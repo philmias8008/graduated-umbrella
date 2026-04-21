@@ -78,7 +78,6 @@ ul { list-style: none; }
   height: 52px;
   width: auto;
   display: block;
-  mix-blend-mode: multiply;
 }
 .nav-logo-text {
   display: flex;
@@ -210,12 +209,11 @@ ul { list-style: none; }
 }
 
 .hero-logo-img {
-  width: 260px;
+  width: 280px;
   height: auto;
   border-radius: 0;
   display: block;
-  mix-blend-mode: multiply;
-  background-color: #F7F4EE;
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
   margin-left: -20px;
 }
 
