@@ -71,21 +71,62 @@ ul { list-style: none; }
 .nav-logo {
   display: flex;
   align-items: center;
+  gap: 10px;
+  text-decoration: none;
 }
 .nav-logo-img {
-  height: 64px;
+  height: 52px;
   width: auto;
   display: block;
-  border-radius: 6px;
+}
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.nav-logo-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.nav-logo-tag {
+  font-size: 0.65rem;
+  color: var(--amber);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+.footer-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
 }
 .footer-logo-img {
-  height: 72px;
+  height: 52px;
   width: auto;
   display: block;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.08);
-  padding: 4px;
+}
+.footer-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.footer-logo-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.footer-logo-tag {
+  font-size: 0.65rem;
+  color: var(--amber);
+  font-weight: 500;
+  letter-spacing: 0.03em;
 }
 
 .nav-links {
@@ -161,9 +202,9 @@ ul { list-style: none; }
 }
 
 .hero-logo-img {
-  width: 220px;
+  width: 200px;
   height: auto;
-  border-radius: 16px;
+  border-radius: 0;
   display: block;
 }
 
