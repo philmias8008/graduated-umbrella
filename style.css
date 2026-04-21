@@ -215,6 +215,7 @@ ul { list-style: none; }
   border-radius: 0;
   display: block;
   mix-blend-mode: multiply;
+  background-color: #F7F4EE;
   margin-left: -20px;
 }
 
