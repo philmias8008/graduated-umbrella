@@ -211,12 +211,11 @@ ul { list-style: none; }
 }
 
 .hero-logo-img {
-  width: 280px;
+  width: 380px;
   height: auto;
   border-radius: 0;
   display: block;
-  clip-path: polygon(50% 11%, 84% 30%, 84% 70%, 50% 89%, 16% 70%, 16% 30%);
-  margin-left: -20px;
+  clip-path: none;
 }
 
 .hero-bg {
