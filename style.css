@@ -80,6 +80,7 @@ ul { list-style: none; }
   display: block;
   clip-path: none;
   background: none;
+  border-radius: 10px;
 }
 .nav-logo-text {
   display: flex;
@@ -215,7 +216,7 @@ ul { list-style: none; }
   height: auto;
   border-radius: 0;
   display: block;
-  clip-path: polygon(50% 8%, 88% 28%, 88% 72%, 50% 92%, 12% 72%, 12% 28%);
+  clip-path: polygon(50% 11%, 84% 30%, 84% 70%, 50% 89%, 16% 70%, 16% 30%);
   margin-left: -20px;
 }
 
