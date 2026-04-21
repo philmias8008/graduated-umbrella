@@ -79,8 +79,7 @@ ul { list-style: none; }
   width: auto;
   display: block;
   clip-path: none;
-  background: none;
-  border-radius: 10px;
+  mix-blend-mode: multiply;
 }
 .nav-logo-text {
   display: flex;
