@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Handstart Digital</title>
+  <meta name="description" content="Get in touch with Handstart Digital. No sales pitch — just an honest conversation about your marketing goals.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="Handstart Digital" class="nav-logo-img"></a>
+    <ul class="nav-links">
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="case-studies.html">Case Studies</a></li>
+      <li><a href="contact.html" class="nav-cta">Let's Talk</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label">Contact</div>
+      <h1>Let's start a conversation</h1>
+      <p>No sales pitch. Tell me where you are, and we'll figure out where you want to go.</p>
+    </div>
+  </section>
+
+  <section class="contact-content">
+    <div class="container">
+      <div class="contact-grid reveal">
+        <div class="contact-info">
+          <h2>How can I help?</h2>
+          <p>Whether you need a full growth strategy, a one-time audit, or just want a second opinion on what your current agency is doing — I'm happy to talk through it.</p>
+          <p>I take on a limited number of clients at a time to make sure every engagement gets the attention it deserves.</p>
+          <div class="contact-detail">
+            <div class="contact-item">
+              <div class="contact-item-icon">✉️</div>
+              <div class="contact-item-text">
+                <small>Email</small>
+                <a href="mailto:aidanjpaggao@gmail.com">aidanjpaggao@gmail.com</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">💼</div>
+              <div class="contact-item-text">
+                <small>LinkedIn</small>
+                <a href="https://www.linkedin.com/in/aidanpaggao/" target="_blank">linkedin.com/in/aidanpaggao</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">📍</div>
+              <div class="contact-item-text">
+                <small>Location</small>
+                <span>Philadelphia, PA (Remote-first)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" name="fname" placeholder="Jane">
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" name="lname" placeholder="Smith">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@yourbusiness.com">
+          </div>
+          <div class="form-group">
+            <label for="business">Business Name</label>
+            <input type="text" id="business" name="business" placeholder="Your Business">
+          </div>
+          <div class="form-group">
+            <label for="service">What are you looking for?</label>
+            <select id="service" name="service">
+              <option value="">Select a service...</option>
+              <option>Paid Search / Google Ads</option>
+              <option>SEO Strategy</option>
+              <option>Growth Strategy & Consulting</option>
+              <option>Paid Social</option>
+              <option>Full Digital Marketing Audit</option>
+              <option>Not sure yet — let's talk</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell me about your business</label>
+            <textarea id="message" name="message" placeholder="What are your goals? What's not working? What's your current setup?"></textarea>
+          </div>
+          <button type="button" class="btn btn-primary" style="width:100%;justify-content:center;">Send Message</button>
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-top:12px;text-align:center;">I typically respond within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Handstart Digital" class="footer-logo-img">
+        
+      </div>
+      <div class="footer-links">
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-copy">
+        <p>© 2026 Handstart Digital. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
