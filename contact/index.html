@@ -72,6 +72,9 @@
   .hs-pitch-note { font-family: var(--sans); font-size: 15px; line-height: 1.6; color: #8b8578; margin: 0; max-width: 44ch; }
   .hs-pitch-email { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--navy); margin-top: 12px; display: inline-block; transition: color 180ms ease; }
   .hs-pitch-email:hover { color: var(--amber); }
+  .hs-pitch-cal { font-family: var(--sans); font-size: 15px; line-height: 1.6; color: var(--body); margin: 16px 0 0; }
+  .hs-pitch-cal a { color: var(--navy); font-weight: 600; border-bottom: 1px solid var(--amber); cursor: pointer; transition: color 180ms ease; }
+  .hs-pitch-cal a:hover { color: var(--amber); }
 
   /* form card */
   .hs-form-card { background: #FBF9F4; border: 1px solid var(--hairline); border-radius: 18px; padding: clamp(24px,3vw,40px); box-shadow: 0 18px 40px rgba(27,43,75,0.10); }
@@ -153,6 +156,7 @@
         <div class="hs-pitch-rule"></div>
         <p class="hs-pitch-note">I read every message myself. I will respond either same day or within two business days.</p>
         <a class="hs-pitch-email" href="mailto:contact@handstartdigital.com">contact@handstartdigital.com</a>
+        <p class="hs-pitch-cal">Rather book a call? <a data-cal-link="aidanpaggao/15min" data-cal-namespace="15min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}'>Grab 15 minutes on my calendar &rarr;</a></p>
       </div>
 
       <!-- RIGHT: form -->
@@ -237,6 +241,16 @@
     }
   })();
   </script>
+
+  <!-- Cal element-click embed code begins -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "15min", {origin:"https://app.cal.com"});
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    Cal.ns["15min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#C8873A"},"dark":{"cal-brand":"#C8873A"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+  <!-- Cal element-click embed code ends -->
 
 </body>
 </html>
