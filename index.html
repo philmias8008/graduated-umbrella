@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <!-- Self-hosted so opentype.js can read real glyph outlines for the draw-on handwriting effect below -->
+  <link rel="preload" href="assets/fonts/Caveat-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
 
   <style>
     :root {
@@ -125,6 +127,8 @@
 
     /* Handwriting */
     .hw-word { font-family: var(--script); font-weight: 600; white-space: nowrap; display: inline-block; }
+    .hw-word-svg { display: none; overflow: visible; }
+    .hw-word-svg path { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: var(--hw-stroke-w, 24); }
 
     @media (max-width: 380px) { .hp-h1 { white-space: normal !important; text-wrap: balance; } }
 
@@ -184,7 +188,7 @@
       <h1 class="hp-h1" style="font-family:var(--serif); font-weight:600; font-size:clamp(28px,4vw,50px); line-height:1.03; letter-spacing:-0.015em; color:var(--cream); margin:0; white-space:nowrap;">Being online &ne; Being found</h1>
       <div style="display:flex; align-items:flex-end; gap:8px; font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">
         <span style="flex-shrink:0;">Get found:</span>
-        <span style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span></span>
+        <span style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span><svg id="hwSvg" class="hw-word-svg" aria-hidden="true"></svg></span>
       </div>
       <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">In an automated world, Handstart keeps human eyes on your business: someone who actually looks, finds what's missing, fixes it, and gives you ways to keep it working.</p>
       <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">Your work won't just be a <a href="/the-difference" style="color:var(--amber); font-weight:600;">generic AI template</a> with your logo dropped on top.</p>
@@ -271,6 +275,7 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -288,23 +293,122 @@
     }
   })();
 
-  // Handwriting: cycle cursive words with a soft fade-in
+  // Handwriting: draw each cursive word on stroke by stroke, hold, then erase it the same way.
+  // Real glyph outlines come from opentype.js reading the self-hosted Caveat file. Each glyph
+  // contour becomes its own SVG path so the stroke-dasharray/dashoffset draw-on technique reveals
+  // them in sequence: a single path spanning multiple letter contours does not reveal cleanly,
+  // since the browser's dash pattern does not stay in lockstep across separate subpaths.
   (function () {
     var el = document.getElementById('hwText');
+    var svg = document.getElementById('hwSvg');
     if (!el) return;
     var words = ['Google Ads', 'SEO', 'Website Builds', 'Social Media Management', 'Meta & Instagram Ads', 'Showing in AI Search Results', 'Landing Pages', 'Local Listings', 'Email Marketing', 'Conversion Tracking'];
     var i = 0;
     el.textContent = words[0];
-    if (reduceMotion) return;
-    el.style.transition = 'opacity 420ms ease';
-    setInterval(function () {
-      el.style.opacity = '0';
-      setTimeout(function () {
-        i = (i + 1) % words.length;
-        el.textContent = words[i];
-        el.style.opacity = '1';
-      }, 420);
-    }, 3000);
+
+    // Reduced motion, or the SVG element is missing: keep the static fallback word, no drawing.
+    if (reduceMotion || !svg || typeof opentype === 'undefined') return;
+
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    var DRAW_MS = 1250;
+    var HOLD_MS = 1800;
+    var ERASE_MS = 850;
+    var GAP_MS = 250;
+
+    opentype.load('assets/fonts/Caveat-SemiBold.ttf', function (err, font) {
+      if (err || !font) return; // network or parse failure: static fallback word stays visible
+
+      try {
+        var upm = font.unitsPerEm;
+        var padUnits = upm * 0.05;
+        var ascUnits = font.ascender + padUnits;
+        var descUnits = -font.descender + padUnits;
+        var heightUnits = ascUnits + descUnits;
+        var strokeWidthUnits = upm * 0.045;
+
+        svg.style.height = (heightUnits / upm) + 'em';
+        svg.style.verticalAlign = (descUnits / upm) + 'em';
+        svg.style.setProperty('--hw-stroke-w', strokeWidthUnits);
+
+        function buildContours(word) {
+          var raw = font.getPath(word, 0, ascUnits, upm);
+          var box = raw.getBoundingBox();
+          var shiftX = box.x1 < 0 ? (padUnits - box.x1) : padUnits;
+          var placed = font.getPath(word, shiftX, ascUnits, upm);
+          var widthUnits = box.x2 + shiftX + padUnits;
+          var dAttr = placed.toPathData(3);
+          var contours = dAttr.split(/(?=M)/).filter(function (s) { return s.trim().length > 0; });
+          return { contours: contours, widthUnits: widthUnits };
+        }
+
+        function drawWord(word, onDone) {
+          var built = buildContours(word);
+          svg.style.width = (built.widthUnits / upm) + 'em';
+          svg.setAttribute('viewBox', '0 0 ' + built.widthUnits + ' ' + heightUnits);
+          while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+          var paths = built.contours.map(function (d) {
+            var p = document.createElementNS(SVG_NS, 'path');
+            p.setAttribute('d', d);
+            svg.appendChild(p);
+            return p;
+          });
+
+          var lens = paths.map(function (p) { return p.getTotalLength(); });
+          var total = lens.reduce(function (a, b) { return a + b; }, 0) || 1;
+          var starts = [];
+          var cum = 0;
+          lens.forEach(function (L) { starts.push(cum); cum += L; });
+
+          // Fully hidden, no transition yet, so the reset below applies before the draw-in starts.
+          paths.forEach(function (p, idx) {
+            p.style.transition = 'none';
+            p.style.strokeDasharray = lens[idx];
+            p.style.strokeDashoffset = lens[idx];
+          });
+          svg.getBoundingClientRect(); // force reflow
+
+          requestAnimationFrame(function () {
+            paths.forEach(function (p, idx) {
+              var delay = DRAW_MS * (starts[idx] / total);
+              var dur = Math.max(DRAW_MS * (lens[idx] / total), 1);
+              p.style.transition = 'stroke-dashoffset ' + dur + 'ms linear ' + delay + 'ms';
+              p.style.strokeDashoffset = '0';
+            });
+          });
+
+          setTimeout(function () {
+            setTimeout(function () {
+              // Erase in reverse: the last contour drawn is the first to disappear.
+              paths.forEach(function (p, idx) {
+                var eraseDelay = ERASE_MS * ((total - starts[idx] - lens[idx]) / total);
+                var eraseDur = Math.max(ERASE_MS * (lens[idx] / total), 1);
+                p.style.transition = 'stroke-dashoffset ' + eraseDur + 'ms linear ' + eraseDelay + 'ms';
+                p.style.strokeDashoffset = lens[idx];
+              });
+              setTimeout(onDone, ERASE_MS);
+            }, HOLD_MS);
+          }, DRAW_MS);
+        }
+
+        function cycle() {
+          drawWord(words[i], function () {
+            setTimeout(function () {
+              i = (i + 1) % words.length;
+              cycle();
+            }, GAP_MS);
+          });
+        }
+
+        el.style.display = 'none';
+        svg.style.display = 'inline-block';
+        cycle();
+      } catch (e) {
+        // Any unexpected drawing failure: leave the static fallback word visible.
+        el.style.display = '';
+        svg.style.display = 'none';
+      }
+    });
   })();
 
   // Smooth scroll for Find My Gaps
