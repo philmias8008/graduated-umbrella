@@ -1,120 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Handstart Digital — Coming soon</title>
-  <meta name="description" content="Handstart Digital — coming soon." />
-  <meta name="robots" content="noindex" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Handstart Digital</title>
+  <meta name="description" content="In an automated world, Handstart keeps human eyes on your business: someone who actually looks, finds what's missing, fixes it, and gives you ways to keep it working.">
 
-  <!-- Brand fonts: Playfair Display (display) + Lato (body).
-       Remove this line if you'd rather keep the page dependency-free;
-       the fallbacks below will take over. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --navy:  #1B2B4B;
+      --navy: #1B2B4B;
       --amber: #C8873A;
+      --amber-lt: #e0a558;
       --cream: #F7F4EE;
+      --slate: #3f4a5a;
+      --body: #5a6472;
+      --hairline: #D6CFC2;
+      --tint: #EFEAE0;
+      --muted: #c3ccda;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+      --script: 'Caveat', 'Segoe Script', cursive;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body { height: 100%; }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; }
     body {
-      background: var(--cream);
-      color: var(--navy);
-      font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      background: var(--cream); color: var(--navy); font-family: var(--sans);
+      overflow-x: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+    a { text-decoration: none; }
+    #assessment { scroll-margin-top: 110px; }
+
+    /* Nav marker underline */
+    .hs-navlink { position: relative; }
+    .hs-navlink-underline {
+      position: absolute; left: 0; bottom: -9px; width: 108%; height: 10px;
+      overflow: visible; pointer-events: none; clip-path: inset(0 100% 0 0);
+      transition: clip-path 340ms cubic-bezier(.5,0,.2,1);
+    }
+    .hs-navlink-underline path { fill: var(--amber); }
+    .hs-navlink:hover .hs-navlink-underline, .hs-navlink:focus-visible .hs-navlink-underline { clip-path: inset(0 0 0 0); }
+
+    .hs-hamburger { display: none; }
+    @media (max-width: 900px) {
+      .hs-nav-links { display: none !important; }
+      .hs-hamburger { display: inline-flex !important; }
     }
 
-    /* ---- Nav bar (wordmark only; otherwise empty) ---- */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.75rem 2rem;
-      border-bottom: 1px solid rgba(27, 43, 75, 0.12);
+    /* Amber CTA button */
+    .hs-cta {
+      position:relative; overflow:hidden; isolation:isolate;
+      display:inline-flex; align-items:center; justify-content:flex-start;
+      background:var(--amber); color:var(--cream);
+      border:1px solid rgba(27,43,75,0.20); border-radius:999px;
+      font-family:var(--sans); font-weight:600; font-size:16px;
+      --hs-dot-x:16px; line-height:1;
+      padding:15px 30px 15px calc(var(--hs-dot-x) + 22px);
+      cursor:pointer; -webkit-tap-highlight-color:transparent;
+    }
+    .hs-cta--sm { padding:11px 22px 11px calc(var(--hs-dot-x) + 20px); font-size:15px; }
+    .hs-cta::before {
+      content:''; position:absolute; left:var(--hs-dot-x); top:50%;
+      width:12px; height:12px; border-radius:50%; background:var(--navy);
+      transform:translate(-50%,-50%) scale(1);
+      transition:transform .45s cubic-bezier(.45,0,.2,1); z-index:0; pointer-events:none;
+    }
+    .hs-cta-face {
+      position:relative; z-index:1; display:inline-flex; align-items:center; white-space:nowrap;
+      transition:transform .35s cubic-bezier(.45,0,.2,1), opacity .3s ease;
+    }
+    .hs-cta-hover {
+      position:absolute; inset:0; z-index:2;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      white-space:nowrap; color:var(--cream); transform:translateX(130%); opacity:0;
+      transition:transform .35s cubic-bezier(.45,0,.2,1), opacity .3s ease; pointer-events:none;
+    }
+    .hs-cta-arrow { display:block; flex-shrink:0; }
+    .hs-cta:hover::before, .hs-cta:focus-visible::before { transform:translate(-50%,-50%) scale(120); }
+    .hs-cta:hover .hs-cta-face, .hs-cta:focus-visible .hs-cta-face { transform:translateX(130%); opacity:0; }
+    .hs-cta:hover .hs-cta-hover, .hs-cta:focus-visible .hs-cta-hover { transform:translateX(0); opacity:1; }
+    .hs-cta:focus-visible { outline:2px solid var(--cream); outline-offset:2px; }
+
+    /* Hero motes, glow, float */
+    @keyframes hpGlow { 0%,100%{opacity:.28; transform:translate(-50%,-50%) scale(.9);} 50%{opacity:.8; transform:translate(-50%,-50%) scale(1.2);} }
+    @keyframes hpFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+    @keyframes hpRise { 0%{opacity:0; transform:translateY(20px) scale(.6);} 15%{opacity:.9;} 85%{opacity:.7;} 100%{opacity:0; transform:translateY(-130px) scale(1);} }
+    .hp-anim-glow { animation: hpGlow 5.5s ease-in-out infinite; }
+    .hp-anim-float { animation: hpFloat 7s ease-in-out infinite; }
+    .hp-mote { animation: hpRise 8s ease-in infinite; }
+
+    /* Ticker */
+    @keyframes hsTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .hs-ticker {
+      position: relative; overflow: hidden; border-top: 1px solid rgba(247,244,238,0.18);
+      margin-top: clamp(32px,6vh,80px); padding: 15px 0;
+      margin-left: calc(-1 * clamp(24px,6vw,80px)); margin-right: calc(-1 * clamp(24px,6vw,80px));
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    }
+    .hs-ticker-track { display: flex; width: max-content; animation: hsTicker 90s linear infinite; }
+    .hs-ticker:hover .hs-ticker-track { animation-play-state: paused; }
+    .hs-ticker-group { display: flex; align-items: center; flex-shrink: 0; }
+    .hs-ticker-item { font-family: var(--sans); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); white-space: nowrap; padding: 0 18px; }
+    .hs-ticker-dot { color: var(--amber); font-size: 12px; }
+
+    /* Assessment */
+    @keyframes hsFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .hs-opt {
+      flex:1 1 0; min-width:96px; padding:20px 16px;
+      background:rgba(247,244,238,0.06); border:1.5px solid rgba(214,207,194,0.35); border-radius:12px;
+      font-family:var(--sans); font-size:19px; font-weight:600; color:var(--cream); cursor:pointer;
+      transition:transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+    .hs-opt:hover {
+      transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,0.28);
+      border-color:var(--amber); background:rgba(247,244,238,0.12);
     }
 
-    .wordmark {
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--navy);
-    }
+    /* Handwriting */
+    .hw-word { font-family: var(--script); font-weight: 600; white-space: nowrap; display: inline-block; }
 
-    /* ---- Center stage ---- */
-    main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    h1 {
-      font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-      font-weight: 500;
-      font-size: clamp(2.75rem, 9vw, 5.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      color: var(--navy);
-      animation: rise 0.9s ease both;
-    }
-
-    /* The one accent: the trailing dot in amber. */
-    h1 .dot { color: var(--amber); }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @media (max-width: 380px) { .hp-h1 { white-space: normal !important; text-wrap: balance; } }
 
     @media (prefers-reduced-motion: reduce) {
-      h1 { animation: none; }
+      .hs-navlink-underline, .hs-cta::before, .hs-cta-face, .hs-cta-hover { transition:none; }
+      .hp-anim-glow, .hp-anim-float, .hp-mote { animation: none !important; }
+      .hs-ticker-track { animation: none; }
     }
-
-    /* ---- Optional contact line ----
-       Uncomment the <p> in the markup below if you want a way to be reached
-       while the site is dark. Styling is ready. -->
-    .contact {
-      margin-top: 1.25rem;
-      font-size: 0.95rem;
-      letter-spacing: 0.02em;
-    }
-    .contact a { color: var(--amber); text-decoration: none; }
-    .contact a:hover,
-    .contact a:focus-visible { text-decoration: underline; }
-    */
   </style>
 </head>
+
 <body>
-  <nav>
-    <span class="wordmark">Handstart Digital</span>
-    <!-- right side intentionally empty -->
-  </nav>
+<div style="min-height:100vh; background:var(--cream); color:var(--navy);">
 
-  <main>
-    <div>
-      <h1>Coming soon<span class="dot">.</span></h1>
-
-      <!-- Optional: uncomment to show a contact line.
-      <p class="contact">In the meantime — <a href="mailto:contact@handstartdigital.com">contact@handstartdigital.com</a></p>
-      -->
+  <!-- ===================== NAV ===================== -->
+  <header style="position:sticky; top:0; z-index:50; background:var(--cream); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,4vw,44px); height:clamp(72px,10vw,96px); display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <a href="#top" style="display:flex; align-items:center; gap:12px;">
+        <img src="assets/logo-header.png" alt="Handstart Digital" style="height:clamp(44px,5.5vw,58px); width:auto; object-fit:contain; display:block;">
+      </a>
+      <nav class="hs-nav-links" style="display:flex; align-items:center; gap:clamp(20px,2.6vw,34px);">
+        <a href="/services" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">Services<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a href="/about" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">About<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a href="/the-difference" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">The Difference<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a href="/case-studies" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">Case Studies<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a class="hs-cta hs-cta--sm" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+      </nav>
+      <button class="hs-hamburger" id="navToggle" aria-label="Menu" aria-expanded="false" style="align-items:center; justify-content:center; width:44px; height:44px; background:none; border:1px solid var(--hairline); border-radius:9px; cursor:pointer; color:var(--navy);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="4" y1="7" x2="20" y2="7" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="12" x2="20" y2="12" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="17" x2="20" y2="17" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line></svg>
+      </button>
     </div>
-  </main>
+    <div id="mobileNav" hidden style="border-top:1px solid var(--hairline); padding:12px clamp(20px,4vw,44px) 20px; flex-direction:column; gap:6px; background:var(--cream);">
+      <a href="/services" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Services</a>
+      <a href="/about" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">About</a>
+      <a href="/the-difference" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">The Difference</a>
+      <a href="/case-studies" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Case Studies</a>
+      <a class="hs-cta hs-cta--sm" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="top" style="position:relative; background:var(--navy); overflow:hidden; padding:clamp(12px,2vw,26px) clamp(24px,6vw,80px) 0; min-height:calc(100svh - clamp(72px,10vw,96px)); display:flex; flex-direction:column;">
+    <div style="position:absolute; inset:0; overflow:hidden; pointer-events:none;">
+      <span class="hp-mote" style="position:absolute; left:12%; bottom:0; width:5px; height:5px; border-radius:50%; background:var(--amber); animation-duration:7s; animation-delay:-1s;"></span>
+      <span class="hp-mote" style="position:absolute; left:24%; bottom:0; width:3px; height:3px; border-radius:50%; background:var(--amber-lt); animation-duration:9s; animation-delay:-4s;"></span>
+      <span class="hp-mote" style="position:absolute; left:38%; bottom:0; width:6px; height:6px; border-radius:50%; background:var(--amber); animation-duration:8s; animation-delay:-2.5s;"></span>
+      <span class="hp-mote" style="position:absolute; left:52%; bottom:0; width:4px; height:4px; border-radius:50%; background:var(--amber-lt); animation-duration:10s; animation-delay:-6s;"></span>
+      <span class="hp-mote" style="position:absolute; left:63%; bottom:0; width:3px; height:3px; border-radius:50%; background:var(--amber); animation-duration:7.5s; animation-delay:-3s;"></span>
+      <span class="hp-mote" style="position:absolute; left:74%; bottom:0; width:5px; height:5px; border-radius:50%; background:var(--amber-lt); animation-duration:9.5s; animation-delay:-5s;"></span>
+      <span class="hp-mote" style="position:absolute; left:86%; bottom:0; width:4px; height:4px; border-radius:50%; background:var(--amber); animation-duration:8.5s; animation-delay:-1.8s;"></span>
+    </div>
+    <div style="position:relative; width:100%; max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center; gap:clamp(7px,1vw,11px); flex:1 1 auto; justify-content:center;">
+      <div style="position:relative; display:flex; align-items:center; justify-content:center; width:clamp(120px,15vw,170px);">
+        <div class="hp-anim-glow" style="position:absolute; top:50%; left:50%; width:140%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle, rgba(200,135,58,.75) 0%, rgba(200,135,58,.35) 42%, rgba(200,135,58,0) 70%); transform:translate(-50%,-50%); pointer-events:none; z-index:0;"></div>
+        <img class="hp-anim-float" src="assets/logo-hero.png" alt="Handstart Digital" style="position:relative; z-index:1; width:100%; height:auto; object-fit:contain; display:block;">
+      </div>
+      <h1 class="hp-h1" style="font-family:var(--serif); font-weight:600; font-size:clamp(28px,4vw,50px); line-height:1.03; letter-spacing:-0.015em; color:var(--cream); margin:0; white-space:nowrap;">Being online &ne; Being found</h1>
+      <div style="display:flex; align-items:flex-end; gap:8px; font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">
+        <span style="flex-shrink:0;">Get found:</span>
+        <span style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span></span>
+      </div>
+      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">In an automated world, Handstart keeps human eyes on your business: someone who actually looks, finds what's missing, fixes it, and gives you ways to keep it working.</p>
+      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">Your work won't just be a <a href="/the-difference" style="color:var(--amber); font-weight:600;">generic AI template</a> with your logo dropped on top.</p>
+      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:0;">Whether you're already running campaigns or don't even have a website yet,<br>you start where you are and grow at your pace, not ours.</p>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content:center; margin-top:8px;">
+        <a class="hs-cta" href="#assessment" id="findGaps"><span class="hs-cta-face">Find My Gaps</span><span class="hs-cta-hover" aria-hidden="true">Find My Gaps <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        <a href="/services" style="display:inline-flex; align-items:center; background:transparent; color:var(--cream); font-family:var(--sans); font-size:16px; font-weight:600; padding:12px 28px; border-radius:9px; border:1.5px solid rgba(247,244,238,0.4); transition:background 200ms ease, transform 200ms ease;">What We Do</a>
+      </div>
+    </div>
+
+    <!-- Ticker -->
+    <div class="hs-ticker" aria-label="Services">
+      <div class="hs-ticker-track">
+        <div class="hs-ticker-group">
+          <span class="hs-ticker-item">Google Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Website Fixes</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Local Listings</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">SEO</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Meta &amp; Instagram Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Social Media, Consistently</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Email Sequences</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Google Business Profile</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Landing Pages</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Conversion Tracking</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Analytics That Actually Work</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Microsoft Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Content &amp; Blogging</span><span class="hs-ticker-dot">&bull;</span>
+        </div>
+        <div class="hs-ticker-group" aria-hidden="true">
+          <span class="hs-ticker-item">Google Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Website Fixes</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Local Listings</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">SEO</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Meta &amp; Instagram Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Social Media, Consistently</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Email Sequences</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Google Business Profile</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Landing Pages</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Conversion Tracking</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Analytics That Actually Work</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Microsoft Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Content &amp; Blogging</span><span class="hs-ticker-dot">&bull;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ASSESSMENT ===================== -->
+  <section id="assessment" style="background:var(--navy); padding:clamp(40px,5vw,64px) clamp(24px,6vw,80px) clamp(56px,8vw,104px);">
+    <div id="assessmentCard" style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center;"></div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="background:var(--navy); padding:clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:22px;">
+        <a href="/" style="display:flex; align-items:center; gap:12px;">
+          <img src="assets/logo-footer.png" alt="Handstart Digital" style="height:48px; width:auto; object-fit:contain; display:block;">
+        </a>
+        <nav style="display:flex; flex-wrap:wrap; align-items:center; gap:10px 26px;">
+          <a href="/" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Home</a>
+          <a href="/services" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Services</a>
+          <a href="/about" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">About</a>
+          <a href="/the-difference" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">The Difference</a>
+          <a href="/case-studies" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Case Studies</a>
+          <a href="/contact" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Contact</a>
+        </nav>
+        <a href="mailto:contact@handstartdigital.com" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--muted);">contact@handstartdigital.com</a>
+      </div>
+      <div style="height:1px; background:rgba(247,244,238,0.16); margin:clamp(28px,3.4vw,36px) 0 clamp(18px,2.2vw,22px);"></div>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div style="font-family:var(--sans); font-size:13px; color:#8791a3;">© <span id="year"></span> Handstart Digital. All rights reserved.</div>
+          <div style="font-family:var(--sans); font-size:12px; color:#6b7488;">Handstart Digital and the Handstart Digital logo are trademarks of Aidan Paggao.</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-family:var(--sans); font-size:13px; color:#8791a3;">
+          <a href="/privacy" style="color:#8791a3;">Privacy</a>
+          <span>·</span>
+          <a href="/terms" style="color:#8791a3;">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Mobile nav
+  (function () {
+    var toggle = document.getElementById('navToggle'), menu = document.getElementById('mobileNav');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function () {
+        var open = menu.hasAttribute('hidden');
+        if (open) { menu.removeAttribute('hidden'); menu.style.display = 'flex'; }
+        else { menu.setAttribute('hidden', ''); menu.style.display = ''; }
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  })();
+
+  // Handwriting: cycle cursive words with a soft fade-in
+  (function () {
+    var el = document.getElementById('hwText');
+    if (!el) return;
+    var words = ['Google Ads', 'SEO', 'Website Builds', 'Social Media Management', 'Meta & Instagram Ads', 'Showing in AI Search Results', 'Landing Pages', 'Local Listings', 'Email Marketing', 'Conversion Tracking'];
+    var i = 0;
+    el.textContent = words[0];
+    if (reduceMotion) return;
+    el.style.transition = 'opacity 420ms ease';
+    setInterval(function () {
+      el.style.opacity = '0';
+      setTimeout(function () {
+        i = (i + 1) % words.length;
+        el.textContent = words[i];
+        el.style.opacity = '1';
+      }, 420);
+    }, 3000);
+  })();
+
+  // Smooth scroll for Find My Gaps
+  (function () {
+    var btn = document.getElementById('findGaps');
+    if (!btn) return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var el = document.getElementById('assessment');
+      if (!el) return;
+      var top = window.scrollY + el.getBoundingClientRect().top - 100;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  })();
+
+  // ===================== Find My Gaps assessment =====================
+  (function () {
+    var mount = document.getElementById('assessmentCard');
+    if (!mount) return;
+
+    var questions = [
+      'Search your business on Google. Are you on page one?',
+      'Do you know how many people found you through Google last month?',
+      'Do you know what it costs you to get one new customer?',
+      'Does your website work properly on a phone?',
+      'Do you know which channel brought in your last five customers?',
+      "Can you explain the return on everything you're paying for?"
+    ];
+    var strengths = [
+      "You're showing up on the first page: the hardest part to earn.",
+      'You actually know your traffic sources. Most owners are guessing.',
+      "You know your cost per customer: the number most people can't name.",
+      "You've looked at your own site on a phone recently. Most people haven't.",
+      'You can trace where your customers came from. That is rare.',
+      'You can explain the return on what you are paying for. Good.'
+    ];
+
+    var step = 0, answers = [];
+
+    function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+    function render() {
+      if (step >= 6) { renderResult(); return; }
+      var q = questions[step];
+      mount.innerHTML =
+        '<div style="width:100%; animation:hsFadeUp 360ms ease both;">' +
+          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:#9fb0cc; margin-bottom:20px;">' + (step + 1) + ' of 6</div>' +
+          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(26px,3.6vw,42px); line-height:1.16; letter-spacing:-0.01em; color:var(--cream); margin:0 auto; max-width:20ch; text-wrap:balance;">' + esc(q) + '</h2>' +
+          '<div style="display:flex; gap:14px; justify-content:center; margin:36px auto 0; max-width:560px; flex-wrap:wrap;">' +
+            '<button class="hs-opt" data-val="yes">Yes</button>' +
+            '<button class="hs-opt" data-val="no">No</button>' +
+            '<button class="hs-opt" data-val="notsure">Not sure</button>' +
+          '</div>' +
+        '</div>';
+      Array.prototype.forEach.call(mount.querySelectorAll('.hs-opt'), function (b) {
+        b.addEventListener('click', function () { answers.push(b.dataset.val); step++; render(); });
+      });
+    }
+
+    function renderResult() {
+      var yesCount = answers.filter(function (a) { return a === 'yes'; }).length;
+      var verdict, costs;
+      if (yesCount >= 4) {
+        verdict = "You're further along than most. The gaps are in optimization, not foundation.";
+        costs = [
+          'Small inefficiencies compound: a few points of wasted spend every month adds up to real money over a year.',
+          'Without a tighter feedback loop, you are probably leaving your best-performing channel under-funded.'
+        ];
+      } else if (yesCount <= 1) {
+        verdict = "You're marketing without a scoreboard.";
+        costs = [
+          'You cannot tell which spending works, so you are likely paying for things that do not.',
+          'Every new customer costs more than it should, because nothing is being optimized.',
+          'Decisions get made on gut feel instead of numbers, expensive over time.'
+        ];
+      } else {
+        verdict = "You're doing marketing. You're just not measuring it.";
+        costs = [
+          'You have activity but no clear read on what is actually driving results.',
+          'Budget is probably split by habit, not by what performs.',
+          'The wins are hard to repeat because you cannot see why they happened.'
+        ];
+      }
+
+      var wins = [];
+      answers.forEach(function (a, i) { if (a === 'yes') wins.push(strengths[i]); });
+
+      var workingBody;
+      if (wins.length === 0) {
+        workingBody = '<p style="margin:0; font-family:var(--sans); font-size:15px; line-height:1.6; color:var(--body);">Honestly, starting from zero is cleaner than fixing a mess. There is nothing to undo, so the first wins come fast.</p>';
+      } else {
+        workingBody = '<ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">' +
+          wins.slice(0, 2).map(function (w) {
+            return '<li style="display:flex; gap:10px; font-family:var(--sans); font-size:15px; line-height:1.55; color:var(--slate);"><span style="color:#1F8A5B; font-weight:700; flex-shrink:0;">&#10003;</span><span>' + esc(w) + '</span></li>';
+          }).join('') + '</ul>';
+      }
+
+      var costList = '<ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;">' +
+        costs.slice(0, 2).map(function (c) {
+          return '<li style="display:flex; gap:10px; font-family:var(--sans); font-size:15px; line-height:1.5; color:var(--slate);"><span style="color:var(--amber); font-weight:700; flex-shrink:0;">&rarr;</span><span>' + esc(c) + '</span></li>';
+        }).join('') + '</ul>';
+
+      function panel(title, accent, body) {
+        return '<div style="background:var(--cream); border:1px solid var(--hairline); border-radius:14px; padding:clamp(16px,2vw,22px); text-align:left; border-left:4px solid ' + accent + ';">' +
+          '<div style="font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:' + accent + '; margin-bottom:10px;">' + title + '</div>' + body + '</div>';
+      }
+
+      mount.innerHTML =
+        '<div style="width:100%; animation:hsFadeUp 400ms ease both;">' +
+          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:#9fb0cc; margin-bottom:12px;">Your read</div>' +
+          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,3.2vw,38px); line-height:1.2; letter-spacing:-0.01em; color:var(--cream); margin:0 auto; max-width:24ch; text-wrap:balance;">' + esc(verdict) + '</h2>' +
+          '<div style="margin:18px 0 0; display:flex; flex-direction:column; align-items:center; gap:14px;">' +
+            '<p style="font-family:var(--serif); font-style:italic; font-size:clamp(17px,2vw,22px); line-height:1.3; color:var(--cream); margin:0; max-width:30ch; text-wrap:balance;">Want me to look at the rest? I\'ll tell you what I\'d fix first.</p>' +
+            '<div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; align-items:center;">' +
+              '<a class="hs-cta" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>' +
+              '<button id="hsRestart" style="background:none; border:none; cursor:pointer; font-family:var(--sans); font-size:14px; font-weight:500; color:#9fb0cc; text-decoration:underline; text-underline-offset:3px;">Start over</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:22px 0 0;">' +
+            panel('What this costs you', '#C8873A', costList) +
+            panel("What's working", '#1F8A5B', workingBody) +
+          '</div>' +
+        '</div>';
+
+      var restart = document.getElementById('hsRestart');
+      if (restart) restart.addEventListener('click', function () { step = 0; answers = []; render(); });
+    }
+
+    render();
+  })();
+</script>
+
 </body>
 </html>

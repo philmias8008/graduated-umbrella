@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Services | Handstart Digital</title>
+  <meta name="description" content="How we can work together. Brand strategy, web design, SEO, performance marketing, and retention for small businesses.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #1B2B4B;
+      --amber: #C8873A;
+      --cream: #F7F4EE;
+      --slate: #3f4a5a;
+      --body: #5a6472;
+      --hairline: #D6CFC2;
+      --tint: #EFEAE0;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--cream);
+      color: var(--navy);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { text-decoration: none; }
+
+    /* Nav hand-drawn marker underline */
+    .hs-navlink { position: relative; }
+    .hs-navlink-underline {
+      position: absolute; left: 0; bottom: -9px; width: 108%; height: 10px;
+      overflow: visible; pointer-events: none;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 340ms cubic-bezier(.5,0,.2,1);
+    }
+    .hs-navlink-underline path { fill: var(--amber); }
+    .hs-navlink:hover .hs-navlink-underline,
+    .hs-navlink:focus-visible .hs-navlink-underline { clip-path: inset(0 0 0 0); }
+
+    /* Hamburger / mobile nav */
+    .hs-hamburger { display: none; }
+    @media (max-width: 900px) {
+      .hs-nav-links { display: none !important; }
+      .hs-hamburger { display: inline-flex !important; }
+    }
+
+    /* Typewriter caret */
+    @keyframes hpBlink { 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
+    .tx-caret {
+      display:inline-block; width:2px; height:1.1em; background:var(--amber);
+      margin-left:3px; vertical-align:-.08em; animation:hpBlink 1s step-end infinite;
+    }
+
+    /* Scroll-reveal slide */
+    [data-anim="slide"] {
+      opacity:0;
+      transition:opacity .6s ease, transform .85s cubic-bezier(.16,1,.3,1);
+      will-change:transform,opacity;
+    }
+    [data-anim="slide"][data-dir="l"] { transform:translateX(-80px); }
+    [data-anim="slide"][data-dir="r"] { transform:translateX(80px); }
+    [data-anim="slide"][data-in="true"] { opacity:1; transform:none; }
+
+    /* Amber CTA button, navy dot floods on hover */
+    .hs-cta {
+      position:relative; overflow:hidden; isolation:isolate;
+      display:inline-flex; align-items:center; justify-content:flex-start;
+      background:var(--amber); color:var(--cream);
+      border:1px solid rgba(27,43,75,0.20); border-radius:999px;
+      font-family:var(--sans); font-weight:600; font-size:16px;
+      --hs-dot-x:16px; line-height:1;
+      padding:15px 30px 15px calc(var(--hs-dot-x) + 22px);
+      cursor:pointer; -webkit-tap-highlight-color:transparent;
+    }
+    .hs-cta--sm { padding:11px 22px 11px calc(var(--hs-dot-x) + 20px); font-size:15px; }
+    .hs-cta::before {
+      content:''; position:absolute; left:var(--hs-dot-x); top:50%;
+      width:12px; height:12px; border-radius:50%; background:var(--navy);
+      transform:translate(-50%,-50%) scale(1);
+      transition:transform .45s cubic-bezier(.45,0,.2,1);
+      z-index:0; pointer-events:none;
+    }
+    .hs-cta-face {
+      position:relative; z-index:1; display:inline-flex; align-items:center; white-space:nowrap;
+      transition:transform .35s cubic-bezier(.45,0,.2,1), opacity .3s ease;
+    }
+    .hs-cta-hover {
+      position:absolute; inset:0; z-index:2;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      white-space:nowrap; color:var(--cream);
+      transform:translateX(130%); opacity:0;
+      transition:transform .35s cubic-bezier(.45,0,.2,1), opacity .3s ease;
+      pointer-events:none;
+    }
+    .hs-cta-arrow { display:block; flex-shrink:0; }
+    .hs-cta:hover::before, .hs-cta:focus-visible::before { transform:translate(-50%,-50%) scale(120); }
+    .hs-cta:hover .hs-cta-face, .hs-cta:focus-visible .hs-cta-face { transform:translateX(130%); opacity:0; }
+    .hs-cta:hover .hs-cta-hover, .hs-cta:focus-visible .hs-cta-hover { transform:translateX(0); opacity:1; }
+    .hs-cta:focus-visible { outline:2px solid var(--navy); outline-offset:2px; }
+
+    /* Comparison table */
+    .hs-cmp-row { display:grid; grid-template-columns:1fr 1.1fr 1.1fr; align-items:stretch; }
+    .hs-cmp-row + .hs-cmp-row { border-top:1px solid var(--hairline); }
+    @media (max-width: 900px) {
+      .hs-cmp-row { grid-template-columns:1fr !important; }
+      .hs-cmp-head { display:none !important; }
+      .hs-cmp-cell::before {
+        content: attr(data-col); display:block;
+        font-family:var(--sans); font-size:11px; font-weight:700;
+        letter-spacing:0.1em; text-transform:uppercase; color:#8b8578; margin-bottom:4px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hs-navlink-underline, .hs-cta::before, .hs-cta-face, .hs-cta-hover { transition:none; }
+      .tx-caret { display:none; }
+      [data-anim="slide"] { opacity:1 !important; transform:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+<div style="min-height:100vh; background:var(--cream); color:var(--navy);">
+
+  <!-- ===================== NAV ===================== -->
+  <header style="position:sticky; top:0; z-index:50; background:var(--cream); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,4vw,44px); height:clamp(72px,10vw,96px); display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <a href="/" style="display:flex; align-items:center; gap:12px;">
+        <img src="assets/handstart-logo-header.png" alt="Handstart Digital" style="height:clamp(44px,5.5vw,58px); width:auto; object-fit:contain; display:block;">
+      </a>
+
+      <nav class="hs-nav-links" style="display:flex; align-items:center; gap:clamp(20px,2.6vw,34px);">
+        <a href="/services" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:600; color:var(--navy);">Services<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a href="/about" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">About<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a href="/the-difference" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">The Difference<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a href="/case-studies" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">Case Studies<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a class="hs-cta hs-cta--sm" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+      </nav>
+
+      <button class="hs-hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false" style="align-items:center; justify-content:center; width:44px; height:44px; padding:0; background:none; border:1px solid var(--hairline); border-radius:9px; cursor:pointer; color:var(--navy);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="4" y1="7" x2="20" y2="7" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="12" x2="20" y2="12" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="17" x2="20" y2="17" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line></svg>
+      </button>
+    </div>
+
+    <div id="mobileNav" hidden style="border-top:1px solid var(--hairline); padding:12px clamp(20px,4vw,44px) 20px; flex-direction:column; gap:6px; background:var(--cream);">
+      <a href="/services" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Services</a>
+      <a href="/about" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">About</a>
+      <a href="/the-difference" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">The Difference</a>
+      <a href="/case-studies" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Case Studies</a>
+      <a class="hs-cta hs-cta--sm" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section style="background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px);">
+    <div style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
+      <div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--amber); margin-bottom:clamp(10px,1.4vw,14px);">Services</div>
+      <div style="font-family:var(--serif); font-weight:600; font-size:clamp(32px,4.6vw,54px); line-height:1.06; letter-spacing:-0.015em; color:var(--navy);">How We Can Work Together</div>
+      <div style="width:100%; max-width:620px; display:flex; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--hairline); border-radius:999px; box-shadow:0 12px 30px rgba(27,43,75,.10); padding:16px 22px; margin:clamp(14px,1.8vw,20px) 0 0; text-align:left;">
+        <span style="display:inline-flex; flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#8b8578" stroke-width="2"></circle><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="#8b8578" stroke-width="2" stroke-linecap="round"></line></svg></span>
+        <span style="font-family:var(--sans); font-size:clamp(16px,1.5vw,19px); font-weight:500; color:var(--navy); min-height:1.2em; display:inline-flex; align-items:center;"><span id="typeSearch"></span><span class="tx-caret"></span></span>
+      </div>
+      <p style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; line-height:1.6; color:var(--navy); max-width:60ch; margin:clamp(14px,1.6vw,18px) 0 0;">See if any of the questions below sound like questions you may have.<br>We may have the answers.</p>
+    </div>
+  </section>
+
+  <!-- ===================== FIVE PROBLEMS ===================== -->
+  <!-- O1 -->
+  <section data-reveal data-anim="slide" data-dir="l" style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What makes your brand yours?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">This is how people recognize you, and decide you are the one to call.</p>
+      <div data-reveal data-js="type" data-text="Brand Strategy" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span></div>
+      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Positioning &amp; Messaging</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Logo &amp; Brand Identity</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Visual Systems</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Brand Guidelines</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- O2 -->
+  <section data-reveal data-anim="slide" data-dir="r" style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is your website working against you?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">It's outdated, hard to use on a phone, or doesn't exist yet. For most small businesses, this is where it starts. The base needs to be built, and built right.</p>
+      <div data-reveal data-js="type" data-text="Web Design &amp; Development" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span></div>
+      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Website Design &amp; Build</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Landing Pages</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Mobile &amp; Speed Fixes</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Ongoing Site Maintenance</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Website Analytics</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Web Hosting</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- O3 -->
+  <section data-reveal data-anim="slide" data-dir="l" style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is it difficult to find you?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">You exist, but when someone searches for what you do, you're not as easy to find as you could be. There are many ways to make it easier.</p>
+      <div data-reveal data-js="type" data-text="SEO &amp; Organic Presence" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span></div>
+      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">SEO</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Google Business Profile</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Local Listings</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Content Strategy</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Technical SEO</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">AI Search/LLM Visibility (AEO/GEO)</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Review Management &amp; Strategy</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- O4 -->
+  <section data-reveal data-anim="slide" data-dir="r" style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Do you need customers now?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">Sometimes you can't wait for slow growth. Performance marketing or paid strategy puts you in front of customers today.</p>
+      <div data-reveal data-js="type" data-text="Performance Marketing" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span></div>
+      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Meta &amp; Instagram Ads</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Microsoft Ads</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Reddit Ads</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">LinkedIn Ads</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Google Suite (Google Ads, Performance Max, Demand Gen)</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">LLM Ads (ChatGPT, Gemini, Copilot)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- O5 -->
+  <section data-reveal data-anim="slide" data-dir="l" style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">How is your brand's ongoing presence?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">Existing or potential customers forget about you. Keeping your brand visible keeps them coming back.</p>
+      <div data-reveal data-js="type" data-text="Retention &amp; General Presence" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span></div>
+      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Social Media Management</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Email Marketing</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">SMS Marketing</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Loyalty &amp; Referral Programs</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== WHAT WE DON'T DO ===================== -->
+  <section style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
+    <div style="max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What we don't do:</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); margin:clamp(12px,1.6vw,16px) 0 clamp(24px,3vw,32px);">Being honest about fit saves everyone time.</p>
+      <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0; width:100%;">
+        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0;">Print production and fabrication</li>
+        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Big-budget video production</li>
+        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Going viral on demand</li>
+        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Anything I can't measure or justify</li>
+        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Pretending your business needs things it doesn't</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== PLACEHOLDER (reserved for later animation work) ===================== -->
+  <section style="background:var(--tint); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
+    <div style="max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Placeholder services headline</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); margin:clamp(12px,1.6vw,16px) 0 0;">Placeholder services copy.</p>
+    </div>
+  </section>
+
+  <!-- ===================== CLOSING CTA ===================== -->
+  <section style="background:var(--navy); padding:clamp(60px,9vw,110px) clamp(24px,6vw,80px); text-align:center;">
+    <div style="max-width:640px; margin:0 auto; display:flex; flex-direction:column; align-items:center;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--cream); margin:0; text-wrap:balance;">Not sure where you fit?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); line-height:1.55; color:#c3ccda; margin:clamp(14px,1.8vw,20px) 0 clamp(28px,3.4vw,36px); max-width:44ch;">Explore some work we've already done, or let's connect on what you need done and double click on how we will do it</p>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center;">
+        <a href="/case-studies" style="display:inline-flex; align-items:center; background:var(--navy); color:var(--cream); font-family:var(--sans); font-size:16px; font-weight:600; padding:15px 30px; border-radius:9px; border:1.5px solid var(--cream); transition:background 200ms ease, transform 200ms ease, box-shadow 200ms ease;">Latest Work</a>
+        <a class="hs-cta" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="background:var(--navy); padding:clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:22px;">
+        <a href="/" style="display:flex; align-items:center; gap:12px;">
+          <img src="assets/handstart-logo-footer.png" alt="Handstart Digital" style="height:48px; width:auto; object-fit:contain; display:block;">
+        </a>
+        <nav style="display:flex; flex-wrap:wrap; align-items:center; gap:10px 26px;">
+          <a href="/" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Home</a>
+          <a href="/services" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Services</a>
+          <a href="/about" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">About</a>
+          <a href="/the-difference" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">The Difference</a>
+          <a href="/case-studies" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Case Studies</a>
+          <a href="/contact" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Contact</a>
+        </nav>
+        <a href="mailto:contact@handstartdigital.com" style="font-family:var(--sans); font-size:15px; font-weight:500; color:#c3ccda;">contact@handstartdigital.com</a>
+      </div>
+      <div style="height:1px; background:rgba(247,244,238,0.16); margin:clamp(28px,3.4vw,36px) 0 clamp(18px,2.2vw,22px);"></div>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div style="font-family:var(--sans); font-size:13px; color:#8791a3;">© <span id="year"></span> Handstart Digital. All rights reserved.</div>
+          <div style="font-family:var(--sans); font-size:12px; color:#6b7488;">Handstart Digital and the Handstart Digital logo are trademarks of Aidan Paggao.</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-family:var(--sans); font-size:13px; color:#8791a3;">
+          <a href="/privacy" style="color:#8791a3;">Privacy</a>
+          <span>·</span>
+          <a href="/terms" style="color:#8791a3;">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile nav toggle
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('mobileNav');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function () {
+        var open = menu.hasAttribute('hidden');
+        if (open) { menu.removeAttribute('hidden'); menu.style.display = 'flex'; }
+        else { menu.setAttribute('hidden', ''); menu.style.display = ''; }
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  })();
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hero search typewriter, cycles through queries
+  (function () {
+    var el = document.getElementById('typeSearch');
+    if (!el) return;
+    var queries = ['digital marketing', 'website design and builds', 'brand strategy and identity'];
+    if (reduceMotion) { el.textContent = queries[0]; return; }
+    var qi = 0, ci = 0, phase = 'typing', timer;
+    function typeDelay() {
+      var d = 70 + Math.random() * 110;
+      if (Math.random() < 0.12) d += 180 + Math.random() * 260;
+      return d;
+    }
+    function backDelay() { return 35 + Math.random() * 55; }
+    function tick() {
+      var q = queries[qi];
+      if (phase === 'typing') {
+        ci++; el.textContent = q.slice(0, ci);
+        if (ci >= q.length) { phase = 'pause'; timer = setTimeout(tick, 1400); }
+        else { timer = setTimeout(tick, typeDelay()); }
+      } else if (phase === 'pause') {
+        phase = 'deleting'; timer = setTimeout(tick, backDelay());
+      } else {
+        ci--; el.textContent = q.slice(0, ci);
+        if (ci <= 0) { qi = (qi + 1) % queries.length; phase = 'typing'; timer = setTimeout(tick, 420); }
+        else { timer = setTimeout(tick, backDelay()); }
+      }
+    }
+    tick();
+  })();
+
+  // Scroll reveals: slide-in sections, plus eyebrow typewriters
+  (function () {
+    if (reduceMotion) {
+      document.querySelectorAll('[data-js="type"]').forEach(function (el) {
+        var s = el.querySelector('.tx-txt'); if (s) s.textContent = el.dataset.text;
+      });
+      return;
+    }
+
+    var slideIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && e.intersectionRatio > 0.2) e.target.dataset.in = 'true';
+        else if (!e.isIntersecting && e.boundingClientRect.top > 0) e.target.dataset.in = 'false';
+      });
+    }, { threshold: [0, 0.2, 0.5], rootMargin: '0px 0px -12% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(function (el) { slideIO.observe(el); });
+
+    function runType(el) {
+      var txt = el.dataset.text, span = el.querySelector('.tx-txt');
+      if (!span) return;
+      var i = 0; clearInterval(el._iv); span.textContent = '';
+      el._iv = setInterval(function () {
+        i++; span.textContent = txt.slice(0, i);
+        if (i >= txt.length) clearInterval(el._iv);
+      }, 78);
+    }
+    var typeIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && e.intersectionRatio > 0.2) {
+          if (e.target.dataset.typed !== 'true') { e.target.dataset.typed = 'true'; runType(e.target); }
+        } else if (!e.isIntersecting && e.boundingClientRect.top > 0) {
+          e.target.dataset.typed = 'false';
+          clearInterval(e.target._iv);
+          var s = e.target.querySelector('.tx-txt'); if (s) s.textContent = '';
+        }
+      });
+    }, { threshold: [0, 0.2, 0.5], rootMargin: '0px 0px -12% 0px' });
+    document.querySelectorAll('[data-js="type"]').forEach(function (el) { typeIO.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
