@@ -294,7 +294,7 @@
     <div data-gp-content id="gp-handstart-content" tabindex="-1">
 
   <!-- ===================== HERO ===================== -->
-  <section id="top" style="position:relative; background:var(--navy); overflow:hidden; padding:clamp(12px,2vw,26px) clamp(24px,6vw,80px) 0; min-height:calc(100svh - clamp(72px,10vw,96px)); display:flex; flex-direction:column;">
+  <section id="top" style="position:relative; background:var(--navy); overflow:hidden; padding:clamp(12px,2vw,26px) clamp(24px,6vw,80px) 0; min-height:calc(100svh - clamp(72px,10vw,96px)); min-height:calc(100dvh - clamp(72px,10vw,96px)); display:flex; flex-direction:column;">
     <div style="position:absolute; inset:0; overflow:hidden; pointer-events:none;">
       <span class="hp-mote" style="position:absolute; left:12%; bottom:0; width:5px; height:5px; border-radius:50%; background:var(--amber); animation-duration:7s; animation-delay:-1s;"></span>
       <span class="hp-mote" style="position:absolute; left:24%; bottom:0; width:3px; height:3px; border-radius:50%; background:var(--amber-lt); animation-duration:9s; animation-delay:-4s;"></span>
@@ -304,24 +304,24 @@
       <span class="hp-mote" style="position:absolute; left:74%; bottom:0; width:5px; height:5px; border-radius:50%; background:var(--amber-lt); animation-duration:9.5s; animation-delay:-5s;"></span>
       <span class="hp-mote" style="position:absolute; left:86%; bottom:0; width:4px; height:4px; border-radius:50%; background:var(--amber); animation-duration:8.5s; animation-delay:-1.8s;"></span>
     </div>
-    <div style="position:relative; width:100%; max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center; gap:clamp(7px,1vw,11px); flex:1 1 auto; justify-content:center;">
-      <div style="position:relative; display:flex; align-items:center; justify-content:center; width:clamp(120px,15vw,170px);">
-        <div class="hp-anim-glow" style="position:absolute; top:50%; left:50%; width:140%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle, rgba(200,135,58,.75) 0%, rgba(200,135,58,.35) 42%, rgba(200,135,58,0) 70%); transform:translate(-50%,-50%); pointer-events:none; z-index:0;"></div>
-        <img class="hp-anim-float" src="assets/logo-hero.png" alt="Handstart Digital" style="position:relative; z-index:1; width:100%; height:auto; object-fit:contain; display:block;">
-      </div>
-      <h1 class="hp-h1" style="font-family:var(--serif); font-weight:600; font-size:clamp(28px,4vw,50px); line-height:1.03; letter-spacing:-0.015em; color:var(--cream); margin:0; white-space:nowrap;">Being online &ne; Being found</h1>
-      <div style="display:flex; flex-direction:column; align-items:flex-start; gap:2px; margin-top:4px;">
+    <div style="position:relative; width:100%; max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start; text-align:left; gap:clamp(7px,1vw,11px); flex:1 1 auto; justify-content:flex-start;">
+      <h1 class="hp-h1" style="font-family:var(--serif); font-weight:600; font-size:clamp(52px,17vw,100px); line-height:1.03; letter-spacing:-0.015em; color:var(--cream); margin:0; align-self:stretch; width:100%; text-align:center;">
+        <span style="display:block;">Being online</span>
+        <span style="display:block;">&ne;</span>
+        <span style="display:block;">Being found</span>
+      </h1>
+      <div style="display:flex; flex-direction:column; align-items:flex-start; gap:2px; margin-top:28px;">
         <span style="font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">Get a headstart on your competition.</span>
         <div style="display:flex; align-items:flex-end; gap:8px; font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">
           <span style="flex-shrink:0;">Get found:</span>
           <span id="hwBox" style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span><svg id="hwSvg" class="hw-word-svg" aria-hidden="true"></svg></span>
         </div>
-        <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; text-align:left; margin:calc(clamp(7px,1vw,11px) + 2px) 0 0;">In an automated world, Handstart prioritizes human eyes and effort for your business.</p>
+        <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; text-align:left; margin:28px 0 0;">In an automated world, Handstart prioritizes human eyes and effort for your business.</p>
         <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; text-align:left; margin:calc(clamp(7px,1vw,11px) - 2px) 0 0;">Whether you're already running campaigns, or don't even have a website yet:<br>You start where you are, and grow at your own pace - not ours.</p>
       </div>
-      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content:center; margin-top:8px;">
-        <a class="hs-cta" href="#assessment" id="findGaps"><span class="hs-cta-face">Find My Gaps</span><span class="hs-cta-hover" aria-hidden="true">Find My Gaps <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-        <a href="/services" style="display:inline-flex; align-items:center; background:transparent; color:var(--cream); font-family:var(--sans); font-size:16px; font-weight:600; padding:12px 28px; border-radius:9px; border:1.5px solid rgba(247,244,238,0.4); transition:background 200ms ease, transform 200ms ease;">What We Do</a>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content:flex-start; margin-top:8px;">
+        <a class="hs-cta hs-cta--sm" href="#assessment" id="findGaps"><span class="hs-cta-face">Find My Gaps</span><span class="hs-cta-hover" aria-hidden="true">Find My Gaps <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        <a href="/services" style="display:inline-flex; align-items:center; background:transparent; color:var(--cream); font-family:var(--sans); font-size:15px; font-weight:600; padding:11px 22px; border-radius:9px; border:1.5px solid rgba(247,244,238,0.4); transition:background 200ms ease, transform 200ms ease;">What We Do</a>
       </div>
     </div>
 
@@ -769,23 +769,37 @@
       // Detecting "scroll back up" directly off the wheel/touch gesture, rather than
       // waiting for a native scroll event to confirm the direction, avoids the delay
       // (and occasional missed first attempt) of the scroll()-based fallback above.
+      //
+      // Below UP_HOLD_PX of sustained upward motion, the page is held in place
+      // entirely (input prevented, nothing scrolls) rather than easing up a little,
+      // so a light or accidental upward nudge does nothing at all. Only a gesture
+      // that keeps going past that distance commits to the reverse ride; a downward
+      // tick (wheel) or lifting the finger before the threshold (touch) cancels it
+      // and the page just sits still, no partial scroll to undo.
+      var UP_HOLD_PX = 160;
+      var wheelUpAccum = 0, wheelUpAt = 0;
       var touchStartY = 0;
       function guardLockedInput(event) {
         if (phase === 'locked') { event.preventDefault(); return; }
-        if (phase === 'landed' && event.type === 'wheel' && event.deltaY < 0) {
-          event.preventDefault();
-          engageLock(-1);
-        }
+        if (phase !== 'landed' || event.type !== 'wheel') return;
+        if (event.deltaY >= 0) { wheelUpAccum = 0; return; }
+        var now = performance.now();
+        if (now - wheelUpAt > 250) wheelUpAccum = 0;
+        wheelUpAccum += -event.deltaY;
+        wheelUpAt = now;
+        event.preventDefault();
+        if (wheelUpAccum >= UP_HOLD_PX) { wheelUpAccum = 0; engageLock(-1); }
       }
       function handleTouchStart(event) {
         touchStartY = event.touches[0] ? event.touches[0].clientY : 0;
       }
       function handleTouchMove(event) {
         if (phase === 'locked') { event.preventDefault(); return; }
-        if (phase === 'landed' && event.touches[0] && event.touches[0].clientY - touchStartY > 8) {
-          event.preventDefault();
-          engageLock(-1);
-        }
+        if (phase !== 'landed' || !event.touches[0]) return;
+        var dy = event.touches[0].clientY - touchStartY;
+        if (dy <= 0) return; // downward drag: normal scroll further into the page
+        event.preventDefault();
+        if (dy > UP_HOLD_PX) { engageLock(-1); }
       }
       function guardLockedKey(event) {
         if (phase !== 'locked') return;
