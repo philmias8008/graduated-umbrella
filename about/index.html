@@ -130,28 +130,6 @@
   html.lenis, html.lenis body { height: auto; }
   .lenis.lenis-smooth { scroll-behavior: auto !important; }
   .lenis.lenis-stopped { overflow: hidden; }
-
-  /* ---------- section reveals: hidden state only applies once JS confirms
-     motion is allowed and has set this class, so no-JS pages stay fully
-     visible and reduced-motion pages never get this class at all. ---------- */
-  html.anim-ready [data-reveal-target] {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-  }
-  html.anim-ready [data-reveal-target].hs-revealed {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  html.anim-ready [data-reveal-target][data-reveal-clip] {
-    opacity: 1;
-    transform: none;
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 0.7s ease-out;
-  }
-  html.anim-ready [data-reveal-target][data-reveal-clip].hs-revealed {
-    clip-path: inset(0 0 0 0);
-  }
 </style>
 </head>
 <body>
@@ -274,6 +252,9 @@
     </div>
   </footer>
 
+  <script src="/assets/js/gsap.min.js"></script>
+  <script src="/assets/js/ScrollTrigger.min.js"></script>
+  <script src="/assets/js/SplitText.min.js"></script>
   <script src="/assets/js/lenis.min.js"></script>
   <script src="/assets/js/hs-motion.js"></script>
   <script>

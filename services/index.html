@@ -121,28 +121,6 @@
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
     .lenis.lenis-stopped { overflow: hidden; }
-
-    /* ---------- section reveals: hidden state only applies once JS confirms
-       motion is allowed and has set this class, so no-JS pages stay fully
-       visible and reduced-motion pages never get this class at all. ---------- */
-    html.anim-ready [data-reveal-target] {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-    }
-    html.anim-ready [data-reveal-target].hs-revealed {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    html.anim-ready [data-reveal-target][data-reveal-clip] {
-      opacity: 1;
-      transform: none;
-      clip-path: inset(100% 0 0 0);
-      transition: clip-path 0.7s ease-out;
-    }
-    html.anim-ready [data-reveal-target][data-reveal-clip].hs-revealed {
-      clip-path: inset(0 0 0 0);
-    }
   </style>
 </head>
 
@@ -195,7 +173,7 @@
   <!-- O1 -->
   <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
     <div style="max-width:900px; margin:0 auto;">
-      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What makes your brand yours?</h2>
+      <h2 data-anim="split-text" style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What makes your brand yours?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">This is how people recognize you, and decide you are the one to call.</p>
       <div data-js="type" data-text="Brand Strategy" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Brand Strategy</noscript></div>
       <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
@@ -275,7 +253,7 @@
   </section>
 
   <!-- ===================== WHAT WE DON'T DO ===================== -->
-  <section style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
+  <section data-anim="clip" style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
     <div style="max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What we don't do:</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); margin:clamp(12px,1.6vw,16px) 0 clamp(24px,3vw,32px);">Being honest about fit saves everyone time.</p>
@@ -343,6 +321,9 @@
 
 </div>
 
+<script src="/assets/js/gsap.min.js"></script>
+<script src="/assets/js/ScrollTrigger.min.js"></script>
+<script src="/assets/js/SplitText.min.js"></script>
 <script src="/assets/js/lenis.min.js"></script>
 <script src="/assets/js/hs-motion.js"></script>
 <script>
