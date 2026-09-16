@@ -125,6 +125,33 @@
     .cr-shine { display: none; }
     [data-anim="cred"][data-in="true"] .cr-shine { animation: none; }
   }
+
+  /* ---------- Lenis smooth scroll (required Lenis CSS) ---------- */
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-stopped { overflow: hidden; }
+
+  /* ---------- section reveals: hidden state only applies once JS confirms
+     motion is allowed and has set this class, so no-JS pages stay fully
+     visible and reduced-motion pages never get this class at all. ---------- */
+  html.anim-ready [data-reveal-target] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  html.anim-ready [data-reveal-target].hs-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  html.anim-ready [data-reveal-target][data-reveal-clip] {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.7s ease-out;
+  }
+  html.anim-ready [data-reveal-target][data-reveal-clip].hs-revealed {
+    clip-path: inset(0 0 0 0);
+  }
 </style>
 </head>
 <body>
@@ -247,6 +274,7 @@
     </div>
   </footer>
 
+  <script src="assets/lenis.min.js"></script>
   <script>
   (function () {
     var y = document.getElementById('hs-year');
@@ -311,6 +339,48 @@
       });
     }, { threshold: [0, 0.2, 0.5], rootMargin: '0px 0px -12% 0px' });
     document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
+
+    // ---------- Lenis smooth scroll, page wide, not scoped to any section ----------
+    if (typeof Lenis !== 'undefined') {
+      var LENIS_LERP = 0.09; // tune by eye: lower is smoother and slower, higher is snappier
+      var lenis = new Lenis({ lerp: LENIS_LERP });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    }
+
+    // ---------- section reveals: every top level section below the first,
+    // played once on enter, with an optional clip variant via data-anim="clip"
+    // and a light stagger across each section's direct child blocks. ----------
+    document.documentElement.classList.add('anim-ready');
+    var STAGGER_MS = 60;
+    var topLevel = Array.prototype.slice.call(document.body.children).filter(function (el) {
+      return el.tagName === 'SECTION' || el.tagName === 'FOOTER';
+    });
+    var revealSections = topLevel.slice(1);
+    var revealTargets = revealSections.map(function (section) {
+      var clip = section.getAttribute('data-anim') === 'clip';
+      var kids = Array.prototype.slice.call(section.children);
+      var targets = kids.length > 1 ? kids : [section];
+      targets.forEach(function (el, i) {
+        el.setAttribute('data-reveal-target', '');
+        if (clip) el.setAttribute('data-reveal-clip', '');
+        el.style.transitionDelay = (i * STAGGER_MS) + 'ms';
+      });
+      return targets;
+    });
+    var revealIo = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var idx = revealSections.indexOf(entry.target);
+        if (idx === -1) return;
+        revealTargets[idx].forEach(function (el) { el.classList.add('hs-revealed'); });
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -20% 0px' });
+    revealSections.forEach(function (section) { revealIo.observe(section); });
   })();
   </script>
 
