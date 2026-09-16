@@ -166,7 +166,7 @@
     :where(#gp-handstart)[data-gp-choosing="true"] [data-gp-touch-picker] { visibility: visible; }
     :where(#gp-handstart) [data-gp-select] { min-height: 44px; min-width: 90px; border: 1px solid var(--hairline); border-radius: 4px; background: var(--gp-paper); color: var(--gp-ink); padding: 0 10px; font: inherit; }
     :where(#gp-handstart) [data-gp-select]:focus-visible { outline: 2px solid var(--gp-field); outline-offset: 4px; }
-    @media (any-pointer: coarse) { :where(#gp-handstart) [data-gp-touch-picker] { display: flex; } }
+    /* Touch letter picker intentionally stays hidden: auto-picked entry is enough, no dropdown. */
     :where(#gp-handstart) [data-gp-fallback] { position: absolute; inset: 0; display: none; place-items: center; font-size: min(calc(100cqw / var(--gp-characters)), 38cqh); line-height: 1; color: var(--gp-field); }
     :where(#gp-handstart)[data-gp-ready] [data-gp-fallback] { visibility: hidden; }
     :where(#gp-handstart) [data-gp-caption] { position: absolute; inset: auto 8% 9%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; font: 13px/1.4 var(--sans); opacity: var(--gp-caption, 1); pointer-events: var(--gp-caption-hit, auto); }
@@ -174,9 +174,7 @@
     :where(#gp-handstart) [data-gp-front] a, :where(#gp-handstart) [data-gp-front] button { pointer-events: var(--gp-caption-hit, auto); }
     :where(#gp-handstart) [data-gp-front]:focus-within { opacity: 1; }
     :where(#gp-handstart) [data-gp-hint] { display: none; }
-    :where(#gp-handstart) [data-gp-enter] { display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 16px 32px; border-radius: 999px; background: var(--amber); color: var(--cream); font-family: var(--sans); font-weight: 600; font-size: clamp(15px,1.8vw,17px); text-decoration: none; letter-spacing: 0; box-shadow: 0 12px 28px rgba(27,43,75,0.22); transition: transform 200ms ease, box-shadow 200ms ease; }
-    :where(#gp-handstart) [data-gp-enter]:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(27,43,75,0.28); }
-    :where(#gp-handstart) [data-gp-enter]:focus-visible { outline: 2px solid var(--navy); outline-offset: 4px; }
+    :where(#gp-handstart) [data-gp-enter] { display: inline-flex; align-items: center; gap: 10px; color: var(--slate); font-family: var(--sans); font-weight: 600; font-size: clamp(13px,1.4vw,15px); letter-spacing: 0.04em; text-transform: uppercase; pointer-events: none; }
     :where(#gp-handstart) [data-gp-caption] { inset: calc(var(--gp-word-bottom, 50%) + 78px) 6% auto; justify-content: center; }
     :where(#gp-handstart) [data-gp-caption]:focus-within { opacity: 1; pointer-events: auto; }
     :where(#gp-handstart) [data-gp-content] { box-sizing: border-box; position: relative; min-height: var(--gp-height, 100svh); padding-top: clamp(72px,10vw,96px); display: grid; align-content: center; color: var(--gp-foreground); background: var(--gp-field); overflow-wrap: anywhere; }
@@ -289,7 +287,7 @@
       <span data-gp-fallback aria-hidden="true" style="font-family:'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif; font-weight:900;">HANDSTART</span>
       <div data-gp-caption>
         <span data-gp-hint aria-hidden="true">Scroll to enter.</span>
-        <a data-gp-enter href="#gp-handstart-content">Scroll for a closer look<span aria-hidden="true">&darr;</span></a>
+        <span data-gp-enter aria-hidden="true">Scroll for a closer look<span aria-hidden="true">&darr;</span></span>
       </div>
       <noscript><style>#gp-handstart [data-gp-fallback]{display:grid}#gp-handstart [data-gp-hint]{display:none}</style></noscript>
     </div>
