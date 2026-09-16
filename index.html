@@ -1,120 +1,1082 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Handstart Digital — Coming soon</title>
-  <meta name="description" content="Handstart Digital — coming soon." />
-  <meta name="robots" content="noindex" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Handstart Digital</title>
+  <meta name="description" content="In an automated world, Handstart keeps human eyes on your business: someone who actually looks, finds what's missing, fixes it, and gives you ways to keep it working.">
 
-  <!-- Brand fonts: Playfair Display (display) + Lato (body).
-       Remove this line if you'd rather keep the page dependency-free;
-       the fallbacks below will take over. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:wght@400;500;600;700;900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <!-- Self-hosted so opentype.js can read real glyph outlines for the draw-on handwriting effect below -->
+  <link rel="preload" href="assets/fonts/Caveat-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
 
   <style>
     :root {
-      --navy:  #1B2B4B;
+      --navy: #1B2B4B;
       --amber: #C8873A;
+      --amber-lt: #e0a558;
       --cream: #F7F4EE;
+      --slate: #3f4a5a;
+      --body: #5a6472;
+      --hairline: #D6CFC2;
+      --tint: #EFEAE0;
+      --muted: #c3ccda;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+      --script: 'Caveat', 'Segoe Script', cursive;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body { height: 100%; }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; }
     body {
-      background: var(--cream);
-      color: var(--navy);
-      font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      background: var(--cream); color: var(--navy); font-family: var(--sans);
+      overflow-x: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+    a { text-decoration: none; }
+    #assessment { scroll-margin-top: 110px; }
+
+    /* Nav marker underline */
+    .hs-navlink { position: relative; }
+    .hs-navlink-underline {
+      position: absolute; left: 0; bottom: -9px; width: 108%; height: 10px;
+      overflow: visible; pointer-events: none; clip-path: inset(0 100% 0 0);
+      transition: clip-path 340ms cubic-bezier(.5,0,.2,1);
+    }
+    .hs-navlink-underline path { fill: var(--amber); }
+    .hs-navlink:hover .hs-navlink-underline, .hs-navlink:focus-visible .hs-navlink-underline { clip-path: inset(0 0 0 0); }
+
+    .hs-hamburger { display: none; }
+    @media (max-width: 900px) {
+      .hs-nav-links { display: none !important; }
+      .hs-hamburger { display: inline-flex !important; }
     }
 
-    /* ---- Nav bar (wordmark only; otherwise empty) ---- */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.75rem 2rem;
-      border-bottom: 1px solid rgba(27, 43, 75, 0.12);
+    /* Amber CTA button */
+    .hs-cta {
+      position:relative; overflow:hidden; isolation:isolate;
+      display:inline-flex; align-items:center; justify-content:flex-start;
+      background:var(--amber); color:var(--cream);
+      border:1px solid rgba(27,43,75,0.20); border-radius:999px;
+      font-family:var(--sans); font-weight:600; font-size:16px;
+      --hs-dot-x:16px; line-height:1;
+      padding:15px 30px 15px calc(var(--hs-dot-x) + 22px);
+      cursor:pointer; -webkit-tap-highlight-color:transparent;
+    }
+    .hs-cta--sm { padding:11px 22px 11px calc(var(--hs-dot-x) + 20px); font-size:15px; }
+    .hs-cta::before {
+      content:''; position:absolute; left:var(--hs-dot-x); top:50%;
+      width:12px; height:12px; border-radius:50%; background:var(--navy);
+      transform:translate(-50%,-50%) scale(1);
+      transition:transform .45s cubic-bezier(.45,0,.2,1); z-index:0; pointer-events:none;
+    }
+    .hs-cta-face {
+      position:relative; z-index:1; display:inline-flex; align-items:center; white-space:nowrap;
+      transition:transform .35s cubic-bezier(.45,0,.2,1), opacity .3s ease;
+    }
+    .hs-cta-hover {
+      position:absolute; inset:0; z-index:2;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      white-space:nowrap; color:var(--cream); transform:translateX(130%); opacity:0;
+      transition:transform .35s cubic-bezier(.45,0,.2,1), opacity .3s ease; pointer-events:none;
+    }
+    .hs-cta-arrow { display:block; flex-shrink:0; }
+    .hs-cta:hover::before, .hs-cta:focus-visible::before { transform:translate(-50%,-50%) scale(120); }
+    .hs-cta:hover .hs-cta-face, .hs-cta:focus-visible .hs-cta-face { transform:translateX(130%); opacity:0; }
+    .hs-cta:hover .hs-cta-hover, .hs-cta:focus-visible .hs-cta-hover { transform:translateX(0); opacity:1; }
+    .hs-cta:focus-visible { outline:2px solid var(--cream); outline-offset:2px; }
+
+    /* Hero motes, glow, float */
+    @keyframes hpGlow { 0%,100%{opacity:.28; transform:translate(-50%,-50%) scale(.9);} 50%{opacity:.8; transform:translate(-50%,-50%) scale(1.2);} }
+    @keyframes hpFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+    @keyframes hpRise { 0%{opacity:0; transform:translateY(20px) scale(.6);} 15%{opacity:.9;} 85%{opacity:.7;} 100%{opacity:0; transform:translateY(-130px) scale(1);} }
+    .hp-anim-glow { animation: hpGlow 5.5s ease-in-out infinite; }
+    .hp-anim-float { animation: hpFloat 7s ease-in-out infinite; }
+    .hp-mote { animation: hpRise 8s ease-in infinite; }
+
+    /* Ticker */
+    @keyframes hsTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .hs-ticker {
+      position: relative; overflow: hidden; border-top: 1px solid rgba(247,244,238,0.18);
+      margin-top: clamp(32px,6vh,80px); padding: 15px 0;
+      margin-left: calc(-1 * clamp(24px,6vw,80px)); margin-right: calc(-1 * clamp(24px,6vw,80px));
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    }
+    .hs-ticker-track { display: flex; width: max-content; animation: hsTicker 90s linear infinite; }
+    .hs-ticker:hover .hs-ticker-track { animation-play-state: paused; }
+    .hs-ticker-group { display: flex; align-items: center; flex-shrink: 0; }
+    .hs-ticker-item { font-family: var(--sans); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); white-space: nowrap; padding: 0 18px; }
+    .hs-ticker-dot { color: var(--amber); font-size: 12px; }
+
+    /* Assessment */
+    @keyframes hsFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .hs-opt {
+      flex:1 1 0; min-width:96px; padding:20px 16px;
+      background:rgba(247,244,238,0.06); border:1.5px solid rgba(214,207,194,0.35); border-radius:12px;
+      font-family:var(--sans); font-size:19px; font-weight:600; color:var(--cream); cursor:pointer;
+      transition:transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+    .hs-opt:hover {
+      transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,0.28);
+      border-color:var(--amber); background:rgba(247,244,238,0.12);
     }
 
-    .wordmark {
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--navy);
-    }
+    /* Handwriting */
+    .hw-word { font-family: var(--script); font-weight: 600; white-space: nowrap; display: inline-block; }
+    .hw-word-svg { display: none; overflow: visible; }
+    .hw-word-svg .hw-fill { fill: currentColor; stroke: none; }
+    .hw-word-svg .hw-stroke { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: var(--hw-stroke-w, 16); }
 
-    /* ---- Center stage ---- */
-    main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    h1 {
-      font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-      font-weight: 500;
-      font-size: clamp(2.75rem, 9vw, 5.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      color: var(--navy);
-      animation: rise 0.9s ease both;
-    }
-
-    /* The one accent: the trailing dot in amber. */
-    h1 .dot { color: var(--amber); }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @media (max-width: 380px) { .hp-h1 { white-space: normal !important; text-wrap: balance; } }
 
     @media (prefers-reduced-motion: reduce) {
-      h1 { animation: none; }
+      .hs-navlink-underline, .hs-cta::before, .hs-cta-face, .hs-cta-hover { transition:none; }
+      .hp-anim-glow, .hp-anim-float, .hp-mote { animation: none !important; }
+      .hs-ticker-track { animation: none; }
     }
 
-    /* ---- Optional contact line ----
-       Uncomment the <p> in the markup below if you want a way to be reached
-       while the site is dark. Styling is ready. -->
-    .contact {
-      margin-top: 1.25rem;
-      font-size: 0.95rem;
-      letter-spacing: 0.02em;
+    /*
+     * Glyph Portal (c) 2026 Christian Katzmann. MIT.
+     * Origin: UsefulPortal.astro on https://ktzm.dk, UsefulPortal.tsx, ClarityPortal.tsx.
+     * A scroll driven camera through live type. Keep this notice with copies.
+     * Ported from React/TSX to plain DOM for this no-build site. Zoom, scan, and
+     * clip mechanics preserved as in the source; only markup, state, and callback
+     * wiring were made vanilla.
+     */
+    :where(#gp-handstart) {
+      --gp-paper: var(--cream); --gp-ink: var(--navy); --gp-field: var(--navy); --gp-foreground: var(--cream);
+      position: relative; isolation: isolate; background: var(--gp-paper); color: var(--gp-ink); font-family: var(--sans);
     }
-    .contact a { color: var(--amber); text-decoration: none; }
-    .contact a:hover,
-    .contact a:focus-visible { text-decoration: underline; }
-    */
+    :where(#gp-handstart) > [data-gp-viewport] { position: absolute; inset: 0 auto auto 0; height: 100vh; height: 100svh; width: 0; pointer-events: none; visibility: hidden; }
+    :where(#gp-handstart) [data-gp-pin] { position: relative; height: var(--gp-height, 100svh); overflow: clip; isolation: isolate; container-type: size; }
+    :where(#gp-handstart) [data-gp-field] { position: absolute; inset: 0; background: var(--gp-field); opacity: 0; pointer-events: none; }
+    :where(#gp-handstart)[data-gp-ready] [data-gp-field] { opacity: 1; }
+    :where(#gp-handstart) [data-gp-art] { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    :where(#gp-handstart) [data-gp-marks] { fill: none; stroke: var(--gp-ink); opacity: .6; }
+    :where(#gp-handstart) [data-gp-choices] { position: absolute; inset: 0; visibility: hidden; pointer-events: none; }
+    :where(#gp-handstart)[data-gp-choosing="true"] [data-gp-choices] { visibility: visible; }
+    :where(#gp-handstart) [data-gp-letter] { box-sizing: border-box; position: absolute; border: 0; padding: 0; margin: 0; background: transparent; cursor: pointer; pointer-events: auto; touch-action: pan-y; }
+    :where(#gp-handstart) [data-gp-letter]:disabled { pointer-events: none; }
+    :where(#gp-handstart) [data-gp-letter]:focus-visible { outline: 2px solid var(--gp-field); outline-offset: 5px; }
+    :where(#gp-handstart) [data-gp-touch-picker] { display: none; position: absolute; top: calc(var(--gp-word-bottom, 50%) + 42px); left: 50%; transform: translateX(-50%); font: 12px/1.4 var(--sans); align-items: center; gap: 12px; visibility: hidden; }
+    :where(#gp-handstart)[data-gp-choosing="true"] [data-gp-touch-picker] { visibility: visible; }
+    :where(#gp-handstart) [data-gp-select] { min-height: 44px; min-width: 90px; border: 1px solid var(--hairline); border-radius: 4px; background: var(--gp-paper); color: var(--gp-ink); padding: 0 10px; font: inherit; }
+    :where(#gp-handstart) [data-gp-select]:focus-visible { outline: 2px solid var(--gp-field); outline-offset: 4px; }
+    /* Touch letter picker intentionally stays hidden: auto-picked entry is enough, no dropdown. */
+    :where(#gp-handstart) [data-gp-fallback] { position: absolute; inset: 0; display: none; place-items: center; font-size: min(calc(100cqw / var(--gp-characters)), 38cqh); line-height: 1; color: var(--gp-field); }
+    :where(#gp-handstart)[data-gp-ready] [data-gp-fallback] { visibility: hidden; }
+    :where(#gp-handstart) [data-gp-caption] { position: absolute; inset: auto 8% 9%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; font: 13px/1.4 var(--sans); opacity: var(--gp-caption, 1); pointer-events: var(--gp-caption-hit, auto); }
+    :where(#gp-handstart) [data-gp-front] { position: absolute; inset: 0; opacity: var(--gp-caption, 1); pointer-events: none; }
+    :where(#gp-handstart) [data-gp-front] a, :where(#gp-handstart) [data-gp-front] button { pointer-events: var(--gp-caption-hit, auto); }
+    :where(#gp-handstart) [data-gp-front]:focus-within { opacity: 1; }
+    :where(#gp-handstart) [data-gp-hint] { display: none; }
+    :where(#gp-handstart) [data-gp-enter] { display: inline-flex; align-items: center; gap: 10px; color: var(--slate); font-family: var(--sans); font-weight: 600; font-size: clamp(13px,1.4vw,15px); letter-spacing: 0.04em; text-transform: uppercase; pointer-events: none; }
+    :where(#gp-handstart) [data-gp-caption] { inset: calc(var(--gp-word-bottom, 50%) + 78px) 6% auto; justify-content: center; }
+    :where(#gp-handstart) [data-gp-caption]:focus-within { opacity: 1; pointer-events: auto; }
+    :where(#gp-handstart) [data-gp-content] { box-sizing: border-box; position: relative; min-height: var(--gp-height, 100svh); padding-top: clamp(72px,10vw,96px); display: grid; align-content: center; color: var(--gp-foreground); background: var(--gp-field); overflow-wrap: anywhere; }
+    :where(#gp-handstart)[data-gp-motion="on"] [data-gp-pin] { position: sticky; top: 0; }
+    :where(#gp-handstart)[data-gp-motion="off"] [data-gp-hint] { display: none; }
+    :where(#gp-handstart)[data-gp-motion="on"] [data-gp-content] { margin-top: calc((var(--gp-length) - 1) * var(--gp-height)); background: transparent; opacity: var(--gp-reveal, 0); pointer-events: none; }
+    :where(#gp-handstart)[data-gp-motion="on"][data-gp-entered="true"] [data-gp-content] { pointer-events: auto; }
+    :where(#gp-handstart)[data-gp-motion="on"]:has([data-gp-content]:focus-within) [data-gp-field] { clip-path: none !important; }
+    :where(#gp-handstart)[data-gp-motion="on"] [data-gp-content]:focus-within { opacity: 1; pointer-events: auto; }
+    :where(#gp-handstart):has([data-gp-content]:focus-within) [data-gp-caption], :where(#gp-handstart):has([data-gp-content]:focus-within) [data-gp-marks] { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      :where(#gp-handstart) [data-gp-pin] { position: relative !important; }
+      :where(#gp-handstart) [data-gp-content] { margin-top: 0 !important; opacity: 1 !important; background: var(--gp-field) !important; min-height: 0; padding-bottom: 0; }
+      :where(#gp-handstart) [data-gp-caption] { opacity: 1 !important; }
+    }
+
+    /* Landing composition: brand lockup, category label, tagline, entry cue */
+    :where(#gp-handstart) [data-hs-landing-top] { position: absolute; inset: clamp(20px,4vw,44px) clamp(20px,4vw,44px) auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    :where(#gp-handstart) [data-hs-landing-category] { font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--slate); }
+    :where(#gp-handstart) [data-hs-landing-support] { position: absolute; inset: calc(var(--gp-word-bottom, 50%) + 20px) 6% auto; margin: 0; text-align: center; font-family: var(--serif); font-style: italic; font-size: clamp(17px,2.2vw,22px); color: var(--body); }
+    @media (max-width: 640px) { :where(#gp-handstart) [data-hs-landing-category] { max-width: 12ch; text-align: right; } }
   </style>
 </head>
+
 <body>
-  <nav>
-    <span class="wordmark">Handstart Digital</span>
-    <!-- right side intentionally empty -->
-  </nav>
+<div style="min-height:100vh; background:var(--cream); color:var(--navy);">
 
-  <main>
-    <div>
-      <h1>Coming soon<span class="dot">.</span></h1>
-
-      <!-- Optional: uncomment to show a contact line.
-      <p class="contact">In the meantime — <a href="mailto:contact@handstartdigital.com">contact@handstartdigital.com</a></p>
-      -->
+  <!-- ===================== FIXED HEADER (hidden during the portal landing, fades in as navy fills the screen) ===================== -->
+  <header id="siteHeader" style="position:fixed; top:0; left:0; right:0; z-index:100; background:var(--navy); border-bottom:1px solid rgba(247,244,238,0.14); opacity:1;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,4vw,44px); height:clamp(72px,10vw,96px); display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <a href="#top" style="display:flex; align-items:center; gap:12px;">
+        <img src="assets/logo-footer.png" alt="Handstart Digital" style="height:clamp(44px,5.5vw,58px); width:auto; object-fit:contain; display:block;">
+      </a>
+      <nav class="hs-nav-links" style="display:flex; align-items:center; gap:clamp(20px,2.6vw,34px);">
+        <a href="/services" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Services<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 L8.07 10.06 L8.71 9.94 L9.43 9.8 L10.22 9.64 L11.09 9.48 L12 9.3 L12.97 9.11 L13.98 8.92 L15.02 8.73 L16.07 8.54 L17.14 8.35 L18.21 8.17 L19.27 8 L20.31 7.85 L21.31 7.71 L22.29 7.59 L23.32 7.47 L24.46 7.34 L25.67 7.22 L26.94 7.09 L28.24 6.96 L29.55 6.84 L30.86 6.73 L32.14 6.63 L33.36 6.54 L34.52 6.46 L35.57 6.41 L36.5 6.37 L37.27 6.36 L37.85 6.37 L38.13 6.37 L37.81 6.2 L36.67 4.36 L37.2 2.75 L37.37 2.62 L37.13 2.81 L36.65 3.09 L36.01 3.43 L35.27 3.79 L34.46 4.17 L33.61 4.56 L32.75 4.94 L31.91 5.32 L31.12 5.68 L30.4 6.03 L29.76 6.35 L29.19 6.69 L28.68 7.09 L28.31 7.52 L28.06 7.93 L27.81 8.61 L27.89 9.7 L28.52 10.62 L29.17 11.01 L29.65 11.15 L30.05 11.21 L30.43 11.23 L30.82 11.24 L31.24 11.23 L31.7 11.22 L32.21 11.2 L32.78 11.17 L33.41 11.14 L34.1 11.1 L34.89 11.05 L35.76 10.98 L36.7 10.9 L37.7 10.81 L38.78 10.7 L39.9 10.59 L41.09 10.47 L42.31 10.34 L43.58 10.21 L44.89 10.07 L46.22 9.94 L47.58 9.8 L48.95 9.67 L50.34 9.54 L51.73 9.41 L53.13 9.3 L54.56 9.18 L56.05 9.06 L57.6 8.94 L59.2 8.82 L60.83 8.7 L62.5 8.58 L64.19 8.46 L65.89 8.34 L67.6 8.22 L69.31 8.1 L71.01 7.98 L72.69 7.86 L74.34 7.74 L75.96 7.63 L77.54 7.51 L79.07 7.4 L80.56 7.29 L82.04 7.17 L83.5 7.06 L84.96 6.95 L86.39 6.84 L87.82 6.74 L89.22 6.63 L90.61 6.52 L91.98 6.42 L93.34 6.31 L94.67 6.21 L95.99 6.1 L97.28 6 L98.55 5.9 L99.81 5.8 L101.03 5.7 L102.26 5.6 L103.51 5.5 L104.77 5.39 L106.02 5.28 L107.27 5.18 L108.51 5.07 L109.72 4.97 L110.89 4.86 L112.02 4.76 L113.1 4.67 L114.12 4.58 L115.07 4.5 L115.94 4.42 L116.73 4.35 L117.42 4.29 L118 4.24 L118 4.16 L117.41 4.16 L116.72 4.17 L115.93 4.17 L115.06 4.18 L114.1 4.18 L113.08 4.19 L111.99 4.19 L110.86 4.2 L109.68 4.21 L108.47 4.22 L107.23 4.23 L105.98 4.24 L104.71 4.25 L103.45 4.27 L102.2 4.28 L100.97 4.3 L99.73 4.32 L98.48 4.34 L97.2 4.37 L95.9 4.39 L94.58 4.42 L93.25 4.44 L91.89 4.47 L90.51 4.5 L89.12 4.54 L87.71 4.57 L86.28 4.6 L84.84 4.64 L83.38 4.68 L81.91 4.72 L80.43 4.76 L78.93 4.8 L77.4 4.85 L75.82 4.89 L74.2 4.94 L72.55 4.98 L70.86 5.03 L69.16 5.08 L67.45 5.13 L65.73 5.18 L64.02 5.24 L62.33 5.3 L60.65 5.36 L59 5.42 L57.4 5.49 L55.83 5.55 L54.32 5.63 L52.87 5.7 L51.45 5.79 L50.04 5.89 L48.63 6 L47.24 6.11 L45.86 6.23 L44.52 6.36 L43.21 6.48 L41.94 6.61 L40.71 6.73 L39.53 6.85 L38.41 6.96 L37.36 7.05 L36.37 7.14 L35.46 7.21 L34.64 7.27 L33.9 7.3 L33.22 7.33 L32.61 7.35 L32.06 7.38 L31.58 7.39 L31.17 7.4 L30.84 7.4 L30.6 7.39 L30.45 7.38 L30.43 7.37 L30.61 7.43 L31.06 7.7 L31.58 8.48 L31.65 9.38 L31.5 9.84 L31.42 9.99 L31.32 10.11 L31.31 10.13 L31.6 10.01 L32.11 9.8 L32.77 9.54 L33.54 9.25 L34.38 8.94 L35.27 8.61 L36.17 8.28 L37.05 7.94 L37.9 7.61 L38.69 7.28 L39.42 6.95 L40.1 6.57 L40.86 5.96 L41.59 3.94 L40.19 1.8 L39.16 1.41 L38.36 1.26 L37.51 1.17 L36.56 1.11 L35.51 1.08 L34.37 1.07 L33.15 1.07 L31.86 1.1 L30.54 1.14 L29.19 1.19 L27.84 1.25 L26.5 1.31 L25.2 1.39 L23.96 1.46 L22.79 1.54 L21.71 1.61 L20.65 1.7 L19.55 1.81 L18.43 1.94 L17.31 2.09 L16.18 2.24 L15.07 2.41 L13.97 2.58 L12.9 2.75 L11.86 2.93 L10.87 3.1 L9.94 3.26 L9.07 3.41 L8.28 3.55 L7.58 3.67 L6.98 3.77 L6.47 3.84 Z"/></svg></a>
+        <a href="/about" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">About<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 L8.07 10.06 L8.71 9.94 L9.43 9.8 L10.22 9.64 L11.09 9.48 L12 9.3 L12.97 9.11 L13.98 8.92 L15.02 8.73 L16.07 8.54 L17.14 8.35 L18.21 8.17 L19.27 8 L20.31 7.85 L21.31 7.71 L22.29 7.59 L23.32 7.47 L24.46 7.34 L25.67 7.22 L26.94 7.09 L28.24 6.96 L29.55 6.84 L30.86 6.73 L32.14 6.63 L33.36 6.54 L34.52 6.46 L35.57 6.41 L36.5 6.37 L37.27 6.36 L37.85 6.37 L38.13 6.37 L37.81 6.2 L36.67 4.36 L37.2 2.75 L37.37 2.62 L37.13 2.81 L36.65 3.09 L36.01 3.43 L35.27 3.79 L34.46 4.17 L33.61 4.56 L32.75 4.94 L31.91 5.32 L31.12 5.68 L30.4 6.03 L29.76 6.35 L29.19 6.69 L28.68 7.09 L28.31 7.52 L28.06 7.93 L27.81 8.61 L27.89 9.7 L28.52 10.62 L29.17 11.01 L29.65 11.15 L30.05 11.21 L30.43 11.23 L30.82 11.24 L31.24 11.23 L31.7 11.22 L32.21 11.2 L32.78 11.17 L33.41 11.14 L34.1 11.1 L34.89 11.05 L35.76 10.98 L36.7 10.9 L37.7 10.81 L38.78 10.7 L39.9 10.59 L41.09 10.47 L42.31 10.34 L43.58 10.21 L44.89 10.07 L46.22 9.94 L47.58 9.8 L48.95 9.67 L50.34 9.54 L51.73 9.41 L53.13 9.3 L54.56 9.18 L56.05 9.06 L57.6 8.94 L59.2 8.82 L60.83 8.7 L62.5 8.58 L64.19 8.46 L65.89 8.34 L67.6 8.22 L69.31 8.1 L71.01 7.98 L72.69 7.86 L74.34 7.74 L75.96 7.63 L77.54 7.51 L79.07 7.4 L80.56 7.29 L82.04 7.17 L83.5 7.06 L84.96 6.95 L86.39 6.84 L87.82 6.74 L89.22 6.63 L90.61 6.52 L91.98 6.42 L93.34 6.31 L94.67 6.21 L95.99 6.1 L97.28 6 L98.55 5.9 L99.81 5.8 L101.03 5.7 L102.26 5.6 L103.51 5.5 L104.77 5.39 L106.02 5.28 L107.27 5.18 L108.51 5.07 L109.72 4.97 L110.89 4.86 L112.02 4.76 L113.1 4.67 L114.12 4.58 L115.07 4.5 L115.94 4.42 L116.73 4.35 L117.42 4.29 L118 4.24 L118 4.16 L117.41 4.16 L116.72 4.17 L115.93 4.17 L115.06 4.18 L114.1 4.18 L113.08 4.19 L111.99 4.19 L110.86 4.2 L109.68 4.21 L108.47 4.22 L107.23 4.23 L105.98 4.24 L104.71 4.25 L103.45 4.27 L102.2 4.28 L100.97 4.3 L99.73 4.32 L98.48 4.34 L97.2 4.37 L95.9 4.39 L94.58 4.42 L93.25 4.44 L91.89 4.47 L90.51 4.5 L89.12 4.54 L87.71 4.57 L86.28 4.6 L84.84 4.64 L83.38 4.68 L81.91 4.72 L80.43 4.76 L78.93 4.8 L77.4 4.85 L75.82 4.89 L74.2 4.94 L72.55 4.98 L70.86 5.03 L69.16 5.08 L67.45 5.13 L65.73 5.18 L64.02 5.24 L62.33 5.3 L60.65 5.36 L59 5.42 L57.4 5.49 L55.83 5.55 L54.32 5.63 L52.87 5.7 L51.45 5.79 L50.04 5.89 L48.63 6 L47.24 6.11 L45.86 6.23 L44.52 6.36 L43.21 6.48 L41.94 6.61 L40.71 6.73 L39.53 6.85 L38.41 6.96 L37.36 7.05 L36.37 7.14 L35.46 7.21 L34.64 7.27 L33.9 7.3 L33.22 7.33 L32.61 7.35 L32.06 7.38 L31.58 7.39 L31.17 7.4 L30.84 7.4 L30.6 7.39 L30.45 7.38 L30.43 7.37 L30.61 7.43 L31.06 7.7 L31.58 8.48 L31.65 9.38 L31.5 9.84 L31.42 9.99 L31.32 10.11 L31.31 10.13 L31.6 10.01 L32.11 9.8 L32.77 9.54 L33.54 9.25 L34.38 8.94 L35.27 8.61 L36.17 8.28 L37.05 7.94 L37.9 7.61 L38.69 7.28 L39.42 6.95 L40.1 6.57 L40.86 5.96 L41.59 3.94 L40.19 1.8 L39.16 1.41 L38.36 1.26 L37.51 1.17 L36.56 1.11 L35.51 1.08 L34.37 1.07 L33.15 1.07 L31.86 1.1 L30.54 1.14 L29.19 1.19 L27.84 1.25 L26.5 1.31 L25.2 1.39 L23.96 1.46 L22.79 1.54 L21.71 1.61 L20.65 1.7 L19.55 1.81 L18.43 1.94 L17.31 2.09 L16.18 2.24 L15.07 2.41 L13.97 2.58 L12.9 2.75 L11.86 2.93 L10.87 3.1 L9.94 3.26 L9.07 3.41 L8.28 3.55 L7.58 3.67 L6.98 3.77 L6.47 3.84 Z"/></svg></a>
+        <a href="/the-difference" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">The Difference<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 L8.07 10.06 L8.71 9.94 L9.43 9.8 L10.22 9.64 L11.09 9.48 L12 9.3 L12.97 9.11 L13.98 8.92 L15.02 8.73 L16.07 8.54 L17.14 8.35 L18.21 8.17 L19.27 8 L20.31 7.85 L21.31 7.71 L22.29 7.59 L23.32 7.47 L24.46 7.34 L25.67 7.22 L26.94 7.09 L28.24 6.96 L29.55 6.84 L30.86 6.73 L32.14 6.63 L33.36 6.54 L34.52 6.46 L35.57 6.41 L36.5 6.37 L37.27 6.36 L37.85 6.37 L38.13 6.37 L37.81 6.2 L36.67 4.36 L37.2 2.75 L37.37 2.62 L37.13 2.81 L36.65 3.09 L36.01 3.43 L35.27 3.79 L34.46 4.17 L33.61 4.56 L32.75 4.94 L31.91 5.32 L31.12 5.68 L30.4 6.03 L29.76 6.35 L29.19 6.69 L28.68 7.09 L28.31 7.52 L28.06 7.93 L27.81 8.61 L27.89 9.7 L28.52 10.62 L29.17 11.01 L29.65 11.15 L30.05 11.21 L30.43 11.23 L30.82 11.24 L31.24 11.23 L31.7 11.22 L32.21 11.2 L32.78 11.17 L33.41 11.14 L34.1 11.1 L34.89 11.05 L35.76 10.98 L36.7 10.9 L37.7 10.81 L38.78 10.7 L39.9 10.59 L41.09 10.47 L42.31 10.34 L43.58 10.21 L44.89 10.07 L46.22 9.94 L47.58 9.8 L48.95 9.67 L50.34 9.54 L51.73 9.41 L53.13 9.3 L54.56 9.18 L56.05 9.06 L57.6 8.94 L59.2 8.82 L60.83 8.7 L62.5 8.58 L64.19 8.46 L65.89 8.34 L67.6 8.22 L69.31 8.1 L71.01 7.98 L72.69 7.86 L74.34 7.74 L75.96 7.63 L77.54 7.51 L79.07 7.4 L80.56 7.29 L82.04 7.17 L83.5 7.06 L84.96 6.95 L86.39 6.84 L87.82 6.74 L89.22 6.63 L90.61 6.52 L91.98 6.42 L93.34 6.31 L94.67 6.21 L95.99 6.1 L97.28 6 L98.55 5.9 L99.81 5.8 L101.03 5.7 L102.26 5.6 L103.51 5.5 L104.77 5.39 L106.02 5.28 L107.27 5.18 L108.51 5.07 L109.72 4.97 L110.89 4.86 L112.02 4.76 L113.1 4.67 L114.12 4.58 L115.07 4.5 L115.94 4.42 L116.73 4.35 L117.42 4.29 L118 4.24 L118 4.16 L117.41 4.16 L116.72 4.17 L115.93 4.17 L115.06 4.18 L114.1 4.18 L113.08 4.19 L111.99 4.19 L110.86 4.2 L109.68 4.21 L108.47 4.22 L107.23 4.23 L105.98 4.24 L104.71 4.25 L103.45 4.27 L102.2 4.28 L100.97 4.3 L99.73 4.32 L98.48 4.34 L97.2 4.37 L95.9 4.39 L94.58 4.42 L93.25 4.44 L91.89 4.47 L90.51 4.5 L89.12 4.54 L87.71 4.57 L86.28 4.6 L84.84 4.64 L83.38 4.68 L81.91 4.72 L80.43 4.76 L78.93 4.8 L77.4 4.85 L75.82 4.89 L74.2 4.94 L72.55 4.98 L70.86 5.03 L69.16 5.08 L67.45 5.13 L65.73 5.18 L64.02 5.24 L62.33 5.3 L60.65 5.36 L59 5.42 L57.4 5.49 L55.83 5.55 L54.32 5.63 L52.87 5.7 L51.45 5.79 L50.04 5.89 L48.63 6 L47.24 6.11 L45.86 6.23 L44.52 6.36 L43.21 6.48 L41.94 6.61 L40.71 6.73 L39.53 6.85 L38.41 6.96 L37.36 7.05 L36.37 7.14 L35.46 7.21 L34.64 7.27 L33.9 7.3 L33.22 7.33 L32.61 7.35 L32.06 7.38 L31.58 7.39 L31.17 7.4 L30.84 7.4 L30.6 7.39 L30.45 7.38 L30.43 7.37 L30.61 7.43 L31.06 7.7 L31.58 8.48 L31.65 9.38 L31.5 9.84 L31.42 9.99 L31.32 10.11 L31.31 10.13 L31.6 10.01 L32.11 9.8 L32.77 9.54 L33.54 9.25 L34.38 8.94 L35.27 8.61 L36.17 8.28 L37.05 7.94 L37.9 7.61 L38.69 7.28 L39.42 6.95 L40.1 6.57 L40.86 5.96 L41.59 3.94 L40.19 1.8 L39.16 1.41 L38.36 1.26 L37.51 1.17 L36.56 1.11 L35.51 1.08 L34.37 1.07 L33.15 1.07 L31.86 1.1 L30.54 1.14 L29.19 1.19 L27.84 1.25 L26.5 1.31 L25.2 1.39 L23.96 1.46 L22.79 1.54 L21.71 1.61 L20.65 1.7 L19.55 1.81 L18.43 1.94 L17.31 2.09 L16.18 2.24 L15.07 2.41 L13.97 2.58 L12.9 2.75 L11.86 2.93 L10.87 3.1 L9.94 3.26 L9.07 3.41 L8.28 3.55 L7.58 3.67 L6.98 3.77 L6.47 3.84 Z"/></svg></a>
+        <a href="/case-studies" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Case Studies<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 L8.07 10.06 L8.71 9.94 L9.43 9.8 L10.22 9.64 L11.09 9.48 L12 9.3 L12.97 9.11 L13.98 8.92 L15.02 8.73 L16.07 8.54 L17.14 8.35 L18.21 8.17 L19.27 8 L20.31 7.85 L21.31 7.71 L22.29 7.59 L23.32 7.47 L24.46 7.34 L25.67 7.22 L26.94 7.09 L28.24 6.96 L29.55 6.84 L30.86 6.73 L32.14 6.63 L33.36 6.54 L34.52 6.46 L35.57 6.41 L36.5 6.37 L37.27 6.36 L37.85 6.37 L38.13 6.37 L37.81 6.2 L36.67 4.36 L37.2 2.75 L37.37 2.62 L37.13 2.81 L36.65 3.09 L36.01 3.43 L35.27 3.79 L34.46 4.17 L33.61 4.56 L32.75 4.94 L31.91 5.32 L31.12 5.68 L30.4 6.03 L29.76 6.35 L29.19 6.69 L28.68 7.09 L28.31 7.52 L28.06 7.93 L27.81 8.61 L27.89 9.7 L28.52 10.62 L29.17 11.01 L29.65 11.15 L30.05 11.21 L30.43 11.23 L30.82 11.24 L31.24 11.23 L31.7 11.22 L32.21 11.2 L32.78 11.17 L33.41 11.14 L34.1 11.1 L34.89 11.05 L35.76 10.98 L36.7 10.9 L37.7 10.81 L38.78 10.7 L39.9 10.59 L41.09 10.47 L42.31 10.34 L43.58 10.21 L44.89 10.07 L46.22 9.94 L47.58 9.8 L48.95 9.67 L50.34 9.54 L51.73 9.41 L53.13 9.3 L54.56 9.18 L56.05 9.06 L57.6 8.94 L59.2 8.82 L60.83 8.7 L62.5 8.58 L64.19 8.46 L65.89 8.34 L67.6 8.22 L69.31 8.1 L71.01 7.98 L72.69 7.86 L74.34 7.74 L75.96 7.63 L77.54 7.51 L79.07 7.4 L80.56 7.29 L82.04 7.17 L83.5 7.06 L84.96 6.95 L86.39 6.84 L87.82 6.74 L89.22 6.63 L90.61 6.52 L91.98 6.42 L93.34 6.31 L94.67 6.21 L95.99 6.1 L97.28 6 L98.55 5.9 L99.81 5.8 L101.03 5.7 L102.26 5.6 L103.51 5.5 L104.77 5.39 L106.02 5.28 L107.27 5.18 L108.51 5.07 L109.72 4.97 L110.89 4.86 L112.02 4.76 L113.1 4.67 L114.12 4.58 L115.07 4.5 L115.94 4.42 L116.73 4.35 L117.42 4.29 L118 4.24 L118 4.16 L117.41 4.16 L116.72 4.17 L115.93 4.17 L115.06 4.18 L114.1 4.18 L113.08 4.19 L111.99 4.19 L110.86 4.2 L109.68 4.21 L108.47 4.22 L107.23 4.23 L105.98 4.24 L104.71 4.25 L103.45 4.27 L102.2 4.28 L100.97 4.3 L99.73 4.32 L98.48 4.34 L97.2 4.37 L95.9 4.39 L94.58 4.42 L93.25 4.44 L91.89 4.47 L90.51 4.5 L89.12 4.54 L87.71 4.57 L86.28 4.6 L84.84 4.64 L83.38 4.68 L81.91 4.72 L80.43 4.76 L78.93 4.8 L77.4 4.85 L75.82 4.89 L74.2 4.94 L72.55 4.98 L70.86 5.03 L69.16 5.08 L67.45 5.13 L65.73 5.18 L64.02 5.24 L62.33 5.3 L60.65 5.36 L59 5.42 L57.4 5.49 L55.83 5.55 L54.32 5.63 L52.87 5.7 L51.45 5.79 L50.04 5.89 L48.63 6 L47.24 6.11 L45.86 6.23 L44.52 6.36 L43.21 6.48 L41.94 6.61 L40.71 6.73 L39.53 6.85 L38.41 6.96 L37.36 7.05 L36.37 7.14 L35.46 7.21 L34.64 7.27 L33.9 7.3 L33.22 7.33 L32.61 7.35 L32.06 7.38 L31.58 7.39 L31.17 7.4 L30.84 7.4 L30.6 7.39 L30.45 7.38 L30.43 7.37 L30.61 7.43 L31.06 7.7 L31.58 8.48 L31.65 9.38 L31.5 9.84 L31.42 9.99 L31.32 10.11 L31.31 10.13 L31.6 10.01 L32.11 9.8 L32.77 9.54 L33.54 9.25 L34.38 8.94 L35.27 8.61 L36.17 8.28 L37.05 7.94 L37.9 7.61 L38.69 7.28 L39.42 6.95 L40.1 6.57 L40.86 5.96 L41.59 3.94 L40.19 1.8 L39.16 1.41 L38.36 1.26 L37.51 1.17 L36.56 1.11 L35.51 1.08 L34.37 1.07 L33.15 1.07 L31.86 1.1 L30.54 1.14 L29.19 1.19 L27.84 1.25 L26.5 1.31 L25.2 1.39 L23.96 1.46 L22.79 1.54 L21.71 1.61 L20.65 1.7 L19.55 1.81 L18.43 1.94 L17.31 2.09 L16.18 2.24 L15.07 2.41 L13.97 2.58 L12.9 2.75 L11.86 2.93 L10.87 3.1 L9.94 3.26 L9.07 3.41 L8.28 3.55 L7.58 3.67 L6.98 3.77 L6.47 3.84 Z"/></svg></a>
+        <a class="hs-cta hs-cta--sm" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+      </nav>
+      <button class="hs-hamburger" id="navToggle" aria-label="Menu" aria-expanded="false" style="align-items:center; justify-content:center; width:44px; height:44px; background:none; border:1px solid rgba(247,244,238,0.3); border-radius:9px; cursor:pointer; color:var(--cream);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="4" y1="7" x2="20" y2="7" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="12" x2="20" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="17" x2="20" y2="17" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line></svg>
+      </button>
     </div>
-  </main>
+    <div id="mobileNav" hidden style="border-top:1px solid rgba(247,244,238,0.14); padding:12px clamp(20px,4vw,44px) 20px; flex-direction:column; gap:6px; background:var(--navy);">
+      <a href="/services" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">Services</a>
+      <a href="/about" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">About</a>
+      <a href="/the-difference" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">The Difference</a>
+      <a href="/case-studies" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">Case Studies</a>
+      <a class="hs-cta hs-cta--sm" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+    </div>
+  </header>
+
+  <!--
+    Glyph Portal (c) 2026 Christian Katzmann. MIT.
+    Origin: UsefulPortal.astro on https://ktzm.dk, UsefulPortal.tsx, ClarityPortal.tsx.
+    A scroll driven camera through live type. Keep this notice with copies.
+    Ported to plain HTML, CSS, and JS for this no-build site: the JSX became the
+    static markup below, the effect became the init function in the script at
+    the bottom of the page, and onProgress became a plain callback that drives
+    the fixed header's opacity.
+  -->
+  <section id="gp-handstart" aria-label="HANDSTART" style="--gp-length:2.2; --gp-characters:9;">
+    <div data-gp-viewport aria-hidden="true"></div>
+    <div data-gp-pin>
+      <div data-gp-field aria-hidden="true" inert></div>
+      <svg data-gp-art aria-hidden="true" focusable="false">
+        <defs>
+          <clipPath id="gp-handstart-clip" clipPathUnits="userSpaceOnUse">
+            <text data-gp-glyph x="0" y="0" style="font-family:'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif; font-weight:900; font-size:100px; font-kerning:none; font-variant-ligatures:none; letter-spacing:0;">HANDSTART</text>
+          </clipPath>
+        </defs>
+        <g data-gp-marks style="visibility:hidden;"><path></path></g>
+      </svg>
+      <div data-gp-choices role="radiogroup" aria-label="Choose the letter to enter through" inert>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="0" aria-label="H, letter 1 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="1" aria-label="A, letter 2 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="2" aria-label="N, letter 3 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="3" aria-label="D, letter 4 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="4" aria-label="S, letter 5 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="5" aria-label="T, letter 6 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="6" aria-label="A, letter 7 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="7" aria-label="R, letter 8 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="8" aria-label="T, letter 9 of 9"></button>
+      </div>
+      <label data-gp-touch-picker>
+        <span style="position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%);">Entry letter</span>
+        <select data-gp-select>
+          <option value="" disabled selected>Choose a letter</option>
+          <option value="0">1 . H</option>
+          <option value="1">2 . A</option>
+          <option value="2">3 . N</option>
+          <option value="3">4 . D</option>
+          <option value="4">5 . S</option>
+          <option value="5">6 . T</option>
+          <option value="6">7 . A</option>
+          <option value="7">8 . R</option>
+          <option value="8">9 . T</option>
+        </select>
+      </label>
+      <div data-gp-front>
+        <div data-hs-landing-top>
+          <a href="#top" style="display:flex; align-items:center; gap:12px;">
+            <img src="assets/logo-header.png" alt="Handstart Digital" style="height:clamp(38px,5vw,52px); width:auto; object-fit:contain; display:block;">
+          </a>
+          <span data-hs-landing-category>Boutique Digital Marketing</span>
+        </div>
+        <p data-hs-landing-support>Let us give your business a hand.</p>
+      </div>
+      <span data-gp-fallback aria-hidden="true" style="font-family:'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif; font-weight:900;">HANDSTART</span>
+      <div data-gp-caption>
+        <span data-gp-hint aria-hidden="true">Scroll to enter.</span>
+        <span data-gp-enter aria-hidden="true">Scroll for a closer look<span aria-hidden="true">&darr;</span></span>
+      </div>
+      <noscript><style>#gp-handstart [data-gp-fallback]{display:grid}#gp-handstart [data-gp-hint]{display:none}</style></noscript>
+    </div>
+    <div data-gp-content id="gp-handstart-content" tabindex="-1">
+
+  <!-- ===================== HERO ===================== -->
+  <section id="top" style="position:relative; background:var(--navy); overflow:hidden; padding:clamp(12px,2vw,26px) clamp(24px,6vw,80px) 0; min-height:calc(100svh - clamp(72px,10vw,96px)); display:flex; flex-direction:column;">
+    <div style="position:absolute; inset:0; overflow:hidden; pointer-events:none;">
+      <span class="hp-mote" style="position:absolute; left:12%; bottom:0; width:5px; height:5px; border-radius:50%; background:var(--amber); animation-duration:7s; animation-delay:-1s;"></span>
+      <span class="hp-mote" style="position:absolute; left:24%; bottom:0; width:3px; height:3px; border-radius:50%; background:var(--amber-lt); animation-duration:9s; animation-delay:-4s;"></span>
+      <span class="hp-mote" style="position:absolute; left:38%; bottom:0; width:6px; height:6px; border-radius:50%; background:var(--amber); animation-duration:8s; animation-delay:-2.5s;"></span>
+      <span class="hp-mote" style="position:absolute; left:52%; bottom:0; width:4px; height:4px; border-radius:50%; background:var(--amber-lt); animation-duration:10s; animation-delay:-6s;"></span>
+      <span class="hp-mote" style="position:absolute; left:63%; bottom:0; width:3px; height:3px; border-radius:50%; background:var(--amber); animation-duration:7.5s; animation-delay:-3s;"></span>
+      <span class="hp-mote" style="position:absolute; left:74%; bottom:0; width:5px; height:5px; border-radius:50%; background:var(--amber-lt); animation-duration:9.5s; animation-delay:-5s;"></span>
+      <span class="hp-mote" style="position:absolute; left:86%; bottom:0; width:4px; height:4px; border-radius:50%; background:var(--amber); animation-duration:8.5s; animation-delay:-1.8s;"></span>
+    </div>
+    <div style="position:relative; width:100%; max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center; gap:clamp(7px,1vw,11px); flex:1 1 auto; justify-content:center;">
+      <div style="position:relative; display:flex; align-items:center; justify-content:center; width:clamp(120px,15vw,170px);">
+        <div class="hp-anim-glow" style="position:absolute; top:50%; left:50%; width:140%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle, rgba(200,135,58,.75) 0%, rgba(200,135,58,.35) 42%, rgba(200,135,58,0) 70%); transform:translate(-50%,-50%); pointer-events:none; z-index:0;"></div>
+        <img class="hp-anim-float" src="assets/logo-hero.png" alt="Handstart Digital" style="position:relative; z-index:1; width:100%; height:auto; object-fit:contain; display:block;">
+      </div>
+      <h1 class="hp-h1" style="font-family:var(--serif); font-weight:600; font-size:clamp(28px,4vw,50px); line-height:1.03; letter-spacing:-0.015em; color:var(--cream); margin:0; white-space:nowrap;">Being online &ne; Being found</h1>
+      <div style="display:flex; align-items:flex-end; gap:8px; font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">
+        <span style="flex-shrink:0;">Get found:</span>
+        <span id="hwBox" style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span><svg id="hwSvg" class="hw-word-svg" aria-hidden="true"></svg></span>
+      </div>
+      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">In an automated world, Handstart keeps human eyes on your business: someone who actually looks, finds what's missing, fixes it, and gives you ways to keep it working.</p>
+      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">Your work won't just be a <a href="/the-difference" style="color:var(--amber); font-weight:600;">generic AI template</a> with your logo dropped on top.</p>
+      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:0;">Whether you're already running campaigns or don't even have a website yet,<br>you start where you are and grow at your pace, not ours.</p>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content:center; margin-top:8px;">
+        <a class="hs-cta" href="#assessment" id="findGaps"><span class="hs-cta-face">Find My Gaps</span><span class="hs-cta-hover" aria-hidden="true">Find My Gaps <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        <a href="/services" style="display:inline-flex; align-items:center; background:transparent; color:var(--cream); font-family:var(--sans); font-size:16px; font-weight:600; padding:12px 28px; border-radius:9px; border:1.5px solid rgba(247,244,238,0.4); transition:background 200ms ease, transform 200ms ease;">What We Do</a>
+      </div>
+    </div>
+
+    <!-- Ticker -->
+    <div class="hs-ticker" aria-label="Services">
+      <div class="hs-ticker-track">
+        <div class="hs-ticker-group">
+          <span class="hs-ticker-item">Google Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Website Fixes</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Local Listings</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">SEO</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Meta &amp; Instagram Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Social Media, Consistently</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Email Sequences</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Google Business Profile</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Landing Pages</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Conversion Tracking</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Analytics That Actually Work</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Microsoft Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Content &amp; Blogging</span><span class="hs-ticker-dot">&bull;</span>
+        </div>
+        <div class="hs-ticker-group" aria-hidden="true">
+          <span class="hs-ticker-item">Google Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Website Fixes</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Local Listings</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">SEO</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Meta &amp; Instagram Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Social Media, Consistently</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Email Sequences</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Google Business Profile</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Landing Pages</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Conversion Tracking</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Analytics That Actually Work</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Microsoft Ads</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Content &amp; Blogging</span><span class="hs-ticker-dot">&bull;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    </div>
+  </section>
+
+  <!-- ===================== ASSESSMENT ===================== -->
+  <section id="assessment" style="background:var(--navy); padding:clamp(40px,5vw,64px) clamp(24px,6vw,80px) clamp(56px,8vw,104px);">
+    <div id="assessmentCard" style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center;"></div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="background:var(--navy); padding:clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:22px;">
+        <a href="/" style="display:flex; align-items:center; gap:12px;">
+          <img src="assets/logo-footer.png" alt="Handstart Digital" style="height:48px; width:auto; object-fit:contain; display:block;">
+        </a>
+        <nav style="display:flex; flex-wrap:wrap; align-items:center; gap:10px 26px;">
+          <a href="/" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Home</a>
+          <a href="/services" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Services</a>
+          <a href="/about" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">About</a>
+          <a href="/the-difference" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">The Difference</a>
+          <a href="/case-studies" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Case Studies</a>
+          <a href="/contact" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Contact</a>
+        </nav>
+        <a href="mailto:contact@handstartdigital.com" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--muted);">contact@handstartdigital.com</a>
+      </div>
+      <div style="height:1px; background:rgba(247,244,238,0.16); margin:clamp(28px,3.4vw,36px) 0 clamp(18px,2.2vw,22px);"></div>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div style="font-family:var(--sans); font-size:13px; color:#8791a3;">© <span id="year"></span> Handstart Digital. All rights reserved.</div>
+          <div style="font-family:var(--sans); font-size:12px; color:#6b7488;">Handstart Digital and the Handstart Digital logo are trademarks of Aidan Paggao.</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-family:var(--sans); font-size:13px; color:#8791a3;">
+          <a href="/privacy" style="color:#8791a3;">Privacy</a>
+          <span>·</span>
+          <a href="/terms" style="color:#8791a3;">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Mobile nav
+  (function () {
+    var toggle = document.getElementById('navToggle'), menu = document.getElementById('mobileNav');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function () {
+        var open = menu.hasAttribute('hidden');
+        if (open) { menu.removeAttribute('hidden'); menu.style.display = 'flex'; }
+        else { menu.setAttribute('hidden', ''); menu.style.display = ''; }
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  })();
+
+  // Glyph Portal (c) 2026 Christian Katzmann. MIT.
+  // Origin: UsefulPortal.astro on https://ktzm.dk, UsefulPortal.tsx, ClarityPortal.tsx.
+  // A scroll driven camera through live type. Keep this notice with copies.
+  //
+  // Ported from the React/TSX source to plain DOM for this no-build site. The JSX
+  // became the static markup in the section above, this init function is the
+  // effect body from the component (useRef and useLayoutEffect collapsed into one
+  // run against real elements), and onProgress below is a plain callback instead
+  // of a React prop. The zoom, scan, and clip mechanics are unchanged from the
+  // source: only the wiring around them was made vanilla.
+  (function () {
+    var clamp = function (n, a, b) {
+      if (a === undefined) a = 0;
+      if (b === undefined) b = 1;
+      return Math.min(b, Math.max(a, n));
+    };
+    var smooth = function (a, b, n) {
+      var t = clamp((n - a) / (b - a));
+      return t * t * (3 - 2 * t);
+    };
+
+    // Largest opaque square, in linear time. Unlike a stem guess, it works in O, S and other holed forms.
+    function interior(context, char, font) {
+      var canvas = context.canvas;
+      context.font = font;
+      var m = context.measureText(char);
+      var pad = 8;
+      var left = Math.ceil(m.actualBoundingBoxLeft);
+      var ascent = Math.ceil(m.actualBoundingBoxAscent);
+      canvas.width = Math.max(1, Math.ceil(m.actualBoundingBoxLeft + m.actualBoundingBoxRight) + pad * 2);
+      canvas.height = Math.max(1, Math.ceil(m.actualBoundingBoxAscent + m.actualBoundingBoxDescent) + pad * 2);
+      context.font = font;
+      context.fontKerning = 'none';
+      context.fillText(char, pad + left, pad + ascent);
+      var width = canvas.width, height = canvas.height;
+      var pixels = context.getImageData(0, 0, width, height).data;
+      var rows = new Uint16Array(width + 1);
+      var size = 0, bx = 0, by = 0;
+      for (var y = 0; y < height; y++) {
+        var diagonal = 0;
+        for (var x = 0; x < width; x++) {
+          var above = rows[x + 1];
+          rows[x + 1] = pixels[(y * width + x) * 4 + 3] > 245 ? Math.min(above, rows[x], diagonal) + 1 : 0;
+          diagonal = above;
+          if (rows[x + 1] > size) { size = rows[x + 1]; bx = x; by = y; }
+        }
+      }
+      if (size < 3) return null;
+      // Scan at 3x SVG size. Inscribe a disk in the square, with room for raster disagreement.
+      return {
+        x: (bx + 1 - size / 2 - pad - left) / 3,
+        y: (by + 1 - size / 2 - pad - ascent) / 3,
+        radius: (size / 2 - 1) / 3
+      };
+    }
+
+    function scrollParent(element) {
+      for (var p = element.parentElement; p; p = p.parentElement) {
+        if (/(auto|scroll|hidden)/.test(getComputedStyle(p).overflowY) && p !== document.body && p !== document.documentElement) return p;
+      }
+      return null;
+    }
+
+    function initGlyphPortal(section, options) {
+      var text = options.word;
+      var characters = Array.from(text);
+      var length = clamp(options.scrollLength, 1, 8);
+      var weight = clamp(options.fontWeight, 1, 1000);
+      var interactive = options.interactive;
+      var focusChar = options.focusChar || null;
+      var clipId = options.clipId;
+      var onProgress = options.onProgress;
+      var hasFront = options.hasFront;
+
+      var pin = section.querySelector('[data-gp-pin]');
+      var field = section.querySelector('[data-gp-field]');
+      var art = section.querySelector('[data-gp-art]');
+      var clip = section.querySelector('#' + clipId);
+      var glyph = section.querySelector('[data-gp-glyph]');
+      var marks = section.querySelector('[data-gp-marks]');
+      var choices = section.querySelector('[data-gp-choices]');
+      var buttons = Array.prototype.slice.call(choices.querySelectorAll('button'));
+      var picker = section.querySelector('[data-gp-select]');
+      var root = scrollParent(section);
+      var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var canvas = document.createElement('canvas');
+      var context = canvas.getContext('2d', { willReadFrequently: true });
+      var disposed = false, raf = 0, dirty = true, active = true, ready = false;
+      var mountedAt = performance.now();
+      var browserFrameSeen = false, stalled = false;
+      var W = 1, H = 1, travel = 1, startScale = 1, endScale = 1;
+      var center = { x: 0, y: 0 }, target = null;
+      var lastProgress = -1;
+      var lastMotion = null;
+      var candidates = [], letters = [];
+      var choosing = false;
+      var bounds = { x: 0, y: 0, width: 1, height: 1 };
+      var fontDirty = true;
+
+      // Freeze an available face for this mount. Late font swaps move the ink under the camera.
+      glyph.style.fontFamily = options.fontFamily;
+      var computedFamily = getComputedStyle(glyph).fontFamily;
+      var families = computedFamily.match(/(?:[^,"']+|"[^"]*"|'[^']*')+/g) || [];
+      var available = families.filter(function (family) {
+        try { return document.fonts.check(weight + ' 100px ' + family.trim(), text); }
+        catch (e) { return false; }
+      });
+      glyph.style.fontFamily = available.concat([options.defaultFont]).join(',');
+      // A pending requested face may also hold WebKit's render loop. Keep that mount static.
+      stalled = available.length < families.length;
+
+      function readInk() {
+        if (!context) return false;
+        var font = getComputedStyle(glyph);
+        var scanFont = font.fontWeight + ' 300px ' + font.fontFamily;
+        context.font = font.fontWeight + ' 100px ' + font.fontFamily;
+        context.fontKerning = 'none';
+        var metrics = context.measureText(text);
+        var advances = [];
+        for (var i = 0; i < text.length; i++) advances.push(context.measureText(text.slice(0, i)).width);
+        // SVG getBBox includes the font's line box in some engines. Frame visible ink instead.
+        bounds = {
+          x: -metrics.actualBoundingBoxLeft, y: -metrics.actualBoundingBoxAscent,
+          width: metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight,
+          height: metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent
+        };
+        if (!bounds.width || !bounds.height) return false;
+        center = { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 };
+        var requested = focusChar ? text.indexOf(focusChar) : -1;
+        var offset = 0;
+        candidates = []; letters = [];
+        for (var ci = 0; ci < characters.length; ci++) {
+          var char = characters[ci];
+          context.font = font.fontWeight + ' 100px ' + font.fontFamily;
+          var m = context.measureText(char);
+          letters.push({
+            index: offset, x: advances[offset] - m.actualBoundingBoxLeft,
+            y: -m.actualBoundingBoxAscent, width: m.actualBoundingBoxLeft + m.actualBoundingBoxRight,
+            height: m.actualBoundingBoxAscent + m.actualBoundingBoxDescent
+          });
+          var found = interior(context, char, scanFont);
+          if (found) { found.x = found.x + advances[offset]; found.index = offset; candidates.push(found); }
+          offset += char.length;
+        }
+        var byRequested = null;
+        for (var k = 0; k < candidates.length; k++) { if (candidates[k].index === requested) { byRequested = candidates[k]; break; } }
+        if (byRequested) {
+          target = byRequested;
+        } else {
+          var sorted = candidates.slice().sort(function (a, b) {
+            return (b.radius - a.radius) || (Math.abs(a.x - center.x) - Math.abs(b.x - center.x));
+          });
+          target = sorted[0] || null;
+        }
+        return true;
+      }
+
+      function select(next) {
+        target = next;
+        endScale = target ? Math.max(startScale, Math.hypot(W, H) / (target.radius * 1.35)) : startScale;
+        section.dataset.gpFocus = target ? Array.from(text.slice(target.index))[0] : '';
+        section.dataset.gpFocusIndex = String(target ? target.index : -1);
+        buttons.forEach(function (button) {
+          var letterIndex = Number(button.dataset.gpLetter);
+          var selected = target ? letterIndex === target.index : false;
+          button.disabled = !candidates.some(function (c) { return c.index === letterIndex; });
+          button.setAttribute('aria-checked', String(selected));
+          button.tabIndex = selected ? 0 : -1;
+        });
+        if (picker.value !== '') picker.value = String(target ? target.index : -1);
+        Array.prototype.forEach.call(picker.options, function (option) {
+          option.disabled = option.value === '' || !candidates.some(function (c) { return c.index === Number(option.value); });
+        });
+        var u = 1 / startScale;
+        var y = bounds.y + bounds.height + 25 * u;
+        var x = bounds.x;
+        var right = x + bounds.width;
+        var cross = target ? 'M' + (target.x - 9 * u) + ' ' + target.y + 'h' + (18 * u) + 'M' + target.x + ' ' + (target.y - 9 * u) + 'v' + (18 * u) : '';
+        var annotationPath = marks.querySelector('path');
+        annotationPath.setAttribute('d', 'M' + x + ' ' + y + 'H' + right + 'M' + x + ' ' + (y - 5 * u) + 'v' + (10 * u) + 'M' + right + ' ' + (y - 5 * u) + 'v' + (10 * u) + cross);
+        annotationPath.setAttribute('stroke-width', String(u));
+      }
+
+      function position() {
+        var origin = root ? root.getBoundingClientRect().top + root.clientTop : 0;
+        return clamp((origin - section.getBoundingClientRect().top) / travel);
+      }
+
+      function paint(progress) {
+        var isStatic = motion.matches || !browserFrameSeen || stalled || !target;
+        var p = isStatic ? 0 : progress;
+        var t = clamp(p / 0.78);
+        var eased = t < 0.5 ? 4 * Math.pow(t, 3) : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        var scale = Math.exp(Math.log(startScale) + Math.log(endScale / startScale) * eased);
+        var blend = endScale === startScale ? 0 : (1 / scale - 1 / startScale) / (1 / endScale - 1 / startScale);
+        var cx = center.x + ((target ? target.x : center.x) - center.x) * blend;
+        var cy = center.y + ((target ? target.y : center.y) - center.y) * blend;
+        var roll = -4 * smooth(0.06, 0.5, t) * (1 - smooth(0.62, 0.92, t));
+        // Keep scale on the clip to avoid text paint limits. Text-local translation
+        // follows page zoom in WebKit; translation on an HTML clip reference does not.
+        var radians = roll * Math.PI / 180;
+        var dx = (W / 2) / scale, dy = (H * 0.46 + H * 0.04 * eased) / scale;
+        clip.setAttribute('transform', 'scale(' + scale + ') rotate(' + roll + ')');
+        glyph.setAttribute('transform', 'translate(' + (Math.cos(radians) * dx + Math.sin(radians) * dy - cx) + ' ' + (-Math.sin(radians) * dx + Math.cos(radians) * dy - cy) + ')');
+        var transform = 'translate(' + (W / 2) + ' ' + (H * 0.46 + H * 0.04 * eased) + ') scale(' + scale + ') rotate(' + roll + ') translate(' + (-cx) + ' ' + (-cy) + ')';
+        marks.setAttribute('transform', transform);
+        marks.style.opacity = String(1 - smooth(0.015, 0.17, p));
+        choosing = interactive && !isStatic && p < 0.04;
+        choices.inert = !choosing;
+        section.dataset.gpChoosing = String(choosing);
+        // Drop the clip only after the camera has already filled the viewport with ink.
+        field.style.clipPath = t >= 1 ? 'none' : 'url(#' + clipId + ')';
+        section.style.setProperty('--gp-caption', String(1 - smooth(0.015, 0.17, p)));
+        section.style.setProperty('--gp-reveal', String(isStatic ? 1 : smooth(0.78, 0.9, p)));
+        section.style.setProperty('--gp-field-scale', String(1 + 0.16 * smooth(0, 0.82, p)));
+        section.style.setProperty('--gp-caption-hit', p < 0.08 ? 'auto' : 'none');
+        section.dataset.gpEntered = String(p >= 0.9);
+        section.dataset.gpProgress = p.toFixed(5);
+        // Also re-fire on a motion-state flip even when progress is unchanged (typically
+        // still 0 at load): a consumer like the fixed header cares about gpMotion too, and
+        // it can change before the user has scrolled at all.
+        var motionState = section.dataset.gpMotion;
+        if (p !== lastProgress || motionState !== lastMotion) {
+          lastProgress = p; lastMotion = motionState;
+          if (onProgress) onProgress(p);
+        }
+      }
+
+      function layout() {
+        if (!section.clientWidth) return;
+        W = pin.clientWidth;
+        // A 100svh probe keeps browser chrome from continually changing the scroll distance.
+        var smallViewport = section.querySelector('[data-gp-viewport]').offsetHeight;
+        var viewportHeight = Math.max(1, Math.min(root ? root.clientHeight : smallViewport, smallViewport));
+        H = motion.matches ? Math.min(viewportHeight * 0.75, 480) : viewportHeight;
+        section.style.setProperty('--gp-height', H + 'px');
+        travel = H * length;
+        art.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        if (fontDirty) { ready = readInk(); fontDirty = false; }
+        if (!ready) return;
+        var wordHeight = hasFront && H < 480 ? Math.min(H * 0.38, Math.max(24, H - 264)) : H * 0.38;
+        startScale = Math.min(W * 0.84 / bounds.width, wordHeight / bounds.height);
+        select(target);
+        buttons.forEach(function (button) {
+          var letterIndex = Number(button.dataset.gpLetter);
+          var letter = null;
+          for (var i = 0; i < letters.length; i++) { if (letters[i].index === letterIndex) { letter = letters[i]; break; } }
+          if (!letter) return;
+          button.style.left = (W / 2 + (letter.x - center.x) * startScale) + 'px';
+          button.style.top = (H * 0.46 + (letter.y - center.y) * startScale - Math.max(0, 44 - letter.height * startScale) / 2) + 'px';
+          button.style.width = Math.max(1, letter.width * startScale) + 'px';
+          button.style.height = Math.max(44, letter.height * startScale) + 'px';
+        });
+        section.style.setProperty('--gp-word-top', (H * 0.46 - bounds.height * startScale / 2) + 'px');
+        section.style.setProperty('--gp-word-bottom', (H * 0.46 + bounds.height * startScale / 2) + 'px');
+        section.dataset.gpReady = 'true';
+        section.dataset.gpMotion = (!motion.matches && browserFrameSeen && !stalled && target) ? 'on' : 'off';
+      }
+
+      function frame(time) {
+        raf = 0;
+        if (disposed) return;
+        if (time !== undefined && !browserFrameSeen) {
+          browserFrameSeen = true;
+          stalled = stalled || (performance.now() - mountedAt > 2500);
+          dirty = true;
+        }
+        if (dirty) { dirty = false; layout(); }
+        if (ready) paint(position());
+      }
+      function schedule() { if (!raf && active) raf = requestAnimationFrame(frame); }
+      function resize() { cancelAnimationFrame(raf); dirty = true; frame(); }
+      function scroll() { schedule(); }
+      function choose(event) {
+        if (!choosing || position() >= 0.04) return;
+        var button = event.target.closest ? event.target.closest('[data-gp-letter]') : null;
+        if (!button) return;
+        var letterIndex = Number(button.dataset.gpLetter);
+        var next = null;
+        for (var i = 0; i < candidates.length; i++) { if (candidates[i].index === letterIndex) { next = candidates[i]; break; } }
+        if (!next || next === target) return;
+        select(next); paint(position());
+      }
+      function navigate(event) {
+        var keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+        if (!choosing || keys.indexOf(event.key) === -1) return;
+        event.preventDefault();
+        var current = candidates.indexOf(target);
+        var index;
+        if (event.key === 'Home') index = 0;
+        else if (event.key === 'End') index = candidates.length - 1;
+        else index = (current + (event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1) + candidates.length) % candidates.length;
+        var wantIndex = candidates[index].index;
+        var wantButton = null;
+        for (var i = 0; i < buttons.length; i++) { if (Number(buttons[i].dataset.gpLetter) === wantIndex) { wantButton = buttons[i]; break; } }
+        if (wantButton) wantButton.focus({ preventScroll: true });
+      }
+      function pick() {
+        if (!choosing || position() >= 0.04) return;
+        var letterIndex = Number(picker.value);
+        var next = null;
+        for (var i = 0; i < candidates.length; i++) { if (candidates[i].index === letterIndex) { next = candidates[i]; break; } }
+        if (next) { select(next); paint(position()); }
+      }
+
+      choices.addEventListener('pointerover', choose);
+      choices.addEventListener('click', choose);
+      choices.addEventListener('focusin', choose);
+      choices.addEventListener('keydown', navigate);
+      picker.addEventListener('change', pick);
+      var observer = new ResizeObserver(resize);
+      observer.observe(section);
+      if (root) observer.observe(root);
+      var visibility = new IntersectionObserver(function (entries) {
+        var entry = entries[0];
+        active = entry.isIntersecting;
+        if (active) { dirty = true; schedule(); }
+        else if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      }, { root: root, rootMargin: '100% 0px' });
+      visibility.observe(section);
+      (root || window).addEventListener('scroll', scroll, { passive: true });
+      window.addEventListener('resize', resize);
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', resize);
+      motion.addEventListener('change', resize);
+      // WebKit can withhold frames, timers and scroll events behind an initial hung font.
+      // Begin in reading flow. Enable motion only when the browser starts rendering promptly.
+      frame();
+      schedule();
+    }
+
+    var section = document.getElementById('gp-handstart');
+    var header = document.getElementById('siteHeader');
+    if (!section) return;
+
+    function updateHeader(progress) {
+      if (!header) return;
+      if (section.dataset.gpMotion !== 'on') { header.style.opacity = '1'; return; }
+      header.style.opacity = String(smooth(0.78, 0.9, progress));
+    }
+
+    function start() {
+      initGlyphPortal(section, {
+        word: 'HANDSTART',
+        focusChar: null, // auto-pick the largest ink patch, never force a letter
+        interactive: true,
+        scrollLength: 2.2, // keep in sync with --gp-length on the section's inline style
+        fontFamily: '"Libre Franklin", -apple-system, BlinkMacSystemFont, sans-serif',
+        defaultFont: '"Arial Black", "Arial", sans-serif',
+        fontWeight: 900,
+        clipId: 'gp-handstart-clip',
+        hasFront: true,
+        onProgress: updateHeader
+      });
+    }
+
+    // A heavy weight is required for the ink scan, so gate on it loading before
+    // measuring anything: a late font swap would move the ink under the camera.
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load('900 100px "Libre Franklin"').catch(function () {}).then(function () {
+        return document.fonts.ready;
+      }).then(start, start);
+    } else {
+      start();
+    }
+  })();
+
+  // Handwriting: two SVG layers per word, both built from the same opentype.js path data for
+  // the self-hosted Caveat file. A bottom fill layer (the whole, undivided path) fades in as
+  // solid ink, since only the undivided path keeps counters in e/a/o/d/g as holes instead of
+  // filled blobs. A top stroke layer splits that same path at each moveto into one path per
+  // contour, finer than per letter, and draws each with stroke-dashoffset so the pen strokes
+  // are staggered and overlapping, the way real handwriting looks.
+  (function () {
+    var el = document.getElementById('hwText');
+    var svg = document.getElementById('hwSvg');
+    var box = document.getElementById('hwBox');
+    if (!el || !svg || !box) return;
+
+    var words = ['Google Ads', 'SEO', 'Website Builds', 'Social Media Management', 'Meta & Instagram Ads', 'Showing in AI Results', 'Landing Pages', 'Local Listings', 'Email Marketing', 'Conversion Tracking'];
+    var i = 0;
+    el.textContent = words[0];
+
+    if (typeof opentype === 'undefined') return; // load failure: static fallback word stays visible
+
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    var DUR_MIN = 1300;
+    var DUR_MAX = 2800;
+    var STROKE_OVERLAP = 2.4;
+    var STROKE_MIN_MS = 220;
+    var FILL_START_FRAC = 0.72;
+    var FILL_MS = 450;
+    var HOLD_MS = 1000;
+    var FADE_MS = 200;
+
+    opentype.load('assets/fonts/Caveat-SemiBold.ttf', function (err, font) {
+      if (err || !font) return; // network or parse failure: static fallback word stays visible
+
+      try {
+        var upm = font.unitsPerEm;
+        var pad = upm * 0.12;
+
+        function metricsFor(word) {
+          var path = font.getPath(word, 0, 0, upm);
+          var b = path.getBoundingBox();
+          var vbX = b.x1 - pad;
+          var vbY = b.y1 - pad;
+          var vbW = (b.x2 - b.x1) + pad * 2;
+          var vbH = (b.y2 - b.y1) + pad * 2;
+          var d = path.toPathData(3);
+          var contours = d.split(/(?=M)/).filter(function (s) { return s.trim().length > 0; });
+          return {
+            d: d, contours: contours, vbX: vbX, vbY: vbY, vbW: vbW, vbH: vbH,
+            widthEm: vbW / upm, heightEm: vbH / upm,
+            baselineEm: -(b.y2 + pad) / upm
+          };
+        }
+
+        // Compute every word's metrics up front: the reserved-width box needs the widest one,
+        // and the draw duration needs the shortest and longest contour counts across the set.
+        var metrics = words.map(metricsFor);
+        var maxWidthEm = Math.max.apply(null, metrics.map(function (m) { return m.widthEm; }));
+        box.style.width = maxWidthEm.toFixed(3) + 'em';
+
+        var counts = metrics.map(function (m) { return m.contours.length; });
+        var minCount = Math.min.apply(null, counts);
+        var maxCount = Math.max.apply(null, counts);
+
+        function durationFor(count) {
+          if (maxCount === minCount) return (DUR_MIN + DUR_MAX) / 2;
+          return DUR_MIN + (count - minCount) / (maxCount - minCount) * (DUR_MAX - DUR_MIN);
+        }
+
+        if (reduceMotion) {
+          // Static fallback: swap plain filled text through the same word list, no stroke
+          // animation at all. Dwell time reuses the same duration formula as the drawn
+          // version, so longer phrases still get a comparable reading beat.
+          (function staticCycle() {
+            var dwell = durationFor(metrics[i].contours.length) + HOLD_MS;
+            setTimeout(function () {
+              i = (i + 1) % words.length;
+              el.textContent = words[i];
+              staticCycle();
+            }, dwell);
+          })();
+          return;
+        }
+
+        svg.style.setProperty('--hw-stroke-w', upm * 0.016);
+
+        function drawWord(idx, onDone) {
+          var m = metrics[idx];
+          svg.style.transition = 'none';
+          svg.setAttribute('viewBox', m.vbX + ' ' + m.vbY + ' ' + m.vbW + ' ' + m.vbH);
+          svg.style.width = m.widthEm + 'em';
+          svg.style.height = m.heightEm + 'em';
+          svg.style.verticalAlign = m.baselineEm + 'em';
+          svg.style.opacity = '1';
+          while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+          var fillPath = document.createElementNS(SVG_NS, 'path');
+          fillPath.setAttribute('class', 'hw-fill');
+          fillPath.setAttribute('d', m.d);
+          svg.appendChild(fillPath);
+
+          var strokePaths = m.contours.map(function (d) {
+            var p = document.createElementNS(SVG_NS, 'path');
+            p.setAttribute('class', 'hw-stroke');
+            p.setAttribute('d', d);
+            svg.appendChild(p);
+            return p;
+          });
+
+          var count = strokePaths.length;
+          var duration = durationFor(count);
+          var lens = strokePaths.map(function (p) { return p.getTotalLength(); });
+
+          // Fully hidden, no transition yet, so this reset applies before the draw-in starts.
+          fillPath.style.transition = 'none';
+          fillPath.style.opacity = '0';
+          strokePaths.forEach(function (p, idx2) {
+            p.style.transition = 'none';
+            p.style.strokeDasharray = lens[idx2];
+            p.style.strokeDashoffset = lens[idx2];
+          });
+          svg.getBoundingClientRect(); // force reflow
+
+          requestAnimationFrame(function () {
+            var finishTimes = [];
+            strokePaths.forEach(function (p, idx2) {
+              var start = (idx2 / count) * duration;
+              var each = Math.max((duration / count) * STROKE_OVERLAP, STROKE_MIN_MS);
+              p.style.transition = 'stroke-dashoffset ' + each + 'ms ease-out ' + start + 'ms';
+              p.style.strokeDashoffset = '0';
+              finishTimes.push(start + each);
+            });
+
+            var fillDelay = duration * FILL_START_FRAC;
+            fillPath.style.transition = 'opacity ' + FILL_MS + 'ms ease-out ' + fillDelay + 'ms';
+            fillPath.style.opacity = '1';
+            finishTimes.push(fillDelay + FILL_MS);
+
+            var drawCompleteMs = Math.max.apply(null, finishTimes);
+            setTimeout(function () {
+              svg.style.transition = 'opacity ' + FADE_MS + 'ms ease-out';
+              svg.style.opacity = '0';
+              setTimeout(onDone, FADE_MS);
+            }, drawCompleteMs + HOLD_MS);
+          });
+        }
+
+        function cycle() {
+          drawWord(i, function () {
+            i = (i + 1) % words.length;
+            cycle();
+          });
+        }
+
+        el.style.display = 'none';
+        svg.style.display = 'inline-block';
+        cycle();
+      } catch (e) {
+        // Any unexpected drawing failure: leave the static fallback word visible.
+        el.style.display = '';
+        svg.style.display = 'none';
+      }
+    });
+  })();
+
+  // Smooth scroll for Find My Gaps
+  (function () {
+    var btn = document.getElementById('findGaps');
+    if (!btn) return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var el = document.getElementById('assessment');
+      if (!el) return;
+      var top = window.scrollY + el.getBoundingClientRect().top - 100;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  })();
+
+  // ===================== Find My Gaps assessment =====================
+  (function () {
+    var mount = document.getElementById('assessmentCard');
+    if (!mount) return;
+
+    var questions = [
+      'Search your business on Google. Are you on page one?',
+      'Do you know how many people found you through Google last month?',
+      'Do you know what it costs you to get one new customer?',
+      'Does your website work properly on a phone?',
+      'Do you know which channel brought in your last five customers?',
+      "Can you explain the return on everything you're paying for?"
+    ];
+    var strengths = [
+      "You're showing up on the first page: the hardest part to earn.",
+      'You actually know your traffic sources. Most owners are guessing.',
+      "You know your cost per customer: the number most people can't name.",
+      "You've looked at your own site on a phone recently. Most people haven't.",
+      'You can trace where your customers came from. That is rare.',
+      'You can explain the return on what you are paying for. Good.'
+    ];
+
+    var step = 0, answers = [];
+
+    function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+    function render() {
+      if (step >= 6) { renderResult(); return; }
+      var q = questions[step];
+      mount.innerHTML =
+        '<div style="width:100%; animation:hsFadeUp 360ms ease both;">' +
+          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:#9fb0cc; margin-bottom:20px;">' + (step + 1) + ' of 6</div>' +
+          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(26px,3.6vw,42px); line-height:1.16; letter-spacing:-0.01em; color:var(--cream); margin:0 auto; max-width:20ch; text-wrap:balance;">' + esc(q) + '</h2>' +
+          '<div style="display:flex; gap:14px; justify-content:center; margin:36px auto 0; max-width:560px; flex-wrap:wrap;">' +
+            '<button class="hs-opt" data-val="yes">Yes</button>' +
+            '<button class="hs-opt" data-val="no">No</button>' +
+            '<button class="hs-opt" data-val="notsure">Not sure</button>' +
+          '</div>' +
+        '</div>';
+      Array.prototype.forEach.call(mount.querySelectorAll('.hs-opt'), function (b) {
+        b.addEventListener('click', function () { answers.push(b.dataset.val); step++; render(); });
+      });
+    }
+
+    function renderResult() {
+      var yesCount = answers.filter(function (a) { return a === 'yes'; }).length;
+      var verdict, costs;
+      if (yesCount >= 4) {
+        verdict = "You're further along than most. The gaps are in optimization, not foundation.";
+        costs = [
+          'Small inefficiencies compound: a few points of wasted spend every month adds up to real money over a year.',
+          'Without a tighter feedback loop, you are probably leaving your best-performing channel under-funded.'
+        ];
+      } else if (yesCount <= 1) {
+        verdict = "You're marketing without a scoreboard.";
+        costs = [
+          'You cannot tell which spending works, so you are likely paying for things that do not.',
+          'Every new customer costs more than it should, because nothing is being optimized.',
+          'Decisions get made on gut feel instead of numbers, expensive over time.'
+        ];
+      } else {
+        verdict = "You're doing marketing. You're just not measuring it.";
+        costs = [
+          'You have activity but no clear read on what is actually driving results.',
+          'Budget is probably split by habit, not by what performs.',
+          'The wins are hard to repeat because you cannot see why they happened.'
+        ];
+      }
+
+      var wins = [];
+      answers.forEach(function (a, i) { if (a === 'yes') wins.push(strengths[i]); });
+
+      var workingBody;
+      if (wins.length === 0) {
+        workingBody = '<p style="margin:0; font-family:var(--sans); font-size:15px; line-height:1.6; color:var(--body);">Honestly, starting from zero is cleaner than fixing a mess. There is nothing to undo, so the first wins come fast.</p>';
+      } else {
+        workingBody = '<ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">' +
+          wins.slice(0, 2).map(function (w) {
+            return '<li style="display:flex; gap:10px; font-family:var(--sans); font-size:15px; line-height:1.55; color:var(--slate);"><span style="color:#1F8A5B; font-weight:700; flex-shrink:0;">&#10003;</span><span>' + esc(w) + '</span></li>';
+          }).join('') + '</ul>';
+      }
+
+      var costList = '<ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;">' +
+        costs.slice(0, 2).map(function (c) {
+          return '<li style="display:flex; gap:10px; font-family:var(--sans); font-size:15px; line-height:1.5; color:var(--slate);"><span style="color:var(--amber); font-weight:700; flex-shrink:0;">&rarr;</span><span>' + esc(c) + '</span></li>';
+        }).join('') + '</ul>';
+
+      function panel(title, accent, body) {
+        return '<div style="background:var(--cream); border:1px solid var(--hairline); border-radius:14px; padding:clamp(16px,2vw,22px); text-align:left; border-left:4px solid ' + accent + ';">' +
+          '<div style="font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:' + accent + '; margin-bottom:10px;">' + title + '</div>' + body + '</div>';
+      }
+
+      mount.innerHTML =
+        '<div style="width:100%; animation:hsFadeUp 400ms ease both;">' +
+          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:#9fb0cc; margin-bottom:12px;">Your read</div>' +
+          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,3.2vw,38px); line-height:1.2; letter-spacing:-0.01em; color:var(--cream); margin:0 auto; max-width:24ch; text-wrap:balance;">' + esc(verdict) + '</h2>' +
+          '<div style="margin:18px 0 0; display:flex; flex-direction:column; align-items:center; gap:14px;">' +
+            '<p style="font-family:var(--serif); font-style:italic; font-size:clamp(17px,2vw,22px); line-height:1.3; color:var(--cream); margin:0; max-width:30ch; text-wrap:balance;">Want me to look at the rest? I\'ll tell you what I\'d fix first.</p>' +
+            '<div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; align-items:center;">' +
+              '<a class="hs-cta" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>' +
+              '<button id="hsRestart" style="background:none; border:none; cursor:pointer; font-family:var(--sans); font-size:14px; font-weight:500; color:#9fb0cc; text-decoration:underline; text-underline-offset:3px;">Start over</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:22px 0 0;">' +
+            panel('What this costs you', '#C8873A', costList) +
+            panel("What's working", '#1F8A5B', workingBody) +
+          '</div>' +
+        '</div>';
+
+      var restart = document.getElementById('hsRestart');
+      if (restart) restart.addEventListener('click', function () { step = 0; answers = []; render(); });
+    }
+
+    render();
+  })();
+</script>
+
 </body>
 </html>
