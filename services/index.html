@@ -62,16 +62,6 @@
       margin-left:3px; vertical-align:-.08em; animation:hpBlink 1s step-end infinite;
     }
 
-    /* Scroll-reveal slide */
-    [data-anim="slide"] {
-      opacity:0;
-      transition:opacity .6s ease, transform .85s cubic-bezier(.16,1,.3,1);
-      will-change:transform,opacity;
-    }
-    [data-anim="slide"][data-dir="l"] { transform:translateX(-80px); }
-    [data-anim="slide"][data-dir="r"] { transform:translateX(80px); }
-    [data-anim="slide"][data-in="true"] { opacity:1; transform:none; }
-
     /* Amber CTA button, navy dot floods on hover */
     .hs-cta {
       position:relative; overflow:hidden; isolation:isolate;
@@ -125,7 +115,6 @@
     @media (prefers-reduced-motion: reduce) {
       .hs-navlink-underline, .hs-cta::before, .hs-cta-face, .hs-cta-hover { transition:none; }
       .tx-caret { display:none; }
-      [data-anim="slide"] { opacity:1 !important; transform:none !important; }
     }
 
     /* ---------- Lenis smooth scroll (required Lenis CSS) ---------- */
@@ -204,11 +193,11 @@
 
   <!-- ===================== FIVE PROBLEMS ===================== -->
   <!-- O1 -->
-  <section data-reveal data-anim="slide" data-dir="l" style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+  <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What makes your brand yours?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">This is how people recognize you, and decide you are the one to call.</p>
-      <div data-reveal data-js="type" data-text="Brand Strategy" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span></div>
+      <div data-js="type" data-text="Brand Strategy" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Brand Strategy</noscript></div>
       <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
         <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Positioning &amp; Messaging</li>
         <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Logo &amp; Brand Identity</li>
@@ -219,11 +208,11 @@
   </section>
 
   <!-- O2 -->
-  <section data-reveal data-anim="slide" data-dir="r" style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
+  <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is your website working against you?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">It's outdated, hard to use on a phone, or doesn't exist yet. For most small businesses, this is where it starts. The base needs to be built, and built right.</p>
-      <div data-reveal data-js="type" data-text="Web Design &amp; Development" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span></div>
+      <div data-js="type" data-text="Web Design &amp; Development" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Web Design &amp; Development</noscript></div>
       <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
         <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Website Design &amp; Build</li>
         <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Landing Pages</li>
@@ -236,11 +225,11 @@
   </section>
 
   <!-- O3 -->
-  <section data-reveal data-anim="slide" data-dir="l" style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+  <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is it difficult to find you?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">You exist, but when someone searches for what you do, you're not as easy to find as you could be. There are many ways to make it easier.</p>
-      <div data-reveal data-js="type" data-text="SEO &amp; Organic Presence" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span></div>
+      <div data-js="type" data-text="SEO &amp; Organic Presence" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>SEO &amp; Organic Presence</noscript></div>
       <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
         <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">SEO</li>
         <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Google Business Profile</li>
@@ -254,11 +243,11 @@
   </section>
 
   <!-- O4 -->
-  <section data-reveal data-anim="slide" data-dir="r" style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
+  <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Do you need customers now?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">Sometimes you can't wait for slow growth. Performance marketing or paid strategy puts you in front of customers today.</p>
-      <div data-reveal data-js="type" data-text="Performance Marketing" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span></div>
+      <div data-js="type" data-text="Performance Marketing" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Performance Marketing</noscript></div>
       <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
         <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Meta &amp; Instagram Ads</li>
         <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Microsoft Ads</li>
@@ -271,11 +260,11 @@
   </section>
 
   <!-- O5 -->
-  <section data-reveal data-anim="slide" data-dir="l" style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+  <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">How is your brand's ongoing presence?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">Existing or potential customers forget about you. Keeping your brand visible keeps them coming back.</p>
-      <div data-reveal data-js="type" data-text="Retention &amp; General Presence" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span></div>
+      <div data-js="type" data-text="Retention &amp; General Presence" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Retention &amp; General Presence</noscript></div>
       <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
         <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Social Media Management</li>
         <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Email Marketing</li>
@@ -406,7 +395,8 @@
     tick();
   })();
 
-  // Scroll reveals: slide-in sections, plus eyebrow typewriters
+  // Eyebrow typewriters: independent of the section reveal system, so they
+  // are untouched by which reveal (bespoke or shared) drives the sections.
   (function () {
     if (reduceMotion) {
       document.querySelectorAll('[data-js="type"]').forEach(function (el) {
@@ -414,14 +404,6 @@
       });
       return;
     }
-
-    var slideIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting && e.intersectionRatio > 0.2) e.target.dataset.in = 'true';
-        else if (!e.isIntersecting && e.boundingClientRect.top > 0) e.target.dataset.in = 'false';
-      });
-    }, { threshold: [0, 0.2, 0.5], rootMargin: '0px 0px -12% 0px' });
-    document.querySelectorAll('[data-reveal]').forEach(function (el) { slideIO.observe(el); });
 
     function runType(el) {
       var txt = el.dataset.text, span = el.querySelector('.tx-txt');
