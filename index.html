@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:wght@400;500;600;700;900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
   <!-- Self-hosted so opentype.js can read real glyph outlines for the draw-on handwriting effect below -->
   <link rel="preload" href="assets/fonts/Caveat-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
 
@@ -138,37 +138,162 @@
       .hp-anim-glow, .hp-anim-float, .hp-mote { animation: none !important; }
       .hs-ticker-track { animation: none; }
     }
+
+    /*
+     * Glyph Portal (c) 2026 Christian Katzmann. MIT.
+     * Origin: UsefulPortal.astro on https://ktzm.dk, UsefulPortal.tsx, ClarityPortal.tsx.
+     * A scroll driven camera through live type. Keep this notice with copies.
+     * Ported from React/TSX to plain DOM for this no-build site. Zoom, scan, and
+     * clip mechanics preserved as in the source; only markup, state, and callback
+     * wiring were made vanilla.
+     */
+    :where(#gp-handstart) {
+      --gp-paper: var(--cream); --gp-ink: var(--navy); --gp-field: var(--navy); --gp-foreground: var(--cream);
+      position: relative; isolation: isolate; background: var(--gp-paper); color: var(--gp-ink); font-family: var(--sans);
+    }
+    :where(#gp-handstart) > [data-gp-viewport] { position: absolute; inset: 0 auto auto 0; height: 100vh; height: 100svh; width: 0; pointer-events: none; visibility: hidden; }
+    :where(#gp-handstart) [data-gp-pin] { position: relative; height: var(--gp-height, 100svh); overflow: clip; isolation: isolate; container-type: size; }
+    :where(#gp-handstart) [data-gp-field] { position: absolute; inset: 0; background: var(--gp-field); opacity: 0; pointer-events: none; }
+    :where(#gp-handstart)[data-gp-ready] [data-gp-field] { opacity: 1; }
+    :where(#gp-handstart) [data-gp-art] { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    :where(#gp-handstart) [data-gp-marks] { fill: none; stroke: var(--gp-ink); opacity: .6; }
+    :where(#gp-handstart) [data-gp-choices] { position: absolute; inset: 0; visibility: hidden; pointer-events: none; }
+    :where(#gp-handstart)[data-gp-choosing="true"] [data-gp-choices] { visibility: visible; }
+    :where(#gp-handstart) [data-gp-letter] { box-sizing: border-box; position: absolute; border: 0; padding: 0; margin: 0; background: transparent; cursor: pointer; pointer-events: auto; touch-action: pan-y; }
+    :where(#gp-handstart) [data-gp-letter]:disabled { pointer-events: none; }
+    :where(#gp-handstart) [data-gp-letter]:focus-visible { outline: 2px solid var(--gp-field); outline-offset: 5px; }
+    :where(#gp-handstart) [data-gp-touch-picker] { display: none; position: absolute; top: calc(var(--gp-word-bottom, 50%) + 42px); left: 50%; transform: translateX(-50%); font: 12px/1.4 var(--sans); align-items: center; gap: 12px; visibility: hidden; }
+    :where(#gp-handstart)[data-gp-choosing="true"] [data-gp-touch-picker] { visibility: visible; }
+    :where(#gp-handstart) [data-gp-select] { min-height: 44px; min-width: 90px; border: 1px solid var(--hairline); border-radius: 4px; background: var(--gp-paper); color: var(--gp-ink); padding: 0 10px; font: inherit; }
+    :where(#gp-handstart) [data-gp-select]:focus-visible { outline: 2px solid var(--gp-field); outline-offset: 4px; }
+    @media (any-pointer: coarse) { :where(#gp-handstart) [data-gp-touch-picker] { display: flex; } }
+    :where(#gp-handstart) [data-gp-fallback] { position: absolute; inset: 0; display: none; place-items: center; font-size: min(calc(100cqw / var(--gp-characters)), 38cqh); line-height: 1; color: var(--gp-field); }
+    :where(#gp-handstart)[data-gp-ready] [data-gp-fallback] { visibility: hidden; }
+    :where(#gp-handstart) [data-gp-caption] { position: absolute; inset: auto 8% 9%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; font: 13px/1.4 var(--sans); opacity: var(--gp-caption, 1); pointer-events: var(--gp-caption-hit, auto); }
+    :where(#gp-handstart) [data-gp-front] { position: absolute; inset: 0; opacity: var(--gp-caption, 1); pointer-events: none; }
+    :where(#gp-handstart) [data-gp-front] a, :where(#gp-handstart) [data-gp-front] button { pointer-events: var(--gp-caption-hit, auto); }
+    :where(#gp-handstart) [data-gp-front]:focus-within { opacity: 1; }
+    :where(#gp-handstart) [data-gp-hint] { display: none; }
+    :where(#gp-handstart) [data-gp-enter] { display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 16px 32px; border-radius: 999px; background: var(--amber); color: var(--cream); font-family: var(--sans); font-weight: 600; font-size: clamp(15px,1.8vw,17px); text-decoration: none; letter-spacing: 0; box-shadow: 0 12px 28px rgba(27,43,75,0.22); transition: transform 200ms ease, box-shadow 200ms ease; }
+    :where(#gp-handstart) [data-gp-enter]:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(27,43,75,0.28); }
+    :where(#gp-handstart) [data-gp-enter]:focus-visible { outline: 2px solid var(--navy); outline-offset: 4px; }
+    :where(#gp-handstart) [data-gp-caption] { inset: calc(var(--gp-word-bottom, 50%) + 78px) 6% auto; justify-content: center; }
+    :where(#gp-handstart) [data-gp-caption]:focus-within { opacity: 1; pointer-events: auto; }
+    :where(#gp-handstart) [data-gp-content] { box-sizing: border-box; position: relative; min-height: var(--gp-height, 100svh); padding-top: clamp(72px,10vw,96px); display: grid; align-content: center; color: var(--gp-foreground); background: var(--gp-field); overflow-wrap: anywhere; }
+    :where(#gp-handstart)[data-gp-motion="on"] [data-gp-pin] { position: sticky; top: 0; }
+    :where(#gp-handstart)[data-gp-motion="off"] [data-gp-hint] { display: none; }
+    :where(#gp-handstart)[data-gp-motion="on"] [data-gp-content] { margin-top: calc((var(--gp-length) - 1) * var(--gp-height)); background: transparent; opacity: var(--gp-reveal, 0); pointer-events: none; }
+    :where(#gp-handstart)[data-gp-motion="on"][data-gp-entered="true"] [data-gp-content] { pointer-events: auto; }
+    :where(#gp-handstart)[data-gp-motion="on"]:has([data-gp-content]:focus-within) [data-gp-field] { clip-path: none !important; }
+    :where(#gp-handstart)[data-gp-motion="on"] [data-gp-content]:focus-within { opacity: 1; pointer-events: auto; }
+    :where(#gp-handstart):has([data-gp-content]:focus-within) [data-gp-caption], :where(#gp-handstart):has([data-gp-content]:focus-within) [data-gp-marks] { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      :where(#gp-handstart) [data-gp-pin] { position: relative !important; }
+      :where(#gp-handstart) [data-gp-content] { margin-top: 0 !important; opacity: 1 !important; background: var(--gp-field) !important; min-height: 0; padding-bottom: 0; }
+      :where(#gp-handstart) [data-gp-caption] { opacity: 1 !important; }
+    }
+
+    /* Landing composition: brand lockup, category label, tagline, entry cue */
+    :where(#gp-handstart) [data-hs-landing-top] { position: absolute; inset: clamp(20px,4vw,44px) clamp(20px,4vw,44px) auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    :where(#gp-handstart) [data-hs-landing-category] { font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--slate); }
+    :where(#gp-handstart) [data-hs-landing-support] { position: absolute; inset: calc(var(--gp-word-bottom, 50%) + 20px) 6% auto; margin: 0; text-align: center; font-family: var(--serif); font-style: italic; font-size: clamp(17px,2.2vw,22px); color: var(--body); }
+    @media (max-width: 640px) { :where(#gp-handstart) [data-hs-landing-category] { max-width: 12ch; text-align: right; } }
   </style>
 </head>
 
 <body>
 <div style="min-height:100vh; background:var(--cream); color:var(--navy);">
 
-  <!-- ===================== NAV ===================== -->
-  <header style="position:sticky; top:0; z-index:50; background:var(--cream); border-bottom:1px solid var(--hairline);">
+  <!-- ===================== FIXED HEADER (hidden during the portal landing, fades in as navy fills the screen) ===================== -->
+  <header id="siteHeader" style="position:fixed; top:0; left:0; right:0; z-index:100; background:var(--navy); border-bottom:1px solid rgba(247,244,238,0.14); opacity:1;">
     <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,4vw,44px); height:clamp(72px,10vw,96px); display:flex; align-items:center; justify-content:space-between; gap:16px;">
       <a href="#top" style="display:flex; align-items:center; gap:12px;">
-        <img src="assets/logo-header.png" alt="Handstart Digital" style="height:clamp(44px,5.5vw,58px); width:auto; object-fit:contain; display:block;">
+        <img src="assets/logo-footer.png" alt="Handstart Digital" style="height:clamp(44px,5.5vw,58px); width:auto; object-fit:contain; display:block;">
       </a>
       <nav class="hs-nav-links" style="display:flex; align-items:center; gap:clamp(20px,2.6vw,34px);">
-        <a href="/services" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">Services<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
-        <a href="/about" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">About<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
-        <a href="/the-difference" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">The Difference<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
-        <a href="/case-studies" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--slate);">Case Studies<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a href="/services" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Services<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a href="/about" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">About<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a href="/the-difference" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">The Difference<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
+        <a href="/case-studies" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Case Studies<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 C 20 8, 40 6.5, 60 6.4 C 80 6.3, 100 7, 113 7.6"/></svg></a>
         <a class="hs-cta hs-cta--sm" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
       </nav>
-      <button class="hs-hamburger" id="navToggle" aria-label="Menu" aria-expanded="false" style="align-items:center; justify-content:center; width:44px; height:44px; background:none; border:1px solid var(--hairline); border-radius:9px; cursor:pointer; color:var(--navy);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="4" y1="7" x2="20" y2="7" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="12" x2="20" y2="12" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="17" x2="20" y2="17" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line></svg>
+      <button class="hs-hamburger" id="navToggle" aria-label="Menu" aria-expanded="false" style="align-items:center; justify-content:center; width:44px; height:44px; background:none; border:1px solid rgba(247,244,238,0.3); border-radius:9px; cursor:pointer; color:var(--cream);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="4" y1="7" x2="20" y2="7" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="12" x2="20" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="17" x2="20" y2="17" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line></svg>
       </button>
     </div>
-    <div id="mobileNav" hidden style="border-top:1px solid var(--hairline); padding:12px clamp(20px,4vw,44px) 20px; flex-direction:column; gap:6px; background:var(--cream);">
-      <a href="/services" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Services</a>
-      <a href="/about" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">About</a>
-      <a href="/the-difference" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">The Difference</a>
-      <a href="/case-studies" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Case Studies</a>
+    <div id="mobileNav" hidden style="border-top:1px solid rgba(247,244,238,0.14); padding:12px clamp(20px,4vw,44px) 20px; flex-direction:column; gap:6px; background:var(--navy);">
+      <a href="/services" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">Services</a>
+      <a href="/about" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">About</a>
+      <a href="/the-difference" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">The Difference</a>
+      <a href="/case-studies" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">Case Studies</a>
       <a class="hs-cta hs-cta--sm" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
     </div>
   </header>
+
+  <!--
+    Glyph Portal (c) 2026 Christian Katzmann. MIT.
+    Origin: UsefulPortal.astro on https://ktzm.dk, UsefulPortal.tsx, ClarityPortal.tsx.
+    A scroll driven camera through live type. Keep this notice with copies.
+    Ported to plain HTML, CSS, and JS for this no-build site: the JSX became the
+    static markup below, the effect became the init function in the script at
+    the bottom of the page, and onProgress became a plain callback that drives
+    the fixed header's opacity.
+  -->
+  <section id="gp-handstart" aria-label="HANDSTART" style="--gp-length:2.2; --gp-characters:9;">
+    <div data-gp-viewport aria-hidden="true"></div>
+    <div data-gp-pin>
+      <div data-gp-field aria-hidden="true" inert></div>
+      <svg data-gp-art aria-hidden="true" focusable="false">
+        <defs>
+          <clipPath id="gp-handstart-clip" clipPathUnits="userSpaceOnUse">
+            <text data-gp-glyph x="0" y="0" style="font-family:'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif; font-weight:900; font-size:100px; font-kerning:none; font-variant-ligatures:none; letter-spacing:0;">HANDSTART</text>
+          </clipPath>
+        </defs>
+        <g data-gp-marks style="visibility:hidden;"><path></path></g>
+      </svg>
+      <div data-gp-choices role="radiogroup" aria-label="Choose the letter to enter through" inert>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="0" aria-label="H, letter 1 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="1" aria-label="A, letter 2 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="2" aria-label="N, letter 3 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="3" aria-label="D, letter 4 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="4" aria-label="S, letter 5 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="5" aria-label="T, letter 6 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="6" aria-label="A, letter 7 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="7" aria-label="R, letter 8 of 9"></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gp-letter="8" aria-label="T, letter 9 of 9"></button>
+      </div>
+      <label data-gp-touch-picker>
+        <span style="position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%);">Entry letter</span>
+        <select data-gp-select>
+          <option value="" disabled selected>Choose a letter</option>
+          <option value="0">1 . H</option>
+          <option value="1">2 . A</option>
+          <option value="2">3 . N</option>
+          <option value="3">4 . D</option>
+          <option value="4">5 . S</option>
+          <option value="5">6 . T</option>
+          <option value="6">7 . A</option>
+          <option value="7">8 . R</option>
+          <option value="8">9 . T</option>
+        </select>
+      </label>
+      <div data-gp-front>
+        <div data-hs-landing-top>
+          <a href="#top" style="display:flex; align-items:center; gap:12px;">
+            <img src="assets/logo-header.png" alt="Handstart Digital" style="height:clamp(38px,5vw,52px); width:auto; object-fit:contain; display:block;">
+          </a>
+          <span data-hs-landing-category>Boutique Digital Marketing</span>
+        </div>
+        <p data-hs-landing-support>Let us give your business a hand.</p>
+      </div>
+      <span data-gp-fallback aria-hidden="true" style="font-family:'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif; font-weight:900;">HANDSTART</span>
+      <div data-gp-caption>
+        <span data-gp-hint aria-hidden="true">Scroll to enter.</span>
+        <a data-gp-enter href="#gp-handstart-content">Scroll for a closer look<span aria-hidden="true">&darr;</span></a>
+      </div>
+      <noscript><style>#gp-handstart [data-gp-fallback]{display:grid}#gp-handstart [data-gp-hint]{display:none}</style></noscript>
+    </div>
+    <div data-gp-content id="gp-handstart-content" tabindex="-1">
 
   <!-- ===================== HERO ===================== -->
   <section id="top" style="position:relative; background:var(--navy); overflow:hidden; padding:clamp(12px,2vw,26px) clamp(24px,6vw,80px) 0; min-height:calc(100svh - clamp(72px,10vw,96px)); display:flex; flex-direction:column;">
@@ -237,6 +362,9 @@
     </div>
   </section>
 
+    </div>
+  </section>
+
   <!-- ===================== ASSESSMENT ===================== -->
   <section id="assessment" style="background:var(--navy); padding:clamp(40px,5vw,64px) clamp(24px,6vw,80px) clamp(56px,8vw,104px);">
     <div id="assessmentCard" style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center;"></div>
@@ -291,6 +419,372 @@
         else { menu.setAttribute('hidden', ''); menu.style.display = ''; }
         toggle.setAttribute('aria-expanded', String(open));
       });
+    }
+  })();
+
+  // Glyph Portal (c) 2026 Christian Katzmann. MIT.
+  // Origin: UsefulPortal.astro on https://ktzm.dk, UsefulPortal.tsx, ClarityPortal.tsx.
+  // A scroll driven camera through live type. Keep this notice with copies.
+  //
+  // Ported from the React/TSX source to plain DOM for this no-build site. The JSX
+  // became the static markup in the section above, this init function is the
+  // effect body from the component (useRef and useLayoutEffect collapsed into one
+  // run against real elements), and onProgress below is a plain callback instead
+  // of a React prop. The zoom, scan, and clip mechanics are unchanged from the
+  // source: only the wiring around them was made vanilla.
+  (function () {
+    var clamp = function (n, a, b) {
+      if (a === undefined) a = 0;
+      if (b === undefined) b = 1;
+      return Math.min(b, Math.max(a, n));
+    };
+    var smooth = function (a, b, n) {
+      var t = clamp((n - a) / (b - a));
+      return t * t * (3 - 2 * t);
+    };
+
+    // Largest opaque square, in linear time. Unlike a stem guess, it works in O, S and other holed forms.
+    function interior(context, char, font) {
+      var canvas = context.canvas;
+      context.font = font;
+      var m = context.measureText(char);
+      var pad = 8;
+      var left = Math.ceil(m.actualBoundingBoxLeft);
+      var ascent = Math.ceil(m.actualBoundingBoxAscent);
+      canvas.width = Math.max(1, Math.ceil(m.actualBoundingBoxLeft + m.actualBoundingBoxRight) + pad * 2);
+      canvas.height = Math.max(1, Math.ceil(m.actualBoundingBoxAscent + m.actualBoundingBoxDescent) + pad * 2);
+      context.font = font;
+      context.fontKerning = 'none';
+      context.fillText(char, pad + left, pad + ascent);
+      var width = canvas.width, height = canvas.height;
+      var pixels = context.getImageData(0, 0, width, height).data;
+      var rows = new Uint16Array(width + 1);
+      var size = 0, bx = 0, by = 0;
+      for (var y = 0; y < height; y++) {
+        var diagonal = 0;
+        for (var x = 0; x < width; x++) {
+          var above = rows[x + 1];
+          rows[x + 1] = pixels[(y * width + x) * 4 + 3] > 245 ? Math.min(above, rows[x], diagonal) + 1 : 0;
+          diagonal = above;
+          if (rows[x + 1] > size) { size = rows[x + 1]; bx = x; by = y; }
+        }
+      }
+      if (size < 3) return null;
+      // Scan at 3x SVG size. Inscribe a disk in the square, with room for raster disagreement.
+      return {
+        x: (bx + 1 - size / 2 - pad - left) / 3,
+        y: (by + 1 - size / 2 - pad - ascent) / 3,
+        radius: (size / 2 - 1) / 3
+      };
+    }
+
+    function scrollParent(element) {
+      for (var p = element.parentElement; p; p = p.parentElement) {
+        if (/(auto|scroll|hidden)/.test(getComputedStyle(p).overflowY) && p !== document.body && p !== document.documentElement) return p;
+      }
+      return null;
+    }
+
+    function initGlyphPortal(section, options) {
+      var text = options.word;
+      var characters = Array.from(text);
+      var length = clamp(options.scrollLength, 1, 8);
+      var weight = clamp(options.fontWeight, 1, 1000);
+      var interactive = options.interactive;
+      var focusChar = options.focusChar || null;
+      var clipId = options.clipId;
+      var onProgress = options.onProgress;
+      var hasFront = options.hasFront;
+
+      var pin = section.querySelector('[data-gp-pin]');
+      var field = section.querySelector('[data-gp-field]');
+      var art = section.querySelector('[data-gp-art]');
+      var clip = section.querySelector('#' + clipId);
+      var glyph = section.querySelector('[data-gp-glyph]');
+      var marks = section.querySelector('[data-gp-marks]');
+      var choices = section.querySelector('[data-gp-choices]');
+      var buttons = Array.prototype.slice.call(choices.querySelectorAll('button'));
+      var picker = section.querySelector('[data-gp-select]');
+      var root = scrollParent(section);
+      var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var canvas = document.createElement('canvas');
+      var context = canvas.getContext('2d', { willReadFrequently: true });
+      var disposed = false, raf = 0, dirty = true, active = true, ready = false;
+      var mountedAt = performance.now();
+      var browserFrameSeen = false, stalled = false;
+      var W = 1, H = 1, travel = 1, startScale = 1, endScale = 1;
+      var center = { x: 0, y: 0 }, target = null;
+      var lastProgress = -1;
+      var lastMotion = null;
+      var candidates = [], letters = [];
+      var choosing = false;
+      var bounds = { x: 0, y: 0, width: 1, height: 1 };
+      var fontDirty = true;
+
+      // Freeze an available face for this mount. Late font swaps move the ink under the camera.
+      glyph.style.fontFamily = options.fontFamily;
+      var computedFamily = getComputedStyle(glyph).fontFamily;
+      var families = computedFamily.match(/(?:[^,"']+|"[^"]*"|'[^']*')+/g) || [];
+      var available = families.filter(function (family) {
+        try { return document.fonts.check(weight + ' 100px ' + family.trim(), text); }
+        catch (e) { return false; }
+      });
+      glyph.style.fontFamily = available.concat([options.defaultFont]).join(',');
+      // A pending requested face may also hold WebKit's render loop. Keep that mount static.
+      stalled = available.length < families.length;
+
+      function readInk() {
+        if (!context) return false;
+        var font = getComputedStyle(glyph);
+        var scanFont = font.fontWeight + ' 300px ' + font.fontFamily;
+        context.font = font.fontWeight + ' 100px ' + font.fontFamily;
+        context.fontKerning = 'none';
+        var metrics = context.measureText(text);
+        var advances = [];
+        for (var i = 0; i < text.length; i++) advances.push(context.measureText(text.slice(0, i)).width);
+        // SVG getBBox includes the font's line box in some engines. Frame visible ink instead.
+        bounds = {
+          x: -metrics.actualBoundingBoxLeft, y: -metrics.actualBoundingBoxAscent,
+          width: metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight,
+          height: metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent
+        };
+        if (!bounds.width || !bounds.height) return false;
+        center = { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 };
+        var requested = focusChar ? text.indexOf(focusChar) : -1;
+        var offset = 0;
+        candidates = []; letters = [];
+        for (var ci = 0; ci < characters.length; ci++) {
+          var char = characters[ci];
+          context.font = font.fontWeight + ' 100px ' + font.fontFamily;
+          var m = context.measureText(char);
+          letters.push({
+            index: offset, x: advances[offset] - m.actualBoundingBoxLeft,
+            y: -m.actualBoundingBoxAscent, width: m.actualBoundingBoxLeft + m.actualBoundingBoxRight,
+            height: m.actualBoundingBoxAscent + m.actualBoundingBoxDescent
+          });
+          var found = interior(context, char, scanFont);
+          if (found) { found.x = found.x + advances[offset]; found.index = offset; candidates.push(found); }
+          offset += char.length;
+        }
+        var byRequested = null;
+        for (var k = 0; k < candidates.length; k++) { if (candidates[k].index === requested) { byRequested = candidates[k]; break; } }
+        if (byRequested) {
+          target = byRequested;
+        } else {
+          var sorted = candidates.slice().sort(function (a, b) {
+            return (b.radius - a.radius) || (Math.abs(a.x - center.x) - Math.abs(b.x - center.x));
+          });
+          target = sorted[0] || null;
+        }
+        return true;
+      }
+
+      function select(next) {
+        target = next;
+        endScale = target ? Math.max(startScale, Math.hypot(W, H) / (target.radius * 1.35)) : startScale;
+        section.dataset.gpFocus = target ? Array.from(text.slice(target.index))[0] : '';
+        section.dataset.gpFocusIndex = String(target ? target.index : -1);
+        buttons.forEach(function (button) {
+          var letterIndex = Number(button.dataset.gpLetter);
+          var selected = target ? letterIndex === target.index : false;
+          button.disabled = !candidates.some(function (c) { return c.index === letterIndex; });
+          button.setAttribute('aria-checked', String(selected));
+          button.tabIndex = selected ? 0 : -1;
+        });
+        if (picker.value !== '') picker.value = String(target ? target.index : -1);
+        Array.prototype.forEach.call(picker.options, function (option) {
+          option.disabled = option.value === '' || !candidates.some(function (c) { return c.index === Number(option.value); });
+        });
+        var u = 1 / startScale;
+        var y = bounds.y + bounds.height + 25 * u;
+        var x = bounds.x;
+        var right = x + bounds.width;
+        var cross = target ? 'M' + (target.x - 9 * u) + ' ' + target.y + 'h' + (18 * u) + 'M' + target.x + ' ' + (target.y - 9 * u) + 'v' + (18 * u) : '';
+        var annotationPath = marks.querySelector('path');
+        annotationPath.setAttribute('d', 'M' + x + ' ' + y + 'H' + right + 'M' + x + ' ' + (y - 5 * u) + 'v' + (10 * u) + 'M' + right + ' ' + (y - 5 * u) + 'v' + (10 * u) + cross);
+        annotationPath.setAttribute('stroke-width', String(u));
+      }
+
+      function position() {
+        var origin = root ? root.getBoundingClientRect().top + root.clientTop : 0;
+        return clamp((origin - section.getBoundingClientRect().top) / travel);
+      }
+
+      function paint(progress) {
+        var isStatic = motion.matches || !browserFrameSeen || stalled || !target;
+        var p = isStatic ? 0 : progress;
+        var t = clamp(p / 0.78);
+        var eased = t < 0.5 ? 4 * Math.pow(t, 3) : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        var scale = Math.exp(Math.log(startScale) + Math.log(endScale / startScale) * eased);
+        var blend = endScale === startScale ? 0 : (1 / scale - 1 / startScale) / (1 / endScale - 1 / startScale);
+        var cx = center.x + ((target ? target.x : center.x) - center.x) * blend;
+        var cy = center.y + ((target ? target.y : center.y) - center.y) * blend;
+        var roll = -4 * smooth(0.06, 0.5, t) * (1 - smooth(0.62, 0.92, t));
+        // Keep scale on the clip to avoid text paint limits. Text-local translation
+        // follows page zoom in WebKit; translation on an HTML clip reference does not.
+        var radians = roll * Math.PI / 180;
+        var dx = (W / 2) / scale, dy = (H * 0.46 + H * 0.04 * eased) / scale;
+        clip.setAttribute('transform', 'scale(' + scale + ') rotate(' + roll + ')');
+        glyph.setAttribute('transform', 'translate(' + (Math.cos(radians) * dx + Math.sin(radians) * dy - cx) + ' ' + (-Math.sin(radians) * dx + Math.cos(radians) * dy - cy) + ')');
+        var transform = 'translate(' + (W / 2) + ' ' + (H * 0.46 + H * 0.04 * eased) + ') scale(' + scale + ') rotate(' + roll + ') translate(' + (-cx) + ' ' + (-cy) + ')';
+        marks.setAttribute('transform', transform);
+        marks.style.opacity = String(1 - smooth(0.015, 0.17, p));
+        choosing = interactive && !isStatic && p < 0.04;
+        choices.inert = !choosing;
+        section.dataset.gpChoosing = String(choosing);
+        // Drop the clip only after the camera has already filled the viewport with ink.
+        field.style.clipPath = t >= 1 ? 'none' : 'url(#' + clipId + ')';
+        section.style.setProperty('--gp-caption', String(1 - smooth(0.015, 0.17, p)));
+        section.style.setProperty('--gp-reveal', String(isStatic ? 1 : smooth(0.78, 0.9, p)));
+        section.style.setProperty('--gp-field-scale', String(1 + 0.16 * smooth(0, 0.82, p)));
+        section.style.setProperty('--gp-caption-hit', p < 0.08 ? 'auto' : 'none');
+        section.dataset.gpEntered = String(p >= 0.9);
+        section.dataset.gpProgress = p.toFixed(5);
+        // Also re-fire on a motion-state flip even when progress is unchanged (typically
+        // still 0 at load): a consumer like the fixed header cares about gpMotion too, and
+        // it can change before the user has scrolled at all.
+        var motionState = section.dataset.gpMotion;
+        if (p !== lastProgress || motionState !== lastMotion) {
+          lastProgress = p; lastMotion = motionState;
+          if (onProgress) onProgress(p);
+        }
+      }
+
+      function layout() {
+        if (!section.clientWidth) return;
+        W = pin.clientWidth;
+        // A 100svh probe keeps browser chrome from continually changing the scroll distance.
+        var smallViewport = section.querySelector('[data-gp-viewport]').offsetHeight;
+        var viewportHeight = Math.max(1, Math.min(root ? root.clientHeight : smallViewport, smallViewport));
+        H = motion.matches ? Math.min(viewportHeight * 0.75, 480) : viewportHeight;
+        section.style.setProperty('--gp-height', H + 'px');
+        travel = H * length;
+        art.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        if (fontDirty) { ready = readInk(); fontDirty = false; }
+        if (!ready) return;
+        var wordHeight = hasFront && H < 480 ? Math.min(H * 0.38, Math.max(24, H - 264)) : H * 0.38;
+        startScale = Math.min(W * 0.84 / bounds.width, wordHeight / bounds.height);
+        select(target);
+        buttons.forEach(function (button) {
+          var letterIndex = Number(button.dataset.gpLetter);
+          var letter = null;
+          for (var i = 0; i < letters.length; i++) { if (letters[i].index === letterIndex) { letter = letters[i]; break; } }
+          if (!letter) return;
+          button.style.left = (W / 2 + (letter.x - center.x) * startScale) + 'px';
+          button.style.top = (H * 0.46 + (letter.y - center.y) * startScale - Math.max(0, 44 - letter.height * startScale) / 2) + 'px';
+          button.style.width = Math.max(1, letter.width * startScale) + 'px';
+          button.style.height = Math.max(44, letter.height * startScale) + 'px';
+        });
+        section.style.setProperty('--gp-word-top', (H * 0.46 - bounds.height * startScale / 2) + 'px');
+        section.style.setProperty('--gp-word-bottom', (H * 0.46 + bounds.height * startScale / 2) + 'px');
+        section.dataset.gpReady = 'true';
+        section.dataset.gpMotion = (!motion.matches && browserFrameSeen && !stalled && target) ? 'on' : 'off';
+      }
+
+      function frame(time) {
+        raf = 0;
+        if (disposed) return;
+        if (time !== undefined && !browserFrameSeen) {
+          browserFrameSeen = true;
+          stalled = stalled || (performance.now() - mountedAt > 2500);
+          dirty = true;
+        }
+        if (dirty) { dirty = false; layout(); }
+        if (ready) paint(position());
+      }
+      function schedule() { if (!raf && active) raf = requestAnimationFrame(frame); }
+      function resize() { cancelAnimationFrame(raf); dirty = true; frame(); }
+      function scroll() { schedule(); }
+      function choose(event) {
+        if (!choosing || position() >= 0.04) return;
+        var button = event.target.closest ? event.target.closest('[data-gp-letter]') : null;
+        if (!button) return;
+        var letterIndex = Number(button.dataset.gpLetter);
+        var next = null;
+        for (var i = 0; i < candidates.length; i++) { if (candidates[i].index === letterIndex) { next = candidates[i]; break; } }
+        if (!next || next === target) return;
+        select(next); paint(position());
+      }
+      function navigate(event) {
+        var keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+        if (!choosing || keys.indexOf(event.key) === -1) return;
+        event.preventDefault();
+        var current = candidates.indexOf(target);
+        var index;
+        if (event.key === 'Home') index = 0;
+        else if (event.key === 'End') index = candidates.length - 1;
+        else index = (current + (event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1) + candidates.length) % candidates.length;
+        var wantIndex = candidates[index].index;
+        var wantButton = null;
+        for (var i = 0; i < buttons.length; i++) { if (Number(buttons[i].dataset.gpLetter) === wantIndex) { wantButton = buttons[i]; break; } }
+        if (wantButton) wantButton.focus({ preventScroll: true });
+      }
+      function pick() {
+        if (!choosing || position() >= 0.04) return;
+        var letterIndex = Number(picker.value);
+        var next = null;
+        for (var i = 0; i < candidates.length; i++) { if (candidates[i].index === letterIndex) { next = candidates[i]; break; } }
+        if (next) { select(next); paint(position()); }
+      }
+
+      choices.addEventListener('pointerover', choose);
+      choices.addEventListener('click', choose);
+      choices.addEventListener('focusin', choose);
+      choices.addEventListener('keydown', navigate);
+      picker.addEventListener('change', pick);
+      var observer = new ResizeObserver(resize);
+      observer.observe(section);
+      if (root) observer.observe(root);
+      var visibility = new IntersectionObserver(function (entries) {
+        var entry = entries[0];
+        active = entry.isIntersecting;
+        if (active) { dirty = true; schedule(); }
+        else if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      }, { root: root, rootMargin: '100% 0px' });
+      visibility.observe(section);
+      (root || window).addEventListener('scroll', scroll, { passive: true });
+      window.addEventListener('resize', resize);
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', resize);
+      motion.addEventListener('change', resize);
+      // WebKit can withhold frames, timers and scroll events behind an initial hung font.
+      // Begin in reading flow. Enable motion only when the browser starts rendering promptly.
+      frame();
+      schedule();
+    }
+
+    var section = document.getElementById('gp-handstart');
+    var header = document.getElementById('siteHeader');
+    if (!section) return;
+
+    function updateHeader(progress) {
+      if (!header) return;
+      if (section.dataset.gpMotion !== 'on') { header.style.opacity = '1'; return; }
+      header.style.opacity = String(smooth(0.78, 0.9, progress));
+    }
+
+    function start() {
+      initGlyphPortal(section, {
+        word: 'HANDSTART',
+        focusChar: null, // auto-pick the largest ink patch, never force a letter
+        interactive: true,
+        scrollLength: 2.2, // keep in sync with --gp-length on the section's inline style
+        fontFamily: '"Libre Franklin", -apple-system, BlinkMacSystemFont, sans-serif',
+        defaultFont: '"Arial Black", "Arial", sans-serif',
+        fontWeight: 900,
+        clipId: 'gp-handstart-clip',
+        hasFront: true,
+        onProgress: updateHeader
+      });
+    }
+
+    // A heavy weight is required for the ink scan, so gate on it loading before
+    // measuring anything: a late font swap would move the ink under the camera.
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load('900 100px "Libre Franklin"').catch(function () {}).then(function () {
+        return document.fonts.ready;
+      }).then(start, start);
+    } else {
+      start();
     }
   })();
 
