@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>Handstart Digital</title>
-  <meta name="description" content="In an automated world, Handstart keeps human eyes on your business: someone who actually looks, finds what's missing, fixes it, and gives you ways to keep it working.">
+  <meta name="description" content="In an automated world, Handstart prioritizes human eyes and effort for your business.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -310,13 +310,15 @@
         <img class="hp-anim-float" src="assets/logo-hero.png" alt="Handstart Digital" style="position:relative; z-index:1; width:100%; height:auto; object-fit:contain; display:block;">
       </div>
       <h1 class="hp-h1" style="font-family:var(--serif); font-weight:600; font-size:clamp(28px,4vw,50px); line-height:1.03; letter-spacing:-0.015em; color:var(--cream); margin:0; white-space:nowrap;">Being online &ne; Being found</h1>
-      <div style="display:flex; align-items:flex-end; gap:8px; font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">
-        <span style="flex-shrink:0;">Get found:</span>
-        <span id="hwBox" style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span><svg id="hwSvg" class="hw-word-svg" aria-hidden="true"></svg></span>
+      <div style="display:flex; flex-direction:column; align-items:flex-start; gap:2px; margin-top:4px;">
+        <span style="font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">Get a headstart on your competition.</span>
+        <div style="display:flex; align-items:flex-end; gap:8px; font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">
+          <span style="flex-shrink:0;">Get found:</span>
+          <span id="hwBox" style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span><svg id="hwSvg" class="hw-word-svg" aria-hidden="true"></svg></span>
+        </div>
       </div>
-      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">In an automated world, Handstart keeps human eyes on your business: someone who actually looks, finds what's missing, fixes it, and gives you ways to keep it working.</p>
-      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">Your work won't just be a <a href="/the-difference" style="color:var(--amber); font-weight:600;">generic AI template</a> with your logo dropped on top.</p>
-      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:0;">Whether you're already running campaigns or don't even have a website yet,<br>you start where you are and grow at your pace, not ours.</p>
+      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">In an automated world, Handstart prioritizes human eyes and effort for your business.</p>
+      <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:0;">Whether you're already running campaigns, or don't even have a website yet:<br>You start where you are, and grow at your own pace - not ours.</p>
       <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content:center; margin-top:8px;">
         <a class="hs-cta" href="#assessment" id="findGaps"><span class="hs-cta-face">Find My Gaps</span><span class="hs-cta-hover" aria-hidden="true">Find My Gaps <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
         <a href="/services" style="display:inline-flex; align-items:center; background:transparent; color:var(--cream); font-family:var(--sans); font-size:16px; font-weight:600; padding:12px 28px; border-radius:9px; border:1.5px solid rgba(247,244,238,0.4); transition:background 200ms ease, transform 200ms ease;">What We Do</a>
@@ -519,6 +521,17 @@
       var bounds = { x: 0, y: 0, width: 1, height: 1 };
       var fontDirty = true;
 
+      // Locked-ride addition (not part of the original Glyph Portal effect above):
+      // past LOCK_AT, scroll hands off to a fixed-duration timed animation instead
+      // of scrubbing 1:1, so the rest of the camera move plays out like a committed
+      // ride rather than a manual drag. Reversible: scrolling back up from landed
+      // replays the same ride backwards down to LOCK_AT, then scrubbing resumes.
+      var LOCK_AT = 0.085;
+      var LOCK_MS = 850;
+      var phase = 'idle'; // idle | priming | locked | landed
+      var lockedP = 0, lockFrom = 0, lockTo = 0, lockStart = 0, lockRaf = 0;
+      var settleUntil = 0; // absorbs residual scroll events right after a lock completes
+
       // Freeze an available face for this mount. Late font swaps move the ink under the camera.
       glyph.style.fontFamily = options.fontFamily;
       var computedFamily = getComputedStyle(glyph).fontFamily;
@@ -688,11 +701,101 @@
           dirty = true;
         }
         if (dirty) { dirty = false; layout(); }
-        if (ready) paint(position());
+        if (ready) paint(phase === 'locked' ? lockedP : position());
       }
       function schedule() { if (!raf && active) raf = requestAnimationFrame(frame); }
-      function resize() { cancelAnimationFrame(raf); dirty = true; frame(); }
-      function scroll() { schedule(); }
+      function resize() {
+        cancelAnimationFrame(raf);
+        if (motion.matches) { cancelAnimationFrame(lockRaf); lockRaf = 0; phase = 'idle'; }
+        dirty = true;
+        frame();
+      }
+
+      // Snaps real document scroll to whatever offset corresponds to progress p,
+      // so native scrolling picks back up seamlessly once the locked ride ends
+      // (undoes any overshoot from the wheel/touch tick that crossed the threshold).
+      function syncScrollToProgress(p) {
+        var origin = root ? root.getBoundingClientRect().top + root.clientTop : 0;
+        var currentTop = section.getBoundingClientRect().top;
+        var targetTop = origin - travel * p;
+        var delta = currentTop - targetTop;
+        if (Math.abs(delta) < 0.5) return;
+        // The page sets html { scroll-behavior: smooth }, which would otherwise animate
+        // this correction over several frames and fire a cascade of intermediate scroll
+        // events, some of which cross the lock thresholds again and re-trigger the lock.
+        if (root) root.scrollTop += delta;
+        else window.scrollTo({ top: window.scrollY + delta, left: window.scrollX, behavior: 'instant' });
+      }
+
+      function tickLock(time) {
+        var t = clamp((time - lockStart) / LOCK_MS);
+        var eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        lockedP = lockFrom + (lockTo - lockFrom) * eased;
+        dirty = false;
+        if (ready) paint(lockedP);
+        if (t < 1) {
+          lockRaf = requestAnimationFrame(tickLock);
+        } else {
+          // Reverse lands at the true resting state (p:0, no residual motion at all),
+          // not the priming threshold, which still had a faint in-progress wobble.
+          phase = lockTo >= 1 ? 'landed' : (lockTo <= 0 ? 'idle' : 'priming');
+          syncScrollToProgress(lockTo);
+          settleUntil = performance.now() + 150;
+        }
+      }
+
+      function engageLock(direction) {
+        cancelAnimationFrame(lockRaf);
+        lockFrom = direction > 0 ? LOCK_AT : 1;
+        lockTo = direction > 0 ? 1 : 0;
+        syncScrollToProgress(lockFrom);
+        phase = 'locked';
+        lockedP = lockFrom;
+        lockStart = performance.now();
+        lockRaf = requestAnimationFrame(tickLock);
+      }
+
+      function scroll() {
+        if (motion.matches || stalled || !browserFrameSeen) { schedule(); return; }
+        if (phase === 'locked') return; // input already captured; ignore stray scroll events
+        if (performance.now() < settleUntil) { schedule(); return; }
+        var rawP = position();
+        if (phase !== 'landed' && target && rawP >= LOCK_AT) { engageLock(1); return; }
+        if (phase === 'landed' && rawP < 1 - 0.0005) { engageLock(-1); return; }
+        phase = rawP >= 1 ? 'landed' : (rawP > 0 ? 'priming' : 'idle');
+        schedule();
+      }
+
+      // Detecting "scroll back up" directly off the wheel/touch gesture, rather than
+      // waiting for a native scroll event to confirm the direction, avoids the delay
+      // (and occasional missed first attempt) of the scroll()-based fallback above.
+      var touchStartY = 0;
+      function guardLockedInput(event) {
+        if (phase === 'locked') { event.preventDefault(); return; }
+        if (phase === 'landed' && event.type === 'wheel' && event.deltaY < 0) {
+          event.preventDefault();
+          engageLock(-1);
+        }
+      }
+      function handleTouchStart(event) {
+        touchStartY = event.touches[0] ? event.touches[0].clientY : 0;
+      }
+      function handleTouchMove(event) {
+        if (phase === 'locked') { event.preventDefault(); return; }
+        if (phase === 'landed' && event.touches[0] && event.touches[0].clientY - touchStartY > 8) {
+          event.preventDefault();
+          engageLock(-1);
+        }
+      }
+      function guardLockedKey(event) {
+        if (phase !== 'locked') return;
+        var keys = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '];
+        if (keys.indexOf(event.key) !== -1) event.preventDefault();
+      }
+      window.addEventListener('wheel', guardLockedInput, { passive: false });
+      window.addEventListener('touchstart', handleTouchStart, { passive: true });
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
+      window.addEventListener('keydown', guardLockedKey);
       function choose(event) {
         if (!choosing || position() >= 0.04) return;
         var button = event.target.closest ? event.target.closest('[data-gp-letter]') : null;
@@ -737,7 +840,10 @@
         var entry = entries[0];
         active = entry.isIntersecting;
         if (active) { dirty = true; schedule(); }
-        else if (raf) { cancelAnimationFrame(raf); raf = 0; }
+        else {
+          if (raf) { cancelAnimationFrame(raf); raf = 0; }
+          if (lockRaf) { cancelAnimationFrame(lockRaf); lockRaf = 0; phase = phase === 'locked' ? 'priming' : phase; }
+        }
       }, { root: root, rootMargin: '100% 0px' });
       visibility.observe(section);
       (root || window).addEventListener('scroll', scroll, { passive: true });
@@ -825,16 +931,10 @@
           var path = font.getPath(word, 0, 0, upm);
           var b = path.getBoundingBox();
           var vbX = b.x1 - pad;
-          var vbY = b.y1 - pad;
           var vbW = (b.x2 - b.x1) + pad * 2;
-          var vbH = (b.y2 - b.y1) + pad * 2;
           var d = path.toPathData(3);
           var contours = d.split(/(?=M)/).filter(function (s) { return s.trim().length > 0; });
-          return {
-            d: d, contours: contours, vbX: vbX, vbY: vbY, vbW: vbW, vbH: vbH,
-            widthEm: vbW / upm, heightEm: vbH / upm,
-            baselineEm: -(b.y2 + pad) / upm
-          };
+          return { d: d, contours: contours, vbX: vbX, vbW: vbW, widthEm: vbW / upm };
         }
 
         // Compute every word's metrics up front: the reserved-width box needs the widest one,
@@ -842,6 +942,17 @@
         var metrics = words.map(metricsFor);
         var maxWidthEm = Math.max.apply(null, metrics.map(function (m) { return m.widthEm; }));
         box.style.width = maxWidthEm.toFixed(3) + 'em';
+
+        // Vertical frame comes from the font's own ascender/descender, not each word's ink
+        // bounding box: "SEO" has no descender while "Social Media Management" does, and
+        // using per-word extents there made the SVG's height (and the row's height under
+        // it) change on every cycle, shifting the copy below up or down.
+        var vbY = -font.ascender - pad;
+        var vbH = (font.ascender - font.descender) + pad * 2;
+        var heightEm = vbH / upm;
+        var baselineEm = -(vbY + vbH) / upm;
+        box.style.height = heightEm.toFixed(3) + 'em';
+        metrics.forEach(function (m) { m.vbY = vbY; m.vbH = vbH; m.heightEm = heightEm; m.baselineEm = baselineEm; });
 
         var counts = metrics.map(function (m) { return m.contours.length; });
         var minCount = Math.min.apply(null, counts);
