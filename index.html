@@ -128,7 +128,8 @@
     /* Handwriting */
     .hw-word { font-family: var(--script); font-weight: 600; white-space: nowrap; display: inline-block; }
     .hw-word-svg { display: none; overflow: visible; }
-    .hw-word-svg path { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: var(--hw-stroke-w, 24); }
+    .hw-word-svg .hw-fill { fill: currentColor; stroke: none; }
+    .hw-word-svg .hw-stroke { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: var(--hw-stroke-w, 16); }
 
     @media (max-width: 380px) { .hp-h1 { white-space: normal !important; text-wrap: balance; } }
 
@@ -188,7 +189,7 @@
       <h1 class="hp-h1" style="font-family:var(--serif); font-weight:600; font-size:clamp(28px,4vw,50px); line-height:1.03; letter-spacing:-0.015em; color:var(--cream); margin:0; white-space:nowrap;">Being online &ne; Being found</h1>
       <div style="display:flex; align-items:flex-end; gap:8px; font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">
         <span style="flex-shrink:0;">Get found:</span>
-        <span style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span><svg id="hwSvg" class="hw-word-svg" aria-hidden="true"></svg></span>
+        <span id="hwBox" style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span><svg id="hwSvg" class="hw-word-svg" aria-hidden="true"></svg></span>
       </div>
       <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">In an automated world, Handstart keeps human eyes on your business: someone who actually looks, finds what's missing, fixes it, and gives you ways to keep it working.</p>
       <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:4px 0 0;">Your work won't just be a <a href="/the-difference" style="color:var(--amber); font-weight:600;">generic AI template</a> with your logo dropped on top.</p>
@@ -293,110 +294,154 @@
     }
   })();
 
-  // Handwriting: draw each cursive word on stroke by stroke, hold, then erase it the same way.
-  // Real glyph outlines come from opentype.js reading the self-hosted Caveat file. Each glyph
-  // contour becomes its own SVG path so the stroke-dasharray/dashoffset draw-on technique reveals
-  // them in sequence: a single path spanning multiple letter contours does not reveal cleanly,
-  // since the browser's dash pattern does not stay in lockstep across separate subpaths.
+  // Handwriting: two SVG layers per word, both built from the same opentype.js path data for
+  // the self-hosted Caveat file. A bottom fill layer (the whole, undivided path) fades in as
+  // solid ink, since only the undivided path keeps counters in e/a/o/d/g as holes instead of
+  // filled blobs. A top stroke layer splits that same path at each moveto into one path per
+  // contour, finer than per letter, and draws each with stroke-dashoffset so the pen strokes
+  // are staggered and overlapping, the way real handwriting looks.
   (function () {
     var el = document.getElementById('hwText');
     var svg = document.getElementById('hwSvg');
-    if (!el) return;
+    var box = document.getElementById('hwBox');
+    if (!el || !svg || !box) return;
+
     var words = ['Google Ads', 'SEO', 'Website Builds', 'Social Media Management', 'Meta & Instagram Ads', 'Showing in AI Search Results', 'Landing Pages', 'Local Listings', 'Email Marketing', 'Conversion Tracking'];
     var i = 0;
     el.textContent = words[0];
 
-    // Reduced motion, or the SVG element is missing: keep the static fallback word, no drawing.
-    if (reduceMotion || !svg || typeof opentype === 'undefined') return;
+    if (typeof opentype === 'undefined') return; // load failure: static fallback word stays visible
 
     var SVG_NS = 'http://www.w3.org/2000/svg';
-    var DRAW_MS = 1250;
-    var HOLD_MS = 1800;
-    var ERASE_MS = 850;
-    var GAP_MS = 250;
+    var DUR_MIN = 1300;
+    var DUR_MAX = 2800;
+    var STROKE_OVERLAP = 2.4;
+    var STROKE_MIN_MS = 220;
+    var FILL_START_FRAC = 0.72;
+    var FILL_MS = 450;
+    var HOLD_MS = 1000;
+    var FADE_MS = 200;
 
     opentype.load('assets/fonts/Caveat-SemiBold.ttf', function (err, font) {
       if (err || !font) return; // network or parse failure: static fallback word stays visible
 
       try {
         var upm = font.unitsPerEm;
-        var padUnits = upm * 0.05;
-        var ascUnits = font.ascender + padUnits;
-        var descUnits = -font.descender + padUnits;
-        var heightUnits = ascUnits + descUnits;
-        var strokeWidthUnits = upm * 0.045;
+        var pad = upm * 0.12;
 
-        svg.style.height = (heightUnits / upm) + 'em';
-        svg.style.verticalAlign = (descUnits / upm) + 'em';
-        svg.style.setProperty('--hw-stroke-w', strokeWidthUnits);
-
-        function buildContours(word) {
-          var raw = font.getPath(word, 0, ascUnits, upm);
-          var box = raw.getBoundingBox();
-          var shiftX = box.x1 < 0 ? (padUnits - box.x1) : padUnits;
-          var placed = font.getPath(word, shiftX, ascUnits, upm);
-          var widthUnits = box.x2 + shiftX + padUnits;
-          var dAttr = placed.toPathData(3);
-          var contours = dAttr.split(/(?=M)/).filter(function (s) { return s.trim().length > 0; });
-          return { contours: contours, widthUnits: widthUnits };
+        function metricsFor(word) {
+          var path = font.getPath(word, 0, 0, upm);
+          var b = path.getBoundingBox();
+          var vbX = b.x1 - pad;
+          var vbY = b.y1 - pad;
+          var vbW = (b.x2 - b.x1) + pad * 2;
+          var vbH = (b.y2 - b.y1) + pad * 2;
+          var d = path.toPathData(3);
+          var contours = d.split(/(?=M)/).filter(function (s) { return s.trim().length > 0; });
+          return {
+            d: d, contours: contours, vbX: vbX, vbY: vbY, vbW: vbW, vbH: vbH,
+            widthEm: vbW / upm, heightEm: vbH / upm,
+            baselineEm: -(b.y2 + pad) / upm
+          };
         }
 
-        function drawWord(word, onDone) {
-          var built = buildContours(word);
-          svg.style.width = (built.widthUnits / upm) + 'em';
-          svg.setAttribute('viewBox', '0 0 ' + built.widthUnits + ' ' + heightUnits);
+        // Compute every word's metrics up front: the reserved-width box needs the widest one,
+        // and the draw duration needs the shortest and longest contour counts across the set.
+        var metrics = words.map(metricsFor);
+        var maxWidthEm = Math.max.apply(null, metrics.map(function (m) { return m.widthEm; }));
+        box.style.width = maxWidthEm.toFixed(3) + 'em';
+
+        var counts = metrics.map(function (m) { return m.contours.length; });
+        var minCount = Math.min.apply(null, counts);
+        var maxCount = Math.max.apply(null, counts);
+
+        function durationFor(count) {
+          if (maxCount === minCount) return (DUR_MIN + DUR_MAX) / 2;
+          return DUR_MIN + (count - minCount) / (maxCount - minCount) * (DUR_MAX - DUR_MIN);
+        }
+
+        if (reduceMotion) {
+          // Static fallback: swap plain filled text through the same word list, no stroke
+          // animation at all. Dwell time reuses the same duration formula as the drawn
+          // version, so longer phrases still get a comparable reading beat.
+          (function staticCycle() {
+            var dwell = durationFor(metrics[i].contours.length) + HOLD_MS;
+            setTimeout(function () {
+              i = (i + 1) % words.length;
+              el.textContent = words[i];
+              staticCycle();
+            }, dwell);
+          })();
+          return;
+        }
+
+        svg.style.setProperty('--hw-stroke-w', upm * 0.016);
+
+        function drawWord(idx, onDone) {
+          var m = metrics[idx];
+          svg.style.transition = 'none';
+          svg.setAttribute('viewBox', m.vbX + ' ' + m.vbY + ' ' + m.vbW + ' ' + m.vbH);
+          svg.style.width = m.widthEm + 'em';
+          svg.style.height = m.heightEm + 'em';
+          svg.style.verticalAlign = m.baselineEm + 'em';
+          svg.style.opacity = '1';
           while (svg.firstChild) svg.removeChild(svg.firstChild);
 
-          var paths = built.contours.map(function (d) {
+          var fillPath = document.createElementNS(SVG_NS, 'path');
+          fillPath.setAttribute('class', 'hw-fill');
+          fillPath.setAttribute('d', m.d);
+          svg.appendChild(fillPath);
+
+          var strokePaths = m.contours.map(function (d) {
             var p = document.createElementNS(SVG_NS, 'path');
+            p.setAttribute('class', 'hw-stroke');
             p.setAttribute('d', d);
             svg.appendChild(p);
             return p;
           });
 
-          var lens = paths.map(function (p) { return p.getTotalLength(); });
-          var total = lens.reduce(function (a, b) { return a + b; }, 0) || 1;
-          var starts = [];
-          var cum = 0;
-          lens.forEach(function (L) { starts.push(cum); cum += L; });
+          var count = strokePaths.length;
+          var duration = durationFor(count);
+          var lens = strokePaths.map(function (p) { return p.getTotalLength(); });
 
-          // Fully hidden, no transition yet, so the reset below applies before the draw-in starts.
-          paths.forEach(function (p, idx) {
+          // Fully hidden, no transition yet, so this reset applies before the draw-in starts.
+          fillPath.style.transition = 'none';
+          fillPath.style.opacity = '0';
+          strokePaths.forEach(function (p, idx2) {
             p.style.transition = 'none';
-            p.style.strokeDasharray = lens[idx];
-            p.style.strokeDashoffset = lens[idx];
+            p.style.strokeDasharray = lens[idx2];
+            p.style.strokeDashoffset = lens[idx2];
           });
           svg.getBoundingClientRect(); // force reflow
 
           requestAnimationFrame(function () {
-            paths.forEach(function (p, idx) {
-              var delay = DRAW_MS * (starts[idx] / total);
-              var dur = Math.max(DRAW_MS * (lens[idx] / total), 1);
-              p.style.transition = 'stroke-dashoffset ' + dur + 'ms linear ' + delay + 'ms';
+            var finishTimes = [];
+            strokePaths.forEach(function (p, idx2) {
+              var start = (idx2 / count) * duration;
+              var each = Math.max((duration / count) * STROKE_OVERLAP, STROKE_MIN_MS);
+              p.style.transition = 'stroke-dashoffset ' + each + 'ms ease-out ' + start + 'ms';
               p.style.strokeDashoffset = '0';
+              finishTimes.push(start + each);
             });
-          });
 
-          setTimeout(function () {
+            var fillDelay = duration * FILL_START_FRAC;
+            fillPath.style.transition = 'opacity ' + FILL_MS + 'ms ease-out ' + fillDelay + 'ms';
+            fillPath.style.opacity = '1';
+            finishTimes.push(fillDelay + FILL_MS);
+
+            var drawCompleteMs = Math.max.apply(null, finishTimes);
             setTimeout(function () {
-              // Erase in reverse: the last contour drawn is the first to disappear.
-              paths.forEach(function (p, idx) {
-                var eraseDelay = ERASE_MS * ((total - starts[idx] - lens[idx]) / total);
-                var eraseDur = Math.max(ERASE_MS * (lens[idx] / total), 1);
-                p.style.transition = 'stroke-dashoffset ' + eraseDur + 'ms linear ' + eraseDelay + 'ms';
-                p.style.strokeDashoffset = lens[idx];
-              });
-              setTimeout(onDone, ERASE_MS);
-            }, HOLD_MS);
-          }, DRAW_MS);
+              svg.style.transition = 'opacity ' + FADE_MS + 'ms ease-out';
+              svg.style.opacity = '0';
+              setTimeout(onDone, FADE_MS);
+            }, drawCompleteMs + HOLD_MS);
+          });
         }
 
         function cycle() {
-          drawWord(words[i], function () {
-            setTimeout(function () {
-              i = (i + 1) % words.length;
-              cycle();
-            }, GAP_MS);
+          drawWord(i, function () {
+            i = (i + 1) % words.length;
+            cycle();
           });
         }
 
