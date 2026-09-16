@@ -121,6 +121,15 @@
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
     .lenis.lenis-stopped { overflow: hidden; }
+
+    /* ---------- pinned service panel stack: plain stacked flow by default
+       (mobile, no-JS, reduced motion all land here); hs-motion.js only
+       promotes this to a pinned, scrubbed cover-wipe at tablet width and up
+       when motion is allowed, and tears it back down below that width. ---------- */
+    @media (min-width: 768px) {
+      .hs-pin-panel { min-height: 100vh; display: flex; align-items: center; }
+      .hs-pin-panel > div { width: 100%; }
+    }
   </style>
 </head>
 
@@ -169,9 +178,10 @@
     </div>
   </section>
 
-  <!-- ===================== FIVE PROBLEMS ===================== -->
+  <!-- ===================== FIVE PROBLEMS (pinned wipe stack on tablet/desktop) ===================== -->
+  <div class="hs-pin-stack" data-pin-stack>
   <!-- O1 -->
-  <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 data-anim="split-text" style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What makes your brand yours?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">This is how people recognize you, and decide you are the one to call.</p>
@@ -186,7 +196,7 @@
   </section>
 
   <!-- O2 -->
-  <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
+  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is your website working against you?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">It's outdated, hard to use on a phone, or doesn't exist yet. For most small businesses, this is where it starts. The base needs to be built, and built right.</p>
@@ -203,7 +213,7 @@
   </section>
 
   <!-- O3 -->
-  <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is it difficult to find you?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">You exist, but when someone searches for what you do, you're not as easy to find as you could be. There are many ways to make it easier.</p>
@@ -221,7 +231,7 @@
   </section>
 
   <!-- O4 -->
-  <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
+  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Do you need customers now?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">Sometimes you can't wait for slow growth. Performance marketing or paid strategy puts you in front of customers today.</p>
@@ -238,7 +248,7 @@
   </section>
 
   <!-- O5 -->
-  <section style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">How is your brand's ongoing presence?</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">Existing or potential customers forget about you. Keeping your brand visible keeps them coming back.</p>
@@ -251,6 +261,7 @@
       </ul>
     </div>
   </section>
+  </div>
 
   <!-- ===================== WHAT WE DON'T DO ===================== -->
   <section data-anim="clip" style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">

@@ -132,4 +132,41 @@
       }
     });
   });
+
+  // Pinned panel stack: an element carrying data-pin-stack holds full height
+  // panels that pin to the top of the viewport, one at a time, while the
+  // next panel is scrubbed up over the current one in lockstep with scroll
+  // position. Tablet and desktop only, gsap.matchMedia both activates this
+  // at that width and reverts every set/timeline/ScrollTrigger it created
+  // when the viewport crosses back below it, including on resize.
+  var pinStack = document.querySelector('[data-pin-stack]');
+  if (pinStack) {
+    var mm = gsap.matchMedia();
+    mm.add('(min-width: 768px)', function () {
+      var panels = Array.prototype.slice.call(pinStack.children);
+      if (panels.length < 2) return;
+
+      gsap.set(pinStack, { position: 'relative', height: '100vh', overflow: 'hidden' });
+      panels.forEach(function (panel, i) {
+        gsap.set(panel, {
+          position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+          zIndex: i, yPercent: i === 0 ? 0 : 100
+        });
+      });
+
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinStack,
+          start: 'top top',
+          end: function () { return '+=' + (panels.length - 1) * window.innerHeight; },
+          pin: true,
+          scrub: true,
+          invalidateOnRefresh: true
+        }
+      });
+      for (var i = 1; i < panels.length; i++) {
+        tl.to(panels[i], { yPercent: 0, ease: 'none', duration: 1 }, i - 1);
+      }
+    });
+  }
 })();
