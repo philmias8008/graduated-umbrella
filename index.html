@@ -93,6 +93,9 @@
     @keyframes hpGlow { 0%,100%{opacity:.28; transform:translate(-50%,-50%) scale(.9);} 50%{opacity:.8; transform:translate(-50%,-50%) scale(1.2);} }
     @keyframes hpFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
     @keyframes hpRise { 0%{opacity:0; transform:translateY(20px) scale(.6);} 15%{opacity:.9;} 85%{opacity:.7;} 100%{opacity:0; transform:translateY(-130px) scale(1);} }
+    @media (max-width: 640px) {
+      @keyframes hpRise { 0%{opacity:0; transform:translateY(20px) scale(.6);} 15%{opacity:.9;} 85%{opacity:.7;} 100%{opacity:0; transform:translateY(-260px) scale(1);} }
+    }
     .hp-anim-glow { animation: hpGlow 5.5s ease-in-out infinite; }
     .hp-anim-float { animation: hpFloat 7s ease-in-out infinite; }
     .hp-mote { animation: hpRise 8s ease-in infinite; }
@@ -106,7 +109,7 @@
       -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
       mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
     }
-    .hs-ticker-track { display: flex; width: max-content; animation: hsTicker 90s linear infinite; }
+    .hs-ticker-track { display: flex; width: max-content; animation: hsTicker 55s linear infinite; }
     .hs-ticker:hover .hs-ticker-track { animation-play-state: paused; }
     .hs-ticker-group { display: flex; align-items: center; flex-shrink: 0; }
     .hs-ticker-item { font-family: var(--sans); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); white-space: nowrap; padding: 0 18px; }
@@ -115,14 +118,14 @@
     /* Assessment */
     @keyframes hsFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     .hs-opt {
-      flex:1 1 0; min-width:96px; padding:20px 16px;
-      background:rgba(247,244,238,0.06); border:1.5px solid rgba(214,207,194,0.35); border-radius:12px;
-      font-family:var(--sans); font-size:19px; font-weight:600; color:var(--cream); cursor:pointer;
+      flex:1 1 0; min-width:76px; padding:13px 14px; max-width:180px;
+      background:var(--tint); border:1.5px solid var(--hairline); border-radius:12px;
+      font-family:var(--sans); font-size:15px; font-weight:600; color:var(--navy); cursor:pointer;
       transition:transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
     }
     .hs-opt:hover {
-      transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,0.28);
-      border-color:var(--amber); background:rgba(247,244,238,0.12);
+      transform:translateY(-2px); box-shadow:0 10px 24px rgba(27,43,75,0.14);
+      border-color:var(--amber); background:var(--cream);
     }
 
     /* Handwriting */
@@ -132,12 +135,108 @@
     .hw-word-svg .hw-stroke { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: var(--hw-stroke-w, 16); }
 
     @media (max-width: 380px) { .hp-h1 { white-space: normal !important; text-wrap: balance; } }
+    .hp-cta-row { justify-content:center; }
+    .hp-subcopy { align-items:center; text-align:center; }
+    .hp-subcopy p { text-align:center; }
+    @media (max-width: 640px) { .hp-subcopy, .hp-subcopy p { align-items:flex-start; text-align:left; } }
+    @media (max-width: 640px) { .hp-subcopy-line { align-self:center; text-align:center; } }
+
+    /* Steps To Get Ahead */
+    .hs-steps-tabs { display:flex; width:100%; }
+    .hs-steps-tab {
+      flex:1 1 0; background:none; border:none; cursor:pointer; text-align:left;
+      padding:0 0 12px; font-family:var(--sans); font-size:13px; font-weight:700;
+      letter-spacing:0.1em; text-transform:uppercase; color:#a9a190; transition:color 220ms ease;
+    }
+    .hs-steps-tab.is-active { color:var(--amber); }
+    .hs-steps-bar { display:flex; width:100%; gap:6px; }
+    .hs-steps-seg { flex:1 1 0; height:3px; border-radius:999px; background:var(--hairline); overflow:hidden; }
+    .hs-steps-fill { display:block; height:100%; width:0%; background:var(--amber); border-radius:999px; }
+    .hs-steps-fill.is-instant { transition:none !important; }
+    .hs-steps-fill.is-filling { transition:width linear; }
+    .hs-steps-panel { position:relative; margin-top:clamp(28px,3.6vw,40px); min-height:220px; }
+    .hs-steps-content {
+      display:flex; flex-direction:column; align-items:flex-start; gap:12px;
+      opacity:1; transform:translateX(0); transition:opacity 320ms ease, transform 320ms ease;
+    }
+    .hs-steps-content.is-out-fwd { opacity:0; transform:translateX(-16px); }
+    .hs-steps-content.is-out-back { opacity:0; transform:translateX(16px); }
+    .hs-steps-content.is-in-fwd { transform:translateX(16px); }
+    .hs-steps-content.is-in-back { transform:translateX(-16px); }
+    .hs-steps-title { margin:0; min-height:1.3em; }
+    @media (max-width: 640px) { .hs-steps-title { font-size:clamp(26px,6.5vw,32px) !important; } }
+    .hs-steps-title .hw-word { white-space:normal; }
+    @media (prefers-reduced-motion: reduce) {
+      .hs-steps-fill, .hs-steps-content { transition:none !important; }
+    }
+
+    /* Why Work With Us: ABCD panel accordion */
+    .hs-abcd { display:flex; width:100%; height:clamp(360px,42vw,460px); gap:6px; margin-top:clamp(28px,3.6vw,40px); }
+    .hs-abcd-panel {
+      position:relative; overflow:hidden; flex:1 1 0%; min-width:0; appearance:none;
+      background:var(--abcd-bg); border:none; border-radius:14px; cursor:pointer;
+      padding:clamp(20px,2.4vw,32px); text-align:left; font:inherit;
+      display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start;
+      transition:flex-grow 480ms cubic-bezier(.4,0,.2,1);
+    }
+    .hs-abcd-panel.is-active { flex-grow:3; }
+    .hs-abcd-letter {
+      position:absolute; top:50%; right:0; transform:translateY(-50%);
+      font-family:var(--serif); font-weight:600; font-size:clamp(140px,20vw,300px); line-height:1;
+      color:var(--navy); opacity:0.12; pointer-events:none; white-space:nowrap;
+      transition:opacity 480ms ease;
+    }
+    .hs-abcd-panel.is-active .hs-abcd-letter { opacity:0.9; }
+    .hs-abcd-toggle { display:none; }
+    .hs-abcd-body { position:relative; z-index:1; max-width:60ch; opacity:0; transition:opacity 260ms ease; }
+    .hs-abcd-panel.is-active .hs-abcd-body { opacity:1; transition-delay:180ms; }
+    .hs-abcd-heading {
+      font-family:var(--serif); font-weight:500; font-size:clamp(20px,2vw,26px);
+      color:var(--navy); margin:0 0 10px; white-space:nowrap;
+    }
+    .hs-abcd-desc { font-family:var(--sans); font-size:clamp(14px,1.1vw,16px); line-height:1.55; color:var(--body); margin:0 0 clamp(24px,3vw,40px); }
+    .hs-abcd-impl-label {
+      font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.08em;
+      text-transform:uppercase; color:var(--slate); margin:0 0 10px;
+    }
+    .hs-abcd-impl ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px; }
+    .hs-abcd-impl li { font-family:var(--sans); font-size:13px; color:var(--body); padding-left:16px; position:relative; }
+    .hs-abcd-impl li::before {
+      content:''; position:absolute; left:0; top:0.55em; width:6px; height:6px; border-radius:50%; background:var(--amber);
+    }
+    @media (max-width: 900px) {
+      .hs-abcd { flex-direction:column; height:auto; gap:8px; }
+      .hs-abcd-panel { flex:none !important; height:auto; padding:16px clamp(16px,4vw,24px); gap:14px; }
+      .hs-abcd-letter { display:none; }
+      .hs-abcd-toggle { display:flex; align-items:center; gap:12px; width:100%; }
+      .hs-abcd-toggle-key {
+        flex:none; width:28px; height:28px; border-radius:50%; background:var(--navy); color:var(--cream);
+        font-family:var(--sans); font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center;
+      }
+      .hs-abcd-toggle-heading { font-family:var(--serif); font-weight:500; font-size:17px; color:var(--navy); flex:1; }
+      .hs-abcd-chevron { flex:none; width:16px; height:16px; color:var(--navy); transition:transform 300ms ease; }
+      .hs-abcd-panel.is-active .hs-abcd-chevron { transform:rotate(180deg); }
+      .hs-abcd-body { max-width:none; }
+      .hs-abcd-body .hs-abcd-heading { display:none; }
+      .hs-abcd-panel:not(.is-active) .hs-abcd-body { height:0; overflow:hidden; padding:0; margin:0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hs-abcd-panel, .hs-abcd-letter, .hs-abcd-body, .hs-abcd-chevron { transition:none !important; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       .hs-navlink-underline, .hs-cta::before, .hs-cta-face, .hs-cta-hover { transition:none; }
       .hp-anim-glow, .hp-anim-float, .hp-mote { animation: none !important; }
       .hs-ticker-track { animation: none; }
+      .hs-scroll-arrow { animation: none !important; }
     }
+
+    /* Scroll-hint arrows: start scrolling / keep scrolling */
+    @keyframes hsScrollArrowBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+    .hs-scroll-arrow { display: inline-flex; animation: hsScrollArrowBounce 1.6s ease-in-out infinite; }
 
     /*
      * Glyph Portal (c) 2026 Christian Katzmann. MIT.
@@ -174,7 +273,7 @@
     :where(#gp-handstart) [data-gp-front] a, :where(#gp-handstart) [data-gp-front] button { pointer-events: var(--gp-caption-hit, auto); }
     :where(#gp-handstart) [data-gp-front]:focus-within { opacity: 1; }
     :where(#gp-handstart) [data-gp-hint] { display: none; }
-    :where(#gp-handstart) [data-gp-enter] { display: inline-flex; align-items: center; gap: 10px; color: var(--slate); font-family: var(--sans); font-weight: 600; font-size: clamp(13px,1.4vw,15px); letter-spacing: 0.04em; text-transform: uppercase; pointer-events: none; }
+    :where(#gp-handstart) [data-gp-enter] { display: inline-flex; align-items: center; gap: 10px; color: var(--slate); font-family: var(--sans); font-weight: 600; font-size: clamp(15px,1.7vw,18px); letter-spacing: 0.04em; text-transform: uppercase; pointer-events: none; }
     :where(#gp-handstart) [data-gp-caption] { inset: calc(var(--gp-word-bottom, 50%) + 78px) 6% auto; justify-content: center; }
     :where(#gp-handstart) [data-gp-caption]:focus-within { opacity: 1; pointer-events: auto; }
     :where(#gp-handstart) [data-gp-content] { box-sizing: border-box; position: relative; min-height: var(--gp-height, 100svh); padding-top: clamp(72px,10vw,96px); display: grid; align-content: center; color: var(--gp-foreground); background: var(--gp-field); overflow-wrap: anywhere; }
@@ -194,7 +293,7 @@
     /* Landing composition: brand lockup, category label, tagline, entry cue */
     :where(#gp-handstart) [data-hs-landing-top] { position: absolute; inset: clamp(20px,4vw,44px) clamp(20px,4vw,44px) auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     :where(#gp-handstart) [data-hs-landing-category] { font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--slate); }
-    :where(#gp-handstart) [data-hs-landing-support] { position: absolute; inset: calc(var(--gp-word-bottom, 50%) + 20px) 6% auto; margin: 0; text-align: center; font-family: var(--serif); font-style: italic; font-size: clamp(17px,2.2vw,22px); color: var(--body); }
+    :where(#gp-handstart) [data-hs-landing-support] { position: absolute; inset: calc(var(--gp-word-bottom, 50%) + 20px) 6% auto; margin: 0; text-align: center; font-family: var(--serif); font-style: italic; font-size: clamp(20px,2.6vw,26px); color: var(--body); }
     @media (max-width: 640px) { :where(#gp-handstart) [data-hs-landing-category] { max-width: 12ch; text-align: right; } }
   </style>
 </head>
@@ -287,7 +386,7 @@
       <span data-gp-fallback aria-hidden="true" style="font-family:'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif; font-weight:900;">HANDSTART</span>
       <div data-gp-caption>
         <span data-gp-hint aria-hidden="true">Scroll to enter.</span>
-        <span data-gp-enter aria-hidden="true">Scroll for a closer look<span aria-hidden="true">&darr;</span></span>
+        <span data-gp-enter aria-hidden="true">Start scrolling<span class="hs-scroll-arrow" aria-hidden="true">&darr;</span></span>
       </div>
       <noscript><style>#gp-handstart [data-gp-fallback]{display:grid}#gp-handstart [data-gp-hint]{display:none}</style></noscript>
     </div>
@@ -305,58 +404,63 @@
       <span class="hp-mote" style="position:absolute; left:86%; bottom:0; width:4px; height:4px; border-radius:50%; background:var(--amber); animation-duration:8.5s; animation-delay:-1.8s;"></span>
     </div>
     <div style="position:relative; width:100%; max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start; text-align:left; gap:clamp(7px,1vw,11px); flex:1 1 auto; justify-content:flex-start;">
-      <h1 class="hp-h1" style="font-family:var(--serif); font-weight:600; font-size:clamp(52px,17vw,100px); line-height:1.03; letter-spacing:-0.015em; color:var(--cream); margin:0; align-self:stretch; width:100%; text-align:center;">
+      <h1 class="hp-h1" style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,9vw,50px); line-height:1.03; letter-spacing:-0.015em; color:var(--cream); margin:0; align-self:stretch; width:100%; text-align:center;">
         <span style="display:block;">Being online</span>
         <span style="display:block;">&ne;</span>
         <span style="display:block;">Being found</span>
       </h1>
-      <div style="display:flex; flex-direction:column; align-items:flex-start; gap:2px; margin-top:28px;">
-        <span style="font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">Get a headstart on your competition.</span>
-        <div style="display:flex; align-items:flex-end; gap:8px; font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">
+      <div class="hp-subcopy" style="display:flex; flex-direction:column; gap:2px; margin-top:28px; width:100%;">
+        <span class="hp-subcopy-line" style="font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">Get a headstart on your competition.</span>
+        <div class="hp-subcopy-line" style="display:flex; align-items:flex-end; justify-content:center; gap:8px; font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">
           <span style="flex-shrink:0;">Get found:</span>
           <span id="hwBox" style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span><svg id="hwSvg" class="hw-word-svg" aria-hidden="true"></svg></span>
         </div>
-        <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; text-align:left; margin:28px 0 0;">In an automated world, Handstart prioritizes human eyes and effort for your business.</p>
-        <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; text-align:left; margin:calc(clamp(7px,1vw,11px) - 2px) 0 0;">Whether you're already running campaigns, or don't even have a website yet:<br>You start where you are, and grow at your own pace - not ours.</p>
+        <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:28px 0 0;">In an automated world, Handstart prioritizes human eyes and effort for your business.</p>
+        <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:calc(clamp(7px,1vw,11px) - 2px) 0 0;">Whether you're already running campaigns, or don't even have a website yet.</p>
+        <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:calc(clamp(7px,1vw,11px) - 2px) 0 0;">Grow at your own pace - not ours.</p>
       </div>
-      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content:flex-start; margin-top:8px;">
+      <div aria-hidden="true" style="flex:1 1 0; min-height:8px;"></div>
+      <div class="hp-cta-row" style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; width:100%;">
         <a class="hs-cta hs-cta--sm" href="#assessment" id="findGaps"><span class="hs-cta-face">Find My Gaps</span><span class="hs-cta-hover" aria-hidden="true">Find My Gaps <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
         <a href="/services" style="display:inline-flex; align-items:center; background:transparent; color:var(--cream); font-family:var(--sans); font-size:15px; font-weight:600; padding:11px 22px; border-radius:9px; border:1.5px solid rgba(247,244,238,0.4); transition:background 200ms ease, transform 200ms ease;">What We Do</a>
       </div>
+      <div aria-hidden="true" style="flex:1 1 0; min-height:8px;"></div>
+    </div>
+
+    <div style="position:relative; display:flex; justify-content:center; padding:clamp(10px,1.5vw,18px) 0;">
+      <span style="display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-family:var(--sans); font-weight:600; font-size:clamp(14px,1.4vw,16px); letter-spacing:0.12em; text-transform:uppercase;">Keep scrolling<svg class="hs-scroll-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M12 19l-5-5M12 19l5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </div>
 
     <!-- Ticker -->
     <div class="hs-ticker" aria-label="Services">
       <div class="hs-ticker-track">
         <div class="hs-ticker-group">
-          <span class="hs-ticker-item">Google Ads</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Website Fixes</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Local Listings</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">SEO</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Meta &amp; Instagram Ads</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Social Media, Consistently</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Email Sequences</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Google Business Profile</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Landing Pages</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Conversion Tracking</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Analytics That Actually Work</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Microsoft Ads</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Content &amp; Blogging</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Paid Search That Delivers</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">A Website That Works</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Local Visibility That Matters</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">SEO That Builds Momentum</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Ads That Stop the Scroll</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Social That Shows Up</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Email That Keeps Working</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Own Your Google Presence</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Landing Pages Built to Convert</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Conversion Tracking That Counts</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Analytics That Tells the Story</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Content That Builds Authority</span><span class="hs-ticker-dot">&bull;</span>
         </div>
         <div class="hs-ticker-group" aria-hidden="true">
-          <span class="hs-ticker-item">Google Ads</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Website Fixes</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Local Listings</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">SEO</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Meta &amp; Instagram Ads</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Social Media, Consistently</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Email Sequences</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Google Business Profile</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Landing Pages</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Conversion Tracking</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Analytics That Actually Work</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Microsoft Ads</span><span class="hs-ticker-dot">&bull;</span>
-          <span class="hs-ticker-item">Content &amp; Blogging</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Paid Search That Delivers</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">A Website That Works</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Local Visibility That Matters</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">SEO That Builds Momentum</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Ads That Stop the Scroll</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Social That Shows Up</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Email That Keeps Working</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Own Your Google Presence</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Landing Pages Built to Convert</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Conversion Tracking That Counts</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Analytics That Tells the Story</span><span class="hs-ticker-dot">&bull;</span>
+          <span class="hs-ticker-item">Content That Builds Authority</span><span class="hs-ticker-dot">&bull;</span>
         </div>
       </div>
     </div>
@@ -365,8 +469,129 @@
     </div>
   </section>
 
+  <!-- ===================== STEPS TO GET AHEAD ===================== -->
+  <section id="latest-work" style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--navy); margin:0 0 clamp(28px,3.6vw,40px); text-wrap:balance;">How We Get Your Handstart</h2>
+
+      <div data-steps>
+        <div class="hs-steps-tabs" data-steps-tabs role="tablist" aria-label="Steps to get ahead">
+          <button type="button" class="hs-steps-tab" role="tab" data-step-index="0">Step 1</button>
+          <button type="button" class="hs-steps-tab" role="tab" data-step-index="1">Step 2</button>
+          <button type="button" class="hs-steps-tab" role="tab" data-step-index="2">Step 3</button>
+          <button type="button" class="hs-steps-tab" role="tab" data-step-index="3">Step 4</button>
+        </div>
+        <div class="hs-steps-bar">
+          <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="0"></div></div>
+          <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="1"></div></div>
+          <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="2"></div></div>
+          <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="3"></div></div>
+        </div>
+        <div class="hs-steps-panel">
+          <div class="hs-steps-content" data-steps-content>
+            <h3 class="hs-steps-title" style="font-size:clamp(24px,3vw,36px);">
+              <span class="hw-word" data-steps-title-text style="font-family:var(--script); font-weight:600; line-height:1.15; color:var(--navy);"></span>
+              <svg class="hw-word-svg" data-steps-title-svg aria-hidden="true" style="color:var(--navy);"></svg>
+            </h3>
+            <ul style="font-family:var(--sans); font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:var(--body); max-width:60ch; margin:0; padding:0 0 0 20px; display:flex; flex-direction:column; gap:6px;" data-steps-desc></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHY WORK WITH US ===================== -->
+  <section id="why-us" style="background:var(--navy); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--cream); margin:0 0 clamp(28px,3.6vw,40px); text-wrap:balance;">Why Work With Us: Our ABCD</h2>
+
+      <div class="hs-abcd" data-abcd>
+        <button type="button" class="hs-abcd-panel is-active" data-abcd-panel data-abcd-key="a" style="--abcd-bg:var(--cream);">
+          <span class="hs-abcd-letter" aria-hidden="true">A</span>
+          <div class="hs-abcd-toggle">
+            <span class="hs-abcd-toggle-key">A</span>
+            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">A</span>I does not come first</span>
+            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hs-abcd-body">
+            <p class="hs-abcd-heading">/ <span style="font-weight:700;">A</span>I does not come first</p>
+            <p class="hs-abcd-desc">Placeholder description copy about a reason to choose Handstart Digital.</p>
+            <div class="hs-abcd-impl">
+              <p class="hs-abcd-impl-label">How We Implement This</p>
+              <ul>
+                <li>Placeholder point one</li>
+                <li>Placeholder point two</li>
+                <li>Placeholder point three</li>
+              </ul>
+            </div>
+          </div>
+        </button>
+        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="b" style="--abcd-bg:var(--tint);">
+          <span class="hs-abcd-letter" aria-hidden="true">B</span>
+          <div class="hs-abcd-toggle">
+            <span class="hs-abcd-toggle-key">B</span>
+            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">B</span>efore execution: direction</span>
+            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hs-abcd-body">
+            <p class="hs-abcd-heading">/ <span style="font-weight:700;">B</span>efore execution: direction</p>
+            <p class="hs-abcd-desc">Placeholder description copy about a reason to choose Handstart Digital.</p>
+            <div class="hs-abcd-impl">
+              <p class="hs-abcd-impl-label">How We Implement This</p>
+              <ul>
+                <li>Placeholder point one</li>
+                <li>Placeholder point two</li>
+                <li>Placeholder point three</li>
+              </ul>
+            </div>
+          </div>
+        </button>
+        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="c" style="--abcd-bg:var(--amber-lt);">
+          <span class="hs-abcd-letter" aria-hidden="true">C</span>
+          <div class="hs-abcd-toggle">
+            <span class="hs-abcd-toggle-key">C</span>
+            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">C</span>lear systems that scale</span>
+            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hs-abcd-body">
+            <p class="hs-abcd-heading">/ <span style="font-weight:700;">C</span>lear systems that scale</p>
+            <p class="hs-abcd-desc">Placeholder description copy about a reason to choose Handstart Digital.</p>
+            <div class="hs-abcd-impl">
+              <p class="hs-abcd-impl-label">How We Implement This</p>
+              <ul>
+                <li>Placeholder point one</li>
+                <li>Placeholder point two</li>
+                <li>Placeholder point three</li>
+              </ul>
+            </div>
+          </div>
+        </button>
+        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="d" style="--abcd-bg:var(--amber);">
+          <span class="hs-abcd-letter" aria-hidden="true">D</span>
+          <div class="hs-abcd-toggle">
+            <span class="hs-abcd-toggle-key">D</span>
+            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">D</span>esign with clarity</span>
+            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hs-abcd-body">
+            <p class="hs-abcd-heading">/ <span style="font-weight:700;">D</span>esign with clarity</p>
+            <p class="hs-abcd-desc">Placeholder description copy about a reason to choose Handstart Digital.</p>
+            <div class="hs-abcd-impl">
+              <p class="hs-abcd-impl-label">How We Implement This</p>
+              <ul>
+                <li>Placeholder point one</li>
+                <li>Placeholder point two</li>
+                <li>Placeholder point three</li>
+              </ul>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== ASSESSMENT ===================== -->
-  <section id="assessment" style="background:var(--navy); padding:clamp(40px,5vw,64px) clamp(24px,6vw,80px) clamp(56px,8vw,104px);">
+  <section id="assessment" style="background:var(--cream); padding:clamp(40px,5vw,64px) clamp(24px,6vw,80px) clamp(56px,8vw,104px);">
     <div id="assessmentCard" style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center;"></div>
   </section>
 
@@ -777,12 +1002,24 @@
       // tick (wheel) or lifting the finger before the threshold (touch) cancels it
       // and the page just sits still, no partial scroll to undo.
       var UP_HOLD_PX = 160;
+      var LANDED_TOP_TOLERANCE = 4;
       var wheelUpAccum = 0, wheelUpAt = 0;
       var touchStartY = 0;
+      // The reverse ride must only be re-enterable from the exact fixed point the
+      // forward ride lands on, not from anywhere on the page. `phase` alone isn't
+      // enough to gate this: it stays 'landed' indefinitely once reached, even after
+      // scrolling far down into unrelated sections, so without this positional check
+      // an upward wheel/touch gesture anywhere on the homepage would re-trigger it.
+      function atLandedTop() {
+        var origin = root ? root.getBoundingClientRect().top + root.clientTop : 0;
+        var landedTop = origin - travel;
+        return Math.abs(section.getBoundingClientRect().top - landedTop) < LANDED_TOP_TOLERANCE;
+      }
       function guardLockedInput(event) {
         if (phase === 'locked') { event.preventDefault(); return; }
         if (phase !== 'landed' || event.type !== 'wheel') return;
         if (event.deltaY >= 0) { wheelUpAccum = 0; return; }
+        if (!atLandedTop()) { wheelUpAccum = 0; return; }
         var now = performance.now();
         if (now - wheelUpAt > 250) wheelUpAccum = 0;
         wheelUpAccum += -event.deltaY;
@@ -795,7 +1032,7 @@
       }
       function handleTouchMove(event) {
         if (phase === 'locked') { event.preventDefault(); return; }
-        if (phase !== 'landed' || !event.touches[0]) return;
+        if (phase !== 'landed' || !event.touches[0] || !atLandedTop()) return;
         var dy = event.touches[0].clientY - touchStartY;
         if (dy <= 0) return; // downward drag: normal scroll further into the page
         event.preventDefault();
@@ -1086,6 +1323,242 @@
     });
   })();
 
+  // ===================== Steps To Get Ahead =====================
+  (function () {
+    var root = document.querySelector('[data-steps]');
+    if (!root) return;
+
+    var STEP_DURATION = 10000;
+    var steps = [
+      { title: 'Get your bearings', bullets: ['understanding your business is the first and most important part.', 'we figure out what’s holding you back, and where we can create an impact for you.'] },
+      { title: 'Set your direction', bullets: ['good direction isn’t necessarily about doing "more".', 'learnings are turned into a clear path forward, a focused plan and not just a to-do list.'] },
+      { title: 'Start building', bullets: ['this is where the thinking becomes something people can see, use, and remember.', 'we launch the brand, website, campaigns, and systems that make it easier for the right people to choose you.'] },
+      { title: 'Get ahead', bullets: ['then we put it to work, with tools and systems to keep gaining ground.', 'and you get someone in your corner for support or figuring out what’s next.'] }
+    ];
+
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[data-step-index]'));
+    var fills = Array.prototype.slice.call(root.querySelectorAll('[data-step-fill]'));
+    var content = root.querySelector('[data-steps-content]');
+    var titleTextEl = root.querySelector('[data-steps-title-text]');
+    var titleSvgEl = root.querySelector('[data-steps-title-svg]');
+    var descEl = root.querySelector('[data-steps-desc]');
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Draw-on handwriting for each step's headline, using the same self-hosted Caveat
+    // outline-reading technique as the hero word cycle above, but drawn once and left
+    // fully inked (no fade-out/cycle) since each headline is meant to stay put.
+    var titleFont = null;
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    function ensureTitleFont(cb) {
+      if (titleFont !== null) { cb(titleFont); return; }
+      if (typeof opentype === 'undefined') { titleFont = false; cb(false); return; }
+      opentype.load('assets/fonts/Caveat-SemiBold.ttf', function (err, f) {
+        titleFont = (err || !f) ? false : f;
+        cb(titleFont);
+      });
+    }
+
+    function drawTitle(text) {
+      titleTextEl.textContent = text;
+      titleTextEl.style.display = '';
+      titleSvgEl.style.display = 'none';
+      if (reduceMotion) return;
+
+      ensureTitleFont(function (font) {
+        if (!font) return; // load/parse failure: plain fallback text stays visible
+        try {
+          var upm = font.unitsPerEm;
+          var pad = upm * 0.08;
+          var path = font.getPath(text, 0, 0, upm);
+          var b = path.getBoundingBox();
+          var vbX = b.x1 - pad;
+          var vbW = (b.x2 - b.x1) + pad * 2;
+          var vbY = -font.ascender - pad;
+          var vbH = (font.ascender - font.descender) + pad * 2;
+          var d = path.toPathData(3);
+          var contours = d.split(/(?=M)/).filter(function (s) { return s.trim().length > 0; });
+
+          titleSvgEl.setAttribute('viewBox', vbX + ' ' + vbY + ' ' + vbW + ' ' + vbH);
+          titleSvgEl.style.width = (vbW / upm).toFixed(3) + 'em';
+          titleSvgEl.style.height = (vbH / upm).toFixed(3) + 'em';
+          titleSvgEl.style.verticalAlign = (-(vbY + vbH) / upm).toFixed(3) + 'em';
+          titleSvgEl.style.setProperty('--hw-stroke-w', upm * 0.014);
+          while (titleSvgEl.firstChild) titleSvgEl.removeChild(titleSvgEl.firstChild);
+
+          var fillPath = document.createElementNS(SVG_NS, 'path');
+          fillPath.setAttribute('class', 'hw-fill');
+          fillPath.setAttribute('d', d);
+          titleSvgEl.appendChild(fillPath);
+
+          var strokePaths = contours.map(function (cd) {
+            var p = document.createElementNS(SVG_NS, 'path');
+            p.setAttribute('class', 'hw-stroke');
+            p.setAttribute('d', cd);
+            titleSvgEl.appendChild(p);
+            return p;
+          });
+
+          var count = strokePaths.length;
+          var duration = 1400 + Math.min(count, 40) * 22;
+          var lens = strokePaths.map(function (p) { return p.getTotalLength(); });
+
+          titleSvgEl.style.transition = 'none';
+          titleSvgEl.style.opacity = '1';
+          fillPath.style.transition = 'none';
+          fillPath.style.opacity = '0';
+          strokePaths.forEach(function (p, idx) {
+            p.style.transition = 'none';
+            p.style.strokeDasharray = lens[idx];
+            p.style.strokeDashoffset = lens[idx];
+          });
+          titleSvgEl.getBoundingClientRect(); // force reflow before swapping visibility and starting the transition
+
+          titleTextEl.style.display = 'none';
+          titleSvgEl.style.display = 'inline-block';
+
+          requestAnimationFrame(function () {
+            strokePaths.forEach(function (p, idx) {
+              var start = (idx / count) * duration;
+              var each = Math.max((duration / count) * 2.4, 200);
+              p.style.transition = 'stroke-dashoffset ' + each + 'ms ease-out ' + start + 'ms';
+              p.style.strokeDashoffset = '0';
+            });
+            fillPath.style.transition = 'opacity ' + (duration * 0.5) + 'ms linear 0ms';
+            fillPath.style.opacity = '1';
+          });
+        } catch (e) {
+          titleTextEl.style.display = '';
+          titleSvgEl.style.display = 'none';
+        }
+      });
+    }
+
+    var activeIndex = 0;
+    var startTime = null;
+    var rafId = null;
+
+    function renderContent(index, dir) {
+      drawTitle(steps[index].title);
+      descEl.innerHTML = '';
+      steps[index].bullets.forEach(function (b) {
+        var li = document.createElement('li');
+        li.textContent = b;
+        descEl.appendChild(li);
+      });
+      tabs.forEach(function (t, i) { t.classList.toggle('is-active', i === index); });
+
+      if (reduceMotion || dir === 0) return;
+      var outClass = dir > 0 ? 'is-out-fwd' : 'is-out-back';
+      var inClass = dir > 0 ? 'is-in-fwd' : 'is-in-back';
+      content.classList.add(outClass);
+      window.setTimeout(function () {
+        content.classList.remove(outClass);
+        content.classList.add(inClass);
+        // force reflow so the browser registers the starting position before transitioning back to rest
+        content.getBoundingClientRect();
+        content.classList.remove(inClass);
+      }, 260);
+    }
+
+    function setFills(index, frac) {
+      fills.forEach(function (fill, i) {
+        fill.classList.remove('is-filling', 'is-instant');
+        if (i < index) {
+          fill.classList.add('is-instant');
+          fill.style.width = '100%';
+        } else if (i > index) {
+          fill.classList.add('is-instant');
+          fill.style.width = '0%';
+        } else {
+          fill.classList.add(frac > 0 ? 'is-filling' : 'is-instant');
+          fill.style.transitionDuration = STEP_DURATION + 'ms';
+          fill.style.width = (frac * 100) + '%';
+        }
+      });
+    }
+
+    function goTo(index, dir) {
+      activeIndex = index;
+      startTime = null;
+      renderContent(activeIndex, dir);
+      setFills(activeIndex, 0);
+      // restart the fill transition on the next frame so the 0% width above actually commits first
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { setFills(activeIndex, 1); });
+      });
+    }
+
+    function tick(now) {
+      if (startTime === null) startTime = now;
+      var elapsed = now - startTime;
+      if (elapsed >= STEP_DURATION) {
+        goTo((activeIndex + 1) % steps.length, 1);
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var index = parseInt(tab.getAttribute('data-step-index'), 10);
+        if (index === activeIndex) return;
+        goTo(index, index > activeIndex ? 1 : -1);
+      });
+    });
+
+    renderContent(0, 0);
+    setFills(0, 0);
+    if (!reduceMotion) {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          setFills(0, 1);
+          rafId = requestAnimationFrame(tick);
+        });
+      });
+    }
+  })();
+
+  (function () {
+    var group = document.querySelector('[data-abcd]');
+    if (!group) return;
+    var panels = group.querySelectorAll('[data-abcd-panel]');
+    if (!panels.length) return;
+    var defaultKey = panels[0].getAttribute('data-abcd-key');
+    var supportsHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function syncAria() {
+      panels.forEach(function (p) {
+        p.setAttribute('aria-expanded', p.classList.contains('is-active') ? 'true' : 'false');
+      });
+    }
+
+    function setActive(key) {
+      panels.forEach(function (p) {
+        p.classList.toggle('is-active', p.getAttribute('data-abcd-key') === key);
+      });
+      syncAria();
+    }
+
+    if (supportsHover) {
+      panels.forEach(function (panel) {
+        var key = panel.getAttribute('data-abcd-key');
+        panel.addEventListener('mouseenter', function () { setActive(key); });
+        panel.addEventListener('focus', function () { setActive(key); });
+      });
+      group.addEventListener('mouseleave', function () { setActive(defaultKey); });
+    } else {
+      panels.forEach(function (panel) {
+        panel.addEventListener('click', function () {
+          var wasActive = panel.classList.contains('is-active');
+          panels.forEach(function (p) { p.classList.remove('is-active'); });
+          if (!wasActive) panel.classList.add('is-active');
+          syncAria();
+        });
+      });
+    }
+
+    setActive(defaultKey);
+  })();
+
   // ===================== Find My Gaps assessment =====================
   (function () {
     var mount = document.getElementById('assessmentCard');
@@ -1117,8 +1590,8 @@
       var q = questions[step];
       mount.innerHTML =
         '<div style="width:100%; animation:hsFadeUp 360ms ease both;">' +
-          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:#9fb0cc; margin-bottom:20px;">' + (step + 1) + ' of 6</div>' +
-          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(26px,3.6vw,42px); line-height:1.16; letter-spacing:-0.01em; color:var(--cream); margin:0 auto; max-width:20ch; text-wrap:balance;">' + esc(q) + '</h2>' +
+          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:var(--slate); margin-bottom:20px;">' + (step + 1) + ' of 6</div>' +
+          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(26px,3.6vw,42px); line-height:1.16; letter-spacing:-0.01em; color:var(--navy); margin:0 auto; max-width:20ch; text-wrap:balance;">' + esc(q) + '</h2>' +
           '<div style="display:flex; gap:14px; justify-content:center; margin:36px auto 0; max-width:560px; flex-wrap:wrap;">' +
             '<button class="hs-opt" data-val="yes">Yes</button>' +
             '<button class="hs-opt" data-val="no">No</button>' +
@@ -1174,19 +1647,19 @@
         }).join('') + '</ul>';
 
       function panel(title, accent, body) {
-        return '<div style="background:var(--cream); border:1px solid var(--hairline); border-radius:14px; padding:clamp(16px,2vw,22px); text-align:left; border-left:4px solid ' + accent + ';">' +
+        return '<div style="background:var(--tint); border:1px solid var(--hairline); border-radius:14px; padding:clamp(16px,2vw,22px); text-align:left; border-left:4px solid ' + accent + ';">' +
           '<div style="font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:' + accent + '; margin-bottom:10px;">' + title + '</div>' + body + '</div>';
       }
 
       mount.innerHTML =
         '<div style="width:100%; animation:hsFadeUp 400ms ease both;">' +
-          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:#9fb0cc; margin-bottom:12px;">Your read</div>' +
-          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,3.2vw,38px); line-height:1.2; letter-spacing:-0.01em; color:var(--cream); margin:0 auto; max-width:24ch; text-wrap:balance;">' + esc(verdict) + '</h2>' +
+          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:var(--slate); margin-bottom:12px;">Your read</div>' +
+          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,3.2vw,38px); line-height:1.2; letter-spacing:-0.01em; color:var(--navy); margin:0 auto; max-width:24ch; text-wrap:balance;">' + esc(verdict) + '</h2>' +
           '<div style="margin:18px 0 0; display:flex; flex-direction:column; align-items:center; gap:14px;">' +
-            '<p style="font-family:var(--serif); font-style:italic; font-size:clamp(17px,2vw,22px); line-height:1.3; color:var(--cream); margin:0; max-width:30ch; text-wrap:balance;">Want me to look at the rest? I\'ll tell you what I\'d fix first.</p>' +
+            '<p style="font-family:var(--serif); font-style:italic; font-size:clamp(17px,2vw,22px); line-height:1.3; color:var(--navy); margin:0; max-width:30ch; text-wrap:balance;">Want me to look at the rest? I\'ll tell you what I\'d fix first.</p>' +
             '<div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; align-items:center;">' +
               '<a class="hs-cta" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>' +
-              '<button id="hsRestart" style="background:none; border:none; cursor:pointer; font-family:var(--sans); font-size:14px; font-weight:500; color:#9fb0cc; text-decoration:underline; text-underline-offset:3px;">Start over</button>' +
+              '<button id="hsRestart" style="background:none; border:none; cursor:pointer; font-family:var(--sans); font-size:14px; font-weight:500; color:var(--slate); text-decoration:underline; text-underline-offset:3px;">Start over</button>' +
             '</div>' +
           '</div>' +
           '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:22px 0 0;">' +
