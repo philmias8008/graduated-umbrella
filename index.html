@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    // Browsers restore the prior scroll offset on reload by default. Without this,
+    // reloading while scrolled even a little into the Glyph Portal ride resumes at
+    // that offset, which is already past the ride's low lock threshold and auto-
+    // plays the rest of the ride with no scroll input. Force every load to start
+    // at the top instead.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
