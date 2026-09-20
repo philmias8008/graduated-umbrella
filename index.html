@@ -33,6 +33,10 @@
       --hairline: #D6CFC2;
       --tint: #EFEAE0;
       --muted: #c3ccda;
+      --step-red: #C1543F;
+      --step-orange: #D68A3C;
+      --step-yellow: #D6B23C;
+      --step-green: #4C9463;
       --serif: 'Cormorant Garamond', Georgia, serif;
       --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
       --script: 'Caveat', 'Segoe Script', cursive;
@@ -49,14 +53,16 @@
     #assessment { scroll-margin-top: 110px; }
 
     /* Nav marker underline */
-    .hs-navlink { position: relative; }
-    .hs-navlink-underline {
-      position: absolute; left: 0; bottom: -9px; width: 108%; height: 10px;
-      overflow: visible; pointer-events: none; clip-path: inset(0 100% 0 0);
-      transition: clip-path 340ms cubic-bezier(.5,0,.2,1);
-    }
-    .hs-navlink-underline path { fill: var(--amber); }
-    .hs-navlink:hover .hs-navlink-underline, .hs-navlink:focus-visible .hs-navlink-underline { clip-path: inset(0 0 0 0); }
+    .hs-navlink { position: relative; display: inline-block; overflow: hidden; white-space: nowrap; height: 1.3em; font-family: var(--sans); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--cream); text-decoration: none; }
+    .hs-navlink.is-active { font-weight: 600; }
+    .hs-navlink-top, .hs-navlink-bottom { display: block; }
+    .hs-navlink-bottom { position: absolute; inset: 0; }
+    .hs-navlink-top span, .hs-navlink-bottom span { display: inline-block; transition: transform 210ms ease-in-out; transition-delay: calc(var(--i, 0) * 12ms); }
+    .hs-navlink-bottom span { transform: translateY(100%); color: var(--amber); }
+    .hs-navlink:is(:hover, .is-tapped) .hs-navlink-top span, .hs-navlink:focus-visible .hs-navlink-top span { transform: translateY(-100%); }
+    .hs-navlink:is(:hover, .is-tapped) .hs-navlink-bottom span, .hs-navlink:focus-visible .hs-navlink-bottom span { transform: translateY(0); }
+    .hs-navlink-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (prefers-reduced-motion: reduce) { .hs-navlink-top span, .hs-navlink-bottom span { transition: none !important; } }
 
     .hs-hamburger { display: none; }
     @media (max-width: 900px) {
@@ -64,39 +70,126 @@
       .hs-hamburger { display: inline-flex !important; }
     }
 
-    /* Amber CTA button */
-    .hs-cta {
-      position:relative; overflow:hidden; isolation:isolate;
-      display:inline-flex; align-items:center; justify-content:flex-start;
-      background:var(--amber); color:var(--cream);
-      border:1px solid rgba(27,43,75,0.20); border-radius:999px;
-      font-family:var(--sans); font-weight:600; font-size:16px;
-      --hs-dot-x:16px; line-height:1;
-      padding:15px 30px 15px calc(var(--hs-dot-x) + 22px);
-      cursor:pointer; -webkit-tap-highlight-color:transparent;
+
+    /* Footer flip-link nav (test) */
+  .hs-footer-navgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; row-gap: 14px; align-content: start; }
+  @media (max-width: 640px) { .hs-footer-navgrid { grid-template-columns: 1fr; row-gap: 10px; } }
+  .hs-footer-navlink { display: block; font-family: var(--sans); font-weight: 500; font-size: 17px; color: var(--cream); transition: color 220ms ease; }
+  .hs-footer-navlink:hover { color: var(--amber); }
+  @media (prefers-reduced-motion: reduce) { .hs-footer-navlink { transition: none; } }
+
+    /* Social icons (test) */
+    .hs-social-list { list-style:none; margin:0; padding:0; display:flex; gap:12px; }
+    .hs-social-icon {
+      position:relative; display:flex; align-items:center; justify-content:center;
+      width:38px; height:38px; border-radius:50%; background:var(--cream);
+      text-decoration:none; overflow:hidden;
     }
-    .hs-cta--sm { padding:11px 22px 11px calc(var(--hs-dot-x) + 20px); font-size:15px; }
-    .hs-cta::before {
-      content:''; position:absolute; left:var(--hs-dot-x); top:50%;
-      width:12px; height:12px; border-radius:50%; background:var(--navy);
-      transform:translate(-50%,-50%) scale(1);
-      transition:transform .45s cubic-bezier(.45,0,.2,1); z-index:0; pointer-events:none;
+    .hs-social-icon::before {
+      content:''; position:absolute; left:0; bottom:-100%; width:100%; height:100%;
+      border-radius:50%; transition:bottom 1100ms cubic-bezier(.4,0,.2,1);
     }
-    .hs-cta-face {
-      position:relative; z-index:1; display:inline-flex; align-items:center; white-space:nowrap;
-      transition:transform .35s cubic-bezier(.45,0,.2,1), opacity .3s ease;
+    .hs-social-icon--facebook::before { background:#1877F2; }
+    .hs-social-icon--linkedin::before { background:#0A66C2; }
+    .hs-social-icon--instagram::before { background:linear-gradient(45deg, #FEDA77, #F58529, #DD2A7B, #8134AF, #515BD4); }
+    .hs-social-icon svg {
+      position:relative; z-index:1; width:15px; height:15px; fill:#111111;
+      transition:fill 700ms ease, transform 700ms ease;
     }
-    .hs-cta-hover {
-      position:absolute; inset:0; z-index:2;
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      white-space:nowrap; color:var(--cream); transform:translateX(130%); opacity:0;
-      transition:transform .35s cubic-bezier(.45,0,.2,1), opacity .3s ease; pointer-events:none;
+    .hs-social-icon:is(:hover, .is-tapped)::before, .hs-social-icon:focus-visible::before { bottom:0; }
+    .hs-social-icon:is(:hover, .is-tapped) svg, .hs-social-icon:focus-visible svg { fill:var(--cream); transform:rotateY(360deg); }
+    @media (prefers-reduced-motion: reduce) {
+      .hs-social-icon::before, .hs-social-icon svg { transition:none; }
     }
-    .hs-cta-arrow { display:block; flex-shrink:0; }
-    .hs-cta:hover::before, .hs-cta:focus-visible::before { transform:translate(-50%,-50%) scale(120); }
-    .hs-cta:hover .hs-cta-face, .hs-cta:focus-visible .hs-cta-face { transform:translateX(130%); opacity:0; }
-    .hs-cta:hover .hs-cta-hover, .hs-cta:focus-visible .hs-cta-hover { transform:translateX(0); opacity:1; }
-    .hs-cta:focus-visible { outline:2px solid var(--cream); outline-offset:2px; }
+
+    /* Comic-panel button (test) */
+    .hs-next-btn {
+      position:relative; display:inline-flex; text-decoration:none;
+      transform:skewX(-10deg); transition:transform 160ms ease;
+    }
+    .hs-next-shadow {
+      position:absolute; inset:0; z-index:0; background:#000;
+      transform:translate(7px,7px); transition:transform 200ms ease, background 200ms ease;
+    }
+    .hs-next-btn:is(:hover, .is-tapped) { transform:skewX(-10deg) translate(3px,3px); }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform:translate(11px,11px); background:var(--amber); }
+    .hs-next-face {
+      position:relative; z-index:1; display:inline-flex; align-items:center; gap:14px;
+      background:var(--navy); padding:13px 26px 13px 22px;
+    }
+    .hs-next-content { display:inline-flex; align-items:center; gap:14px; transform:skewX(10deg); }
+    .hs-next-label {
+      font-family:var(--sans); font-weight:700; font-size:15px;
+      letter-spacing:0.01em; text-transform:uppercase; color:var(--cream); white-space:nowrap;
+    }
+    .hs-next-icons { position:relative; width:30px; height:20px; }
+    .hs-next-rest, .hs-next-cascade svg { position:absolute; top:0; left:0; transition:opacity 220ms ease, transform 220ms cubic-bezier(.65,0,.076,1); }
+    .hs-next-rest path, .hs-next-cascade path { stroke:var(--cream); }
+    .hs-next-rest { opacity:1; }
+    .hs-next-cascade svg { opacity:0; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-next-rest { opacity:0; transform:translateX(8px); }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-next-cascade svg { opacity:1; }
+    .hs-next-cascade .hs-arrow-one { transition-delay:0ms; }
+    .hs-next-cascade .hs-arrow-two { transition-delay:40ms; }
+    .hs-next-cascade .hs-arrow-three { transition-delay:80ms; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one { transform:translateX(3px); }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two { transform:translateX(10px); }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three { transform:translateX(17px); }
+    @keyframes hs-arrow-chase {
+      0%, 100% { stroke:var(--cream); }
+      50% { stroke:var(--amber); }
+    }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path { animation:hs-arrow-chase 1.2s ease-in-out infinite; animation-delay:0s; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path { animation:hs-arrow-chase 1.2s ease-in-out infinite; animation-delay:0.2s; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation:hs-arrow-chase 1.2s ease-in-out infinite; animation-delay:0.4s; }
+      /* Header-size modifier for the Contact button */
+      .hs-next-btn--sm { align-self: flex-start; }
+      .hs-next-btn--sm .hs-next-face { padding: 10px 20px 10px 16px; gap: 10px; }
+      .hs-next-btn--sm .hs-next-content { gap: 10px; }
+      .hs-next-btn--sm .hs-next-label { font-size: 13px; }
+      .hs-next-btn--sm .hs-next-icons { width: 22px; height: 15px; }
+      .hs-next-btn--sm .hs-next-shadow { transform: translate(5px,5px); }
+      .hs-next-btn--sm:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(8px,8px); }
+      .hs-next-btn--sm:is(:hover, .is-tapped) .hs-next-rest { transform: translateX(6px); }
+      .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-one { transform: translateX(2px); }
+      .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(7px); }
+      .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(12px); }
+
+      /* Navy-background modifier: flips face/label/icon colors for use on a navy backdrop */
+      .hs-next-btn--reverse .hs-next-face { background: var(--cream); }
+      .hs-next-btn--reverse .hs-next-label { color: var(--navy); }
+      .hs-next-btn--reverse .hs-next-rest path, .hs-next-btn--reverse .hs-next-cascade path { stroke: var(--navy); }
+      @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--amber); } }
+      .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-one path { animation-name: hs-arrow-chase-reverse; }
+      .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-two path { animation-name: hs-arrow-chase-reverse; }
+      .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-three path { animation-name: hs-arrow-chase-reverse; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hs-next-btn, .hs-next-shadow, .hs-next-rest, .hs-next-cascade svg { transition:none !important; }
+      .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation:none !important; stroke:var(--amber) !important; }
+    }
+
+    /* Two-path CTA cards */
+    .hs-paths { display:grid; grid-template-columns:1fr 1fr; gap:clamp(18px,3vw,28px); }
+    @media (max-width:700px) { .hs-paths { grid-template-columns:1fr; } }
+    .hs-path-card {
+      background:#fff; border:1px solid var(--hairline); border-radius:16px;
+      padding:clamp(28px,3.6vw,36px) clamp(24px,3vw,32px);
+      display:flex; flex-direction:column; align-items:flex-start; gap:16px;
+    }
+    .hs-path-icon { width:56px; height:56px; object-fit:contain; }
+    .hs-path-kicker {
+      font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.06em;
+      text-transform:uppercase; color:var(--amber); margin:0;
+    }
+    .hs-path-title {
+      font-family:var(--serif); font-weight:600; font-size:clamp(21px,2.2vw,25px);
+      line-height:1.15; color:var(--navy); margin:0;
+    }
+    .hs-path-body {
+      font-family:var(--sans); font-size:14.5px; line-height:1.6; color:var(--body);
+      margin:0; max-width:42ch;
+    }
 
     /* Hero motes, glow, float */
     @keyframes hpGlow { 0%,100%{opacity:.28; transform:translate(-50%,-50%) scale(.9);} 50%{opacity:.8; transform:translate(-50%,-50%) scale(1.2);} }
@@ -128,13 +221,13 @@
     @keyframes hsFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     .hs-opt {
       flex:1 1 0; min-width:76px; padding:13px 14px; max-width:180px;
-      background:var(--tint); border:1.5px solid var(--hairline); border-radius:12px;
-      font-family:var(--sans); font-size:15px; font-weight:600; color:var(--navy); cursor:pointer;
+      background:rgba(247,244,238,0.06); border:1.5px solid rgba(214,207,194,0.35); border-radius:12px;
+      font-family:var(--sans); font-size:15px; font-weight:600; color:var(--cream); cursor:pointer;
       transition:transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
     }
     .hs-opt:hover {
-      transform:translateY(-2px); box-shadow:0 10px 24px rgba(27,43,75,0.14);
-      border-color:var(--amber); background:var(--cream);
+      transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,0.28);
+      border-color:var(--amber); background:rgba(247,244,238,0.12);
     }
 
     /* Handwriting */
@@ -144,6 +237,9 @@
     .hw-word-svg .hw-stroke { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: var(--hw-stroke-w, 16); }
 
     @media (max-width: 380px) { .hp-h1 { white-space: normal !important; text-wrap: balance; } }
+    @media (max-width: 900px) {
+      .hp-keepscroll { margin-top: auto !important; margin-bottom: auto !important; }
+    }
     .hp-cta-row { justify-content:center; }
     .hp-subcopy { align-items:center; text-align:center; }
     .hp-subcopy p { text-align:center; }
@@ -155,12 +251,23 @@
     .hs-steps-tab {
       flex:1 1 0; background:none; border:none; cursor:pointer; text-align:left;
       padding:0 0 12px; font-family:var(--sans); font-size:13px; font-weight:700;
-      letter-spacing:0.1em; text-transform:uppercase; color:#a9a190; transition:color 220ms ease;
+      letter-spacing:0.1em; text-transform:uppercase; color:#a9a190;
     }
     .hs-steps-tab.is-active { color:var(--amber); }
-    .hs-steps-bar { display:flex; width:100%; gap:6px; }
-    .hs-steps-seg { flex:1 1 0; height:3px; border-radius:999px; background:var(--hairline); overflow:hidden; }
-    .hs-steps-fill { display:block; height:100%; width:0%; background:var(--amber); border-radius:999px; }
+    .hs-steps-tab-label {
+      position:relative; display:inline-block;
+      transition:color 220ms ease, transform 200ms ease;
+    }
+    .hs-steps-tab:hover .hs-steps-tab-label, .hs-steps-tab:focus-visible .hs-steps-tab-label {
+      color:var(--amber); transform:translateY(-2px);
+    }
+    .hs-steps-bar { display:flex; width:100%; gap:0; border-radius:999px; overflow:hidden; background:var(--hairline); }
+    .hs-steps-seg { flex:1 1 0; height:3px; }
+    .hs-steps-fill { display:block; height:100%; width:0%; }
+    .hs-steps-fill[data-step-fill="0"] { background:var(--step-red); }
+    .hs-steps-fill[data-step-fill="1"] { background:var(--step-orange); }
+    .hs-steps-fill[data-step-fill="2"] { background:var(--step-yellow); }
+    .hs-steps-fill[data-step-fill="3"] { background:var(--step-green); }
     .hs-steps-fill.is-instant { transition:none !important; }
     .hs-steps-fill.is-filling { transition:width linear; }
     .hs-steps-panel { position:relative; margin-top:clamp(28px,3.6vw,40px); min-height:220px; }
@@ -179,39 +286,67 @@
       .hs-steps-fill, .hs-steps-content { transition:none !important; }
     }
 
+    /* Steps sketchbook plate */
+    .hs-steps-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(24px,4vw,56px); align-items:center; }
+    @media (max-width:760px) {
+      .hs-steps-row { grid-template-columns:1fr; }
+      .hs-steps-copy { order:1; }
+      .hs-steps-image { order:2; margin-top:0px; }
+      .hs-steps-desc { min-height:132px; }
+    }
+    .hs-plate-stage { position:relative; aspect-ratio:1/1; max-width:420px; margin:0 auto; }
+    @media (max-width:760px) { .hs-plate-stage { max-width:300px; margin-left:0; margin-right:auto; } }
+    .hs-plate {
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+      filter:drop-shadow(0 12px 20px rgba(27,43,75,.28));
+    }
+    .hs-plate img { width:100%; height:100%; object-fit:contain; display:block; }
+    .hs-plate-back { z-index:1; transform:rotate(var(--tilt-back,-1.4deg)); }
+    .hs-plate-front { z-index:2; opacity:0; transform:rotate(var(--tilt-front,-1.4deg)); }
+    .hs-plate-front.is-shown { opacity:1; }
+    .hs-plate-front.is-fading {
+      transition:opacity 600ms ease, transform 600ms ease;
+      opacity:0; transform:rotate(var(--tilt-front,-1.4deg)) scale(1.02);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hs-plate-front { transition:none !important; opacity:0 !important; transform:none !important; }
+    }
+
     /* Why Work With Us: ABCD panel accordion */
-    .hs-abcd { display:flex; width:100%; height:clamp(360px,42vw,460px); gap:6px; margin-top:clamp(28px,3.6vw,40px); }
+    .hs-abcd { display:flex; width:100%; height:clamp(280px,30vw,360px); gap:6px; margin-top:clamp(28px,3.6vw,40px); }
     .hs-abcd-panel {
       position:relative; overflow:hidden; flex:1 1 0%; min-width:0; appearance:none;
       background:var(--abcd-bg); border:none; border-radius:14px; cursor:pointer;
       padding:clamp(20px,2.4vw,32px); text-align:left; font:inherit;
       display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start;
       transition:flex-grow 480ms cubic-bezier(.4,0,.2,1);
+      container-type:inline-size;
+      --abcd-letter-size:clamp(90px,68cqw,210px);
     }
     .hs-abcd-panel.is-active { flex-grow:3; }
     .hs-abcd-letter {
-      position:absolute; top:50%; right:0; transform:translateY(-50%);
-      font-family:var(--serif); font-weight:600; font-size:clamp(140px,20vw,300px); line-height:1;
+      position:absolute; top:70%; right:0; transform:translateY(-50%);
+      font-family:var(--serif); font-weight:600; font-size:var(--abcd-letter-size); line-height:1;
       color:var(--navy); opacity:0.12; pointer-events:none; white-space:nowrap;
       transition:opacity 480ms ease;
     }
     .hs-abcd-panel.is-active .hs-abcd-letter { opacity:0.9; }
     .hs-abcd-toggle { display:none; }
-    .hs-abcd-body { position:relative; z-index:1; max-width:60ch; opacity:0; transition:opacity 260ms ease; }
+    .hs-abcd-body { position:relative; z-index:1; max-width:min(60ch, calc(100% - var(--abcd-letter-size) * 0.72)); opacity:0; transition:opacity 260ms ease; }
     .hs-abcd-panel.is-active .hs-abcd-body { opacity:1; transition-delay:180ms; }
     .hs-abcd-heading {
-      font-family:var(--serif); font-weight:500; font-size:clamp(20px,2vw,26px);
+      font-family:var(--serif); font-weight:500; font-size:clamp(21px,2vw,27px);
       color:var(--navy); margin:0 0 10px; white-space:nowrap;
     }
-    .hs-abcd-desc { font-family:var(--sans); font-size:clamp(14px,1.1vw,16px); line-height:1.55; color:var(--body); margin:0 0 clamp(24px,3vw,40px); }
+    .hs-abcd-desc { font-family:var(--sans); font-size:clamp(15px,1.1vw,17px); line-height:1.55; color:var(--abcd-text, var(--body)); margin:0 0 clamp(24px,3vw,40px); }
     .hs-abcd-impl-label {
       font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.08em;
       text-transform:uppercase; color:var(--slate); margin:0 0 10px;
     }
     .hs-abcd-impl ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px; }
-    .hs-abcd-impl li { font-family:var(--sans); font-size:13px; color:var(--body); padding-left:16px; position:relative; }
+    .hs-abcd-impl li { font-family:var(--sans); font-size:15px; color:var(--abcd-text, var(--body)); padding-left:16px; position:relative; }
     .hs-abcd-impl li::before {
-      content:''; position:absolute; left:0; top:0.55em; width:6px; height:6px; border-radius:50%; background:var(--amber);
+      content:''; position:absolute; left:0; top:0.55em; width:6px; height:6px; border-radius:50%; background:var(--abcd-dot, var(--amber));
     }
     @media (max-width: 900px) {
       .hs-abcd { flex-direction:column; height:auto; gap:8px; }
@@ -234,7 +369,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .hs-navlink-underline, .hs-cta::before, .hs-cta-face, .hs-cta-hover { transition:none; }
+      .hs-steps-tab-label { transition:none; }
       .hp-anim-glow, .hp-anim-float, .hp-mote { animation: none !important; }
       .hs-ticker-track { animation: none; }
       .hs-scroll-arrow { animation: none !important; }
@@ -317,11 +452,27 @@
         <img src="assets/logo-footer.png" alt="Handstart Digital" style="height:clamp(44px,5.5vw,58px); width:auto; object-fit:contain; display:block;">
       </a>
       <nav class="hs-nav-links" style="display:flex; align-items:center; gap:clamp(20px,2.6vw,34px);">
-        <a href="/services" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Services<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 L8.07 10.06 L8.71 9.94 L9.43 9.8 L10.22 9.64 L11.09 9.48 L12 9.3 L12.97 9.11 L13.98 8.92 L15.02 8.73 L16.07 8.54 L17.14 8.35 L18.21 8.17 L19.27 8 L20.31 7.85 L21.31 7.71 L22.29 7.59 L23.32 7.47 L24.46 7.34 L25.67 7.22 L26.94 7.09 L28.24 6.96 L29.55 6.84 L30.86 6.73 L32.14 6.63 L33.36 6.54 L34.52 6.46 L35.57 6.41 L36.5 6.37 L37.27 6.36 L37.85 6.37 L38.13 6.37 L37.81 6.2 L36.67 4.36 L37.2 2.75 L37.37 2.62 L37.13 2.81 L36.65 3.09 L36.01 3.43 L35.27 3.79 L34.46 4.17 L33.61 4.56 L32.75 4.94 L31.91 5.32 L31.12 5.68 L30.4 6.03 L29.76 6.35 L29.19 6.69 L28.68 7.09 L28.31 7.52 L28.06 7.93 L27.81 8.61 L27.89 9.7 L28.52 10.62 L29.17 11.01 L29.65 11.15 L30.05 11.21 L30.43 11.23 L30.82 11.24 L31.24 11.23 L31.7 11.22 L32.21 11.2 L32.78 11.17 L33.41 11.14 L34.1 11.1 L34.89 11.05 L35.76 10.98 L36.7 10.9 L37.7 10.81 L38.78 10.7 L39.9 10.59 L41.09 10.47 L42.31 10.34 L43.58 10.21 L44.89 10.07 L46.22 9.94 L47.58 9.8 L48.95 9.67 L50.34 9.54 L51.73 9.41 L53.13 9.3 L54.56 9.18 L56.05 9.06 L57.6 8.94 L59.2 8.82 L60.83 8.7 L62.5 8.58 L64.19 8.46 L65.89 8.34 L67.6 8.22 L69.31 8.1 L71.01 7.98 L72.69 7.86 L74.34 7.74 L75.96 7.63 L77.54 7.51 L79.07 7.4 L80.56 7.29 L82.04 7.17 L83.5 7.06 L84.96 6.95 L86.39 6.84 L87.82 6.74 L89.22 6.63 L90.61 6.52 L91.98 6.42 L93.34 6.31 L94.67 6.21 L95.99 6.1 L97.28 6 L98.55 5.9 L99.81 5.8 L101.03 5.7 L102.26 5.6 L103.51 5.5 L104.77 5.39 L106.02 5.28 L107.27 5.18 L108.51 5.07 L109.72 4.97 L110.89 4.86 L112.02 4.76 L113.1 4.67 L114.12 4.58 L115.07 4.5 L115.94 4.42 L116.73 4.35 L117.42 4.29 L118 4.24 L118 4.16 L117.41 4.16 L116.72 4.17 L115.93 4.17 L115.06 4.18 L114.1 4.18 L113.08 4.19 L111.99 4.19 L110.86 4.2 L109.68 4.21 L108.47 4.22 L107.23 4.23 L105.98 4.24 L104.71 4.25 L103.45 4.27 L102.2 4.28 L100.97 4.3 L99.73 4.32 L98.48 4.34 L97.2 4.37 L95.9 4.39 L94.58 4.42 L93.25 4.44 L91.89 4.47 L90.51 4.5 L89.12 4.54 L87.71 4.57 L86.28 4.6 L84.84 4.64 L83.38 4.68 L81.91 4.72 L80.43 4.76 L78.93 4.8 L77.4 4.85 L75.82 4.89 L74.2 4.94 L72.55 4.98 L70.86 5.03 L69.16 5.08 L67.45 5.13 L65.73 5.18 L64.02 5.24 L62.33 5.3 L60.65 5.36 L59 5.42 L57.4 5.49 L55.83 5.55 L54.32 5.63 L52.87 5.7 L51.45 5.79 L50.04 5.89 L48.63 6 L47.24 6.11 L45.86 6.23 L44.52 6.36 L43.21 6.48 L41.94 6.61 L40.71 6.73 L39.53 6.85 L38.41 6.96 L37.36 7.05 L36.37 7.14 L35.46 7.21 L34.64 7.27 L33.9 7.3 L33.22 7.33 L32.61 7.35 L32.06 7.38 L31.58 7.39 L31.17 7.4 L30.84 7.4 L30.6 7.39 L30.45 7.38 L30.43 7.37 L30.61 7.43 L31.06 7.7 L31.58 8.48 L31.65 9.38 L31.5 9.84 L31.42 9.99 L31.32 10.11 L31.31 10.13 L31.6 10.01 L32.11 9.8 L32.77 9.54 L33.54 9.25 L34.38 8.94 L35.27 8.61 L36.17 8.28 L37.05 7.94 L37.9 7.61 L38.69 7.28 L39.42 6.95 L40.1 6.57 L40.86 5.96 L41.59 3.94 L40.19 1.8 L39.16 1.41 L38.36 1.26 L37.51 1.17 L36.56 1.11 L35.51 1.08 L34.37 1.07 L33.15 1.07 L31.86 1.1 L30.54 1.14 L29.19 1.19 L27.84 1.25 L26.5 1.31 L25.2 1.39 L23.96 1.46 L22.79 1.54 L21.71 1.61 L20.65 1.7 L19.55 1.81 L18.43 1.94 L17.31 2.09 L16.18 2.24 L15.07 2.41 L13.97 2.58 L12.9 2.75 L11.86 2.93 L10.87 3.1 L9.94 3.26 L9.07 3.41 L8.28 3.55 L7.58 3.67 L6.98 3.77 L6.47 3.84 Z"/></svg></a>
-        <a href="/about" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">About<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 L8.07 10.06 L8.71 9.94 L9.43 9.8 L10.22 9.64 L11.09 9.48 L12 9.3 L12.97 9.11 L13.98 8.92 L15.02 8.73 L16.07 8.54 L17.14 8.35 L18.21 8.17 L19.27 8 L20.31 7.85 L21.31 7.71 L22.29 7.59 L23.32 7.47 L24.46 7.34 L25.67 7.22 L26.94 7.09 L28.24 6.96 L29.55 6.84 L30.86 6.73 L32.14 6.63 L33.36 6.54 L34.52 6.46 L35.57 6.41 L36.5 6.37 L37.27 6.36 L37.85 6.37 L38.13 6.37 L37.81 6.2 L36.67 4.36 L37.2 2.75 L37.37 2.62 L37.13 2.81 L36.65 3.09 L36.01 3.43 L35.27 3.79 L34.46 4.17 L33.61 4.56 L32.75 4.94 L31.91 5.32 L31.12 5.68 L30.4 6.03 L29.76 6.35 L29.19 6.69 L28.68 7.09 L28.31 7.52 L28.06 7.93 L27.81 8.61 L27.89 9.7 L28.52 10.62 L29.17 11.01 L29.65 11.15 L30.05 11.21 L30.43 11.23 L30.82 11.24 L31.24 11.23 L31.7 11.22 L32.21 11.2 L32.78 11.17 L33.41 11.14 L34.1 11.1 L34.89 11.05 L35.76 10.98 L36.7 10.9 L37.7 10.81 L38.78 10.7 L39.9 10.59 L41.09 10.47 L42.31 10.34 L43.58 10.21 L44.89 10.07 L46.22 9.94 L47.58 9.8 L48.95 9.67 L50.34 9.54 L51.73 9.41 L53.13 9.3 L54.56 9.18 L56.05 9.06 L57.6 8.94 L59.2 8.82 L60.83 8.7 L62.5 8.58 L64.19 8.46 L65.89 8.34 L67.6 8.22 L69.31 8.1 L71.01 7.98 L72.69 7.86 L74.34 7.74 L75.96 7.63 L77.54 7.51 L79.07 7.4 L80.56 7.29 L82.04 7.17 L83.5 7.06 L84.96 6.95 L86.39 6.84 L87.82 6.74 L89.22 6.63 L90.61 6.52 L91.98 6.42 L93.34 6.31 L94.67 6.21 L95.99 6.1 L97.28 6 L98.55 5.9 L99.81 5.8 L101.03 5.7 L102.26 5.6 L103.51 5.5 L104.77 5.39 L106.02 5.28 L107.27 5.18 L108.51 5.07 L109.72 4.97 L110.89 4.86 L112.02 4.76 L113.1 4.67 L114.12 4.58 L115.07 4.5 L115.94 4.42 L116.73 4.35 L117.42 4.29 L118 4.24 L118 4.16 L117.41 4.16 L116.72 4.17 L115.93 4.17 L115.06 4.18 L114.1 4.18 L113.08 4.19 L111.99 4.19 L110.86 4.2 L109.68 4.21 L108.47 4.22 L107.23 4.23 L105.98 4.24 L104.71 4.25 L103.45 4.27 L102.2 4.28 L100.97 4.3 L99.73 4.32 L98.48 4.34 L97.2 4.37 L95.9 4.39 L94.58 4.42 L93.25 4.44 L91.89 4.47 L90.51 4.5 L89.12 4.54 L87.71 4.57 L86.28 4.6 L84.84 4.64 L83.38 4.68 L81.91 4.72 L80.43 4.76 L78.93 4.8 L77.4 4.85 L75.82 4.89 L74.2 4.94 L72.55 4.98 L70.86 5.03 L69.16 5.08 L67.45 5.13 L65.73 5.18 L64.02 5.24 L62.33 5.3 L60.65 5.36 L59 5.42 L57.4 5.49 L55.83 5.55 L54.32 5.63 L52.87 5.7 L51.45 5.79 L50.04 5.89 L48.63 6 L47.24 6.11 L45.86 6.23 L44.52 6.36 L43.21 6.48 L41.94 6.61 L40.71 6.73 L39.53 6.85 L38.41 6.96 L37.36 7.05 L36.37 7.14 L35.46 7.21 L34.64 7.27 L33.9 7.3 L33.22 7.33 L32.61 7.35 L32.06 7.38 L31.58 7.39 L31.17 7.4 L30.84 7.4 L30.6 7.39 L30.45 7.38 L30.43 7.37 L30.61 7.43 L31.06 7.7 L31.58 8.48 L31.65 9.38 L31.5 9.84 L31.42 9.99 L31.32 10.11 L31.31 10.13 L31.6 10.01 L32.11 9.8 L32.77 9.54 L33.54 9.25 L34.38 8.94 L35.27 8.61 L36.17 8.28 L37.05 7.94 L37.9 7.61 L38.69 7.28 L39.42 6.95 L40.1 6.57 L40.86 5.96 L41.59 3.94 L40.19 1.8 L39.16 1.41 L38.36 1.26 L37.51 1.17 L36.56 1.11 L35.51 1.08 L34.37 1.07 L33.15 1.07 L31.86 1.1 L30.54 1.14 L29.19 1.19 L27.84 1.25 L26.5 1.31 L25.2 1.39 L23.96 1.46 L22.79 1.54 L21.71 1.61 L20.65 1.7 L19.55 1.81 L18.43 1.94 L17.31 2.09 L16.18 2.24 L15.07 2.41 L13.97 2.58 L12.9 2.75 L11.86 2.93 L10.87 3.1 L9.94 3.26 L9.07 3.41 L8.28 3.55 L7.58 3.67 L6.98 3.77 L6.47 3.84 Z"/></svg></a>
-        <a href="/the-difference" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">The Difference<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 L8.07 10.06 L8.71 9.94 L9.43 9.8 L10.22 9.64 L11.09 9.48 L12 9.3 L12.97 9.11 L13.98 8.92 L15.02 8.73 L16.07 8.54 L17.14 8.35 L18.21 8.17 L19.27 8 L20.31 7.85 L21.31 7.71 L22.29 7.59 L23.32 7.47 L24.46 7.34 L25.67 7.22 L26.94 7.09 L28.24 6.96 L29.55 6.84 L30.86 6.73 L32.14 6.63 L33.36 6.54 L34.52 6.46 L35.57 6.41 L36.5 6.37 L37.27 6.36 L37.85 6.37 L38.13 6.37 L37.81 6.2 L36.67 4.36 L37.2 2.75 L37.37 2.62 L37.13 2.81 L36.65 3.09 L36.01 3.43 L35.27 3.79 L34.46 4.17 L33.61 4.56 L32.75 4.94 L31.91 5.32 L31.12 5.68 L30.4 6.03 L29.76 6.35 L29.19 6.69 L28.68 7.09 L28.31 7.52 L28.06 7.93 L27.81 8.61 L27.89 9.7 L28.52 10.62 L29.17 11.01 L29.65 11.15 L30.05 11.21 L30.43 11.23 L30.82 11.24 L31.24 11.23 L31.7 11.22 L32.21 11.2 L32.78 11.17 L33.41 11.14 L34.1 11.1 L34.89 11.05 L35.76 10.98 L36.7 10.9 L37.7 10.81 L38.78 10.7 L39.9 10.59 L41.09 10.47 L42.31 10.34 L43.58 10.21 L44.89 10.07 L46.22 9.94 L47.58 9.8 L48.95 9.67 L50.34 9.54 L51.73 9.41 L53.13 9.3 L54.56 9.18 L56.05 9.06 L57.6 8.94 L59.2 8.82 L60.83 8.7 L62.5 8.58 L64.19 8.46 L65.89 8.34 L67.6 8.22 L69.31 8.1 L71.01 7.98 L72.69 7.86 L74.34 7.74 L75.96 7.63 L77.54 7.51 L79.07 7.4 L80.56 7.29 L82.04 7.17 L83.5 7.06 L84.96 6.95 L86.39 6.84 L87.82 6.74 L89.22 6.63 L90.61 6.52 L91.98 6.42 L93.34 6.31 L94.67 6.21 L95.99 6.1 L97.28 6 L98.55 5.9 L99.81 5.8 L101.03 5.7 L102.26 5.6 L103.51 5.5 L104.77 5.39 L106.02 5.28 L107.27 5.18 L108.51 5.07 L109.72 4.97 L110.89 4.86 L112.02 4.76 L113.1 4.67 L114.12 4.58 L115.07 4.5 L115.94 4.42 L116.73 4.35 L117.42 4.29 L118 4.24 L118 4.16 L117.41 4.16 L116.72 4.17 L115.93 4.17 L115.06 4.18 L114.1 4.18 L113.08 4.19 L111.99 4.19 L110.86 4.2 L109.68 4.21 L108.47 4.22 L107.23 4.23 L105.98 4.24 L104.71 4.25 L103.45 4.27 L102.2 4.28 L100.97 4.3 L99.73 4.32 L98.48 4.34 L97.2 4.37 L95.9 4.39 L94.58 4.42 L93.25 4.44 L91.89 4.47 L90.51 4.5 L89.12 4.54 L87.71 4.57 L86.28 4.6 L84.84 4.64 L83.38 4.68 L81.91 4.72 L80.43 4.76 L78.93 4.8 L77.4 4.85 L75.82 4.89 L74.2 4.94 L72.55 4.98 L70.86 5.03 L69.16 5.08 L67.45 5.13 L65.73 5.18 L64.02 5.24 L62.33 5.3 L60.65 5.36 L59 5.42 L57.4 5.49 L55.83 5.55 L54.32 5.63 L52.87 5.7 L51.45 5.79 L50.04 5.89 L48.63 6 L47.24 6.11 L45.86 6.23 L44.52 6.36 L43.21 6.48 L41.94 6.61 L40.71 6.73 L39.53 6.85 L38.41 6.96 L37.36 7.05 L36.37 7.14 L35.46 7.21 L34.64 7.27 L33.9 7.3 L33.22 7.33 L32.61 7.35 L32.06 7.38 L31.58 7.39 L31.17 7.4 L30.84 7.4 L30.6 7.39 L30.45 7.38 L30.43 7.37 L30.61 7.43 L31.06 7.7 L31.58 8.48 L31.65 9.38 L31.5 9.84 L31.42 9.99 L31.32 10.11 L31.31 10.13 L31.6 10.01 L32.11 9.8 L32.77 9.54 L33.54 9.25 L34.38 8.94 L35.27 8.61 L36.17 8.28 L37.05 7.94 L37.9 7.61 L38.69 7.28 L39.42 6.95 L40.1 6.57 L40.86 5.96 L41.59 3.94 L40.19 1.8 L39.16 1.41 L38.36 1.26 L37.51 1.17 L36.56 1.11 L35.51 1.08 L34.37 1.07 L33.15 1.07 L31.86 1.1 L30.54 1.14 L29.19 1.19 L27.84 1.25 L26.5 1.31 L25.2 1.39 L23.96 1.46 L22.79 1.54 L21.71 1.61 L20.65 1.7 L19.55 1.81 L18.43 1.94 L17.31 2.09 L16.18 2.24 L15.07 2.41 L13.97 2.58 L12.9 2.75 L11.86 2.93 L10.87 3.1 L9.94 3.26 L9.07 3.41 L8.28 3.55 L7.58 3.67 L6.98 3.77 L6.47 3.84 Z"/></svg></a>
-        <a href="/case-studies" class="hs-navlink" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Case Studies<svg class="hs-navlink-underline" viewBox="0 0 120 12" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M7.53 10.16 L8.07 10.06 L8.71 9.94 L9.43 9.8 L10.22 9.64 L11.09 9.48 L12 9.3 L12.97 9.11 L13.98 8.92 L15.02 8.73 L16.07 8.54 L17.14 8.35 L18.21 8.17 L19.27 8 L20.31 7.85 L21.31 7.71 L22.29 7.59 L23.32 7.47 L24.46 7.34 L25.67 7.22 L26.94 7.09 L28.24 6.96 L29.55 6.84 L30.86 6.73 L32.14 6.63 L33.36 6.54 L34.52 6.46 L35.57 6.41 L36.5 6.37 L37.27 6.36 L37.85 6.37 L38.13 6.37 L37.81 6.2 L36.67 4.36 L37.2 2.75 L37.37 2.62 L37.13 2.81 L36.65 3.09 L36.01 3.43 L35.27 3.79 L34.46 4.17 L33.61 4.56 L32.75 4.94 L31.91 5.32 L31.12 5.68 L30.4 6.03 L29.76 6.35 L29.19 6.69 L28.68 7.09 L28.31 7.52 L28.06 7.93 L27.81 8.61 L27.89 9.7 L28.52 10.62 L29.17 11.01 L29.65 11.15 L30.05 11.21 L30.43 11.23 L30.82 11.24 L31.24 11.23 L31.7 11.22 L32.21 11.2 L32.78 11.17 L33.41 11.14 L34.1 11.1 L34.89 11.05 L35.76 10.98 L36.7 10.9 L37.7 10.81 L38.78 10.7 L39.9 10.59 L41.09 10.47 L42.31 10.34 L43.58 10.21 L44.89 10.07 L46.22 9.94 L47.58 9.8 L48.95 9.67 L50.34 9.54 L51.73 9.41 L53.13 9.3 L54.56 9.18 L56.05 9.06 L57.6 8.94 L59.2 8.82 L60.83 8.7 L62.5 8.58 L64.19 8.46 L65.89 8.34 L67.6 8.22 L69.31 8.1 L71.01 7.98 L72.69 7.86 L74.34 7.74 L75.96 7.63 L77.54 7.51 L79.07 7.4 L80.56 7.29 L82.04 7.17 L83.5 7.06 L84.96 6.95 L86.39 6.84 L87.82 6.74 L89.22 6.63 L90.61 6.52 L91.98 6.42 L93.34 6.31 L94.67 6.21 L95.99 6.1 L97.28 6 L98.55 5.9 L99.81 5.8 L101.03 5.7 L102.26 5.6 L103.51 5.5 L104.77 5.39 L106.02 5.28 L107.27 5.18 L108.51 5.07 L109.72 4.97 L110.89 4.86 L112.02 4.76 L113.1 4.67 L114.12 4.58 L115.07 4.5 L115.94 4.42 L116.73 4.35 L117.42 4.29 L118 4.24 L118 4.16 L117.41 4.16 L116.72 4.17 L115.93 4.17 L115.06 4.18 L114.1 4.18 L113.08 4.19 L111.99 4.19 L110.86 4.2 L109.68 4.21 L108.47 4.22 L107.23 4.23 L105.98 4.24 L104.71 4.25 L103.45 4.27 L102.2 4.28 L100.97 4.3 L99.73 4.32 L98.48 4.34 L97.2 4.37 L95.9 4.39 L94.58 4.42 L93.25 4.44 L91.89 4.47 L90.51 4.5 L89.12 4.54 L87.71 4.57 L86.28 4.6 L84.84 4.64 L83.38 4.68 L81.91 4.72 L80.43 4.76 L78.93 4.8 L77.4 4.85 L75.82 4.89 L74.2 4.94 L72.55 4.98 L70.86 5.03 L69.16 5.08 L67.45 5.13 L65.73 5.18 L64.02 5.24 L62.33 5.3 L60.65 5.36 L59 5.42 L57.4 5.49 L55.83 5.55 L54.32 5.63 L52.87 5.7 L51.45 5.79 L50.04 5.89 L48.63 6 L47.24 6.11 L45.86 6.23 L44.52 6.36 L43.21 6.48 L41.94 6.61 L40.71 6.73 L39.53 6.85 L38.41 6.96 L37.36 7.05 L36.37 7.14 L35.46 7.21 L34.64 7.27 L33.9 7.3 L33.22 7.33 L32.61 7.35 L32.06 7.38 L31.58 7.39 L31.17 7.4 L30.84 7.4 L30.6 7.39 L30.45 7.38 L30.43 7.37 L30.61 7.43 L31.06 7.7 L31.58 8.48 L31.65 9.38 L31.5 9.84 L31.42 9.99 L31.32 10.11 L31.31 10.13 L31.6 10.01 L32.11 9.8 L32.77 9.54 L33.54 9.25 L34.38 8.94 L35.27 8.61 L36.17 8.28 L37.05 7.94 L37.9 7.61 L38.69 7.28 L39.42 6.95 L40.1 6.57 L40.86 5.96 L41.59 3.94 L40.19 1.8 L39.16 1.41 L38.36 1.26 L37.51 1.17 L36.56 1.11 L35.51 1.08 L34.37 1.07 L33.15 1.07 L31.86 1.1 L30.54 1.14 L29.19 1.19 L27.84 1.25 L26.5 1.31 L25.2 1.39 L23.96 1.46 L22.79 1.54 L21.71 1.61 L20.65 1.7 L19.55 1.81 L18.43 1.94 L17.31 2.09 L16.18 2.24 L15.07 2.41 L13.97 2.58 L12.9 2.75 L11.86 2.93 L10.87 3.1 L9.94 3.26 L9.07 3.41 L8.28 3.55 L7.58 3.67 L6.98 3.77 L6.47 3.84 Z"/></svg></a>
-        <a class="hs-cta hs-cta--sm" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        <a href="/services" class="hs-navlink" data-flip-text="Services">
+          <span class="hs-navlink-top" aria-hidden="true"></span>
+          <span class="hs-navlink-bottom" aria-hidden="true"></span>
+          <span class="hs-navlink-sr">Services</span>
+        </a>
+        <a href="/about" class="hs-navlink" data-flip-text="About">
+          <span class="hs-navlink-top" aria-hidden="true"></span>
+          <span class="hs-navlink-bottom" aria-hidden="true"></span>
+          <span class="hs-navlink-sr">About</span>
+        </a>
+        <a href="/the-difference" class="hs-navlink" data-flip-text="The Difference">
+          <span class="hs-navlink-top" aria-hidden="true"></span>
+          <span class="hs-navlink-bottom" aria-hidden="true"></span>
+          <span class="hs-navlink-sr">The Difference</span>
+        </a>
+        <a href="/case-studies" class="hs-navlink" data-flip-text="Case Studies">
+          <span class="hs-navlink-top" aria-hidden="true"></span>
+          <span class="hs-navlink-bottom" aria-hidden="true"></span>
+          <span class="hs-navlink-sr">Case Studies</span>
+        </a>
+        <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
       </nav>
       <button class="hs-hamburger" id="navToggle" aria-label="Menu" aria-expanded="false" style="align-items:center; justify-content:center; width:44px; height:44px; background:none; border:1px solid rgba(247,244,238,0.3); border-radius:9px; cursor:pointer; color:var(--cream);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="4" y1="7" x2="20" y2="7" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="12" x2="20" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="17" x2="20" y2="17" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line></svg>
@@ -332,7 +483,7 @@
       <a href="/about" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">About</a>
       <a href="/the-difference" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">The Difference</a>
       <a href="/case-studies" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--cream); padding:11px 0;">Case Studies</a>
-      <a class="hs-cta hs-cta--sm" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+      <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span></span></span></a>
     </div>
   </header>
 
@@ -424,20 +575,13 @@
           <span style="flex-shrink:0;">Get found:</span>
           <span id="hwBox" style="color:var(--amber); display:inline-flex; width:clamp(180px,22vw,280px); flex-shrink:0; justify-content:flex-start; overflow:visible; font-size:clamp(28px,3.2vw,40px); transform:translateY(0.12em);"><span id="hwText" class="hw-word"></span><svg id="hwSvg" class="hw-word-svg" aria-hidden="true"></svg></span>
         </div>
-        <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:28px 0 0;">In an automated world, Handstart prioritizes human eyes and effort for your business.</p>
-        <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:calc(clamp(7px,1vw,11px) - 2px) 0 0;">Whether you're already running campaigns, or don't even have a website yet.</p>
-        <p style="font-family:var(--sans); font-size:clamp(14px,1.1vw,15.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:calc(clamp(7px,1vw,11px) - 2px) 0 0;">Grow at your own pace - not ours.</p>
+        <p style="font-family:var(--sans); font-size:clamp(16px,1.3vw,17.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:28px 0 0;">In an automated world, Handstart prioritizes human eyes and effort for your business.</p>
+        <p style="font-family:var(--sans); font-size:clamp(16px,1.3vw,17.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:calc(clamp(7px,1vw,11px) - 2px) 0 0;">Whether you're already running campaigns, or don't even have a website yet.</p>
+        <p style="font-family:var(--sans); font-size:clamp(16px,1.3vw,17.5px); font-weight:400; line-height:1.65; color:var(--muted); max-width:60ch; margin:calc(clamp(7px,1vw,11px) - 2px) 0 0;">Grow at your own pace - not ours.</p>
       </div>
-      <div aria-hidden="true" style="flex:1 1 0; min-height:8px;"></div>
-      <div class="hp-cta-row" style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; width:100%;">
-        <a class="hs-cta hs-cta--sm" href="#assessment" id="findGaps"><span class="hs-cta-face">Find My Gaps</span><span class="hs-cta-hover" aria-hidden="true">Find My Gaps <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
-        <a href="/services" style="display:inline-flex; align-items:center; background:transparent; color:var(--cream); font-family:var(--sans); font-size:15px; font-weight:600; padding:11px 22px; border-radius:9px; border:1.5px solid rgba(247,244,238,0.4); transition:background 200ms ease, transform 200ms ease;">What We Do</a>
+      <div class="hp-keepscroll" style="position:relative; display:flex; justify-content:center; width:100%; margin:clamp(28px,4vw,44px) 0 0;">
+        <span style="display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-family:var(--sans); font-weight:600; font-size:clamp(14px,1.4vw,16px); letter-spacing:0.12em; text-transform:uppercase;">Keep scrolling<svg class="hs-scroll-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M12 19l-5-5M12 19l5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
-      <div aria-hidden="true" style="flex:1 1 0; min-height:8px;"></div>
-    </div>
-
-    <div style="position:relative; display:flex; justify-content:center; padding:clamp(10px,1.5vw,18px) 0;">
-      <span style="display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-family:var(--sans); font-weight:600; font-size:clamp(14px,1.4vw,16px); letter-spacing:0.12em; text-transform:uppercase;">Keep scrolling<svg class="hs-scroll-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M12 19l-5-5M12 19l5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </div>
 
     <!-- Ticker -->
@@ -480,29 +624,37 @@
 
   <!-- ===================== STEPS TO GET AHEAD ===================== -->
   <section id="latest-work" style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
-    <div style="max-width:900px; margin:0 auto;">
+    <div style="max-width:1080px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--navy); margin:0 0 clamp(28px,3.6vw,40px); text-wrap:balance;">How We Get Your Handstart</h2>
 
-      <div data-steps>
-        <div class="hs-steps-tabs" data-steps-tabs role="tablist" aria-label="Steps to get ahead">
-          <button type="button" class="hs-steps-tab" role="tab" data-step-index="0">Step 1</button>
-          <button type="button" class="hs-steps-tab" role="tab" data-step-index="1">Step 2</button>
-          <button type="button" class="hs-steps-tab" role="tab" data-step-index="2">Step 3</button>
-          <button type="button" class="hs-steps-tab" role="tab" data-step-index="3">Step 4</button>
+      <div class="hs-steps-row">
+        <div class="hs-steps-copy" data-steps>
+          <div class="hs-steps-tabs" data-steps-tabs role="tablist" aria-label="Steps to get ahead">
+            <button type="button" class="hs-steps-tab" role="tab" data-step-index="0"><span class="hs-steps-tab-label">Step 1</span></button>
+            <button type="button" class="hs-steps-tab" role="tab" data-step-index="1"><span class="hs-steps-tab-label">Step 2</span></button>
+            <button type="button" class="hs-steps-tab" role="tab" data-step-index="2"><span class="hs-steps-tab-label">Step 3</span></button>
+            <button type="button" class="hs-steps-tab" role="tab" data-step-index="3"><span class="hs-steps-tab-label">Step 4</span></button>
+          </div>
+          <div class="hs-steps-bar">
+            <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="0"></div></div>
+            <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="1"></div></div>
+            <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="2"></div></div>
+            <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="3"></div></div>
+          </div>
+          <div class="hs-steps-panel">
+            <div class="hs-steps-content" data-steps-content>
+              <h3 class="hs-steps-title" style="font-size:clamp(24px,3vw,36px);">
+                <span class="hw-word" data-steps-title-text style="font-family:var(--script); font-weight:600; line-height:1.15; color:var(--navy);"></span>
+                <svg class="hw-word-svg" data-steps-title-svg aria-hidden="true" style="color:var(--navy);"></svg>
+              </h3>
+              <ul class="hs-steps-desc" style="font-family:var(--sans); font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:var(--body); max-width:60ch; margin:0; padding:0 0 0 20px; display:flex; flex-direction:column; gap:6px;" data-steps-desc></ul>
+            </div>
+          </div>
         </div>
-        <div class="hs-steps-bar">
-          <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="0"></div></div>
-          <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="1"></div></div>
-          <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="2"></div></div>
-          <div class="hs-steps-seg"><div class="hs-steps-fill" data-step-fill="3"></div></div>
-        </div>
-        <div class="hs-steps-panel">
-          <div class="hs-steps-content" data-steps-content>
-            <h3 class="hs-steps-title" style="font-size:clamp(24px,3vw,36px);">
-              <span class="hw-word" data-steps-title-text style="font-family:var(--script); font-weight:600; line-height:1.15; color:var(--navy);"></span>
-              <svg class="hw-word-svg" data-steps-title-svg aria-hidden="true" style="color:var(--navy);"></svg>
-            </h3>
-            <ul style="font-family:var(--sans); font-size:clamp(15px,1.3vw,17px); line-height:1.6; color:var(--body); max-width:60ch; margin:0; padding:0 0 0 20px; display:flex; flex-direction:column; gap:6px;" data-steps-desc></ul>
+        <div class="hs-steps-image">
+          <div class="hs-plate-stage" data-plate-stage>
+            <div class="hs-plate hs-plate-back" data-plate-back><img data-plate-img-back src="assets/steps/step-1-bearings.png" alt="Handstart step illustration"></div>
+            <div class="hs-plate hs-plate-front" data-plate-front><img data-plate-img-front src="assets/steps/step-1-bearings.png" alt="" aria-hidden="true"></div>
           </div>
         </div>
       </div>
@@ -524,13 +676,11 @@
           </div>
           <div class="hs-abcd-body">
             <p class="hs-abcd-heading">/ <span style="font-weight:700;">A</span>I does not come first</p>
-            <p class="hs-abcd-desc">Placeholder description copy about a reason to choose Handstart Digital.</p>
+            <p class="hs-abcd-desc">While AI is inevitable in most digital tools, it won't replace our human element. We lead with human creativity and AI-free strategic thinking.</p>
             <div class="hs-abcd-impl">
-              <p class="hs-abcd-impl-label">How We Implement This</p>
               <ul>
-                <li>Placeholder point one</li>
-                <li>Placeholder point two</li>
-                <li>Placeholder point three</li>
+                <li>Every project runs through human dev and design</li>
+                <li>AI will only have a hand in the output if you specifically decide that it serves your goals</li>
               </ul>
             </div>
           </div>
@@ -544,18 +694,17 @@
           </div>
           <div class="hs-abcd-body">
             <p class="hs-abcd-heading">/ <span style="font-weight:700;">B</span>efore execution: direction</p>
-            <p class="hs-abcd-desc">Placeholder description copy about a reason to choose Handstart Digital.</p>
+            <p class="hs-abcd-desc">You don't run a marathon like it's a hundred-meter dash. We map the pace and the distance before the whistle blows.</p>
             <div class="hs-abcd-impl">
-              <p class="hs-abcd-impl-label">How We Implement This</p>
               <ul>
-                <li>Placeholder point one</li>
-                <li>Placeholder point two</li>
-                <li>Placeholder point three</li>
+                <li>We ask "why" before we ask "what color"</li>
+                <li>Competitors' moves are analyzed before we make ours</li>
+                <li>Budget follows strategy, not the other way around</li>
               </ul>
             </div>
           </div>
         </button>
-        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="c" style="--abcd-bg:var(--amber-lt);">
+        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="c" style="--abcd-bg:var(--amber-lt); --abcd-text:var(--navy); --abcd-dot:var(--navy);">
           <span class="hs-abcd-letter" aria-hidden="true">C</span>
           <div class="hs-abcd-toggle">
             <span class="hs-abcd-toggle-key">C</span>
@@ -564,33 +713,31 @@
           </div>
           <div class="hs-abcd-body">
             <p class="hs-abcd-heading">/ <span style="font-weight:700;">C</span>lear systems that scale</p>
-            <p class="hs-abcd-desc">Placeholder description copy about a reason to choose Handstart Digital.</p>
+            <p class="hs-abcd-desc">You don't want to set it up in a way you can't outgrow. We build the kind of foundation that holds whether you're a team of three or thirty.</p>
             <div class="hs-abcd-impl">
-              <p class="hs-abcd-impl-label">How We Implement This</p>
               <ul>
-                <li>Placeholder point one</li>
-                <li>Placeholder point two</li>
-                <li>Placeholder point three</li>
+                <li>No rebuild required when you grow</li>
+                <li>Every piece built once, ready to reuse</li>
+                <li>Rules anyone on the team can follow</li>
               </ul>
             </div>
           </div>
         </button>
-        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="d" style="--abcd-bg:var(--amber);">
+        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="d" style="--abcd-bg:var(--amber); --abcd-text:var(--navy); --abcd-dot:var(--navy);">
           <span class="hs-abcd-letter" aria-hidden="true">D</span>
           <div class="hs-abcd-toggle">
             <span class="hs-abcd-toggle-key">D</span>
-            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">D</span>esign with clarity</span>
+            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">D</span>eliver with clarity</span>
             <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="hs-abcd-body">
-            <p class="hs-abcd-heading">/ <span style="font-weight:700;">D</span>esign with clarity</p>
-            <p class="hs-abcd-desc">Placeholder description copy about a reason to choose Handstart Digital.</p>
+            <p class="hs-abcd-heading">/ <span style="font-weight:700;">D</span>eliver with clarity</p>
+            <p class="hs-abcd-desc">Strategy comes before the visuals, not after. Reporting follows suit - telling the story with the data and results.</p>
             <div class="hs-abcd-impl">
-              <p class="hs-abcd-impl-label">How We Implement This</p>
               <ul>
-                <li>Placeholder point one</li>
-                <li>Placeholder point two</li>
-                <li>Placeholder point three</li>
+                <li>Strategy comes before a single pixel</li>
+                <li>Clear messaging built around you</li>
+                <li>Reports that don't need a translator</li>
               </ul>
             </div>
           </div>
@@ -599,8 +746,62 @@
     </div>
   </section>
 
+  <!-- ===================== TWO PATHS ===================== -->
+  <section id="hero-ctas" style="background:var(--cream); padding:clamp(40px,5vw,64px) clamp(24px,6vw,80px);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(26px,3.4vw,38px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0 0 clamp(24px,3vw,32px); text-wrap:balance;">Where do you want to start?</h2>
+
+      <div class="hs-paths">
+        <div class="hs-path-card">
+          <img class="hs-path-icon" src="assets/steps/doodle-find-gaps.png" alt="" aria-hidden="true">
+          <p class="hs-path-kicker">Not sure yet</p>
+          <h3 class="hs-path-title">Find your gaps</h3>
+          <p class="hs-path-body">Answer a few quick questions and we'll show you where your business is losing ground, and where the easiest wins are.</p>
+          <a class="hs-next-btn" href="#assessment" id="findGaps">
+            <span class="hs-next-shadow" aria-hidden="true"></span>
+            <span class="hs-next-face">
+              <span class="hs-next-content">
+                <span class="hs-next-label">Find My Gaps</span>
+                <span class="hs-next-icons">
+                  <svg class="hs-next-rest" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="hs-next-cascade">
+                    <svg class="hs-arrow-one" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="hs-arrow-two" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="hs-arrow-three" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </a>
+        </div>
+        <div class="hs-path-card">
+          <img class="hs-path-icon" src="assets/steps/doodle-what-we-do.png" alt="" aria-hidden="true">
+          <p class="hs-path-kicker">Already know</p>
+          <h3 class="hs-path-title">See what we do</h3>
+          <p class="hs-path-body">Marketing, design, and the systems behind them. A straight look at the work itself, no assessment required.</p>
+          <a class="hs-next-btn" href="/services" id="whatWeDo">
+            <span class="hs-next-shadow" aria-hidden="true"></span>
+            <span class="hs-next-face">
+              <span class="hs-next-content">
+                <span class="hs-next-label">What We Do</span>
+                <span class="hs-next-icons">
+                  <svg class="hs-next-rest" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="hs-next-cascade">
+                    <svg class="hs-arrow-one" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="hs-arrow-two" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="hs-arrow-three" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== ASSESSMENT ===================== -->
-  <section id="assessment" style="background:var(--cream); padding:clamp(40px,5vw,64px) clamp(24px,6vw,80px) clamp(56px,8vw,104px);">
+  <section id="assessment" style="background:var(--navy); padding:clamp(40px,5vw,64px) clamp(24px,6vw,80px) clamp(56px,8vw,104px);">
     <div id="assessmentCard" style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:center; text-align:center;"></div>
   </section>
 
@@ -611,16 +812,38 @@
         <a href="/" style="display:flex; align-items:center; gap:12px;">
           <img src="assets/logo-footer.png" alt="Handstart Digital" style="height:48px; width:auto; object-fit:contain; display:block;">
         </a>
-        <nav style="display:flex; flex-wrap:wrap; align-items:center; gap:10px 26px;">
-          <a href="/" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Home</a>
-          <a href="/services" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Services</a>
-          <a href="/about" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">About</a>
-          <a href="/the-difference" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">The Difference</a>
-          <a href="/case-studies" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Case Studies</a>
-          <a href="/contact" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--cream);">Contact</a>
-        </nav>
-        <a href="mailto:contact@handstartdigital.com" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--muted);">contact@handstartdigital.com</a>
+        <div class="hs-footer-contact" style="display:flex; flex-direction:column; align-items:flex-end; gap:12px;">
+          <a href="mailto:contact@handstartdigital.com" style="font-family:var(--sans); font-size:15px; font-weight:500; color:var(--muted);">contact@handstartdigital.com</a>
+          <ul class="hs-social-list">
+            <li>
+              <a class="hs-social-icon hs-social-icon--facebook" aria-label="Facebook" style="cursor:default;" tabindex="-1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"></path></svg>
+              </a>
+            </li>
+            <li>
+              <a class="hs-social-icon hs-social-icon--linkedin" href="https://www.linkedin.com/in/aidanpaggao/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.8-2.05 3.7-2.05 3.96 0 4.69 2.6 4.69 6V21h-4v-5.3c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"></path></svg>
+              </a>
+            </li>
+            <li>
+              <a class="hs-social-icon hs-social-icon--instagram" aria-label="Instagram" style="cursor:default;" tabindex="-1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.24.06 2.08.25 2.82.54a5.7 5.7 0 0 1 2.06 1.34 5.7 5.7 0 0 1 1.34 2.06c.29.74.48 1.58.54 2.82.07 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.06 1.24-.25 2.08-.54 2.82a5.7 5.7 0 0 1-1.34 2.06 5.7 5.7 0 0 1-2.06 1.34c-.74.29-1.58.48-2.82.54-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.24-.06-2.08-.25-2.82-.54a5.7 5.7 0 0 1-2.06-1.34A5.7 5.7 0 0 1 .93 20.9c-.29-.74-.48-1.58-.54-2.82C.32 16.83.32 16.43.32 13.23s0-3.6.07-4.85c.06-1.24.25-2.08.54-2.82A5.7 5.7 0 0 1 2.27 3.5 5.7 5.7 0 0 1 4.33 2.16c.74-.29 1.58-.48 2.82-.54C8.4 1.55 8.8 1.55 12 1.55zm0 3a6.85 6.85 0 1 0 0 13.7 6.85 6.85 0 0 0 0-13.7zm0 11.3a4.45 4.45 0 1 1 0-8.9 4.45 4.45 0 0 1 0 8.9zm7.12-11.57a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0z"></path></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
+
+      <div style="font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#8791a3; margin:clamp(28px,3.4vw,36px) 0 clamp(14px,2vw,18px);">Explore</div>
+      <div class="hs-footer-navgrid">
+        <span class="hs-footer-navlink">Home</span>
+        <span class="hs-footer-navlink">The Difference</span>
+        <span class="hs-footer-navlink">Services</span>
+        <span class="hs-footer-navlink">Case Studies</span>
+        <span class="hs-footer-navlink">About</span>
+        <span class="hs-footer-navlink">Contact</span>
+      </div>
+
       <div style="height:1px; background:rgba(247,244,238,0.16); margin:clamp(28px,3.4vw,36px) 0 clamp(18px,2.2vw,22px);"></div>
       <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
         <div style="display:flex; flex-direction:column; gap:4px;">
@@ -642,6 +865,27 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Tap-to-preview: on touch devices, tapping an animated button/link plays
+  // its hover animation for a beat before following the link, instead of
+  // skipping straight to the destination with no animation shown at all.
+  (function () {
+    var isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+    if (!isTouch) return;
+    var SELECTOR = '.hs-navlink, .hs-next-btn, .flip-link, .hs-social-icon';
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest(SELECTOR);
+      if (!el || el.tagName !== 'A' || !el.href) return;
+      // findGaps and whatWeDo already have their own bespoke tap-delay handlers
+      // (one scrolls in-page instead of navigating), so this generic one skips them.
+      if (el.id === 'findGaps' || el.id === 'whatWeDo') return;
+      if (el.classList.contains('is-tapped')) return;
+      e.preventDefault();
+      el.classList.add('is-tapped');
+      setTimeout(function () { window.location.href = el.href; }, 1000);
+    }, true);
+  })();
+
 
   // Mobile nav
   (function () {
@@ -1319,16 +1563,43 @@
     });
   })();
 
-  // Smooth scroll for Find My Gaps
+  // Smooth scroll for Find My Gaps. On touch devices there's no real hover,
+  // so a tap would otherwise skip straight past the comic-panel animation;
+  // play it first, then scroll.
   (function () {
     var btn = document.getElementById('findGaps');
     if (!btn) return;
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
+    var isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+
+    function goToAssessment() {
       var el = document.getElementById('assessment');
       if (!el) return;
       var top = window.scrollY + el.getBoundingClientRect().top - 100;
       window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!isTouch) { goToAssessment(); return; }
+      if (btn.classList.contains('is-tapped')) return;
+      btn.classList.add('is-tapped');
+      setTimeout(goToAssessment, 1000);
+    });
+  })();
+
+  // What We Do: same tap-then-follow treatment as Find My Gaps, but for a
+  // real link instead of an in-page scroll.
+  (function () {
+    var btn = document.getElementById('whatWeDo');
+    if (!btn) return;
+    var isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+    if (!isTouch) return;
+
+    btn.addEventListener('click', function (e) {
+      if (btn.classList.contains('is-tapped')) return;
+      e.preventDefault();
+      btn.classList.add('is-tapped');
+      setTimeout(function () { window.location.href = btn.href; }, 1000);
     });
   })();
 
@@ -1339,10 +1610,10 @@
 
     var STEP_DURATION = 10000;
     var steps = [
-      { title: 'Get your bearings', bullets: ['understanding your business is the first and most important part.', 'we figure out what’s holding you back, and where we can create an impact for you.'] },
-      { title: 'Set your direction', bullets: ['good direction isn’t necessarily about doing "more".', 'learnings are turned into a clear path forward, a focused plan and not just a to-do list.'] },
-      { title: 'Start building', bullets: ['this is where the thinking becomes something people can see, use, and remember.', 'we launch the brand, website, campaigns, and systems that make it easier for the right people to choose you.'] },
-      { title: 'Get ahead', bullets: ['then we put it to work, with tools and systems to keep gaining ground.', 'and you get someone in your corner for support or figuring out what’s next.'] }
+      { title: 'Get your bearings', bullets: ['we ask all the important and annoying questions to fully understand your business.', 'we figure out what’s holding you back, and where we can create an impact for you.'] },
+      { title: 'Set your direction', bullets: ['good direction isn’t necessarily about doing "more".', 'you get a clear path of what matters, not a spreadsheet with forty tabs.'] },
+      { title: 'Start building', bullets: ['this is the part where the whiteboard finally turns into a website.', 'your brand, site, campaigns - your system - is built so the right people can find you.'] },
+      { title: 'Get ahead', bullets: ['then we put it to work, with tools and systems to keep gaining ground.', 'something need fixing or rethinking - you get a real person to call, not a ticket number.'] }
     ];
 
     var tabs = Array.prototype.slice.call(root.querySelectorAll('[data-step-index]'));
@@ -1352,6 +1623,63 @@
     var titleSvgEl = root.querySelector('[data-steps-title-svg]');
     var descEl = root.querySelector('[data-steps-desc]');
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Sketchbook plate: a two-layer crossfade kept in sync with the step change below.
+    // The back layer always instantly holds the correct current image and never animates;
+    // the front layer is a transient overlay of the outgoing image that fades away to
+    // reveal it. Keeping the "correct" layer static avoids any window where a stale or
+    // mid-transition image could show.
+    var STEP_IMAGES = ['assets/steps/step-1-bearings.png', 'assets/steps/step-2-direction.png', 'assets/steps/step-3-building.png', 'assets/steps/step-4-ahead.png'];
+    var STEP_TILTS = [-1.6, 1.2, -0.8, 1.5];
+    var FADE_DURATION = 600;
+    var plateBack = document.querySelector('[data-plate-back]');
+    var plateFront = document.querySelector('[data-plate-front]');
+    var plateImgBack = document.querySelector('[data-plate-img-back]');
+    var plateImgFront = document.querySelector('[data-plate-img-front]');
+    var platesReady = !!(plateBack && plateFront && plateImgBack && plateImgFront);
+    var preloadedPlates = platesReady ? STEP_IMAGES.map(function (src) {
+      var im = new Image();
+      im.src = src;
+      return im;
+    }) : [];
+    var plateAnimating = false;
+
+    function runPlateTransition(index, prevIndex) {
+      plateFront.classList.remove('is-fading');
+      plateFront.style.transition = 'none';
+      plateFront.classList.add('is-shown');
+      plateFront.style.setProperty('--tilt-front', STEP_TILTS[prevIndex] + 'deg');
+      plateImgFront.src = STEP_IMAGES[prevIndex];
+
+      plateBack.style.setProperty('--tilt-back', STEP_TILTS[index] + 'deg');
+      plateImgBack.src = STEP_IMAGES[index];
+
+      void plateFront.offsetWidth;
+      plateFront.style.transition = '';
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          plateFront.classList.remove('is-shown');
+          plateFront.classList.add('is-fading');
+        });
+      });
+
+      window.setTimeout(function () { plateAnimating = false; }, FADE_DURATION);
+    }
+
+    function updatePlate(index, prevIndex) {
+      if (!platesReady || index === prevIndex) return;
+      if (reduceMotion) {
+        plateBack.style.setProperty('--tilt-back', STEP_TILTS[index] + 'deg');
+        plateImgBack.src = STEP_IMAGES[index];
+        return;
+      }
+      plateAnimating = true;
+      var ready = [preloadedPlates[prevIndex], preloadedPlates[index]].map(function (im) {
+        return im.decode ? im.decode().catch(function () {}) : Promise.resolve();
+      });
+      Promise.all(ready).then(function () { runPlateTransition(index, prevIndex); });
+    }
 
     // Draw-on handwriting for each step's headline, using the same self-hosted Caveat
     // outline-reading technique as the hero word cycle above, but drawn once and left
@@ -1487,9 +1815,11 @@
     }
 
     function goTo(index, dir) {
+      var prevIndex = activeIndex;
       activeIndex = index;
       startTime = null;
       renderContent(activeIndex, dir);
+      updatePlate(activeIndex, prevIndex);
       setFills(activeIndex, 0);
       // restart the fill transition on the next frame so the 0% width above actually commits first
       requestAnimationFrame(function () {
@@ -1509,11 +1839,15 @@
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
         var index = parseInt(tab.getAttribute('data-step-index'), 10);
-        if (index === activeIndex) return;
+        if (index === activeIndex || plateAnimating) return;
         goTo(index, index > activeIndex ? 1 : -1);
       });
     });
 
+    if (platesReady) {
+      plateBack.style.setProperty('--tilt-back', STEP_TILTS[0] + 'deg');
+      plateFront.style.setProperty('--tilt-front', STEP_TILTS[0] + 'deg');
+    }
     renderContent(0, 0);
     setFills(0, 0);
     if (!reduceMotion) {
@@ -1599,8 +1933,8 @@
       var q = questions[step];
       mount.innerHTML =
         '<div style="width:100%; animation:hsFadeUp 360ms ease both;">' +
-          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:var(--slate); margin-bottom:20px;">' + (step + 1) + ' of 6</div>' +
-          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(26px,3.6vw,42px); line-height:1.16; letter-spacing:-0.01em; color:var(--navy); margin:0 auto; max-width:20ch; text-wrap:balance;">' + esc(q) + '</h2>' +
+          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:#9fb0cc; margin-bottom:20px;">' + (step + 1) + ' of 6</div>' +
+          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(26px,3.6vw,42px); line-height:1.16; letter-spacing:-0.01em; color:var(--cream); margin:0 auto; max-width:20ch; text-wrap:balance;">' + esc(q) + '</h2>' +
           '<div style="display:flex; gap:14px; justify-content:center; margin:36px auto 0; max-width:560px; flex-wrap:wrap;">' +
             '<button class="hs-opt" data-val="yes">Yes</button>' +
             '<button class="hs-opt" data-val="no">No</button>' +
@@ -1656,19 +1990,20 @@
         }).join('') + '</ul>';
 
       function panel(title, accent, body) {
-        return '<div style="background:var(--tint); border:1px solid var(--hairline); border-radius:14px; padding:clamp(16px,2vw,22px); text-align:left; border-left:4px solid ' + accent + ';">' +
+        return '<div style="background:var(--cream); border:1px solid var(--hairline); border-radius:14px; padding:clamp(16px,2vw,22px); text-align:left; border-left:4px solid ' + accent + ';">' +
           '<div style="font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:' + accent + '; margin-bottom:10px;">' + title + '</div>' + body + '</div>';
       }
 
       mount.innerHTML =
         '<div style="width:100%; animation:hsFadeUp 400ms ease both;">' +
-          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:var(--slate); margin-bottom:12px;">Your read</div>' +
-          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,3.2vw,38px); line-height:1.2; letter-spacing:-0.01em; color:var(--navy); margin:0 auto; max-width:24ch; text-wrap:balance;">' + esc(verdict) + '</h2>' +
+          '<div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; color:#9fb0cc; margin-bottom:12px;">Your read</div>' +
+          '<h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,3.2vw,38px); line-height:1.2; letter-spacing:-0.01em; color:var(--cream); margin:0 auto; max-width:24ch; text-wrap:balance;">' + esc(verdict) + '</h2>' +
           '<div style="margin:18px 0 0; display:flex; flex-direction:column; align-items:center; gap:14px;">' +
-            '<p style="font-family:var(--serif); font-style:italic; font-size:clamp(17px,2vw,22px); line-height:1.3; color:var(--navy); margin:0; max-width:30ch; text-wrap:balance;">Want me to look at the rest? I\'ll tell you what I\'d fix first.</p>' +
+            '<p style="font-family:var(--serif); font-style:italic; font-size:clamp(17px,2vw,22px); line-height:1.3; color:var(--cream); margin:0; max-width:30ch; text-wrap:balance;">Want me to look at the rest? I\'ll tell you what I\'d fix first.</p>' +
             '<div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; align-items:center;">' +
-              '<a class="hs-cta" href="/contact"><span class="hs-cta-face">Contact</span><span class="hs-cta-hover" aria-hidden="true">Contact <svg class="hs-cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><line x1="4" y1="12" x2="18" y2="12" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round"></line><path d="M12 6l6 6-6 6" stroke="#F7F4EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>' +
-              '<button id="hsRestart" style="background:none; border:none; cursor:pointer; font-family:var(--sans); font-size:14px; font-weight:500; color:var(--slate); text-decoration:underline; text-underline-offset:3px;">Start over</button>' +
+              '<a class="hs-next-btn hs-next-btn--reverse" href="/services"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">What We Do</span></span></span></a>' +
+              '<a class="hs-next-btn hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>' +
+              '<button id="hsRestart" style="background:none; border:none; cursor:pointer; font-family:var(--sans); font-size:14px; font-weight:500; color:#9fb0cc; text-decoration:underline; text-underline-offset:3px;">Start over</button>' +
             '</div>' +
           '</div>' +
           '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin:22px 0 0;">' +
@@ -1682,6 +2017,24 @@
     }
 
     render();
+  })();
+
+  // Header nav flip: builds the per-letter spans for both rows at runtime,
+  // same mechanic as the Explore More flip links.
+  (function () {
+    document.querySelectorAll('.hs-navlink[data-flip-text]').forEach(function (link) {
+      var text = link.getAttribute('data-flip-text');
+      var top = link.querySelector('.hs-navlink-top');
+      var bottom = link.querySelector('.hs-navlink-bottom');
+      if (!top || !bottom) return;
+      text.split('').forEach(function (ch, i) {
+        var display = ch === ' ' ? '\u00A0' : ch;
+        var a = document.createElement('span'); a.textContent = display; a.style.setProperty('--i', i);
+        var b = document.createElement('span'); b.textContent = display; b.style.setProperty('--i', i);
+        top.appendChild(a);
+        bottom.appendChild(b);
+      });
+    });
   })();
 </script>
 

@@ -168,5 +168,29 @@
         tl.to(panels[i], { yPercent: 0, ease: 'none', duration: 1 }, i - 1);
       }
     });
+
+    // Below the pin-stack breakpoint the panels above just stack in normal
+    // document flow with no motion of their own, since they opt out of the
+    // generic reveal system via data-reveal. Give them the same fade/slide
+    // treatment as a regular section instead, one panel at a time as it
+    // scrolls into view.
+    mm.add('(max-width: 767px)', function () {
+      var SLIDE_DIST_X = 48; // px, alternating left/right entrance for this breakpoint only
+      var panels = Array.prototype.slice.call(pinStack.children);
+      panels.forEach(function (panel, i) {
+        var kids = Array.prototype.slice.call(panel.children);
+        var targets = kids.length > 1 ? kids : [panel];
+        var dir = i % 2 === 0 ? 1 : -1; // right, then left, alternating per panel
+        gsap.set(targets, { x: dir * SLIDE_DIST_X, opacity: 0 });
+        ScrollTrigger.create({
+          trigger: panel,
+          start: 'top 85%',
+          once: true,
+          onEnter: function () {
+            gsap.to(targets, { x: 0, opacity: 1, duration: DURATION, ease: EASE, stagger: STAGGER });
+          }
+        });
+      });
+    });
   }
 })();
