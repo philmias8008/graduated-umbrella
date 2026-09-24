@@ -42,6 +42,8 @@
 
   /* Comic-panel Contact button, mirrors the homepage's Find My Gaps button */
   .hs-next-btn { position: relative; display: inline-flex; text-decoration: none; transform: skewX(-10deg); transition: transform 160ms ease; }
+  button.hs-next-btn { -webkit-appearance: none; appearance: none; background: none; border: 0; outline: none; box-shadow: none; padding: 0; margin: 0; font: inherit; cursor: pointer; }
+  button.hs-next-btn::-moz-focus-inner { border: 0; padding: 0; }
   .hs-next-shadow { position: absolute; inset: 0; z-index: 0; background: #000; transform: translate(7px,7px); transition: transform 200ms ease, background 200ms ease; }
   .hs-next-btn:is(:hover, .is-tapped) { transform: skewX(-10deg) translate(3px,3px); }
   .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(11px,11px); background: var(--amber); }
@@ -171,7 +173,7 @@
 </head>
 <body>
 
-  <!-- ===================== HEADER ===================== -->
+  <!-- header -->
   <header class="hs-header">
     <div class="hs-header-in">
       <a class="hs-logo" href="/" aria-label="Handstart Digital home">
@@ -213,17 +215,16 @@
           <a href="/about" class="hs-mnav-link" data-close>About</a>
           <a href="/the-difference" class="hs-mnav-link" data-close>The Difference</a>
           <a href="/case-studies" class="hs-mnav-link" data-close>Case Studies</a>
-      <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span></span></span></a>
+      <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
     </div>
   </header>
 
-  <!-- ===================== CONTACT ===================== -->
+  <!-- contact -->
   <section class="hs-contact-section">
     <div class="hs-contact-grid">
 
       <!-- LEFT: pitch -->
       <div class="hs-pitch">
-        <p class="hs-eyebrow">Let's Talk</p>
         <h1>Tell me what's going on.</h1>
         <p class="hs-pitch-sub">What's working? What isn't?<br>Then I'll tell you what I'd look at first.</p>
         <div class="hs-pitch-rule"></div>
@@ -261,7 +262,7 @@
     </div>
   </section>
 
-  <!-- ===================== FOOTER ===================== -->
+  <!-- footer -->
   <footer class="hs-footer">
     <div class="hs-footer-in">
       <div class="hs-footer-top">
@@ -292,12 +293,12 @@
 
       <div class="hs-footer-explore">Explore</div>
       <div class="hs-footer-navgrid">
-        <span class="hs-footer-navlink">Home</span>
-        <span class="hs-footer-navlink">The Difference</span>
-        <span class="hs-footer-navlink">Services</span>
-        <span class="hs-footer-navlink">Case Studies</span>
-        <span class="hs-footer-navlink">About</span>
-        <span class="hs-footer-navlink">Contact</span>
+        <a class="hs-footer-navlink" href="/">Home</a>
+        <a class="hs-footer-navlink" href="/the-difference">The Difference</a>
+        <a class="hs-footer-navlink" href="/services">Services</a>
+        <a class="hs-footer-navlink" href="/case-studies">Case Studies</a>
+        <a class="hs-footer-navlink" href="/about">About</a>
+        <a class="hs-footer-navlink" href="/contact">Contact</a>
       </div>
 
       <div class="hs-footer-divider"></div>
