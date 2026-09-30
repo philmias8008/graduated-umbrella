@@ -24,15 +24,15 @@ Defined as CSS custom properties in each page's own `:root` block (no shared sty
 ```
 
 Font stack (Google Fonts, loaded per-page via `<link>`):
-- `--serif`: Cormorant Garamond — headings, italic emphasis
-- `--sans`: Libre Franklin — body text, UI
-- `--script`: Caveat — handwriting/cursive accents only
+- `--serif`: Cormorant Garamond: headings, italic emphasis
+- `--sans`: Libre Franklin: body text, UI
+- `--script`: Caveat: handwriting/cursive accents only
 
 Caveat is also self-hosted as a static TTF at `assets/fonts/Caveat-SemiBold.ttf` (instantiated from Google's variable font via `fonttools`) for the homepage's draw-on animation, because opentype.js needs direct file access to glyph outlines and can't parse the woff2 that Google Fonts serves. Keep using the Google Fonts `<link>` for normal CSS text rendering; only self-host when a library needs to read outlines directly.
 
 ## No em dashes
 
-Never use em dashes (—) anywhere: not in page copy, not in code, not in code comments, not in commit messages. Use a period, comma, or colon instead.
+Never use em dashes (—) anywhere: not in page copy, not in code, not in code comments, not in docs, not in commit messages. Use a period, comma, or colon instead.
 
 ## URL structure: folder-per-page, clean URLs
 
@@ -62,3 +62,14 @@ Each page folder keeps its own self-contained `assets/` subfolder (e.g. `about/a
 - **External scripts**: pin to an exact CDN version (e.g. `opentype.js@1.3.4` from cdnjs) rather than a floating `@latest` tag.
 - **Legacy root files** (`style.css`, `main.js`, `logo.png`, `hero-logo.png`) are leftovers from an earlier version of the site and are not referenced by any current page. Don't assume they're live; don't build on them without checking first.
 - Git identity for this repo is set locally to `Aidan Paggao <philmias8008@gmail.com>`.
+
+## Mascot system and build rules
+
+Rules for all future work:
+
+- **No em dashes** anywhere in code, copy, comments, or docs (see "No em dashes" above).
+- **Homepage stays library-free for motion.** Lenis, GSAP, and ScrollTrigger must never load on the homepage. Homepage animation is CSS or vanilla JS only. (opentype.js for the handwriting draw-on is a font parser, not a motion library.)
+- **Reduced motion.** Every animation needs a `prefers-reduced-motion` fallback that shows a static state.
+- **No generic HTML comments** like `<!-- header -->`. Remove existing ones when you touch a file. Use specific comments only when they explain a non-obvious decision.
+- **Brand tokens** stay as defined in "Brand colors and fonts" above. Fonts: Cormorant Garamond, Libre Franklin, Caveat.
+- **Workflow.** Before editing, show a short plan. After editing, summarize what changed and which files.
