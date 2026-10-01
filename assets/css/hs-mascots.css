@@ -1,0 +1,225 @@
+/*
+  Mascot states. CSS only, safe on every page including the homepage.
+  Pairs with /assets/js/hs-mascot-loader.js. Optional GSAP upgrade: /assets/js/hs-mascots.js.
+
+  Built by the loader:
+    figure.hs-mascot
+      span.hs-mascot__blob    inline SVG blob, color from data-blob
+      span.hs-mascot__shadow  soft ellipse on the ground line, squashes with the bob
+      span.hs-mascot__art     the character: stacked pose <img>s (raster) or an inline <svg>
+
+  data-state:  idle    bob (+ blink on svg mascots)
+               hover   idle + wiggle + hover pose, held on (real :hover does the same on pointer devices)
+               reveal  hidden until scrolled into view, then pops in and idles
+               static  no motion, base pose only (also what prefers-reduced-motion gets)
+  data-boil:   swaps two poses at 4 fps
+
+  Motion uses the individual translate / scale / rotate properties, never
+  transform, so several animations stack on one element and GSAP's transform
+  composes on top without overwriting them.
+*/
+
+/* blob accent tokens, also listed in CLAUDE.md; tint #EFEAE0 stays the neutral */
+:root {
+  --terracotta: #E08E72;
+  --sage: #A3B899;
+  --dusty-blue: #8FA6C9;
+  --butter: #E8B96A;
+}
+
+.hs-mascot {
+  --hs-bob-dur: 3.2s;
+  --hs-blink-dur: 4.6s;
+  --hs-blob-fill: #EFEAE0;
+  display: block;
+  margin: 0;
+  position: relative;
+  width: var(--hs-mascot-size, 100%);
+  aspect-ratio: var(--hs-mascot-ratio, 1);
+}
+
+/* blob colors: the loader sets data-blob from manifest.json unless the figure already has one */
+.hs-mascot[data-blob="terracotta"] { --hs-blob-fill: var(--terracotta); }
+.hs-mascot[data-blob="butter"]     { --hs-blob-fill: var(--butter); }
+.hs-mascot[data-blob="sage"]       { --hs-blob-fill: var(--sage); }
+.hs-mascot[data-blob="dusty-blue"] { --hs-blob-fill: var(--dusty-blue); }
+.hs-mascot[data-blob="tint"]       { --hs-blob-fill: #EFEAE0; }
+.hs-mascot[data-blob="amber"]      { --hs-blob-fill: #C8873A; }
+.hs-mascot[data-blob="none"] .hs-mascot__blob { display: none; }
+
+.hs-mascot__blob {
+  position: absolute;
+  inset: 3% 5% 14%;
+}
+.hs-mascot__blob svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  rotate: var(--hs-blob-rotate, 0deg);
+}
+.hs-mascot__blob path { fill: var(--hs-blob-fill); }
+
+/* centered on the shared ground line at 84% of the canvas height */
+.hs-mascot__shadow {
+  position: absolute;
+  left: 27%;
+  right: 27%;
+  top: 81%;
+  height: 6%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(27, 43, 75, .32), rgba(27, 43, 75, 0));
+}
+
+.hs-mascot__art {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 84%;
+}
+.hs-mascot__art > svg,
+.hs-mascot__pose {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.hs-mascot__art > svg { overflow: visible; }
+.hs-mascot__pose {
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity .22s ease;
+  user-select: none;
+}
+.hs-mascot__pose.is-base { opacity: 1; }
+
+/* svg layer pivots, see docs/mascot-svg-contract.md */
+.hs-mascot [data-layer] {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.hs-mascot [data-layer="body"]  { transform-origin: 50% 100%; }
+.hs-mascot [data-layer="arm-l"] { transform-origin: 100% 0; }
+.hs-mascot [data-layer="arm-r"] { transform-origin: 0 0; }
+.hs-mascot [data-layer="leg-l"],
+.hs-mascot [data-layer="leg-r"] { transform-origin: 50% 0; }
+
+@keyframes hs-mascot-bob {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -3%; }
+}
+@keyframes hs-mascot-shadow {
+  0%, 100% { scale: 1; opacity: 1; }
+  50%      { scale: .8 .9; opacity: .65; }
+}
+@keyframes hs-mascot-blink {
+  0%, 91%, 97%, 100% { scale: 1 1; }
+  94%                { scale: 1 .08; }
+}
+@keyframes hs-mascot-wiggle {
+  0%, 100% { rotate: 0deg; }
+  25%      { rotate: -4deg; }
+  75%      { rotate: 4deg; }
+}
+@keyframes hs-mascot-wave-r {
+  from { rotate: 0deg; }
+  to   { rotate: -28deg; }
+}
+@keyframes hs-mascot-wave-l {
+  from { rotate: 0deg; }
+  to   { rotate: 14deg; }
+}
+@keyframes hs-mascot-pop {
+  0%   { opacity: 0; scale: .6; translate: 0 18px; }
+  60%  { opacity: 1; scale: 1.06; translate: 0 -4px; }
+  100% { opacity: 1; scale: 1; translate: 0 0; }
+}
+/* 0.5s cycle, two poses: each holds 250ms, so 4 drawings per second */
+@keyframes hs-mascot-boil {
+  0%   { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* idle */
+.hs-mascot__art {
+  animation: hs-mascot-bob var(--hs-bob-dur) ease-in-out infinite;
+}
+.hs-mascot__shadow {
+  animation: hs-mascot-shadow var(--hs-bob-dur) ease-in-out infinite;
+}
+.hs-mascot [data-layer="eyes"],
+.hs-mascot [data-layer="pupils"] {
+  animation: hs-mascot-blink var(--hs-blink-dur) linear var(--hs-blink-delay, 0s) infinite;
+}
+
+/* boil */
+.hs-mascot[data-boil-ready] .hs-mascot__pose.is-boil-a {
+  animation: hs-mascot-boil .5s step-end infinite;
+}
+.hs-mascot[data-boil-ready] .hs-mascot__pose.is-boil-b {
+  animation: hs-mascot-boil .5s step-end -.25s infinite;
+}
+
+/* hover, held on: bob keeps its name in the list so it continues instead of restarting */
+.hs-mascot[data-state="hover"] .hs-mascot__art {
+  animation:
+    hs-mascot-bob var(--hs-bob-dur) ease-in-out infinite,
+    hs-mascot-wiggle .7s ease-in-out infinite;
+}
+.hs-mascot[data-state="hover"][data-boil-ready] .hs-mascot__pose { animation: none; }
+.hs-mascot[data-state="hover"][data-hover-ready] .hs-mascot__pose.is-base { opacity: 0; }
+.hs-mascot[data-state="hover"][data-hover-ready] .hs-mascot__pose.is-hover { opacity: 1; }
+.hs-mascot[data-state="hover"] [data-layer="arm-r"] {
+  animation: hs-mascot-wave-r .35s ease-in-out infinite alternate;
+}
+.hs-mascot[data-state="hover"] [data-layer="arm-l"] {
+  animation: hs-mascot-wave-l .35s ease-in-out infinite alternate;
+}
+
+/* hover, real pointer: the pose swap always runs; the wiggle and wave defer to GSAP when it is active */
+@media (hover: hover) {
+  .hs-mascot:not([data-state="static"]):hover .hs-mascot__pose { animation: none; }
+  .hs-mascot:not([data-state="static"])[data-hover-ready]:hover .hs-mascot__pose.is-base { opacity: 0; }
+  .hs-mascot:not([data-state="static"])[data-hover-ready]:hover .hs-mascot__pose.is-hover { opacity: 1; }
+  .hs-mascot:not([data-state="static"]):not(.hs-mascot--gsap):hover .hs-mascot__art {
+    animation:
+      hs-mascot-bob var(--hs-bob-dur) ease-in-out infinite,
+      hs-mascot-wiggle .7s ease-in-out infinite;
+  }
+  .hs-mascot:not([data-state="static"]):not(.hs-mascot--gsap):hover [data-layer="arm-r"] {
+    animation: hs-mascot-wave-r .35s ease-in-out infinite alternate;
+  }
+  .hs-mascot:not([data-state="static"]):not(.hs-mascot--gsap):hover [data-layer="arm-l"] {
+    animation: hs-mascot-wave-l .35s ease-in-out infinite alternate;
+  }
+}
+
+/* reveal: the pop lives on the figure so hover (on the art) can't restart it.
+   Hidden only when the loader is running, so no-JS visitors still see the mascot. */
+.hs-mascots-js .hs-mascot[data-state="reveal"]:not(.is-revealed):not(.hs-mascot--gsap) {
+  opacity: 0;
+}
+.hs-mascot[data-state="reveal"].is-revealed:not(.hs-mascot--gsap) {
+  animation: hs-mascot-pop .7s cubic-bezier(.34, 1.4, .64, 1) both;
+}
+
+/* static */
+.hs-mascot[data-state="static"],
+.hs-mascot[data-state="static"] * {
+  animation: none !important;
+  transition: none !important;
+}
+.hs-mascot[data-state="static"] .hs-mascot__pose { opacity: 0 !important; }
+.hs-mascot[data-state="static"] .hs-mascot__pose.is-base { opacity: 1 !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-mascot,
+  .hs-mascot * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .hs-mascot .hs-mascot__pose { opacity: 0 !important; }
+  .hs-mascot .hs-mascot__pose.is-base { opacity: 1 !important; }
+  .hs-mascots-js .hs-mascot[data-state="reveal"] { opacity: 1 !important; }
+}

@@ -23,6 +23,15 @@ Defined as CSS custom properties in each page's own `:root` block (no shared sty
 --muted: #c3ccda;      /* muted text on dark backgrounds */
 ```
 
+Accent tokens for mascot blobs (defined in `assets/css/hs-mascots.css`; `--tint` above stays the neutral):
+
+```css
+--terracotta: #E08E72;
+--sage: #A3B899;
+--dusty-blue: #8FA6C9;
+--butter: #E8B96A;
+```
+
 Font stack (Google Fonts, loaded per-page via `<link>`):
 - `--serif`: Cormorant Garamond: headings, italic emphasis
 - `--sans`: Libre Franklin: body text, UI
@@ -73,3 +82,17 @@ Rules for all future work:
 - **No generic HTML comments** like `<!-- header -->`. Remove existing ones when you touch a file. Use specific comments only when they explain a non-obvious decision.
 - **Brand tokens** stay as defined in "Brand colors and fonts" above. Fonts: Cormorant Garamond, Libre Franklin, Caveat.
 - **Workflow.** Before editing, show a short plan. After editing, summarize what changed and which files.
+
+### Using mascots
+
+- Mascots are raster by default: transparent WebP from Midjourney, spec in `docs/mascot-raster-spec.md`. `docs/mascot-svg-contract.md` is optional, for the logo and any code-built geometric characters.
+- Markup: `<figure class="hs-mascot" data-mascot="magnifier" data-state="idle" data-blob="amber"></figure>`.
+  - `data-state`: `idle`, `hover` (held on, for demos), `reveal` (pops in on scroll), `static`. Use `idle` or `reveal` on real pages; real hover triggers the hover state.
+  - `data-blob`: `terracotta`, `butter`, `sage`, `dusty-blue`, `tint`, `amber`, or `none`. Optional: every mascot has a default blob in `manifest.json`, and `data-blob` on the figure overrides it. There is no navy blob.
+  - Optional: `data-pose`, `data-hover-pose`, `data-boil` (4 fps two-pose swap), `data-eager` (above the fold), `data-label` (alt text; otherwise decorative).
+- The component draws the blob and shadow. Never bake them into art.
+- Size with `--hs-mascot-size` (defaults to 100% width). `aspect-ratio` reserves the space before art arrives, so there is no layout shift.
+- Every page that shows a mascot loads `/assets/css/hs-mascots.css` and `/assets/js/hs-mascot-loader.js` (both homepage-safe). Pages that already load GSAP may also load `/assets/js/hs-mascots.js` after GSAP and ScrollTrigger. Never on the homepage.
+- `assets/mascots/manifest.json` lists every mascot with its default `blob`. Finished art adds `type` and `poses` (optional `ratio`). An entry without a `type` shows its SVG placeholder from `assets/mascots/placeholder/` (regenerate with `python3 tools/make-mascot-placeholders.py`). Raw art goes in `incoming/`, checked art in `final/`.
+- `/mascot-test/` is a dev-only page showing every mascot in every state, in CSS mode and `?gsap` mode, plus demo raster characters from `mascot-test/demo/` (regenerate with `python3 tools/make-demo-raster.py`). It is not linked from the site.
+- Homepage ABCD row ("Why Work With Us"): when mascots are added to those panels, use blob overrides A `dusty-blue`, B `terracotta`, C `sage`, D `butter`.

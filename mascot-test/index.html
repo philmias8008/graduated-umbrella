@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Mascot Test | Handstart Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/hs-mascots.css">
+<style>
+  :root {
+    --navy: #1B2B4B;
+    --amber: #C8873A;
+    --amber-lt: #e0a558;
+    --cream: #F7F4EE;
+    --body: #5a6472;
+    --hairline: #D6CFC2;
+    --tint: #EFEAE0;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Libre Franklin', Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--navy); font-family: var(--sans); }
+  .mt-bar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center;
+    padding: 14px 24px; background: var(--navy); color: var(--cream); font-size: 14px;
+  }
+  .mt-bar h1 { margin: 0 auto 0 0; font-family: var(--serif); font-weight: 600; font-size: 24px; }
+  .mt-bar button, .mt-bar a {
+    font: 600 13px var(--sans); color: var(--navy); background: var(--amber-lt);
+    border: 2px solid var(--cream); border-radius: 6px; padding: 6px 12px; cursor: pointer; text-decoration: none;
+  }
+  .mt-bar label { display: flex; align-items: center; gap: 8px; }
+  .mt-stat { color: var(--amber-lt); }
+  .mt-wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px 80px; }
+  .mt-wrap > h2 { font-family: var(--serif); font-weight: 600; font-size: 32px; margin: 40px 0 4px; }
+  .mt-wrap > p { margin: 0 0 8px; color: var(--body); font-size: 14px; max-width: 70ch; }
+  .mt-row { border-top: 1px solid var(--hairline); padding: 18px 0; }
+  .mt-row h3 { margin: 0 0 12px; font-size: 15px; font-weight: 600; display: flex; gap: 10px; align-items: center; }
+  .mt-group { margin-bottom: 14px; }
+  .mt-group h4 { margin: 0 0 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--body); }
+  .mt-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 99px; background: var(--tint); color: var(--body); }
+  .mt-badge[data-source="final"] { background: var(--amber); color: var(--cream); }
+  .mt-cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .mt-cell { background: #fff; border: 1px solid var(--hairline); border-radius: 10px; padding: 12px 12px 8px; }
+  .mt-cell .hs-mascot { --hs-mascot-size: min(100%, var(--mt-size, 140px)); margin: 0 auto; }
+  .mt-cell figcaption, .mt-cap { display: block; text-align: center; font-size: 12px; color: var(--body); margin-top: 6px; }
+  .mt-cap code { font-size: 11px; color: var(--navy); }
+  .mt-contrast { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .mt-swatch {
+    width: min(100%, 96px); aspect-ratio: 1; border-radius: 50%;
+    background: var(--mt-swatch, var(--tint)); border: 4px solid var(--navy);
+  }
+  .mt-contrast .mt-cap strong { display: block; font-size: 12px; }
+  .mt-pass { color: var(--navy); }
+  .mt-fail { color: var(--amber); text-transform: uppercase; }
+  @media (max-width: 700px) {
+    .mt-bar { padding: 12px 16px; }
+    .mt-wrap { padding-left: 16px; padding-right: 16px; }
+    .mt-cells { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="mt-bar">
+  <h1>Mascot test</h1>
+  <span class="mt-stat" id="mt-stat">Loading...</span>
+  <label>Size <input type="range" id="mt-size" min="60" max="240" value="140"></label>
+  <button type="button" id="mt-replay">Replay reveals</button>
+  <a id="mt-mode" href="?gsap">Switch to GSAP mode</a>
+</div>
+
+<div class="mt-wrap">
+  <h2>Raster</h2>
+  <p>Stand-in WebP characters from <code>tools/make-demo-raster.py</code>, loaded through a test-only manifest in <code>mascot-test/demo/</code>. Final Midjourney art takes exactly this path. Hover any mascot to see the pose swap.</p>
+  <div id="mt-raster"></div>
+
+  <h2>Placeholders</h2>
+  <p>Every id in the system, on its default blob from <code>assets/mascots/manifest.json</code>. Each shows its SVG placeholder until its art gets a <code>type</code> there. The last card checks the navy outline against the blob (WCAG 3:1 for graphics) and shows how far an amber body stands apart from it.</p>
+  <div id="mt-placeholders"></div>
+</div>
+
+<script>
+  (function () {
+    // Keep in sync with tools/make-mascot-placeholders.py
+    var IDS = [
+      'hero-bib-hand', 'foam-finger', 'power-button', 'stopwatch', 'magnifier',
+      'megaphone', 'clipboard', 'lightbulb', 'piggy-bank', 'bullseye',
+      'browser-window', 'bar-chart', 'handshake', 'high-five', 'podium',
+      'compass', 'baton', 'ribbon', 'green-flag', 'glove-stop'
+    ];
+    var DEMO_IDS = ['demo-bean'];
+    var DEMO_POSES = ['idle', 'happy', 'idle-b'];
+    var BLOBS = ['terracotta', 'butter', 'sage', 'dusty-blue', 'tint'];
+    var NAVY = '#1B2B4B';
+    var gsapMode = new URLSearchParams(location.search).has('gsap');
+    var stat = document.getElementById('mt-stat');
+
+    var mode = document.getElementById('mt-mode');
+    mode.textContent = gsapMode ? 'Switch to CSS mode' : 'Switch to GSAP mode';
+    mode.href = gsapMode ? location.pathname : '?gsap';
+
+    function esc(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    }
+
+    function cell(attrs, caption) {
+      var a = Object.keys(attrs).map(function (k) {
+        return attrs[k] === true ? ' ' + k : ' ' + k + '="' + esc(attrs[k]) + '"';
+      }).join('');
+      return '<div class="mt-cell"><figure class="hs-mascot"' + a + '></figure><span class="mt-cap">' + caption + '</span></div>';
+    }
+
+    function group(title, cells) {
+      return '<div class="mt-group"><h4>' + title + '</h4><div class="mt-cells">' + cells.join('') + '</div></div>';
+    }
+
+    var rasterHtml = DEMO_IDS.map(function (id) {
+      var poses = DEMO_POSES.map(function (p) {
+        return cell({ 'data-mascot': id, 'data-state': 'static', 'data-pose': p }, '<code>data-pose="' + p + '"</code>');
+      });
+      var blobs = [cell({ 'data-mascot': id, 'data-state': 'idle' }, 'manifest default')].concat(BLOBS.map(function (b) {
+        return cell({ 'data-mascot': id, 'data-state': 'idle', 'data-blob': b }, '<code>data-blob="' + b + '"</code>');
+      }));
+      var states = [
+        cell({ 'data-mascot': id, 'data-state': 'idle' }, 'idle'),
+        cell({ 'data-mascot': id, 'data-state': 'hover' }, 'hover (held)'),
+        cell({ 'data-mascot': id, 'data-state': 'reveal' }, 'reveal'),
+        cell({ 'data-mascot': id, 'data-state': 'idle', 'data-boil': true }, 'idle + <code>data-boil</code>'),
+        cell({ 'data-mascot': id, 'data-state': 'idle', 'data-boil': 'idle happy' }, '<code>data-boil="idle happy"</code>'),
+        cell({ 'data-mascot': id, 'data-state': 'static' }, 'static / reduced motion')
+      ];
+      return '<section class="mt-row"><h3>' + id + ' <span class="mt-badge">loading</span></h3>' +
+        group('Poses', poses) + group('Blob colors', blobs) + group('States', states) + '</section>';
+    }).join('');
+    document.getElementById('mt-raster').innerHTML = rasterHtml;
+
+    var placeholderHtml = IDS.map(function (id) {
+      var cells = ['idle', 'hover', 'reveal', 'static'].map(function (state) {
+        var label = state === 'hover' ? 'hover (held)' : state === 'static' ? 'static / reduced motion' : state;
+        return cell({ 'data-mascot': id, 'data-state': state }, label);
+      });
+      cells.push('<div class="mt-cell mt-contrast" data-contrast-for="' + id + '"><span class="mt-swatch"></span><span class="mt-cap">checking...</span></div>');
+      return '<section class="mt-row"><h3>' + id + ' <span class="mt-badge">loading</span> <span class="mt-badge mt-blob">blob</span></h3><div class="mt-cells">' + cells.join('') + '</div></section>';
+    }).join('');
+    document.getElementById('mt-placeholders').innerHTML = placeholderHtml;
+
+    // WCAG 1.4.11: graphical outlines need 3:1 against what is behind them.
+    function luminance(hex) {
+      var c = hex.replace('#', '');
+      if (c.length === 3) c = c.replace(/./g, '$&$&');
+      return [0, 2, 4].map(function (i) {
+        var v = parseInt(c.substr(i, 2), 16) / 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      }).reduce(function (sum, v, i) { return sum + v * [0.2126, 0.7152, 0.0722][i]; }, 0);
+    }
+    function ratio(a, b) {
+      var la = luminance(a), lb = luminance(b);
+      return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+    }
+
+    function checkContrast(fig) {
+      var row = fig.closest('.mt-row');
+      var box = row.querySelector('.mt-contrast');
+      if (!box || box.hasAttribute('data-done')) return;
+      box.setAttribute('data-done', '');
+      var blob = fig.getAttribute('data-blob');
+      var fill = getComputedStyle(fig).getPropertyValue('--hs-blob-fill').trim();
+      var body = fig.querySelector('[data-layer="body"]');
+      var bodyFill = body ? (body.getAttribute('fill') || '#C8873A') : '#C8873A';
+      var outline = ratio(NAVY, fill);
+      var bodyRatio = ratio(bodyFill, fill);
+      var pass = outline >= 3;
+      box.style.setProperty('--mt-swatch', fill);
+      box.querySelector('.mt-cap').innerHTML =
+        '<strong class="mt-' + (pass ? 'pass' : 'fail') + '">Navy outline ' + outline.toFixed(1) + ':1 ' + (pass ? 'pass' : 'fail') + '</strong>' +
+        'Body vs blob ' + bodyRatio.toFixed(1) + ':1<br><code>' + fill + '</code>';
+      row.querySelector('.mt-blob').textContent = 'blob: ' + blob + ' (default)';
+    }
+
+    document.addEventListener('hs-mascot:loaded', function (e) {
+      var badge = e.target.closest('.mt-row').querySelector('.mt-badge');
+      badge.textContent = e.detail.source + ' ' + e.detail.type;
+      badge.setAttribute('data-source', e.detail.source);
+      checkContrast(e.target);
+      report();
+    });
+
+    document.getElementById('mt-size').addEventListener('input', function () {
+      document.body.style.setProperty('--mt-size', this.value + 'px');
+    });
+
+    document.getElementById('mt-replay').addEventListener('click', function () {
+      document.querySelectorAll('.hs-mascot[data-state="reveal"]').forEach(function (fig) {
+        if (fig._hsReveal) {
+          fig._hsReveal.play(0);
+        } else {
+          fig.classList.remove('is-revealed');
+          void fig.offsetWidth;
+          window.HSMascots.observeReveal(fig);
+        }
+      });
+    });
+
+    // Confirms fetch-once: repeated mascots should not add requests.
+    function report() {
+      var files = performance.getEntriesByType('resource').filter(function (r) {
+        return /\/(assets\/mascots|mascot-test\/demo)\/.+\.(svg|webp)$/.test(r.name);
+      }).length;
+      var figs = document.querySelectorAll('.hs-mascot').length;
+      stat.textContent = (gsapMode ? 'GSAP mode' : 'CSS mode') + ': ' + figs + ' figures, ' + files + ' art requests';
+    }
+    document.addEventListener('load', report, true);
+
+    window.HSMascotsConfig = { extraManifests: ['/mascot-test/demo/manifest.json'] };
+
+    // In GSAP mode the enhancement must be listening before the loader
+    // inlines anything, so every script is chained in order.
+    var scripts = gsapMode
+      ? ['/assets/js/gsap.min.js', '/assets/js/ScrollTrigger.min.js', '/assets/js/hs-mascots.js', '/assets/js/hs-mascot-loader.js']
+      : ['/assets/js/hs-mascot-loader.js'];
+    (function next() {
+      var src = scripts.shift();
+      if (!src) return;
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = next;
+      document.body.appendChild(s);
+    })();
+  })();
+</script>
+</body>
+</html>
