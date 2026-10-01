@@ -24,7 +24,7 @@
   a { text-decoration: none; color: inherit; }
   img { display: block; }
 
-  /* ---------- header / nav ---------- */
+  /* header / nav */
   .hs-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid var(--hairline); }
   .hs-header-in { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); height: clamp(72px,10vw,96px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .hs-logo img { height: clamp(44px,5.5vw,58px); width: auto; object-fit: contain; }
@@ -92,7 +92,7 @@
   }
 
 
-  /* ---------- hamburger / mobile nav ---------- */
+  /* hamburger / mobile nav */
   .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid var(--hairline); border-radius: 9px; cursor: pointer; color: var(--navy); }
   .hs-mnav { display: none; border-top: 1px solid var(--hairline); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--cream); }
   .hs-mnav.is-open { display: flex; }
@@ -103,7 +103,7 @@
     .hs-hamburger { display: inline-flex !important; }
   }
 
-  /* ---------- body ---------- */
+  /* body */
   .hs-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: clamp(64px,10vw,120px) clamp(24px,6vw,80px); text-align: center; }
   .hs-body-in { max-width: 600px; display: flex; flex-direction: column; align-items: center; }
   .hs-back { font-family: var(--sans); font-size: 14px; font-weight: 600; color: #8b8578; margin-bottom: clamp(24px,3vw,34px); transition: color 180ms ease; }
@@ -113,7 +113,7 @@
   .hs-body p { font-family: var(--sans); font-size: clamp(16px,1.4vw,19px); line-height: 1.6; color: var(--body); max-width: 46ch; margin: clamp(16px,2vw,22px) 0 clamp(28px,3.4vw,36px); }
   .hs-body-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 
-  /* ---------- footer ---------- */
+  /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
   .hs-footer-in { max-width: 1200px; margin: 0 auto; }
   .hs-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
@@ -153,7 +153,6 @@
 </head>
 <body>
 
-  <!-- header -->
   <header class="hs-header">
     <div class="hs-header-in">
       <a class="hs-logo" href="/" aria-label="Handstart Digital home">
@@ -199,7 +198,6 @@
     </div>
   </header>
 
-  <!-- body -->
   <section class="hs-body">
     <div class="hs-body-in">
       <a class="hs-back" href="/case-studies">&larr; All case studies</a>
@@ -212,7 +210,6 @@
     </div>
   </section>
 
-  <!-- footer -->
   <footer class="hs-footer">
     <div class="hs-footer-in">
       <div class="hs-footer-top">

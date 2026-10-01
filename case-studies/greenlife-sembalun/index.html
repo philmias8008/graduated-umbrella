@@ -24,7 +24,7 @@
   a { text-decoration: none; color: inherit; }
   img { display: block; max-width: 100%; }
 
-  /* ---------- header / nav ---------- */
+  /* header / nav */
   .hs-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid var(--hairline); }
   .hs-header-in { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); height: clamp(72px,10vw,96px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .hs-logo img { height: clamp(44px,5.5vw,58px); width: auto; object-fit: contain; }
@@ -92,7 +92,7 @@
   }
 
 
-  /* ---------- hamburger / mobile nav ---------- */
+  /* hamburger / mobile nav */
   .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid var(--hairline); border-radius: 9px; cursor: pointer; color: var(--navy); }
   .hs-mnav { display: none; border-top: 1px solid var(--hairline); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--cream); }
   .hs-mnav.is-open { display: flex; }
@@ -103,7 +103,7 @@
     .hs-hamburger { display: inline-flex !important; }
   }
 
-  /* ---------- hero ---------- */
+  /* hero */
   .hs-hero { padding: clamp(44px,6vw,72px) clamp(24px,6vw,80px) clamp(32px,4vw,48px); }
   .hs-hero-in { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; }
   .hs-back { font-family: var(--sans); font-size: 14px; font-weight: 600; color: #8b8578; margin-bottom: clamp(20px,2.4vw,28px); transition: color 180ms ease; }
@@ -114,7 +114,7 @@
   .hs-place { font-family: var(--sans); font-size: 14px; font-weight: 500; color: #8b8578; }
   .hs-hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(32px,4.6vw,54px); line-height: 1.06; letter-spacing: -0.015em; color: var(--navy); margin: clamp(14px,1.8vw,18px) 0 0; text-wrap: balance; }
 
-  /* ---------- body / article ---------- */
+  /* body / article */
   .hs-body { padding: 0 clamp(24px,6vw,80px) clamp(20px,3vw,40px); }
   .hs-article { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(56px,7vw,96px); }
 
@@ -171,14 +171,14 @@
     .hs-diff-row .hs-diff-text { order: 0 !important; }
   }
 
-  /* ---------- closing CTA ---------- */
+  /* closing CTA */
   .hs-close { background: var(--navy); margin-top: clamp(40px,6vw,72px); padding: clamp(60px,9vw,110px) clamp(24px,6vw,80px); text-align: center; }
   .hs-close-in { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
   .hs-close h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(30px,4.4vw,50px); line-height: 1.08; letter-spacing: -0.01em; color: var(--cream); margin: 0; text-wrap: balance; }
   .hs-close p { font-family: var(--sans); font-size: clamp(16px,1.4vw,19px); line-height: 1.55; color: #c3ccda; margin: clamp(14px,1.8vw,20px) 0 clamp(28px,3.4vw,36px); max-width: 44ch; }
   .hs-close-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 
-  /* ---------- footer ---------- */
+  /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
   .hs-footer-in { max-width: 1200px; margin: 0 auto; }
   .hs-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
@@ -219,7 +219,6 @@
 </head>
 <body>
 
-  <!-- header -->
   <header class="hs-header">
     <div class="hs-header-in">
       <a class="hs-logo" href="/" aria-label="Handstart Digital home">
@@ -265,7 +264,6 @@
     </div>
   </header>
 
-  <!-- hero -->
   <section class="hs-hero">
     <div class="hs-hero-in">
       <a class="hs-back" href="/case-studies">&larr; All case studies</a>
@@ -278,11 +276,9 @@
     </div>
   </section>
 
-  <!-- body -->
   <section class="hs-body">
     <article class="hs-article">
 
-      <!-- before / after -->
       <div class="hs-ba">
         <div class="hs-ba-col">
           <div class="hs-ba-label">Before</div>
@@ -294,7 +290,6 @@
         </div>
       </div>
 
-      <!-- results -->
       <figure class="hs-results">
         <figcaption>
           <div class="hs-results-title">Results</div>
@@ -322,7 +317,6 @@
         </div>
       </figure>
 
-      <!-- challenge / approach / impact rows -->
       <div class="hs-diff-row">
         <div class="hs-diff-text">
           <div class="hs-rule"><span class="hs-rule-line"></span><span class="hs-rule-tab"></span></div>
@@ -356,7 +350,6 @@
         </div>
       </div>
 
-      <!-- testimonial -->
       <blockquote class="hs-quote">
         <p>"...the most beautiful campsite with a stunning view of the Sembalun mountains and farms. Will definitely stay again when I come back to Lombok."</p>
         <footer>Guest review</footer>
@@ -365,7 +358,6 @@
     </article>
   </section>
 
-  <!-- closing cta -->
   <section class="hs-close">
     <div class="hs-close-in">
       <h2>Ready to work with me?</h2>
@@ -378,7 +370,6 @@
     </div>
   </section>
 
-  <!-- footer -->
   <footer class="hs-footer">
     <div class="hs-footer-in">
       <div class="hs-footer-top">

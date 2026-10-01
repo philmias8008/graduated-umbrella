@@ -24,7 +24,7 @@
   a { text-decoration: none; color: inherit; }
   img { display: block; }
 
-  /* ---------- header / nav ---------- */
+  /* header / nav */
   .hs-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid var(--hairline); }
   .hs-header-in { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); height: clamp(72px,10vw,96px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .hs-logo img { height: clamp(44px,5.5vw,58px); width: auto; object-fit: contain; }
@@ -94,7 +94,7 @@
   }
 
 
-  /* ---------- hamburger / mobile nav ---------- */
+  /* hamburger / mobile nav */
   .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid var(--hairline); border-radius: 9px; cursor: pointer; color: var(--navy); }
   .hs-mnav { display: none; border-top: 1px solid var(--hairline); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--cream); }
   .hs-mnav.is-open { display: flex; }
@@ -104,7 +104,7 @@
     .hs-hamburger { display: inline-flex !important; }
   }
 
-  /* ---------- contact ---------- */
+  /* contact */
   .hs-contact-section { padding: clamp(52px,7.5vw,92px) clamp(24px,6vw,80px) clamp(40px,5vw,56px); }
   .hs-contact-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px,5vw,72px); align-items: start; }
   @media (max-width: 900px) {
@@ -133,7 +133,7 @@
   textarea.hs-field { resize: vertical; min-height: 140px; line-height: 1.55; font-family: var(--sans); }
   .hs-honeypot-field { display: none; }
 
-  /* ---------- footer ---------- */
+  /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
   .hs-footer-in { max-width: 1200px; margin: 0 auto; }
   .hs-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
@@ -173,7 +173,6 @@
 </head>
 <body>
 
-  <!-- header -->
   <header class="hs-header">
     <div class="hs-header-in">
       <a class="hs-logo" href="/" aria-label="Handstart Digital home">
@@ -219,11 +218,9 @@
     </div>
   </header>
 
-  <!-- contact -->
   <section class="hs-contact-section">
     <div class="hs-contact-grid">
 
-      <!-- LEFT: pitch -->
       <div class="hs-pitch">
         <h1>Tell me what's going on.</h1>
         <p class="hs-pitch-sub">What's working? What isn't?<br>Then I'll tell you what I'd look at first.</p>
@@ -233,7 +230,6 @@
         <p class="hs-pitch-cal">Rather book a call? <a data-cal-link="aidanpaggao/15min" data-cal-namespace="15min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}'>Grab 15 minutes on my calendar &rarr;</a></p>
       </div>
 
-      <!-- RIGHT: form -->
       <div class="hs-form-card">
         <!-- Wired for Netlify Forms: submissions are captured automatically once this site is deployed to Netlify. No backend or JS handling needed. -->
         <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact/thank-you/" class="hs-form">
@@ -262,7 +258,6 @@
     </div>
   </section>
 
-  <!-- footer -->
   <footer class="hs-footer">
     <div class="hs-footer-in">
       <div class="hs-footer-top">

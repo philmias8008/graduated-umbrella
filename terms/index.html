@@ -24,7 +24,7 @@
   a { text-decoration: none; color: inherit; }
   img { display: block; }
 
-  /* ---------- header / nav ---------- */
+  /* header / nav */
   .hs-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid var(--hairline); }
   .hs-header-in { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); height: clamp(72px,10vw,96px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .hs-logo img { height: clamp(44px,5.5vw,58px); width: auto; object-fit: contain; }
@@ -92,7 +92,7 @@
   }
 
 
-  /* ---------- hamburger / mobile nav ---------- */
+  /* hamburger / mobile nav */
   .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid var(--hairline); border-radius: 9px; cursor: pointer; color: var(--navy); }
   .hs-mnav { display: none; border-top: 1px solid var(--hairline); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--cream); }
   .hs-mnav.is-open { display: flex; }
@@ -102,7 +102,7 @@
     .hs-hamburger { display: inline-flex !important; }
   }
 
-  /* ---------- legal article ---------- */
+  /* legal article */
   .hs-legal-section { padding: clamp(48px,7vw,88px) clamp(24px,6vw,80px) clamp(56px,7vw,88px); }
   .hs-legal { max-width: 760px; margin: 0 auto; }
   .hs-eyebrow { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
@@ -113,7 +113,7 @@
   .hs-legal p { font-family: var(--sans); font-size: 17px; line-height: 1.7; color: var(--slate); margin: clamp(14px,1.6vw,18px) 0 0; }
   .hs-inline-link { color: var(--navy); border-bottom: 1px solid var(--amber); }
 
-  /* ---------- footer ---------- */
+  /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
   .hs-footer-in { max-width: 1200px; margin: 0 auto; }
   .hs-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
@@ -152,7 +152,6 @@
 </head>
 <body>
 
-  <!-- header -->
   <header class="hs-header">
     <div class="hs-header-in">
       <a class="hs-logo" href="/" aria-label="Handstart Digital home">
@@ -198,7 +197,6 @@
     </div>
   </header>
 
-  <!-- legal article -->
   <section class="hs-legal-section">
     <article class="hs-legal">
       <h1>Terms of Service</h1>
@@ -232,7 +230,6 @@
     </article>
   </section>
 
-  <!-- footer -->
   <footer class="hs-footer">
     <div class="hs-footer-in">
       <div class="hs-footer-top">

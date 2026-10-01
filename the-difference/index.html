@@ -29,7 +29,7 @@
   a { text-decoration: none; color: inherit; }
   img { display: block; }
 
-  /* ---------- header / nav ---------- */
+  /* header / nav */
   .hs-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid var(--hairline); }
   .hs-header-in { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); height: clamp(72px,10vw,96px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .hs-logo img { height: clamp(44px,5.5vw,58px); width: auto; object-fit: contain; }
@@ -97,7 +97,7 @@
   }
 
 
-  /* ---------- hamburger / mobile nav ---------- */
+  /* hamburger / mobile nav */
   .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid var(--hairline); border-radius: 9px; cursor: pointer; color: var(--navy); }
   .hs-mnav { display: none; border-top: 1px solid var(--hairline); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--cream); }
   .hs-mnav.is-open { display: flex; }
@@ -108,7 +108,7 @@
     .hs-hamburger { display: inline-flex !important; }
   }
 
-  /* ---------- article ---------- */
+  /* article */
   .hs-article { padding: clamp(36px,5vw,60px) clamp(24px,6vw,80px) clamp(64px,9vw,110px); }
   .hs-col { max-width: 760px; margin: 0 auto; }
   .hs-wide { max-width: 1180px; margin: clamp(40px,5vw,60px) auto 0; }
@@ -122,7 +122,7 @@
   .hs-list .hs-bullet { flex-shrink: 0; color: var(--amber); font-weight: 700; font-size: 15px; }
   .hs-list span:last-child { font-family: var(--sans); font-size: clamp(14px,0.9vw,15px); font-weight: 400; line-height: 1.65; color: var(--slate); }
 
-  /* ---------- FAQ accordion ---------- */
+  /* FAQ accordion */
   .hs-faq { display: flex; flex-direction: column; gap: 8px; }
   .hs-faq-item { border-radius: 12px; padding: 4px clamp(18px,2.4vw,26px); transition: background .3s ease; background: transparent; }
   .hs-faq-item.is-open { background: var(--navy); }
@@ -138,7 +138,7 @@
   .hs-faq-ans-inner { overflow: hidden; min-height: 0; }
   .hs-faq-p { font-family: var(--sans); font-size: clamp(14px,0.9vw,15px); line-height: 1.7; color: #c3ccda; margin: 0 0 18px; }
 
-  /* ---------- diff rows ---------- */
+  /* diff rows */
   .hs-rule { position: relative; height: 3px; margin-bottom: 20px; }
   .hs-rule-line { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--hairline); }
   .hs-rule-tab { position: absolute; left: 0; bottom: 0; width: 140px; height: 3px; background: #A9B0BE; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 0 100%); }
@@ -164,14 +164,14 @@
   }
   @media (max-width: 700px) { .hs-sbs { grid-template-columns: 1fr; } }
 
-  /* ---------- closing CTA ---------- */
+  /* closing CTA */
   .hs-close { background: var(--navy); padding: clamp(60px,9vw,110px) clamp(24px,6vw,80px); text-align: center; }
   .hs-close-in { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
   .hs-close h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(30px,4.4vw,50px); line-height: 1.08; letter-spacing: -0.01em; color: var(--cream); margin: 0; text-wrap: balance; }
   .hs-close p { font-family: var(--sans); font-size: clamp(16px,1.4vw,19px); line-height: 1.55; color: #c3ccda; margin: clamp(14px,1.8vw,20px) 0 clamp(28px,3.4vw,36px); max-width: 52ch; }
   .hs-close-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 
-  /* ---------- footer ---------- */
+  /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
   .hs-footer-in { max-width: 1200px; margin: 0 auto; }
   .hs-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
@@ -212,7 +212,6 @@
 </head>
 <body>
 
-  <!-- header -->
   <header class="hs-header">
     <div class="hs-header-in">
       <a class="hs-logo" href="/" aria-label="Handstart Digital home">
@@ -258,7 +257,6 @@
     </div>
   </header>
 
-  <!-- article -->
   <article class="hs-article">
     <div class="hs-col">
       <h1 class="hs-h1">Are you getting pitched 100% AI generated work?</h1>
@@ -296,7 +294,6 @@
 
     <div class="hs-wide">
 
-      <!-- Example: working -->
       <div class="hs-diff-row hs-diff-row--big">
         <div class="hs-diff-text">
           <div class="hs-rule"><span class="hs-rule-line"></span><span class="hs-rule-tab"></span></div>
@@ -310,7 +307,6 @@
         </div>
       </div>
 
-      <!-- Checklist -->
       <div class="hs-section">
         <div class="hs-rule"><span class="hs-rule-line"></span><span class="hs-rule-tab"></span></div>
         <p class="hs-p" style="margin-bottom:clamp(20px,2.4vw,28px);">Whether you're sizing up a website, a proposal, or a piece of content, look for these:</p>
@@ -330,7 +326,6 @@
         </ul>
       </div>
 
-      <!-- The takeaway -->
       <div class="hs-section">
         <div class="hs-rule"><span class="hs-rule-line"></span><span class="hs-rule-tab"></span></div>
         <p class="hs-p">The same trick shows up everywhere else in digital marketing.</p>
@@ -343,7 +338,6 @@
     </div>
   </article>
 
-  <!-- closing cta -->
   <section class="hs-close">
     <div class="hs-close-in">
       <h2>Not sure what you're actually paying for?</h2>
@@ -355,7 +349,6 @@
     </div>
   </section>
 
-  <!-- footer -->
   <footer class="hs-footer">
     <div class="hs-footer-in">
       <div class="hs-footer-top">

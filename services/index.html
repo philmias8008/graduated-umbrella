@@ -234,15 +234,15 @@
       .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation:none !important; stroke:var(--amber) !important; }
     }
 
-    /* ---------- Lenis smooth scroll (required Lenis CSS) ---------- */
+    /* Lenis smooth scroll (required Lenis CSS) */
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
     .lenis.lenis-stopped { overflow: hidden; }
 
-    /* ---------- pinned service panel stack: plain stacked flow by default
+    /* Pinned service panel stack: plain stacked flow by default
        (mobile, no-JS, reduced motion all land here); hs-motion.js only
        promotes this to a pinned, scrubbed cover-wipe at tablet width and up
-       when motion is allowed, and tears it back down below that width. ---------- */
+       when motion is allowed, and tears it back down below that width. */
     @media (min-width: 768px) {
       .hs-pin-panel { min-height: 100vh; display: flex; align-items: center; }
       .hs-pin-panel > div { width: 100%; }
@@ -253,7 +253,6 @@
 <body>
 <div style="min-height:100vh; background:var(--cream); color:var(--navy);">
 
-  <!-- nav -->
   <header style="position:sticky; top:0; z-index:50; background:var(--cream); border-bottom:1px solid var(--hairline);">
     <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,4vw,44px); height:clamp(72px,10vw,96px); display:flex; align-items:center; justify-content:space-between; gap:16px;">
       <a href="/" style="display:flex; align-items:center; gap:12px;">
@@ -298,7 +297,6 @@
     </div>
   </header>
 
-  <!-- hero -->
   <section style="background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px);">
     <div style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
       <div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--amber); margin-bottom:clamp(10px,1.4vw,14px);">Services</div>
@@ -312,9 +310,8 @@
     </div>
   </section>
 
-  <!-- five problems (pinned wipe stack on tablet/desktop) -->
+  <!-- pinned wipe stack on tablet and desktop -->
   <div class="hs-pin-stack" data-pin-stack>
-  <!-- O1 -->
   <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 data-anim="split-text" style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What makes your brand yours?</h2>
@@ -329,7 +326,6 @@
     </div>
   </section>
 
-  <!-- O2 -->
   <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is your website working against you?</h2>
@@ -346,7 +342,6 @@
     </div>
   </section>
 
-  <!-- O3 -->
   <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is it difficult to find you?</h2>
@@ -364,7 +359,6 @@
     </div>
   </section>
 
-  <!-- O4 -->
   <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Do you need customers now?</h2>
@@ -381,7 +375,6 @@
     </div>
   </section>
 
-  <!-- O5 -->
   <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
     <div style="max-width:900px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">How is your brand's ongoing presence?</h2>
@@ -397,7 +390,6 @@
   </section>
   </div>
 
-  <!-- what we don't do -->
   <section data-anim="clip" style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
     <div style="max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What we don't do:</h2>
@@ -412,7 +404,6 @@
     </div>
   </section>
 
-  <!-- why work with us -->
   <section id="why-us" style="background:var(--navy); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
     <div style="max-width:1200px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--cream); margin:0 0 clamp(28px,3.6vw,40px); text-wrap:balance;">Why Work With Us: Our ABCD</h2>
@@ -497,7 +488,6 @@
     </div>
   </section>
 
-  <!-- closing cta -->
   <section style="background:var(--navy); padding:clamp(60px,9vw,110px) clamp(24px,6vw,80px); text-align:center;">
     <div style="max-width:640px; margin:0 auto; display:flex; flex-direction:column; align-items:center;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--cream); margin:0; text-wrap:balance;">Not sure where you fit?</h2>
@@ -509,7 +499,6 @@
     </div>
   </section>
 
-  <!-- footer -->
   <footer style="background:var(--navy); padding:clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px);">
     <div style="max-width:1200px; margin:0 auto;">
       <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:22px;">
