@@ -83,62 +83,6 @@
       .hs-footer-navlink { transition:none; }
     }
 
-    /* Why Work With Us: ABCD panel accordion */
-    .hs-abcd { display:flex; width:100%; height:clamp(280px,30vw,360px); gap:6px; margin-top:clamp(28px,3.6vw,40px); }
-    .hs-abcd-panel {
-      position:relative; overflow:hidden; flex:1 1 0%; min-width:0; appearance:none;
-      background:var(--abcd-bg); border:none; border-radius:14px; cursor:pointer;
-      padding:clamp(20px,2.4vw,32px); text-align:left; font:inherit;
-      display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start;
-      transition:flex-grow 480ms cubic-bezier(.4,0,.2,1);
-      container-type:inline-size;
-      --abcd-letter-size:clamp(90px,68cqw,210px);
-    }
-    .hs-abcd-panel.is-active { flex-grow:3; }
-    .hs-abcd-letter {
-      position:absolute; top:70%; right:0; transform:translateY(-50%);
-      font-family:var(--serif); font-weight:600; font-size:var(--abcd-letter-size); line-height:1;
-      color:var(--navy); opacity:0.12; pointer-events:none; white-space:nowrap;
-      transition:opacity 480ms ease;
-    }
-    .hs-abcd-panel.is-active .hs-abcd-letter { opacity:0.9; }
-    .hs-abcd-toggle { display:none; }
-    .hs-abcd-body { position:relative; z-index:1; max-width:min(60ch, calc(100% - var(--abcd-letter-size) * 0.72)); opacity:0; transition:opacity 260ms ease; }
-    .hs-abcd-panel.is-active .hs-abcd-body { opacity:1; transition-delay:180ms; }
-    .hs-abcd-heading {
-      font-family:var(--serif); font-weight:500; font-size:clamp(21px,2vw,27px);
-      color:var(--navy); margin:0 0 10px; white-space:nowrap;
-    }
-    .hs-abcd-desc { font-family:var(--sans); font-size:clamp(15px,1.1vw,17px); line-height:1.55; color:var(--abcd-text, var(--body)); margin:0 0 clamp(24px,3vw,40px); }
-    .hs-abcd-impl-label {
-      font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.08em;
-      text-transform:uppercase; color:var(--slate); margin:0 0 10px;
-    }
-    .hs-abcd-impl ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px; }
-    .hs-abcd-impl li { font-family:var(--sans); font-size:15px; color:var(--abcd-text, var(--body)); padding-left:16px; position:relative; }
-    .hs-abcd-impl li::before {
-      content:''; position:absolute; left:0; top:0.55em; width:6px; height:6px; border-radius:50%; background:var(--abcd-dot, var(--amber));
-    }
-    @media (max-width: 900px) {
-      .hs-abcd { flex-direction:column; height:auto; gap:8px; }
-      .hs-abcd-panel { flex:none !important; height:auto; padding:16px clamp(16px,4vw,24px); gap:14px; }
-      .hs-abcd-letter { display:none; }
-      .hs-abcd-toggle { display:flex; align-items:center; gap:12px; width:100%; }
-      .hs-abcd-toggle-key {
-        flex:none; width:28px; height:28px; border-radius:50%; background:var(--navy); color:var(--cream);
-        font-family:var(--sans); font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center;
-      }
-      .hs-abcd-toggle-heading { font-family:var(--serif); font-weight:500; font-size:17px; color:var(--navy); flex:1; }
-      .hs-abcd-chevron { flex:none; width:16px; height:16px; color:var(--navy); transition:transform 300ms ease; }
-      .hs-abcd-panel.is-active .hs-abcd-chevron { transform:rotate(180deg); }
-      .hs-abcd-body { max-width:none; }
-      .hs-abcd-body .hs-abcd-heading { display:none; }
-      .hs-abcd-panel:not(.is-active) .hs-abcd-body { height:0; overflow:hidden; padding:0; margin:0; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hs-abcd-panel, .hs-abcd-letter, .hs-abcd-body, .hs-abcd-chevron { transition:none !important; }
-    }
-
     /* Footer flip-link nav (test) */
   .hs-footer-navgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; row-gap: 14px; align-content: start; }
   @media (max-width: 640px) { .hs-footer-navgrid { grid-template-columns: 1fr; row-gap: 10px; } }
@@ -321,31 +265,37 @@
       .hs-chip-face, .hs-chip-face::before { transition:none; }
     }
 
-    /* Real work vs template work (folded in from the old The Difference page) */
-    .hs-real { background:var(--tint); border-top:1px solid var(--hairline); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px); }
+    /* Real work vs template work: the page opener (folded in from the old The Difference page) */
+    .hs-real { background:var(--cream); padding:clamp(40px,6vw,72px) clamp(24px,6vw,80px) clamp(48px,6vw,72px); }
     .hs-real-in { max-width:1040px; margin:0 auto; }
     .hs-real-head { display:flex; align-items:center; gap:clamp(12px,1.8vw,20px); }
     .hs-real-mascot { --hs-mascot-size:clamp(76px,8vw,96px); flex:none; }
-    .hs-real-title { font-family:var(--serif); font-weight:600; font-size:clamp(28px,3.8vw,44px); line-height:1.08; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance; }
+    .hs-real-title { font-family:var(--serif); font-weight:600; font-size:clamp(32px,4.6vw,54px); line-height:1.08; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance; }
     .hs-real-intro { display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:clamp(24px,4vw,48px); align-items:center; margin-top:clamp(20px,2.6vw,28px); }
     .hs-real-setup { font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.7; color:var(--body); margin:0; }
     .hs-real-mock { border-radius:14px; overflow:hidden; border:1px solid var(--hairline); box-shadow:0 18px 40px -20px rgba(27,43,75,.45); }
     .hs-real-mock img { display:block; width:100%; height:auto; }
-    .hs-real-check { display:flex; align-items:flex-start; gap:clamp(14px,2vw,24px); margin-top:clamp(32px,4vw,48px); padding-top:clamp(24px,3vw,32px); border-top:1px solid var(--hairline); }
+    .hs-real-check { display:flex; align-items:flex-start; gap:clamp(14px,2vw,24px); margin-top:clamp(24px,3vw,36px); padding-top:clamp(20px,2.4vw,28px); border-top:1px solid var(--hairline); }
     .hs-real-clip { --hs-mascot-size:clamp(72px,7vw,88px); flex:none; margin-top:-6px; }
     .hs-real-lede { font-family:var(--sans); font-size:clamp(15px,1.3vw,17px); font-weight:600; color:var(--navy); margin:0 0 14px; }
-    .hs-real-list { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:14px clamp(20px,3vw,36px); }
-    .hs-real-list li { position:relative; padding-left:18px; font-family:var(--sans); font-size:15px; line-height:1.55; color:var(--body); }
+    .hs-real-list { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:10px clamp(20px,3vw,36px); }
+    .hs-real-list li { position:relative; padding-left:18px; font-family:var(--sans); font-size:14px; line-height:1.5; color:var(--body); }
     .hs-real-list li::before { content:''; position:absolute; left:0; top:0.6em; width:7px; height:7px; border-radius:50%; background:var(--amber); }
-    .hs-real-offer { margin:clamp(28px,3.6vw,40px) 0 0; }
-    .hs-real-offer a { font-family:var(--serif); font-style:italic; font-weight:600; font-size:clamp(20px,2vw,26px); color:var(--navy); text-decoration:none; border-bottom:1.5px solid var(--amber); padding-bottom:2px; transition:color 180ms ease; }
-    .hs-real-offer a:hover { color:var(--amber); }
+    /* the fork bridges into the services: people who have been pitched before go to /contact, first-timers scroll on */
+    .hs-fork { display:grid; grid-template-columns:1fr 1fr; gap:clamp(12px,2vw,20px); margin-top:clamp(28px,3.6vw,40px); }
+    .hs-fork-card { display:flex; flex-direction:column; gap:6px; text-decoration:none; background:#fff; border:1.5px solid var(--hairline); border-radius:14px; padding:clamp(16px,2vw,22px) clamp(18px,2.2vw,26px); transition:border-color 180ms ease, transform 180ms ease; }
+    .hs-fork-card:hover { border-color:var(--amber); transform:translateY(-2px); }
+    .hs-fork-card:focus-visible { outline:2px solid var(--navy); outline-offset:3px; }
+    .hs-fork-kicker { font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber); }
+    .hs-fork-line { font-family:var(--serif); font-style:italic; font-weight:600; font-size:clamp(19px,1.9vw,24px); line-height:1.25; color:var(--navy); }
+    #work-together { scroll-margin-top:clamp(72px,10vw,96px); }
     @media (max-width:760px) {
       .hs-real-intro { grid-template-columns:1fr; }
       .hs-real-list { grid-template-columns:1fr; }
       .hs-real-check { flex-direction:column; gap:6px; }
+      .hs-fork { grid-template-columns:1fr; }
     }
-    @media (prefers-reduced-motion: reduce) { .hs-real-offer a { transition:none; } }
+    @media (prefers-reduced-motion: reduce) { .hs-fork-card { transition:none; } .hs-fork-card:hover { transform:none; } }
   </style>
 </head>
 
@@ -390,10 +340,46 @@
     </div>
   </header>
 
-  <section style="background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px);">
+  <section class="hs-real" id="real-work" aria-labelledby="real-title">
+    <div class="hs-real-in">
+      <div class="hs-real-head">
+        <figure class="hs-mascot hs-real-mascot" data-mascot="magnifier" data-state="idle"></figure>
+        <h1 class="hs-real-title" id="real-title">Real work vs template work</h1>
+      </div>
+      <div class="hs-real-intro">
+        <p class="hs-real-setup">A good template, built on real code and properly customized, is smart money. The one to watch for is the generic AI version: swap the logo and the colors and it's a plumber, a restaurant or an agency. I check every agency that runs an ad in my feed, and about one in four is selling a site like this, complete with results for clients that don't exist. Here's one I made for a plumbing business that doesn't exist.</p>
+        <div class="hs-real-mock"><img src="assets/plumbing-mockup.png" width="1183" height="854" alt="Generic AI-generated template mockup for a fictional plumbing business"></div>
+      </div>
+      <div class="hs-real-check">
+        <figure class="hs-mascot hs-real-clip" data-mascot="clipboard" data-state="reveal"></figure>
+        <div>
+          <p class="hs-real-lede">Whether you're sizing up a website, a proposal or a piece of content, look for these:</p>
+          <ul class="hs-real-list">
+          <li>A heading with one word italicized or recolored for no clear reason, especially if every heading does it.</li>
+          <li>The same narrow palette everywhere: dark-mode backgrounds, purple or blue accents, endless rounded-corner cards.</li>
+          <li>Generic reassurance copy like "no credit card required" stacked under every button.</li>
+          <li>Copy that reads the same everywhere: the same sentence rhythm, the same "in today's fast-paced world" openers, whatever the topic.</li>
+          <li>Case studies and results for client sites that don't exist: click through and the "clients" are the same template with different names, or nothing comes up when you search them.</li>
+          <li>An Instagram or Facebook ad selling websites from a business with no website of its own: nothing linked in the ad, nothing when you search their name.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="hs-fork">
+        <a class="hs-fork-card" href="/contact">
+          <span class="hs-fork-kicker">Already paying someone?</span>
+          <span class="hs-fork-line">Send me what you are paying for and I will take a look <span aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a class="hs-fork-card" href="#work-together">
+          <span class="hs-fork-kicker">Starting fresh?</span>
+          <span class="hs-fork-line">See how we can work together <span aria-hidden="true">&darr;</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="work-together" style="background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px);">
     <div style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
-      <div style="font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--amber); margin-bottom:clamp(10px,1.4vw,14px);">Services</div>
-      <div style="font-family:var(--serif); font-weight:600; font-size:clamp(32px,4.6vw,54px); line-height:1.06; letter-spacing:-0.015em; color:var(--navy);">How We Can Work Together</div>
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(32px,4.6vw,54px); line-height:1.06; letter-spacing:-0.015em; color:var(--navy); margin:0;">How We Can Work Together</h2>
       <div style="width:100%; max-width:620px; display:flex; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--hairline); border-radius:999px; box-shadow:0 12px 30px rgba(27,43,75,.10); padding:16px 22px; margin:clamp(14px,1.8vw,20px) 0 0; text-align:left;">
         <span style="display:inline-flex; flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#8b8578" stroke-width="2"></circle><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="#8b8578" stroke-width="2" stroke-linecap="round"></line></svg></span>
         <span style="font-family:var(--sans); font-size:clamp(16px,1.5vw,19px); font-weight:500; color:var(--navy); min-height:1.2em; display:inline-flex; align-items:center;"><span id="typeSearch"></span><span class="tx-caret"></span></span>
@@ -618,118 +604,6 @@
     </div>
   </section>
 
-  <section class="hs-real" id="real-work" aria-labelledby="real-title">
-    <div class="hs-real-in">
-      <div class="hs-real-head">
-        <figure class="hs-mascot hs-real-mascot" data-mascot="magnifier" data-state="reveal"></figure>
-        <h2 class="hs-real-title" id="real-title">Real work vs template work</h2>
-      </div>
-      <div class="hs-real-intro">
-        <p class="hs-real-setup">A good template, built on real code and properly customized, is smart money. The one to watch for is the generic AI version: swap the logo and the colors and it's a plumber, a restaurant or an agency. Here's one I made for a plumbing business that doesn't exist.</p>
-        <div class="hs-real-mock"><img src="assets/plumbing-mockup.png" width="1183" height="854" alt="Generic AI-generated template mockup for a fictional plumbing business" loading="lazy"></div>
-      </div>
-      <div class="hs-real-check">
-        <figure class="hs-mascot hs-real-clip" data-mascot="clipboard" data-state="reveal"></figure>
-        <div>
-          <p class="hs-real-lede">Whether you're sizing up a website, a proposal or a piece of content, look for these:</p>
-          <ul class="hs-real-list">
-          <li>A heading with one word italicized or recolored for no clear reason, especially if every heading does it.</li>
-          <li>The same narrow palette everywhere: dark-mode backgrounds, purple or blue accents, endless rounded-corner cards.</li>
-          <li>Generic reassurance copy like "no credit card required" stacked under every button.</li>
-          <li>Copy that reads the same everywhere: the same sentence rhythm, the same "in today's fast-paced world" openers, whatever the topic.</li>
-          <li>Case studies and results for client sites that don't exist: click through and the "clients" are the same template with different names, or nothing comes up when you search them.</li>
-          <li>An Instagram or Facebook ad selling websites from a business with no website of its own: nothing linked in the ad, nothing when you search their name.</li>
-          </ul>
-        </div>
-      </div>
-      <p class="hs-real-offer"><a href="/contact">Send me what you are paying for and I will take a look <span aria-hidden="true">&rarr;</span></a></p>
-    </div>
-  </section>
-
-  <section id="why-us" style="background:var(--navy); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
-    <div style="max-width:1200px; margin:0 auto;">
-      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--cream); margin:0 0 clamp(28px,3.6vw,40px); text-wrap:balance;">Why Work With Us: Our ABCD</h2>
-
-      <div class="hs-abcd" data-abcd>
-        <button type="button" class="hs-abcd-panel is-active" data-abcd-panel data-abcd-key="a" style="--abcd-bg:var(--cream);">
-          <span class="hs-abcd-letter" aria-hidden="true">A</span>
-          <div class="hs-abcd-toggle">
-            <span class="hs-abcd-toggle-key">A</span>
-            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">A</span>I does not come first</span>
-            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="hs-abcd-body">
-            <p class="hs-abcd-heading">/ <span style="font-weight:700;">A</span>I does not come first</p>
-            <p class="hs-abcd-desc">While AI is inevitable in most digital tools, it won't replace our human element. We lead with human creativity and AI-free strategic thinking.</p>
-            <div class="hs-abcd-impl">
-              <ul>
-                <li>Every project runs through human dev and design</li>
-                <li>AI will only have a hand in the output if you specifically decide that it serves your goals</li>
-              </ul>
-            </div>
-          </div>
-        </button>
-        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="b" style="--abcd-bg:var(--tint);">
-          <span class="hs-abcd-letter" aria-hidden="true">B</span>
-          <div class="hs-abcd-toggle">
-            <span class="hs-abcd-toggle-key">B</span>
-            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">B</span>efore execution: direction</span>
-            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="hs-abcd-body">
-            <p class="hs-abcd-heading">/ <span style="font-weight:700;">B</span>efore execution: direction</p>
-            <p class="hs-abcd-desc">You don't run a marathon like it's a hundred-meter dash. We map the pace and the distance before the whistle blows.</p>
-            <div class="hs-abcd-impl">
-              <ul>
-                <li>We ask "why" before we ask "what color"</li>
-                <li>Competitors' moves are analyzed before we make ours</li>
-                <li>Budget follows strategy, not the other way around</li>
-              </ul>
-            </div>
-          </div>
-        </button>
-        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="c" style="--abcd-bg:var(--amber-lt); --abcd-text:var(--navy); --abcd-dot:var(--navy);">
-          <span class="hs-abcd-letter" aria-hidden="true">C</span>
-          <div class="hs-abcd-toggle">
-            <span class="hs-abcd-toggle-key">C</span>
-            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">C</span>lear systems that scale</span>
-            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="hs-abcd-body">
-            <p class="hs-abcd-heading">/ <span style="font-weight:700;">C</span>lear systems that scale</p>
-            <p class="hs-abcd-desc">You don't want to set it up in a way you can't outgrow. We build the kind of foundation that holds whether you're a team of three or thirty.</p>
-            <div class="hs-abcd-impl">
-              <ul>
-                <li>No rebuild required when you grow</li>
-                <li>Every piece built once, ready to reuse</li>
-                <li>Rules anyone on the team can follow</li>
-              </ul>
-            </div>
-          </div>
-        </button>
-        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="d" style="--abcd-bg:var(--amber); --abcd-text:var(--navy); --abcd-dot:var(--navy);">
-          <span class="hs-abcd-letter" aria-hidden="true">D</span>
-          <div class="hs-abcd-toggle">
-            <span class="hs-abcd-toggle-key">D</span>
-            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">D</span>eliver with clarity</span>
-            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="hs-abcd-body">
-            <p class="hs-abcd-heading">/ <span style="font-weight:700;">D</span>eliver with clarity</p>
-            <p class="hs-abcd-desc">Strategy comes before the visuals, not after. Reporting follows suit - telling the story with the data and results.</p>
-            <div class="hs-abcd-impl">
-              <ul>
-                <li>Strategy comes before a single pixel</li>
-                <li>Clear messaging built around you</li>
-                <li>Reports that don't need a translator</li>
-              </ul>
-            </div>
-          </div>
-        </button>
-      </div>
-    </div>
-  </section>
-
   <section style="background:var(--navy); padding:clamp(60px,9vw,110px) clamp(24px,6vw,80px); text-align:center;">
     <div style="max-width:640px; margin:0 auto; display:flex; flex-direction:column; align-items:center;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--cream); margin:0; text-wrap:balance;">Not sure where you fit?</h2>
@@ -903,47 +777,6 @@
     document.querySelectorAll('[data-js="type"]').forEach(function (el) { typeIO.observe(el); });
   })();
 
-  (function () {
-    var group = document.querySelector('[data-abcd]');
-    if (!group) return;
-    var panels = group.querySelectorAll('[data-abcd-panel]');
-    if (!panels.length) return;
-    var defaultKey = panels[0].getAttribute('data-abcd-key');
-    var supportsHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-    function syncAria() {
-      panels.forEach(function (p) {
-        p.setAttribute('aria-expanded', p.classList.contains('is-active') ? 'true' : 'false');
-      });
-    }
-
-    function setActive(key) {
-      panels.forEach(function (p) {
-        p.classList.toggle('is-active', p.getAttribute('data-abcd-key') === key);
-      });
-      syncAria();
-    }
-
-    if (supportsHover) {
-      panels.forEach(function (panel) {
-        var key = panel.getAttribute('data-abcd-key');
-        panel.addEventListener('mouseenter', function () { setActive(key); });
-        panel.addEventListener('focus', function () { setActive(key); });
-      });
-      group.addEventListener('mouseleave', function () { setActive(defaultKey); });
-    } else {
-      panels.forEach(function (panel) {
-        panel.addEventListener('click', function () {
-          var wasActive = panel.classList.contains('is-active');
-          panels.forEach(function (p) { p.classList.remove('is-active'); });
-          if (!wasActive) panel.classList.add('is-active');
-          syncAria();
-        });
-      });
-    }
-
-    setActive(defaultKey);
-  })();
 
   // Header nav flip: builds the per-letter spans for both rows at runtime.
   (function () {
