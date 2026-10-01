@@ -1,0 +1,3 @@
+# The Difference was folded into Services as the "Real work vs template work" section.
+# One rule covers /the-difference and /the-difference/ (Netlify normalizes trailing slashes).
+/the-difference  /services#real-work  301

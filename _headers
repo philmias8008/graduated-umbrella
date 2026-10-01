@@ -1,0 +1,59 @@
+# Netlify cache headers.
+# Rules must not overlap: when two paths match one file, Netlify can merge
+# their Cache-Control values into one conflicting header. So no broad
+# /assets/* rule; every folder is listed on its own.
+
+# Same-named files that change between deploys: always revalidate.
+/assets/js/*
+  Cache-Control: public, max-age=0, must-revalidate
+/assets/css/*
+  Cache-Control: public, max-age=0, must-revalidate
+/assets/mascots/manifest.json
+  Cache-Control: public, max-age=0, must-revalidate
+# Final mascot art gets swapped under the same names while Midjourney
+# iterations land. Move to the image rule below once the art is locked.
+/assets/mascots/final/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Fonts: rename the file if it ever changes.
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images: one week, not immutable, because logos are replaced in place.
+/assets/logo-header.png
+  Cache-Control: public, max-age=604800
+/assets/logo-footer.png
+  Cache-Control: public, max-age=604800
+/assets/logo-hero.png
+  Cache-Control: public, max-age=604800
+/assets/brushes/*
+  Cache-Control: public, max-age=604800
+/assets/steps/*
+  Cache-Control: public, max-age=604800
+/assets/mascots/placeholder/*
+  Cache-Control: public, max-age=604800
+/about/assets/*
+  Cache-Control: public, max-age=604800
+/case-studies/assets/*
+  Cache-Control: public, max-age=604800
+/case-studies/greenlife-sembalun/assets/*
+  Cache-Control: public, max-age=604800
+/case-studies/soon/assets/*
+  Cache-Control: public, max-age=604800
+/contact/assets/*
+  Cache-Control: public, max-age=604800
+/privacy/assets/*
+  Cache-Control: public, max-age=604800
+/services/assets/*
+  Cache-Control: public, max-age=604800
+/terms/assets/*
+  Cache-Control: public, max-age=604800
+/mascot-test/demo/*.webp
+  Cache-Control: public, max-age=604800
+
+# Thank-you page stays out of search permanently, even after the site-wide
+# meta noindex comes off at launch. Exact paths, so no other rule overlaps.
+/contact/thank-you
+  X-Robots-Tag: noindex
+/contact/thank-you/
+  X-Robots-Tag: noindex

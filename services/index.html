@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Services | Handstart Digital</title>
+  <meta name="description" content="How we can work together. Brand strategy, web design, SEO, performance marketing, and retention for small businesses.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/hs-mascots.css">
+
+  <style>
+    :root {
+      --navy: #1B2B4B;
+      --amber: #C8873A;
+      --amber-lt: #e0a558;
+      --cream: #F7F4EE;
+      --slate: #3f4a5a;
+      --body: #5a6472;
+      --hairline: #D6CFC2;
+      --tint: #EFEAE0;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--cream);
+      color: var(--navy);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { text-decoration: none; }
+
+    /* Nav hand-drawn marker underline */
+    .hs-navlink { position: relative; display: inline-block; overflow: hidden; white-space: nowrap; height: 1.3em; font-family: var(--sans); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--navy); text-decoration: none; }
+    .hs-navlink.is-active { font-weight: 600; }
+    .hs-navlink-top, .hs-navlink-bottom { display: block; }
+    .hs-navlink-bottom { position: absolute; inset: 0; }
+    .hs-navlink-top span, .hs-navlink-bottom span { display: inline-block; transition: transform 210ms ease-in-out; transition-delay: calc(var(--i, 0) * 12ms); }
+    .hs-navlink-bottom span { transform: translateY(100%); color: var(--amber); }
+    .hs-navlink:is(:hover, .is-tapped) .hs-navlink-top span, .hs-navlink:focus-visible .hs-navlink-top span { transform: translateY(-100%); }
+    .hs-navlink:is(:hover, .is-tapped) .hs-navlink-bottom span, .hs-navlink:focus-visible .hs-navlink-bottom span { transform: translateY(0); }
+    .hs-navlink-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (prefers-reduced-motion: reduce) { .hs-navlink-top span, .hs-navlink-bottom span { transition: none !important; } }
+
+    /* Hamburger / mobile nav */
+    .hs-hamburger { display: none; }
+    @media (max-width: 900px) {
+      .hs-nav-links { display: none !important; }
+      .hs-hamburger { display: inline-flex !important; }
+    }
+
+    /* Typewriter caret */
+    @keyframes hpBlink { 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
+    .tx-caret {
+      display:inline-block; width:2px; height:1.1em; background:var(--amber);
+      margin-left:3px; vertical-align:-.08em; animation:hpBlink 1s step-end infinite;
+    }
+
+    /* Comparison table */
+    .hs-cmp-row { display:grid; grid-template-columns:1fr 1.1fr 1.1fr; align-items:stretch; }
+    .hs-cmp-row + .hs-cmp-row { border-top:1px solid var(--hairline); }
+    @media (max-width: 900px) {
+      .hs-cmp-row { grid-template-columns:1fr !important; }
+      .hs-cmp-head { display:none !important; }
+      .hs-cmp-cell::before {
+        content: attr(data-col); display:block;
+        font-family:var(--sans); font-size:11px; font-weight:700;
+        letter-spacing:0.1em; text-transform:uppercase; color:#8b8578; margin-bottom:4px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tx-caret { display:none; }
+      .hs-footer-navlink { transition:none; }
+    }
+
+    /* Footer flip-link nav (test) */
+  .hs-footer-navgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; row-gap: 14px; align-content: start; }
+  @media (max-width: 640px) { .hs-footer-navgrid { grid-template-columns: 1fr; row-gap: 10px; } }
+  .hs-footer-navlink { display: block; font-family: var(--sans); font-weight: 500; font-size: 17px; color: var(--cream); transition: color 220ms ease; }
+  .hs-footer-navlink:hover { color: var(--amber); }
+  @media (prefers-reduced-motion: reduce) { .hs-footer-navlink { transition: none; } }
+
+    /* Social icons (test) */
+    .hs-social-list { list-style:none; margin:0; padding:0; display:flex; gap:12px; }
+    .hs-social-icon {
+      position:relative; display:flex; align-items:center; justify-content:center;
+      width:38px; height:38px; border-radius:50%; background:var(--cream);
+      text-decoration:none; overflow:hidden;
+    }
+    .hs-social-icon::before {
+      content:''; position:absolute; left:0; bottom:-100%; width:100%; height:100%;
+      border-radius:50%; transition:bottom 1100ms cubic-bezier(.4,0,.2,1);
+    }
+    .hs-social-icon--facebook::before { background:#1877F2; }
+    .hs-social-icon--linkedin::before { background:#0A66C2; }
+    .hs-social-icon--instagram::before { background:linear-gradient(45deg, #FEDA77, #F58529, #DD2A7B, #8134AF, #515BD4); }
+    .hs-social-icon svg {
+      position:relative; z-index:1; width:15px; height:15px; fill:#111111;
+      transition:fill 700ms ease, transform 700ms ease;
+    }
+    .hs-social-icon:is(:hover, .is-tapped)::before, .hs-social-icon:focus-visible::before { bottom:0; }
+    .hs-social-icon:is(:hover, .is-tapped) svg, .hs-social-icon:focus-visible svg { fill:var(--cream); transform:rotateY(360deg); }
+    @media (prefers-reduced-motion: reduce) {
+      .hs-social-icon::before, .hs-social-icon svg { transition:none; }
+    }
+
+    .hs-next-btn {
+      position:relative; display:inline-flex; text-decoration:none;
+      transform:skewX(-10deg); transition:transform 160ms ease;
+    }
+    .hs-next-shadow {
+      position:absolute; inset:0; z-index:0; background:#000;
+      transform:translate(7px,7px); transition:transform 200ms ease, background 200ms ease;
+    }
+    .hs-next-btn:is(:hover, .is-tapped) { transform:skewX(-10deg) translate(3px,3px); }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform:translate(11px,11px); background:var(--amber); }
+    .hs-next-face {
+      position:relative; z-index:1; display:inline-flex; align-items:center; gap:16px;
+      background:var(--navy); padding:18px 34px 18px 28px;
+    }
+    .hs-next-content { display:inline-flex; align-items:center; gap:16px; transform:skewX(10deg); }
+    .hs-next-label {
+      font-family:var(--sans); font-weight:700; font-size:20px;
+      letter-spacing:0.01em; text-transform:uppercase; color:var(--cream);
+    }
+    .hs-next-icons { position:relative; width:38px; height:24px; }
+    .hs-next-rest, .hs-next-cascade svg { position:absolute; top:0; left:0; transition:opacity 220ms ease, transform 220ms cubic-bezier(.65,0,.076,1); }
+    .hs-next-rest path, .hs-next-cascade path { stroke:var(--cream); }
+    .hs-next-rest { opacity:1; }
+    .hs-next-cascade svg { opacity:0; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-next-rest { opacity:0; transform:translateX(10px); }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-next-cascade svg { opacity:1; }
+    .hs-next-cascade .hs-arrow-one { transition-delay:0ms; }
+    .hs-next-cascade .hs-arrow-two { transition-delay:40ms; }
+    .hs-next-cascade .hs-arrow-three { transition-delay:80ms; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one { transform:translateX(4px); }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two { transform:translateX(13px); }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three { transform:translateX(22px); }
+    @keyframes hs-arrow-chase {
+      0%, 100% { stroke:var(--cream); }
+      50% { stroke:var(--amber); }
+    }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path { animation:hs-arrow-chase 1.2s ease-in-out infinite; animation-delay:0s; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path { animation:hs-arrow-chase 1.2s ease-in-out infinite; animation-delay:0.2s; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation:hs-arrow-chase 1.2s ease-in-out infinite; animation-delay:0.4s; }
+      /* Header-size modifier for the Contact button */
+      .hs-next-btn--sm { align-self: flex-start; }
+      .hs-next-btn--sm .hs-next-face { padding: 10px 20px 10px 16px; gap: 10px; }
+      .hs-next-btn--sm .hs-next-content { gap: 10px; }
+      .hs-next-btn--sm .hs-next-label { font-size: 13px; }
+      .hs-next-btn--sm .hs-next-icons { width: 22px; height: 15px; }
+      .hs-next-btn--sm .hs-next-shadow { transform: translate(5px,5px); }
+      .hs-next-btn--sm:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(8px,8px); }
+      .hs-next-btn--sm:is(:hover, .is-tapped) .hs-next-rest { transform: translateX(6px); }
+      .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-one { transform: translateX(2px); }
+      .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(7px); }
+      .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(12px); }
+
+      /* Navy-background modifier: flips face/label/icon colors for use on a navy backdrop */
+      .hs-next-btn--reverse .hs-next-face { background: var(--cream); }
+      .hs-next-btn--reverse .hs-next-label { color: var(--navy); }
+      .hs-next-btn--reverse .hs-next-rest path, .hs-next-btn--reverse .hs-next-cascade path { stroke: var(--navy); }
+      @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--amber); } }
+      .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-one path { animation-name: hs-arrow-chase-reverse; }
+      .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-two path { animation-name: hs-arrow-chase-reverse; }
+      .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-three path { animation-name: hs-arrow-chase-reverse; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hs-next-btn, .hs-next-shadow, .hs-next-rest, .hs-next-cascade svg { transition:none !important; }
+      .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation:none !important; stroke:var(--amber) !important; }
+    }
+
+    /* Lenis smooth scroll (required Lenis CSS) */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-stopped { overflow: hidden; }
+
+    /* Pinned service panel stack: plain stacked flow by default
+       (mobile, no-JS, reduced motion all land here); hs-motion.js only
+       promotes this to a pinned, scrubbed cover-wipe at tablet width and up
+       when motion is allowed, and tears it back down below that width. */
+    @media (min-width: 768px) {
+      .hs-pin-panel { min-height: 100vh; display: flex; align-items: center; }
+      .hs-pin-panel > div { width: 100%; }
+    }
+
+    /* Build your handstart */
+    .hs-build { background:var(--tint); border-top:1px solid var(--hairline); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px); }
+    .hs-build-in { max-width:1120px; margin:0 auto; }
+    .hs-build-title { font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance; }
+    .hs-build-lede { font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:56ch; margin:clamp(12px,1.6vw,16px) 0 clamp(28px,3.6vw,40px); }
+    .hs-build-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:clamp(14px,2vw,20px); }
+    .hs-build-card { grid-column:span 2; background:#fff; border:1px solid var(--hairline); border-radius:16px; padding:clamp(20px,2.4vw,28px); display:flex; flex-direction:column; align-items:flex-start; }
+    .hs-build-card:nth-child(4) { grid-column:2 / span 2; }
+    @media (max-width:1000px) {
+      .hs-build-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .hs-build-card, .hs-build-card:nth-child(4) { grid-column:auto; }
+    }
+    @media (max-width:640px) { .hs-build-grid { grid-template-columns:1fr; } }
+    .hs-build-mascot { --hs-mascot-size:88px; margin:-6px 0 6px -8px; }
+    .hs-build-card-title { font-family:var(--serif); font-weight:600; font-size:clamp(22px,2vw,26px); line-height:1.15; color:var(--navy); margin:0; }
+    .hs-build-card-q { font-family:var(--sans); font-size:14px; line-height:1.5; color:var(--body); margin:6px 0 16px; }
+    .hs-chips { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
+    .hs-chip { position:relative; display:inline-flex; cursor:pointer; }
+    /* the real checkbox stays in the accessibility tree and takes focus; the face is what you see */
+    .hs-chip input { position:absolute; inset:0; margin:0; opacity:0; cursor:pointer; }
+    .hs-chip-face {
+      display:inline-flex; align-items:center; gap:6px;
+      font-family:var(--sans); font-size:14px; font-weight:500; line-height:1.3; color:var(--navy);
+      background:var(--cream); border:1.5px solid var(--hairline); border-radius:999px; padding:7px 14px;
+      transition:background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+    .hs-chip-face::before {
+      content:''; width:0; height:10px; overflow:hidden; flex:none;
+      border:solid var(--navy); border-width:0 2px 2px 0; transform:rotate(45deg) translate(-1px,-2px);
+      opacity:0; transition:width 160ms ease, opacity 160ms ease;
+    }
+    .hs-chip:hover .hs-chip-face { border-color:var(--amber); }
+    .hs-chip input:checked + .hs-chip-face { background:var(--amber-lt); border-color:var(--amber); }
+    .hs-chip input:checked + .hs-chip-face::before { width:5px; opacity:1; }
+    .hs-chip input:focus-visible + .hs-chip-face { outline:2px solid var(--navy); outline-offset:2px; }
+
+    .hs-tray {
+      margin-top:clamp(24px,3vw,32px); background:var(--navy); color:var(--cream);
+      border-radius:16px; padding:clamp(18px,2.4vw,26px) clamp(20px,2.6vw,30px);
+      box-shadow:0 18px 40px -18px rgba(27,43,75,.55);
+    }
+    /* desktop: rides along the bottom of the screen while the cards scroll past, settles under them at the end */
+    @media (min-width:768px) {
+      .hs-tray { position:sticky; bottom:16px; z-index:5; }
+      .hs-tray-groups { max-height:34vh; overflow-y:auto; }
+    }
+    .hs-tray-head { display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+    .hs-tray-title { font-family:var(--serif); font-weight:600; font-size:clamp(22px,2.2vw,28px); margin:0; color:var(--cream); }
+    .hs-tray-count { font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber-lt); margin:0; }
+    .hs-tray-empty { font-family:var(--sans); font-size:15px; color:var(--muted, #c3ccda); margin:10px 0 0; }
+    .hs-tray-groups { list-style:none; margin:14px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:12px 22px; }
+    .hs-tray-groups:empty, .hs-tray-groups:not(:has(> li:not([hidden]))) { margin:0; }
+    .hs-tray-group { display:flex; align-items:flex-start; gap:10px; min-width:0; max-width:340px; }
+    .hs-tray-group[hidden] { display:none; }
+    .hs-tray-mascot { --hs-mascot-size:52px; flex:none; }
+    .hs-tray-group-name { font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber-lt); margin:4px 0 4px; }
+    .hs-tray-picks { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:4px 12px; }
+    .hs-tray-picks li { font-family:var(--sans); font-size:14px; line-height:1.4; color:var(--cream); }
+    .hs-tray-actions { display:flex; flex-wrap:wrap; gap:18px 22px; margin-top:18px; }
+    button.hs-next-btn { border:0; padding:0; background:none; font:inherit; cursor:pointer; }
+
+    .hs-dont-in { position:relative; }
+    .hs-dont-mascot { --hs-mascot-size:120px; position:absolute; top:-10px; right:0; }
+    @media (max-width:640px) {
+      .hs-dont-mascot { --hs-mascot-size:88px; position:relative; top:auto; right:auto; margin:0 0 10px -8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hs-chip-face, .hs-chip-face::before { transition:none; }
+    }
+
+    /* Real work vs template work: the page opener (folded in from the old The Difference page) */
+    .hs-real { background:var(--cream); padding:clamp(40px,6vw,72px) clamp(24px,6vw,80px) clamp(48px,6vw,72px); }
+    .hs-real-in { max-width:1040px; margin:0 auto; }
+    .hs-real-head { display:flex; align-items:center; gap:clamp(12px,1.8vw,20px); }
+    .hs-real-mascot { --hs-mascot-size:clamp(76px,8vw,96px); flex:none; }
+    .hs-real-title { font-family:var(--serif); font-weight:600; font-size:clamp(32px,4.6vw,54px); line-height:1.08; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance; }
+    .hs-real-intro { display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:clamp(24px,4vw,48px); align-items:center; margin-top:clamp(20px,2.6vw,28px); }
+    .hs-real-setup { font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.7; color:var(--body); margin:0; }
+    .hs-real-mock { border-radius:14px; overflow:hidden; border:1px solid var(--hairline); box-shadow:0 18px 40px -20px rgba(27,43,75,.45); }
+    .hs-real-mock img { display:block; width:100%; height:auto; }
+    .hs-real-check { display:flex; align-items:flex-start; gap:clamp(14px,2vw,24px); margin-top:clamp(24px,3vw,36px); padding-top:clamp(20px,2.4vw,28px); border-top:1px solid var(--hairline); }
+    .hs-real-clip { --hs-mascot-size:clamp(72px,7vw,88px); flex:none; margin-top:-6px; }
+    .hs-real-lede { font-family:var(--sans); font-size:clamp(15px,1.3vw,17px); font-weight:600; color:var(--navy); margin:0 0 14px; }
+    .hs-real-list { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:10px clamp(20px,3vw,36px); }
+    .hs-real-list li { position:relative; padding-left:18px; font-family:var(--sans); font-size:14px; line-height:1.5; color:var(--body); }
+    .hs-real-list li::before { content:''; position:absolute; left:0; top:0.6em; width:7px; height:7px; border-radius:50%; background:var(--amber); }
+    /* the fork bridges into the services: people who have been pitched before go to /contact, first-timers scroll on */
+    .hs-fork { display:grid; grid-template-columns:1fr 1fr; gap:clamp(12px,2vw,20px); margin-top:clamp(28px,3.6vw,40px); }
+    .hs-fork-card { display:flex; flex-direction:column; gap:6px; text-decoration:none; background:#fff; border:1.5px solid var(--hairline); border-radius:14px; padding:clamp(16px,2vw,22px) clamp(18px,2.2vw,26px); transition:border-color 180ms ease, transform 180ms ease; }
+    .hs-fork-card:hover { border-color:var(--amber); transform:translateY(-2px); }
+    .hs-fork-card:focus-visible { outline:2px solid var(--navy); outline-offset:3px; }
+    .hs-fork-kicker { font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber); }
+    .hs-fork-line { font-family:var(--serif); font-style:italic; font-weight:600; font-size:clamp(19px,1.9vw,24px); line-height:1.25; color:var(--navy); }
+    #work-together { scroll-margin-top:clamp(72px,10vw,96px); }
+    @media (max-width:760px) {
+      .hs-real-intro { grid-template-columns:1fr; }
+      .hs-real-list { grid-template-columns:1fr; }
+      .hs-real-check { flex-direction:column; gap:6px; }
+      .hs-fork { grid-template-columns:1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { .hs-fork-card { transition:none; } .hs-fork-card:hover { transform:none; } }
+  </style>
+</head>
+
+<body>
+<div style="min-height:100vh; background:var(--cream); color:var(--navy);">
+
+  <header style="position:sticky; top:0; z-index:50; background:var(--cream); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,4vw,44px); height:clamp(72px,10vw,96px); display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <a href="/" style="display:flex; align-items:center; gap:12px;">
+        <img src="assets/handstart-logo-header.png" alt="Handstart Digital" style="height:clamp(44px,5.5vw,58px); width:auto; object-fit:contain; display:block;">
+      </a>
+
+      <nav class="hs-nav-links" style="display:flex; align-items:center; gap:clamp(20px,2.6vw,34px);">
+        <a href="/services" class="hs-navlink is-active" data-flip-text="Services">
+          <span class="hs-navlink-top" aria-hidden="true"></span>
+          <span class="hs-navlink-bottom" aria-hidden="true"></span>
+          <span class="hs-navlink-sr">Services</span>
+        </a>
+        <a href="/about" class="hs-navlink" data-flip-text="About">
+          <span class="hs-navlink-top" aria-hidden="true"></span>
+          <span class="hs-navlink-bottom" aria-hidden="true"></span>
+          <span class="hs-navlink-sr">About</span>
+        </a>
+        <a href="/case-studies" class="hs-navlink" data-flip-text="Case Studies">
+          <span class="hs-navlink-top" aria-hidden="true"></span>
+          <span class="hs-navlink-bottom" aria-hidden="true"></span>
+          <span class="hs-navlink-sr">Case Studies</span>
+        </a>
+        <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+      </nav>
+
+      <button class="hs-hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false" style="align-items:center; justify-content:center; width:44px; height:44px; padding:0; background:none; border:1px solid var(--hairline); border-radius:9px; cursor:pointer; color:var(--navy);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="4" y1="7" x2="20" y2="7" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="12" x2="20" y2="12" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="17" x2="20" y2="17" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line></svg>
+      </button>
+    </div>
+
+    <div id="mobileNav" hidden style="border-top:1px solid var(--hairline); padding:12px clamp(20px,4vw,44px) 20px; flex-direction:column; gap:6px; background:var(--cream);">
+      <a href="/services" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Services</a>
+      <a href="/about" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">About</a>
+      <a href="/case-studies" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Case Studies</a>
+      <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+    </div>
+  </header>
+
+  <section class="hs-real" id="real-work" aria-labelledby="real-title">
+    <div class="hs-real-in">
+      <div class="hs-real-head">
+        <figure class="hs-mascot hs-real-mascot" data-mascot="magnifier" data-state="idle"></figure>
+        <h1 class="hs-real-title" id="real-title">Real work vs template work</h1>
+      </div>
+      <div class="hs-real-intro">
+        <p class="hs-real-setup">A good template, built on real code and properly customized, is smart money. The one to watch for is the generic AI version: swap the logo and the colors and it's a plumber, a restaurant or an agency. I check every agency that runs an ad in my feed, and about one in four is selling a site like this, complete with results for clients that don't exist. Here's one I built for a plumber I made up.</p>
+        <div class="hs-real-mock"><img src="assets/plumbing-mockup.png" width="1183" height="854" alt="Generic AI-generated template mockup for a fictional plumbing business"></div>
+      </div>
+      <div class="hs-real-check">
+        <figure class="hs-mascot hs-real-clip" data-mascot="clipboard" data-state="reveal"></figure>
+        <div>
+          <p class="hs-real-lede">Whether you're sizing up a website, a proposal or a piece of content, look for these:</p>
+          <ul class="hs-real-list">
+          <li>A heading with one word italicized or recolored for no clear reason, especially if every heading does it.</li>
+          <li>The same narrow palette everywhere: dark-mode backgrounds, purple or blue accents, endless rounded-corner cards.</li>
+          <li>Generic reassurance copy like "no credit card required" stacked under every button.</li>
+          <li>Copy that reads the same everywhere: the same sentence rhythm, the same "in today's fast-paced world" openers, whatever the topic.</li>
+          <li>Case studies and results for client sites that don't exist: click through and the "clients" are the same template with different names, or nothing comes up when you search them.</li>
+          <li>An Instagram or Facebook ad selling websites from a business with no website of its own: nothing linked in the ad, nothing when you search their name.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="hs-fork">
+        <a class="hs-fork-card" href="/contact">
+          <span class="hs-fork-kicker">Already paying someone?</span>
+          <span class="hs-fork-line">Send me what you are paying for and I will take a look <span aria-hidden="true">&rarr;</span></span>
+        </a>
+        <a class="hs-fork-card" href="#work-together">
+          <span class="hs-fork-kicker">Starting fresh?</span>
+          <span class="hs-fork-line">See how we can work together <span aria-hidden="true">&darr;</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="work-together" style="background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px);">
+    <div style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(32px,4.6vw,54px); line-height:1.06; letter-spacing:-0.015em; color:var(--navy); margin:0;">How We Can Work Together</h2>
+      <div style="width:100%; max-width:620px; display:flex; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--hairline); border-radius:999px; box-shadow:0 12px 30px rgba(27,43,75,.10); padding:16px 22px; margin:clamp(14px,1.8vw,20px) 0 0; text-align:left;">
+        <span style="display:inline-flex; flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#8b8578" stroke-width="2"></circle><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="#8b8578" stroke-width="2" stroke-linecap="round"></line></svg></span>
+        <span style="font-family:var(--sans); font-size:clamp(16px,1.5vw,19px); font-weight:500; color:var(--navy); min-height:1.2em; display:inline-flex; align-items:center;"><span id="typeSearch"></span><span class="tx-caret"></span></span>
+      </div>
+      <p style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:600; line-height:1.6; color:var(--navy); max-width:60ch; margin:clamp(28px,3.2vw,36px) 0 0;">Handstart is Human-First, never leading with generic AI work.</p>
+      <p style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; line-height:1.6; color:var(--navy); max-width:60ch; margin:clamp(8px,1vw,10px) 0 0;">See if any of the questions below sound like questions you may have.<br>We may have the answers.</p>
+    </div>
+  </section>
+
+  <!-- pinned wipe stack on tablet and desktop -->
+  <div class="hs-pin-stack" data-pin-stack>
+  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 data-anim="split-text" style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What makes your brand yours?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">This is how people recognize you, and decide you are the one to call.</p>
+      <div data-js="type" data-text="Brand Strategy" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Brand Strategy</noscript></div>
+      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Positioning &amp; Messaging</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Logo &amp; Brand Identity</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Visual Systems</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Brand Guidelines</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is your website working against you?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">It's outdated, hard to use on a phone, or doesn't exist yet. For most small businesses, this is where it starts. The base needs to be built, and built right.</p>
+      <div data-js="type" data-text="Web Design &amp; Development" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Web Design &amp; Development</noscript></div>
+      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Website Design &amp; Build</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Landing Pages</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Mobile &amp; Speed Fixes</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Ongoing Site Maintenance</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Website Analytics</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Web Hosting</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is it difficult to find you?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">You exist, but when someone searches for what you do, you're not as easy to find as you could be. There are many ways to make it easier.</p>
+      <div data-js="type" data-text="SEO &amp; Organic Presence" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>SEO &amp; Organic Presence</noscript></div>
+      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">SEO</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Google Business Profile</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Local Listings</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Content Strategy</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Technical SEO</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">AI Search/LLM Visibility (AEO/GEO)</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Review Management &amp; Strategy</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Do you need customers now?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">Sometimes you can't wait for slow growth. Performance marketing or paid strategy puts you in front of customers today.</p>
+      <div data-js="type" data-text="Performance Marketing" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Performance Marketing</noscript></div>
+      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Meta &amp; Instagram Ads</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Microsoft Ads</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Reddit Ads</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">LinkedIn Ads</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Google Suite (Google Ads, Performance Max, Demand Gen)</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">LLM Ads (ChatGPT, Gemini, Copilot)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
+    <div style="max-width:900px; margin:0 auto;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">How is your brand's ongoing presence?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">Existing or potential customers forget about you. Keeping your brand visible keeps them coming back.</p>
+      <div data-js="type" data-text="Retention &amp; General Presence" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Retention &amp; General Presence</noscript></div>
+      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Social Media Management</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Email Marketing</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">SMS Marketing</li>
+        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Loyalty &amp; Referral Programs</li>
+      </ul>
+    </div>
+  </section>
+  </div>
+
+  <section class="hs-build" id="build" aria-labelledby="build-title">
+    <div class="hs-build-in">
+      <h2 class="hs-build-title" id="build-title">Build your handstart</h2>
+      <p class="hs-build-lede">Tap whatever sounds like your business. Your picks collect below and come with you when you get in touch.</p>
+      <div class="hs-build-grid">
+        <div class="hs-build-card" role="group" aria-labelledby="build-brand">
+          <figure class="hs-mascot hs-build-mascot" data-mascot="lightbulb" data-state="reveal"></figure>
+          <h3 class="hs-build-card-title" id="build-brand">Brand Strategy</h3>
+          <p class="hs-build-card-q">What makes your brand yours?</p>
+          <ul class="hs-chips">
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="positioning-messaging" data-group="brand"><span class="hs-chip-face">Positioning &amp; Messaging</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="logo-brand-identity" data-group="brand"><span class="hs-chip-face">Logo &amp; Brand Identity</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="visual-systems" data-group="brand"><span class="hs-chip-face">Visual Systems</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="brand-guidelines" data-group="brand"><span class="hs-chip-face">Brand Guidelines</span></label></li>
+          </ul>
+        </div>
+        <div class="hs-build-card" role="group" aria-labelledby="build-web">
+          <figure class="hs-mascot hs-build-mascot" data-mascot="browser-window" data-state="reveal"></figure>
+          <h3 class="hs-build-card-title" id="build-web">Web Design &amp; Development</h3>
+          <p class="hs-build-card-q">Is your website working against you?</p>
+          <ul class="hs-chips">
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="website-design-build" data-group="web"><span class="hs-chip-face">Website Design &amp; Build</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="landing-pages" data-group="web"><span class="hs-chip-face">Landing Pages</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="mobile-speed-fixes" data-group="web"><span class="hs-chip-face">Mobile &amp; Speed Fixes</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="ongoing-site-maintenance" data-group="web"><span class="hs-chip-face">Ongoing Site Maintenance</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="website-analytics" data-group="web"><span class="hs-chip-face">Website Analytics</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="web-hosting" data-group="web"><span class="hs-chip-face">Web Hosting</span></label></li>
+          </ul>
+        </div>
+        <div class="hs-build-card" role="group" aria-labelledby="build-seo">
+          <figure class="hs-mascot hs-build-mascot" data-mascot="magnifier" data-state="reveal"></figure>
+          <h3 class="hs-build-card-title" id="build-seo">SEO &amp; Organic Presence</h3>
+          <p class="hs-build-card-q">Is it difficult to find you?</p>
+          <ul class="hs-chips">
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="seo" data-group="seo"><span class="hs-chip-face">SEO</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="google-business-profile" data-group="seo"><span class="hs-chip-face">Google Business Profile</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="local-listings" data-group="seo"><span class="hs-chip-face">Local Listings</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="content-strategy" data-group="seo"><span class="hs-chip-face">Content Strategy</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="technical-seo" data-group="seo"><span class="hs-chip-face">Technical SEO</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="ai-search-llm-visibility-aeo-geo" data-group="seo"><span class="hs-chip-face">AI Search/LLM Visibility (AEO/GEO)</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="review-management-strategy" data-group="seo"><span class="hs-chip-face">Review Management &amp; Strategy</span></label></li>
+          </ul>
+        </div>
+        <div class="hs-build-card" role="group" aria-labelledby="build-performance">
+          <figure class="hs-mascot hs-build-mascot" data-mascot="megaphone" data-state="reveal"></figure>
+          <h3 class="hs-build-card-title" id="build-performance">Performance Marketing</h3>
+          <p class="hs-build-card-q">Do you need customers now?</p>
+          <ul class="hs-chips">
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="meta-instagram-ads" data-group="performance"><span class="hs-chip-face">Meta &amp; Instagram Ads</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="microsoft-ads" data-group="performance"><span class="hs-chip-face">Microsoft Ads</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="reddit-ads" data-group="performance"><span class="hs-chip-face">Reddit Ads</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="linkedin-ads" data-group="performance"><span class="hs-chip-face">LinkedIn Ads</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="google-suite-google-ads-performance-max-demand-gen" data-group="performance"><span class="hs-chip-face">Google Suite (Google Ads, Performance Max, Demand Gen)</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="llm-ads-chatgpt-gemini-copilot" data-group="performance"><span class="hs-chip-face">LLM Ads (ChatGPT, Gemini, Copilot)</span></label></li>
+          </ul>
+        </div>
+        <div class="hs-build-card" role="group" aria-labelledby="build-retention">
+          <figure class="hs-mascot hs-build-mascot" data-mascot="speech-bubble" data-state="reveal"></figure>
+          <h3 class="hs-build-card-title" id="build-retention">Retention &amp; General Presence</h3>
+          <p class="hs-build-card-q">How is your brand&#x27;s ongoing presence?</p>
+          <ul class="hs-chips">
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="social-media-management" data-group="retention"><span class="hs-chip-face">Social Media Management</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="email-marketing" data-group="retention"><span class="hs-chip-face">Email Marketing</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="sms-marketing" data-group="retention"><span class="hs-chip-face">SMS Marketing</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="loyalty-referral-programs" data-group="retention"><span class="hs-chip-face">Loyalty &amp; Referral Programs</span></label></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hs-tray" data-tray role="region" aria-labelledby="tray-title">
+        <div class="hs-tray-head">
+          <h3 class="hs-tray-title" id="tray-title">My handstart</h3>
+          <p class="hs-tray-count" data-tray-count aria-live="polite">Nothing picked yet</p>
+        </div>
+        <p class="hs-tray-empty" data-tray-empty>Pick anything above and it lands here.</p>
+        <ul class="hs-tray-groups" data-tray-groups>
+          <li class="hs-tray-group" data-tray-group="brand" hidden>
+            <span class="hs-mascot hs-tray-mascot" data-mascot="lightbulb" data-state="idle"></span>
+            <div class="hs-tray-group-text">
+              <p class="hs-tray-group-name">Brand Strategy</p>
+              <ul class="hs-tray-picks" data-tray-picks></ul>
+            </div>
+          </li>
+          <li class="hs-tray-group" data-tray-group="web" hidden>
+            <span class="hs-mascot hs-tray-mascot" data-mascot="browser-window" data-state="idle"></span>
+            <div class="hs-tray-group-text">
+              <p class="hs-tray-group-name">Web Design &amp; Development</p>
+              <ul class="hs-tray-picks" data-tray-picks></ul>
+            </div>
+          </li>
+          <li class="hs-tray-group" data-tray-group="seo" hidden>
+            <span class="hs-mascot hs-tray-mascot" data-mascot="magnifier" data-state="idle"></span>
+            <div class="hs-tray-group-text">
+              <p class="hs-tray-group-name">SEO &amp; Organic Presence</p>
+              <ul class="hs-tray-picks" data-tray-picks></ul>
+            </div>
+          </li>
+          <li class="hs-tray-group" data-tray-group="performance" hidden>
+            <span class="hs-mascot hs-tray-mascot" data-mascot="megaphone" data-state="idle"></span>
+            <div class="hs-tray-group-text">
+              <p class="hs-tray-group-name">Performance Marketing</p>
+              <ul class="hs-tray-picks" data-tray-picks></ul>
+            </div>
+          </li>
+          <li class="hs-tray-group" data-tray-group="retention" hidden>
+            <span class="hs-mascot hs-tray-mascot" data-mascot="speech-bubble" data-state="idle"></span>
+            <div class="hs-tray-group-text">
+              <p class="hs-tray-group-name">Retention &amp; General Presence</p>
+              <ul class="hs-tray-picks" data-tray-picks></ul>
+            </div>
+          </li>
+        </ul>
+        <div class="hs-tray-actions">
+          <button class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" type="button" data-book-call data-cal-link="aidanpaggao/15min" data-cal-namespace="15min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}'><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Book a call</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></button>
+          <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact" data-send-message><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Send a message</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-anim="clip" style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
+    <div class="hs-dont-in" style="max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
+      <figure class="hs-mascot hs-dont-mascot" data-mascot="glove-stop" data-state="reveal"></figure>
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What we don't do:</h2>
+      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); margin:clamp(12px,1.6vw,16px) 0 clamp(24px,3vw,32px);">Being honest about fit saves everyone time.</p>
+      <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0; width:100%;">
+        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0;">Print production and fabrication</li>
+        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Big-budget video production</li>
+        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Going viral on demand</li>
+        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Anything I can't measure or justify</li>
+        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Pretending your business needs things it doesn't</li>
+      </ul>
+    </div>
+  </section>
+
+  <section style="background:var(--navy); padding:clamp(60px,9vw,110px) clamp(24px,6vw,80px); text-align:center;">
+    <div style="max-width:640px; margin:0 auto; display:flex; flex-direction:column; align-items:center;">
+      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--cream); margin:0; text-wrap:balance;">Not sure where you fit?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); line-height:1.55; color:#c3ccda; margin:clamp(14px,1.8vw,20px) 0 clamp(28px,3.4vw,36px); max-width:44ch;">Explore some work we've already done, or let's connect on what you need done and double click on how we will do it</p>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center;">
+        <a class="hs-next-btn hs-next-btn--reverse" href="/case-studies"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Latest Work</span></span></span></a>
+        <a class="hs-next-btn hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:var(--navy); padding:clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:22px;">
+        <a href="/" style="display:flex; align-items:center; gap:12px;">
+          <img src="assets/handstart-logo-footer.png" alt="Handstart Digital" style="height:48px; width:auto; object-fit:contain; display:block;">
+        </a>
+        <div class="hs-footer-contact" style="display:flex; flex-direction:column; align-items:flex-end; gap:12px;">
+          <a href="mailto:contact@handstartdigital.com" style="font-family:var(--sans); font-size:15px; font-weight:500; color:#c3ccda;">contact@handstartdigital.com</a>
+          <ul class="hs-social-list">
+            <li>
+              <a class="hs-social-icon hs-social-icon--facebook" aria-label="Facebook" style="cursor:default;" tabindex="-1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"></path></svg>
+              </a>
+            </li>
+            <li>
+              <a class="hs-social-icon hs-social-icon--linkedin" href="https://www.linkedin.com/in/aidanpaggao/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.8-2.05 3.7-2.05 3.96 0 4.69 2.6 4.69 6V21h-4v-5.3c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"></path></svg>
+              </a>
+            </li>
+            <li>
+              <a class="hs-social-icon hs-social-icon--instagram" aria-label="Instagram" style="cursor:default;" tabindex="-1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.24.06 2.08.25 2.82.54a5.7 5.7 0 0 1 2.06 1.34 5.7 5.7 0 0 1 1.34 2.06c.29.74.48 1.58.54 2.82.07 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.06 1.24-.25 2.08-.54 2.82a5.7 5.7 0 0 1-1.34 2.06 5.7 5.7 0 0 1-2.06 1.34c-.74.29-1.58.48-2.82.54-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.24-.06-2.08-.25-2.82-.54a5.7 5.7 0 0 1-2.06-1.34A5.7 5.7 0 0 1 .93 20.9c-.29-.74-.48-1.58-.54-2.82C.32 16.83.32 16.43.32 13.23s0-3.6.07-4.85c.06-1.24.25-2.08.54-2.82A5.7 5.7 0 0 1 2.27 3.5 5.7 5.7 0 0 1 4.33 2.16c.74-.29 1.58-.48 2.82-.54C8.4 1.55 8.8 1.55 12 1.55zm0 3a6.85 6.85 0 1 0 0 13.7 6.85 6.85 0 0 0 0-13.7zm0 11.3a4.45 4.45 0 1 1 0-8.9 4.45 4.45 0 0 1 0 8.9zm7.12-11.57a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0z"></path></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#8791a3; margin:clamp(28px,3.4vw,36px) 0 clamp(14px,2vw,18px);">Explore</div>
+      <div class="hs-footer-navgrid">
+        <a class="hs-footer-navlink" href="/">Home</a>
+        <a class="hs-footer-navlink" href="/services">Services</a>
+        <a class="hs-footer-navlink" href="/case-studies">Case Studies</a>
+        <a class="hs-footer-navlink" href="/about">About</a>
+        <a class="hs-footer-navlink" href="/contact">Contact</a>
+      </div>
+
+      <div style="height:1px; background:rgba(247,244,238,0.16); margin:clamp(28px,3.4vw,36px) 0 clamp(18px,2.2vw,22px);"></div>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div style="font-family:var(--sans); font-size:13px; color:#8791a3;">© <span id="year"></span> Handstart Digital. All rights reserved.</div>
+          <div style="font-family:var(--sans); font-size:12px; color:#6b7488;">Handstart Digital and the Handstart Digital logo are trademarks of Aidan Paggao.</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-family:var(--sans); font-size:13px; color:#8791a3;">
+          <a href="/privacy" style="color:#8791a3;">Privacy</a>
+          <span>·</span>
+          <a href="/terms" style="color:#8791a3;">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script src="/assets/js/gsap.min.js"></script>
+<script src="/assets/js/ScrollTrigger.min.js"></script>
+<script src="/assets/js/SplitText.min.js"></script>
+<script src="/assets/js/lenis.min.js"></script>
+<script src="/assets/js/hs-motion.js"></script>
+<script src="/assets/js/hs-mascots.js"></script>
+<script src="/assets/js/hs-mascot-loader.js"></script>
+<script>
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Tap-to-preview: on touch devices, tapping an animated button/link plays
+  // its hover animation for a beat before following the link, instead of
+  // skipping straight to the destination with no animation shown at all.
+  (function () {
+    var isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+    if (!isTouch) return;
+    var SELECTOR = '.hs-navlink, .hs-next-btn, .flip-link, .hs-social-icon';
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest(SELECTOR);
+      if (!el || el.tagName !== 'A' || !el.href) return;
+      if (el.classList.contains('is-tapped')) return;
+      e.preventDefault();
+      el.classList.add('is-tapped');
+      setTimeout(function () { window.location.href = el.href; }, 1000);
+    }, true);
+  })();
+
+
+  // Mobile nav toggle
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var menu = document.getElementById('mobileNav');
+    if (toggle && menu) {
+      toggle.addEventListener('click', function () {
+        var open = menu.hasAttribute('hidden');
+        if (open) { menu.removeAttribute('hidden'); menu.style.display = 'flex'; }
+        else { menu.setAttribute('hidden', ''); menu.style.display = ''; }
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  })();
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hero search typewriter, cycles through queries
+  (function () {
+    var el = document.getElementById('typeSearch');
+    if (!el) return;
+    var queries = ['digital marketing', 'website design and builds', 'brand strategy and identity'];
+    if (reduceMotion) { el.textContent = queries[0]; return; }
+    var qi = 0, ci = 0, phase = 'typing', timer;
+    function typeDelay() {
+      var d = 70 + Math.random() * 110;
+      if (Math.random() < 0.12) d += 180 + Math.random() * 260;
+      return d;
+    }
+    function backDelay() { return 35 + Math.random() * 55; }
+    function tick() {
+      var q = queries[qi];
+      if (phase === 'typing') {
+        ci++; el.textContent = q.slice(0, ci);
+        if (ci >= q.length) { phase = 'pause'; timer = setTimeout(tick, 1400); }
+        else { timer = setTimeout(tick, typeDelay()); }
+      } else if (phase === 'pause') {
+        phase = 'deleting'; timer = setTimeout(tick, backDelay());
+      } else {
+        ci--; el.textContent = q.slice(0, ci);
+        if (ci <= 0) { qi = (qi + 1) % queries.length; phase = 'typing'; timer = setTimeout(tick, 420); }
+        else { timer = setTimeout(tick, backDelay()); }
+      }
+    }
+    tick();
+  })();
+
+  // Eyebrow typewriters: independent of the section reveal system, so they
+  // are untouched by which reveal (bespoke or shared) drives the sections.
+  (function () {
+    if (reduceMotion) {
+      document.querySelectorAll('[data-js="type"]').forEach(function (el) {
+        var s = el.querySelector('.tx-txt'); if (s) s.textContent = el.dataset.text;
+      });
+      return;
+    }
+
+    function runType(el) {
+      var txt = el.dataset.text, span = el.querySelector('.tx-txt');
+      if (!span) return;
+      var i = 0; clearInterval(el._iv); span.textContent = '';
+      el._iv = setInterval(function () {
+        i++; span.textContent = txt.slice(0, i);
+        if (i >= txt.length) clearInterval(el._iv);
+      }, 78);
+    }
+    var typeIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && e.intersectionRatio > 0.2) {
+          if (e.target.dataset.typed !== 'true') { e.target.dataset.typed = 'true'; runType(e.target); }
+        } else if (!e.isIntersecting && e.boundingClientRect.top > 0) {
+          e.target.dataset.typed = 'false';
+          clearInterval(e.target._iv);
+          var s = e.target.querySelector('.tx-txt'); if (s) s.textContent = '';
+        }
+      });
+    }, { threshold: [0, 0.2, 0.5], rootMargin: '0px 0px -12% 0px' });
+    document.querySelectorAll('[data-js="type"]').forEach(function (el) { typeIO.observe(el); });
+  })();
+
+
+  // Header nav flip: builds the per-letter spans for both rows at runtime.
+  (function () {
+    document.querySelectorAll('.hs-navlink[data-flip-text]').forEach(function (link) {
+      var text = link.getAttribute('data-flip-text');
+      var top = link.querySelector('.hs-navlink-top');
+      var bottom = link.querySelector('.hs-navlink-bottom');
+      if (!top || !bottom) return;
+      text.split('').forEach(function (ch, i) {
+        var display = ch === ' ' ? '\u00A0' : ch;
+        var a = document.createElement('span'); a.textContent = display; a.style.setProperty('--i', i);
+        var b = document.createElement('span'); b.textContent = display; b.style.setProperty('--i', i);
+        top.appendChild(a);
+        bottom.appendChild(b);
+      });
+    });
+  })();
+</script>
+
+
+<script>
+  // Build your handstart: chips are real checkboxes. This keeps the tray, sessionStorage,
+  // the contact link and the Cal.com notes in sync with whatever is checked.
+  (function () {
+    var root = document.getElementById('build');
+    if (!root) return;
+    var STORE_KEY = 'hs_selected_services';
+    var boxes = [].slice.call(root.querySelectorAll('.hs-chip input'));
+    var countEl = root.querySelector('[data-tray-count]');
+    var emptyEl = root.querySelector('[data-tray-empty]');
+    var sendLink = root.querySelector('[data-send-message]');
+    var bookBtn = root.querySelector('[data-book-call]');
+    var baseCal = JSON.parse(bookBtn.getAttribute('data-cal-config'));
+    var groupNames = {};
+    var trayGroups = {};
+    root.querySelectorAll('[data-tray-group]').forEach(function (li) {
+      var gid = li.getAttribute('data-tray-group');
+      trayGroups[gid] = li;
+      groupNames[gid] = document.getElementById('build-' + gid).textContent;
+    });
+
+    // Join animation on desktop with motion allowed; everything else gets instant changes.
+    var animate = false;
+    if (window.gsap && gsap.matchMedia) {
+      gsap.matchMedia().add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', function () {
+        animate = true;
+        return function () { animate = false; };
+      });
+    }
+
+    function picked() {
+      return boxes.filter(function (b) { return b.checked; }).map(function (b) {
+        return { id: b.value, label: b.nextElementSibling.textContent, gid: b.getAttribute('data-group') };
+      });
+    }
+
+    function shownGroups() {
+      return Object.keys(trayGroups).map(function (k) { return trayGroups[k]; }).filter(function (li) { return !li.hidden; });
+    }
+
+    // FLIP: note where the shown groups sit, apply the change, then slide each from its old spot.
+    function flip(change) {
+      if (!animate) { change(); return; }
+      var before = shownGroups().map(function (li) { return [li, li.getBoundingClientRect()]; });
+      change();
+      before.forEach(function (pair) {
+        var li = pair[0];
+        if (li.hidden) return;
+        var r = li.getBoundingClientRect();
+        var dx = pair[1].left - r.left, dy = pair[1].top - r.top;
+        if (dx || dy) gsap.fromTo(li, { x: dx, y: dy }, { x: 0, y: 0, duration: 0.45, ease: 'power3.out' });
+      });
+    }
+
+    function join(li) {
+      if (li._leave) { li._leave.kill(); li._leave = null; if (window.gsap) gsap.set(li, { clearProps: 'opacity,scale' }); }
+      if (!li.hidden) return;
+      flip(function () { li.hidden = false; });
+      if (!animate) return;
+      gsap.from(li, { scale: 0.3, y: -28, rotation: -10, opacity: 0, transformOrigin: '0% 50%', duration: 0.6, ease: 'back.out(2.2)' });
+      var mascot = li.querySelector('.hs-tray-mascot');
+      gsap.fromTo(mascot, { y: 0 }, { y: -14, duration: 0.18, ease: 'power2.out', yoyo: true, repeat: 1, delay: 0.35 });
+    }
+
+    function leave(li) {
+      if (li.hidden || li._leave) return;
+      if (!animate) { li.hidden = true; return; }
+      li._leave = gsap.to(li, {
+        scale: 0.5, opacity: 0, duration: 0.22, ease: 'power2.in',
+        onComplete: function () {
+          li._leave = null;
+          flip(function () { li.hidden = true; });
+          gsap.set(li, { clearProps: 'opacity,scale' });
+        }
+      });
+    }
+
+    function render(changed) {
+      var list = picked();
+      Object.keys(trayGroups).forEach(function (gid) {
+        var li = trayGroups[gid];
+        var mine = list.filter(function (p) { return p.gid === gid; });
+        var ul = li.querySelector('[data-tray-picks]');
+        if (mine.length) {
+          ul.innerHTML = '';
+          mine.forEach(function (p) {
+            var item = document.createElement('li');
+            item.textContent = p.label;
+            ul.appendChild(item);
+            if (animate && changed && changed.checked && changed.value === p.id && !li.hidden) {
+              gsap.from(item, { opacity: 0, x: -8, duration: 0.25, ease: 'power2.out' });
+            }
+          });
+          join(li);
+        } else {
+          leave(li);
+        }
+      });
+
+      var n = list.length;
+      countEl.textContent = n ? n + (n === 1 ? ' service picked' : ' services picked') : 'Nothing picked yet';
+      emptyEl.hidden = n > 0;
+
+      var stored = list.map(function (p) { return { id: p.id, label: p.label, group: groupNames[p.gid] }; });
+      try { sessionStorage.setItem(STORE_KEY, JSON.stringify(stored)); } catch (e) {}
+
+      sendLink.href = '/contact' + (n ? '?services=' + list.map(function (p) { return encodeURIComponent(p.id); }).join(',') : '');
+
+      var cfg = {};
+      for (var k in baseCal) cfg[k] = baseCal[k];
+      if (n) cfg.notes = 'Interested in: ' + list.map(function (p) { return p.label; }).join('; ');
+      bookBtn.setAttribute('data-cal-config', JSON.stringify(cfg));
+    }
+
+    root.addEventListener('change', function (e) {
+      if (e.target.matches('.hs-chip input')) render(e.target);
+    });
+
+    // Restore picks from earlier in this browser session, without the join animation.
+    try {
+      var saved = JSON.parse(sessionStorage.getItem(STORE_KEY)) || [];
+      var ids = saved.map(function (p) { return p && p.id; });
+      boxes.forEach(function (b) { b.checked = ids.indexOf(b.value) !== -1; });
+    } catch (e) {}
+    var wasAnimating = animate;
+    animate = false;
+    render(null);
+    animate = wasAnimating;
+  })();
+</script>
+
+  <!-- Cal element-click embed code begins -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "15min", {origin:"https://app.cal.com"});
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    Cal.ns["15min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#C8873A"},"dark":{"cal-brand":"#C8873A"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+  <!-- Cal element-click embed code ends -->
+
+</body>
+</html>

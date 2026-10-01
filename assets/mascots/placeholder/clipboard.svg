@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <title>clipboard (placeholder)</title>
+  <g id="leg-l">
+    <rect x="80" y="136" width="11" height="32" rx="5.5" fill="#1B2B4B"/>
+  </g>
+  <g id="leg-r">
+    <rect x="109" y="136" width="11" height="32" rx="5.5" fill="#1B2B4B"/>
+  </g>
+  <g id="arm-l">
+    <path d="M62 100 Q44 106 38 126" stroke="#1B2B4B" stroke-width="9" stroke-linecap="round"/>
+  </g>
+  <g id="arm-r">
+    <path d="M138 100 Q156 106 162 126" stroke="#1B2B4B" stroke-width="9" stroke-linecap="round"/>
+  </g>
+  <g id="body" fill="#C8873A" stroke="#1B2B4B" stroke-width="4">
+    <rect x="62" y="50" width="76" height="94" rx="38"/>
+  </g>
+  <g id="eyes" fill="#F7F4EE" stroke="#1B2B4B" stroke-width="3">
+    <ellipse cx="86" cy="90" rx="9" ry="10"/>
+    <ellipse cx="114" cy="90" rx="9" ry="10"/>
+  </g>
+  <g id="pupils" fill="#1B2B4B">
+    <circle cx="87" cy="92" r="4"/>
+    <circle cx="115" cy="92" r="4"/>
+  </g>
+  <g id="mouth">
+    <path d="M90 112 Q100 121 110 112" stroke="#1B2B4B" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+  <g id="marks" stroke="#1B2B4B" stroke-width="3" stroke-linecap="round">
+    <path d="M152 46 L162 38"/>
+    <path d="M158 60 L171 57"/>
+    <path d="M48 46 L38 38"/>
+  </g>
+  <g id="label">
+    <text x="100" y="194" text-anchor="middle" font-family="'Libre Franklin', Arial, sans-serif" font-size="13" font-weight="600" fill="#1B2B4B">clipboard</text>
+  </g>
+</svg>
