@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/hs-mascots.css">
+<script src="/assets/js/hs-mascot-loader.js" defer></script>
 <style>
   :root {
     --navy: #1B2B4B; --amber: #C8873A; --amber-light: #e0a558;
@@ -118,9 +120,6 @@
   .hs-pitch-note { font-family: var(--sans); font-size: 15px; line-height: 1.6; color: #8b8578; margin: 0; max-width: 44ch; }
   .hs-pitch-email { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--navy); margin-top: 12px; display: inline-block; transition: color 180ms ease; }
   .hs-pitch-email:hover { color: var(--amber); }
-  .hs-pitch-cal { font-family: var(--sans); font-size: 15px; line-height: 1.6; color: var(--body); margin: 16px 0 0; }
-  .hs-pitch-cal a { color: var(--navy); font-weight: 600; border-bottom: 1px solid var(--amber); cursor: pointer; transition: color 180ms ease; }
-  .hs-pitch-cal a:hover { color: var(--amber); }
 
   /* form card */
   .hs-form-card { background: #FBF9F4; border: 1px solid var(--hairline); border-radius: 18px; padding: clamp(24px,3vw,40px); box-shadow: 0 18px 40px rgba(27,43,75,0.10); }
@@ -132,6 +131,22 @@
   .hs-field:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(200,135,58,0.15); }
   textarea.hs-field { resize: vertical; min-height: 140px; line-height: 1.55; font-family: var(--sans); }
   .hs-honeypot-field { display: none; }
+  .hs-form-label .hs-optional { font-weight: 400; color: #8b8578; }
+  .hs-picked { display: flex; flex-direction: column; gap: 8px; }
+  .hs-picked[hidden] { display: none; }
+  .hs-picked-label { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--navy); margin: 0; }
+  .hs-picked-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .hs-picked-chip { display: inline-flex; align-items: center; gap: 2px; font-family: var(--sans); font-size: 14px; font-weight: 500; line-height: 1.3; color: var(--navy); background: var(--amber-light); border: 1.5px solid var(--amber); border-radius: 999px; padding: 4px 5px 4px 14px; }
+  .hs-picked-x { appearance: none; -webkit-appearance: none; border: 0; background: transparent; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 19px; line-height: 1; color: var(--navy); cursor: pointer; }
+  .hs-picked-x:hover { background: rgba(27,43,75,0.12); }
+  .hs-picked-x:focus-visible { outline: 2px solid var(--navy); outline-offset: 1px; }
+  .hs-form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 24px; margin-top: 4px; }
+  .hs-submit-mascot { --hs-mascot-size: 40px; margin: -12px -6px -12px -10px; }
+  /* Pressed on hover: squash toward the feet. The mascot CSS animates translate and rotate on the art, so scale is free to use here. */
+  .hs-submit-mascot .hs-mascot__art { transition: scale 140ms ease; }
+  .hs-submit:is(:hover, .is-tapped, :focus-visible) .hs-submit-mascot .hs-mascot__art { scale: 1.14 0.76; }
+  .hs-submit:is(:hover, .is-tapped, :focus-visible) .hs-submit-mascot[data-hover-ready] .hs-mascot__pose.is-base { opacity: 0; }
+  .hs-submit:is(:hover, .is-tapped, :focus-visible) .hs-submit-mascot[data-hover-ready] .hs-mascot__pose.is-hover { opacity: 1; }
 
   /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
@@ -168,6 +183,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hs-pitch-email, .hs-field { transition: none; }
+    .hs-submit-mascot .hs-mascot__art { transition: none; scale: none !important; }
   }
 </style>
 </head>
@@ -227,13 +243,12 @@
         <div class="hs-pitch-rule"></div>
         <p class="hs-pitch-note">I read every message myself. I will respond either same day or within two business days.</p>
         <a class="hs-pitch-email" href="mailto:contact@handstartdigital.com">contact@handstartdigital.com</a>
-        <p class="hs-pitch-cal">Rather book a call? <a data-cal-link="aidanpaggao/15min" data-cal-namespace="15min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}'>Grab 15 minutes on my calendar &rarr;</a></p>
       </div>
 
       <div class="hs-form-card">
-        <!-- Wired for Netlify Forms: submissions are captured automatically once this site is deployed to Netlify. No backend or JS handling needed. -->
         <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact/thank-you/" class="hs-form">
           <input type="hidden" name="form-name" value="contact">
+          <input type="hidden" name="services" value="">
           <p class="hs-honeypot-field"><label>Don't fill this out: <input name="bot-field"></label></p>
 
           <label class="hs-form-label">
@@ -247,11 +262,24 @@
           </label>
 
           <label class="hs-form-label">
+            <span>Your website <span class="hs-optional">(optional)</span></span>
+            <input class="hs-field" type="text" name="website" inputmode="url" autocomplete="url" placeholder="yourbusiness.com">
+          </label>
+
+          <div class="hs-picked" data-picked hidden>
+            <p class="hs-picked-label" id="picked-label">Services you picked</p>
+            <ul class="hs-picked-chips" data-picked-chips aria-labelledby="picked-label"></ul>
+          </div>
+
+          <label class="hs-form-label">
             <span>What's the situation?</span>
             <textarea class="hs-field" name="message" rows="6" placeholder="Start anywhere. I'll follow."></textarea>
           </label>
 
-          <button class="hs-next-btn" type="submit" style="align-self:flex-start; margin-top:4px;"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Send it</span></span></span></button>
+          <div class="hs-form-actions">
+            <button class="hs-next-btn hs-submit" type="submit"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-mascot hs-submit-mascot" data-mascot="power-button" data-state="idle" data-hover-pose="pressed"></span><span class="hs-next-label">Send it</span></span></span></button>
+            <button class="hs-next-btn hs-next-btn--reverse" type="button" data-book-call data-cal-link="aidanpaggao/15min" data-cal-namespace="15min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}'><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Book a call</span></span></span></button>
+          </div>
         </form>
       </div>
 
@@ -370,22 +398,79 @@
   </script>
 
   <script>
-  // Prefill the message with services picked on /services. Ids come from ?services=,
-  // readable labels from sessionStorage when this is the same browser session.
+  // Services picked on /services: shown as removable chips and sent in the hidden
+  // services field. Ids come from ?services= (or sessionStorage when there is no
+  // query); readable labels come from sessionStorage when it has them.
   (function () {
-    var field = document.querySelector('textarea[name="message"]');
+    var KEY = 'hs_selected_services';
+    var field = document.querySelector('form[name="contact"] input[name="services"]');
+    var wrap = document.querySelector('[data-picked]');
+    var list = document.querySelector('[data-picked-chips]');
+    var message = document.querySelector('textarea[name="message"]');
+    var bookBtn = document.querySelector('[data-book-call]');
+    if (!field || !wrap || !list) return;
+    var baseCal = bookBtn ? JSON.parse(bookBtn.getAttribute('data-cal-config')) : null;
+
+    var stored = [];
+    try { stored = JSON.parse(sessionStorage.getItem(KEY)) || []; } catch (e) {}
+    var byId = {};
+    stored.forEach(function (p) { if (p && p.id) byId[p.id] = p; });
+
     var raw = new URLSearchParams(location.search).get('services');
-    if (!field || !raw || field.value) return;
-    var known = {};
-    try {
-      (JSON.parse(sessionStorage.getItem('hs_selected_services')) || []).forEach(function (p) {
-        if (p && p.id) known[p.id] = p.label;
-      });
-    } catch (e) {}
-    var labels = raw.split(',').map(function (id) { return id.trim(); }).filter(Boolean).map(function (id) {
-      return known[id] || id.replace(/-/g, ' ').replace(/^./, function (ch) { return ch.toUpperCase(); });
+    var ids = raw
+      ? raw.split(',').map(function (id) { return id.trim(); })
+      : stored.map(function (p) { return p && p.id; });
+    var picks = ids.filter(function (id, i) { return id && ids.indexOf(id) === i; }).map(function (id) {
+      return byId[id] || { id: id, label: id.replace(/-/g, ' ').replace(/^./, function (ch) { return ch.toUpperCase(); }), group: '' };
     });
-    if (labels.length) field.value = 'I’m interested in: ' + labels.join('; ') + '.\n\n';
+
+    function labels() { return picks.map(function (p) { return p.label; }); }
+
+    function render() {
+      field.value = labels().join('; ');
+      wrap.hidden = !picks.length;
+      list.innerHTML = '';
+      picks.forEach(function (p) {
+        var li = document.createElement('li');
+        var chip = document.createElement('span');
+        chip.className = 'hs-picked-chip';
+        chip.appendChild(document.createTextNode(p.label));
+        var x = document.createElement('button');
+        x.type = 'button';
+        x.className = 'hs-picked-x';
+        x.setAttribute('aria-label', 'Remove ' + p.label);
+        x.innerHTML = '<span aria-hidden="true">&times;</span>';
+        x.addEventListener('click', function () { remove(p.id); });
+        chip.appendChild(x);
+        li.appendChild(chip);
+        list.appendChild(li);
+      });
+      if (bookBtn) {
+        var cfg = {};
+        for (var k in baseCal) cfg[k] = baseCal[k];
+        if (picks.length) cfg.notes = 'Interested in: ' + labels().join('; ');
+        bookBtn.setAttribute('data-cal-config', JSON.stringify(cfg));
+      }
+    }
+
+    function remove(id) {
+      var idx = picks.map(function (p) { return p.id; }).indexOf(id);
+      if (idx === -1) return;
+      picks.splice(idx, 1);
+      try {
+        sessionStorage.setItem(KEY, JSON.stringify(picks.map(function (p) { return { id: p.id, label: p.label, group: p.group }; })));
+      } catch (e) {}
+      // Keep the address bar in step so a reload does not bring the chip back.
+      var url = new URL(location.href);
+      if (picks.length) url.searchParams.set('services', picks.map(function (p) { return p.id; }).join(','));
+      else url.searchParams.delete('services');
+      history.replaceState(null, '', url);
+      render();
+      var next = list.querySelectorAll('.hs-picked-x')[Math.min(idx, picks.length - 1)];
+      (next || message).focus();
+    }
+
+    render();
   })();
   </script>
 

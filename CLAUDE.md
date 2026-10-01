@@ -65,9 +65,10 @@ Each page folder keeps its own self-contained `assets/` subfolder (e.g. `about/a
 
 ## Other standing conventions
 
-- **`<meta name="robots" content="noindex">`** is present on every current page (site isn't live/indexed yet). Keep it on new pages unless told the site has launched.
+- **`<meta name="robots" content="noindex">`** is present on every current page (site isn't live/indexed yet). Keep it on new pages unless told the site has launched. At launch, remove it everywhere **except `contact/thank-you/`**, which is permanently noindex (its tag is marked with a comment, and `_headers` also sends `X-Robots-Tag: noindex` for it). If a sitemap is ever added, leave `/contact/thank-you/` out of it. Do not add a robots.txt `Disallow` for it: that would stop crawlers from seeing the noindex.
 - **Title tag pattern**: `<title>Page Name | Handstart Digital</title>` for every page except the homepage, which is bare `Handstart Digital`.
-- **Contact form** uses Netlify Forms (`data-netlify="true"`, `netlify-honeypot="bot-field"`, hidden `form-name` input) with an explicit `action="/contact/thank-you/"` redirect to `contact/thank-you/index.html`. No backend or JS form handling.
+- **Contact form** uses Netlify Forms (`data-netlify="true"`, `netlify-honeypot="bot-field"`, hidden `form-name` input) with an explicit `action="/contact/thank-you/"` redirect to `contact/thank-you/index.html`. No backend or JS form handling. Every field Netlify should capture must exist in the static HTML (including the hidden `services` field, which JS only fills in). Fields: name, email, website (optional, plain text so "mybiz.com" passes), services (hidden), message.
+- **Analytics:** none installed. `hsConversion()` on the thank-you page is an empty hook called on load; wire tracking there if it is ever added.
 - **External scripts**: pin to an exact CDN version (e.g. `opentype.js@1.3.4` from cdnjs) rather than a floating `@latest` tag.
 - **Legacy root files** (`style.css`, `main.js`, `logo.png`, `hero-logo.png`) are leftovers from an earlier version of the site and are not referenced by any current page. Don't assume they're live; don't build on them without checking first.
 - Git identity for this repo is set locally to `Aidan Paggao <philmias8008@gmail.com>`.

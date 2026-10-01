@@ -3,12 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Permanent: keep this noindex after launch. The thank-you page should never appear in search; _headers also sends X-Robots-Tag for it. -->
 <meta name="robots" content="noindex">
 <title>Message Sent | Handstart Digital</title>
 <meta name="description" content="Your message has been sent. I'll get back to you soon.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/hs-mascots.css">
+<script src="/assets/js/hs-mascot-loader.js" defer></script>
 <style>
   :root {
     --navy: #1B2B4B; --amber: #C8873A; --amber-light: #e0a558;
@@ -105,11 +108,27 @@
   /* body */
   .hs-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: clamp(64px,10vw,120px) clamp(24px,6vw,80px); text-align: center; }
   .hs-body-in { max-width: 560px; display: flex; flex-direction: column; align-items: center; }
-  .hs-checkmark { width: 56px; height: 56px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; margin-bottom: clamp(20px,2.6vw,28px); }
   .hs-eyebrow { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
   .hs-body h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(34px,4.8vw,56px); line-height: 1.06; letter-spacing: -0.015em; color: var(--navy); margin: clamp(14px,1.8vw,20px) 0 0; text-wrap: balance; }
   .hs-body p { font-family: var(--sans); font-size: clamp(16px,1.4vw,19px); line-height: 1.6; color: var(--body); max-width: 46ch; margin: clamp(16px,2vw,22px) 0 clamp(28px,3.4vw,36px); }
-  .hs-body-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .hs-body-btns { display: flex; flex-wrap: wrap; gap: 18px 28px; justify-content: center; align-items: center; }
+  button.hs-next-btn { -webkit-appearance: none; appearance: none; background: none; border: 0; padding: 0; margin: 0; font: inherit; cursor: pointer; }
+  .hs-ty-link { font-family: var(--sans); font-size: 16px; font-weight: 600; color: var(--navy); text-decoration: none; border-bottom: 1.5px solid var(--amber); padding-bottom: 2px; transition: color 180ms ease; }
+  .hs-ty-link:hover { color: var(--amber); }
+
+  /* High-five slap: waits for the loader to inline the art (data-loaded), then slaps in
+     from the upper right, squashes wide on impact and rebounds. CSS only. */
+  .hs-ty-mascot { --hs-mascot-size: clamp(120px,16vw,160px); margin-bottom: clamp(6px,1vw,10px); transform-origin: 50% 84%; }
+  .hs-mascots-js .hs-ty-mascot:not([data-loaded="true"]) { opacity: 0; }
+  .hs-ty-mascot[data-loaded="true"] { animation: hs-ty-slap 950ms cubic-bezier(.2,.8,.3,1) both; }
+  @keyframes hs-ty-slap {
+    0%   { opacity: 0; translate: 70% -80%; rotate: 28deg; scale: 0.7; }
+    42%  { opacity: 1; translate: 0 0; rotate: -8deg; scale: 1; }
+    52%  { rotate: 0deg; scale: 1.2 0.78; }
+    68%  { scale: 0.93 1.09; }
+    84%  { scale: 1.03 0.97; }
+    100% { opacity: 1; translate: 0 0; rotate: 0deg; scale: 1; }
+  }
 
   /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
@@ -197,16 +216,12 @@
 
   <section class="hs-body">
     <div class="hs-body-in">
-      <div class="hs-checkmark" aria-hidden="true">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M5 13l4 4L19 7" stroke="#C8873A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </div>
-      <h1>Thank you!</h1>
-      <p>I will be in touch soon.</p>
+      <figure class="hs-mascot hs-ty-mascot" data-mascot="high-five" data-state="idle"></figure>
+      <h1>High five. Got it.</h1>
+      <p>I read every message myself. Expect a reply today or within two business days.</p>
       <div class="hs-body-btns">
-        <a class="hs-next-btn" href="/"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Back to Home</span></span></span></a>
-        <a class="hs-next-btn" href="/services"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">See What I Do</span></span></span></a>
+        <button class="hs-next-btn" type="button" data-book-call data-cal-link="aidanpaggao/15min" data-cal-namespace="15min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}'><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Book a call now</span></span></span></button>
+        <a class="hs-ty-link" href="/case-studies">Case Studies</a>
       </div>
     </div>
   </section>
@@ -321,6 +336,36 @@
     });
   })();
 </script>
+
+<script>
+  // Conversion hook. Intentionally empty for now: this is the one place to wire up
+  // analytics later. No tracking scripts are loaded on this site.
+  function hsConversion() {}
+  window.addEventListener('load', function () { hsConversion(); });
+
+  // Book a call carries any services picked on /services into the Cal.com notes.
+  (function () {
+    var btn = document.querySelector('[data-book-call]');
+    if (!btn) return;
+    try {
+      var picks = JSON.parse(sessionStorage.getItem('hs_selected_services')) || [];
+      if (!picks.length) return;
+      var cfg = JSON.parse(btn.getAttribute('data-cal-config'));
+      cfg.notes = 'Interested in: ' + picks.map(function (p) { return p.label; }).join('; ');
+      btn.setAttribute('data-cal-config', JSON.stringify(cfg));
+    } catch (e) {}
+  })();
+</script>
+
+  <!-- Cal element-click embed code begins -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "15min", {origin:"https://app.cal.com"});
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    Cal.ns["15min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#C8873A"},"dark":{"cal-brand":"#C8873A"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+  <!-- Cal element-click embed code ends -->
 
 </body>
 </html>

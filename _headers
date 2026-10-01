@@ -52,3 +52,10 @@
   Cache-Control: public, max-age=604800
 /mascot-test/demo/*.webp
   Cache-Control: public, max-age=604800
+
+# Thank-you page stays out of search permanently, even after the site-wide
+# meta noindex comes off at launch. Exact paths, so no other rule overlaps.
+/contact/thank-you
+  X-Robots-Tag: noindex
+/contact/thank-you/
+  X-Robots-Tag: noindex
