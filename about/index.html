@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/hs-mascots.css">
 <style>
   :root {
     --navy: #1B2B4B; --amber: #C8873A; --amber-lt: #e0a558;
@@ -137,7 +138,39 @@
   .hs-close-in { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
   .hs-close h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(30px,4.4vw,50px); line-height: 1.08; letter-spacing: -0.01em; color: var(--cream); margin: 0; text-wrap: balance; }
   .hs-close p { font-family: var(--sans); font-size: clamp(16px,1.4vw,19px); line-height: 1.55; color: #c3ccda; margin: clamp(14px,1.8vw,20px) 0 clamp(28px,3.4vw,36px); max-width: 44ch; }
-  .hs-close-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .hs-close-btns { display: flex; flex-wrap: wrap; gap: 18px 28px; justify-content: center; align-items: center; }
+  .hs-close-link { font-family: var(--sans); font-size: 16px; font-weight: 600; color: var(--cream); text-decoration: none; border-bottom: 1.5px solid var(--amber); padding-bottom: 2px; transition: color 180ms ease; }
+  .hs-close-link:hover { color: var(--amber-lt); }
+
+  /* bar-chart peeks over the card: the card clips its own overflow, so the mascot lives in a
+     wrapper behind it. The wrapper takes over the sticky, a little lower so the fixed header
+     does not cover the peek. */
+  .hs-cred-wrap { position: sticky; top: calc(clamp(88px,11vw,112px) + 48px); align-self: start; margin-top: 48px; }
+  .hs-cred-wrap .hs-cred { position: relative; top: auto; z-index: 1; }
+  .hs-cred-peek { --hs-mascot-size: 104px; position: absolute; top: -62px; right: 22px; z-index: 0; }
+  @media (max-width: 900px) { .hs-cred-wrap { position: relative; top: auto; margin-top: 56px; } }
+
+  /* side mascots sit in the empty space right of the 60ch text column when there is room,
+     and float into the text below that */
+  .hs-has-side { position: relative; }
+  .hs-side-mascot { --hs-mascot-size: 64px; float: right; margin: 2px 0 6px 14px; }
+  .hs-side-mascot--tape { rotate: 14deg; }
+  @media (min-width: 1260px) {
+    .hs-side-mascot { --hs-mascot-size: 104px; float: none; position: absolute; top: -6px; left: calc(100% + 28px); margin: 0; }
+    /* tilted and nudged left so it cuts across the paragraph's top corner like tape, clear of the words */
+    .hs-side-mascot--tape { top: -34px; left: calc(100% - 4px); }
+  }
+  .hs-narrative .hs-pull { display: flex; align-items: center; gap: 14px; font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(22px,2.2vw,28px); line-height: 1.25; color: var(--navy); margin: 2px 0 4px; }
+  .hs-pull-mascot { --hs-mascot-size: 72px; flex: none; }
+
+  /* The ticker needs its full width, so on desktop the megaphone hangs off its left edge
+     instead of sharing the row; below that it stacks above the number. */
+  .hs-ticker-row { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .hs-ticker-mascot { --hs-mascot-size: 88px; }
+  @media (min-width: 900px) {
+    .hs-ticker-row { display: block; position: relative; width: fit-content; margin: 0 auto; }
+    .hs-ticker-mascot { --hs-mascot-size: clamp(96px,8vw,116px); position: absolute; right: calc(100% + clamp(16px,2vw,28px)); top: 50%; margin-top: calc(clamp(96px,8vw,116px) / -2); }
+  }
 
   /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
@@ -240,6 +273,8 @@
   <section class="hs-about">
     <div class="hs-profile-grid">
 
+      <div class="hs-cred-wrap">
+      <figure class="hs-mascot hs-cred-peek" data-mascot="bar-chart" data-state="reveal"></figure>
       <aside class="hs-cred" data-reveal data-anim="cred">
         <span class="cr-shine" aria-hidden="true"></span>
         <div class="hs-cred-photo"><img src="assets/aidan.jpg" alt="Aidan Paggao"></div>
@@ -252,8 +287,8 @@
             <div class="hs-cred-stat-label">in digital marketing</div>
           </div>
           <div>
-            <div class="hs-cred-stat-num" data-reveal data-js="count" data-count="15" data-dur="2600" data-pre="$" data-suf=" million+">$15 million+</div>
-            <div class="hs-cred-stat-label">yearly ad spend managed</div>
+            <div class="hs-cred-stat-num" data-reveal data-js="count" data-count="15" data-dur="2600" data-pre="$" data-suf="M+">$15M+</div>
+            <div class="hs-cred-stat-label">in annual ad spend managed, five years running</div>
           </div>
           <div>
             <div class="hs-cred-stat-num hs-cred-stat-num--sm">Agency + in-house</div>
@@ -261,14 +296,16 @@
           </div>
         </div>
       </aside>
+      </div>
 
       <div>
         <h1>Offering the "human touch" in a rapidly advancing digital world</h1>
         <div class="hs-narrative">
-          <p>Handstart is not a corporation with account managers and junior handoffs. You deal with me directly, and I own the agreed upon output of our projects from start to finish.</p>
+          <p class="hs-has-side"><span class="hs-mascot hs-side-mascot" data-mascot="handshake" data-state="reveal"></span>Handstart is not a corporation with account managers and junior handoffs. You deal with me directly, and I own the agreed upon output of our projects from start to finish.</p>
           <p>Three things will always be clear: who you're working with, how long the work takes, and what it costs. For heavier website builds I recommend bringing in a developer I trust, same goes for my designer when it comes to intricate design work.</p>
           <p>I don't take on every project. It has to be the right fit, for both of us. I would rather create real impact for you and build a relationship built on trust, rather than deliver cheap fixes and templates. I have no reason to upsell you: I recommend what fits your goals, not what grows the invoice.</p>
-          <p>Handstart began when the red tape of big companies became tiresome. Weeks of approvals delayed innovation and speed to market. I wanted to work the way work should actually move: I see it, we decide it, we start it.</p>
+          <p class="hs-has-side"><span class="hs-mascot hs-side-mascot hs-side-mascot--tape" data-mascot="ribbon" data-state="reveal"></span>Handstart began when the red tape of big companies became tiresome. Weeks of approvals delayed innovation and speed to market. I wanted to work the way work should actually move:</p>
+          <p class="hs-pull"><span class="hs-mascot hs-pull-mascot" data-mascot="power-button" data-state="reveal"></span><span class="hs-pull-text">I see it, we decide it, we start it.</span></p>
           <p>That's why it's called Handstart. A helping human hand in a digital world that moves faster than most businesses can keep pace with. It might just be what you need to get a head start against your competition.</p>
           <p>Based in Philadelphia, working everywhere.</p>
         </div>
@@ -281,9 +318,12 @@
   <section style="background:var(--navy); padding:clamp(56px,9vw,110px) clamp(24px,6vw,80px) clamp(36px,5vw,64px); text-align:center;">
     <div style="max-width:760px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,3vw,38px); line-height:1.15; letter-spacing:-0.01em; color:var(--cream); margin:0 0 clamp(24px,3.4vw,40px); text-wrap:balance;">Our guess on how much the world has spent on marketing so far today</h2>
-      <div class="hs-ticker" id="hsTicker" aria-live="off">
-        <span class="hs-ticker-dollar">$</span>
-        <span class="hs-ticker-digits" id="hsTickerDigits"></span>
+      <div class="hs-ticker-row">
+        <figure class="hs-mascot hs-ticker-mascot" data-mascot="megaphone" data-state="reveal"></figure>
+        <div class="hs-ticker" id="hsTicker" aria-live="off">
+          <span class="hs-ticker-dollar">$</span>
+          <span class="hs-ticker-digits" id="hsTickerDigits"></span>
+        </div>
       </div>
       <p style="font-family:var(--sans); font-size:13px; color:#c3ccda; margin:clamp(16px,2vw,22px) 0 0;">Ticking up in real time, resets at midnight</p>
     </div>
@@ -292,11 +332,10 @@
   <section class="hs-close">
     <div class="hs-close-in">
       <h2>That number keeps climbing. Want in - or curious if we're a fit?</h2>
-      <p>Take the 60-second check, or just tell me what's going on.</p>
+      <p>Tell me what's going on. I'll tell you straight whether I'm the right fit.</p>
       <div class="hs-close-btns">
-        <a class="hs-next-btn hs-next-btn--reverse" href="/#assessment"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Take the Check</span></span></span></a>
-        <a class="hs-next-btn hs-next-btn--reverse" href="/services"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">What We Do</span></span></span></a>
         <a class="hs-next-btn hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+        <a class="hs-close-link" href="/services">See what we do</a>
       </div>
     </div>
   </section>
@@ -359,6 +398,8 @@
   <script src="/assets/js/SplitText.min.js"></script>
   <script src="/assets/js/lenis.min.js"></script>
   <script src="/assets/js/hs-motion.js"></script>
+  <script src="/assets/js/hs-mascots.js"></script>
+  <script src="/assets/js/hs-mascot-loader.js"></script>
   <script>
   (function () {
 
