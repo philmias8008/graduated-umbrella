@@ -369,6 +369,26 @@
   })();
   </script>
 
+  <script>
+  // Prefill the message with services picked on /services. Ids come from ?services=,
+  // readable labels from sessionStorage when this is the same browser session.
+  (function () {
+    var field = document.querySelector('textarea[name="message"]');
+    var raw = new URLSearchParams(location.search).get('services');
+    if (!field || !raw || field.value) return;
+    var known = {};
+    try {
+      (JSON.parse(sessionStorage.getItem('hs_selected_services')) || []).forEach(function (p) {
+        if (p && p.id) known[p.id] = p.label;
+      });
+    } catch (e) {}
+    var labels = raw.split(',').map(function (id) { return id.trim(); }).filter(Boolean).map(function (id) {
+      return known[id] || id.replace(/-/g, ' ').replace(/^./, function (ch) { return ch.toUpperCase(); });
+    });
+    if (labels.length) field.value = 'I’m interested in: ' + labels.join('; ') + '.\n\n';
+  })();
+  </script>
+
   <!-- Cal element-click embed code begins -->
   <script type="text/javascript">
     (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");

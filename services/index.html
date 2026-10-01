@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/hs-mascots.css">
 
   <style>
     :root {
@@ -247,6 +248,77 @@
       .hs-pin-panel { min-height: 100vh; display: flex; align-items: center; }
       .hs-pin-panel > div { width: 100%; }
     }
+
+    /* Build your handstart */
+    .hs-build { background:var(--tint); border-top:1px solid var(--hairline); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px); }
+    .hs-build-in { max-width:1120px; margin:0 auto; }
+    .hs-build-title { font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance; }
+    .hs-build-lede { font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:56ch; margin:clamp(12px,1.6vw,16px) 0 clamp(28px,3.6vw,40px); }
+    .hs-build-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:clamp(14px,2vw,20px); }
+    .hs-build-card { grid-column:span 2; background:#fff; border:1px solid var(--hairline); border-radius:16px; padding:clamp(20px,2.4vw,28px); display:flex; flex-direction:column; align-items:flex-start; }
+    .hs-build-card:nth-child(4) { grid-column:2 / span 2; }
+    @media (max-width:1000px) {
+      .hs-build-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .hs-build-card, .hs-build-card:nth-child(4) { grid-column:auto; }
+    }
+    @media (max-width:640px) { .hs-build-grid { grid-template-columns:1fr; } }
+    .hs-build-mascot { --hs-mascot-size:88px; margin:-6px 0 6px -8px; }
+    .hs-build-card-title { font-family:var(--serif); font-weight:600; font-size:clamp(22px,2vw,26px); line-height:1.15; color:var(--navy); margin:0; }
+    .hs-build-card-q { font-family:var(--sans); font-size:14px; line-height:1.5; color:var(--body); margin:6px 0 16px; }
+    .hs-chips { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
+    .hs-chip { position:relative; display:inline-flex; cursor:pointer; }
+    /* the real checkbox stays in the accessibility tree and takes focus; the face is what you see */
+    .hs-chip input { position:absolute; inset:0; margin:0; opacity:0; cursor:pointer; }
+    .hs-chip-face {
+      display:inline-flex; align-items:center; gap:6px;
+      font-family:var(--sans); font-size:14px; font-weight:500; line-height:1.3; color:var(--navy);
+      background:var(--cream); border:1.5px solid var(--hairline); border-radius:999px; padding:7px 14px;
+      transition:background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+    .hs-chip-face::before {
+      content:''; width:0; height:10px; overflow:hidden; flex:none;
+      border:solid var(--navy); border-width:0 2px 2px 0; transform:rotate(45deg) translate(-1px,-2px);
+      opacity:0; transition:width 160ms ease, opacity 160ms ease;
+    }
+    .hs-chip:hover .hs-chip-face { border-color:var(--amber); }
+    .hs-chip input:checked + .hs-chip-face { background:var(--amber-lt); border-color:var(--amber); }
+    .hs-chip input:checked + .hs-chip-face::before { width:5px; opacity:1; }
+    .hs-chip input:focus-visible + .hs-chip-face { outline:2px solid var(--navy); outline-offset:2px; }
+
+    .hs-tray {
+      margin-top:clamp(24px,3vw,32px); background:var(--navy); color:var(--cream);
+      border-radius:16px; padding:clamp(18px,2.4vw,26px) clamp(20px,2.6vw,30px);
+      box-shadow:0 18px 40px -18px rgba(27,43,75,.55);
+    }
+    /* desktop: rides along the bottom of the screen while the cards scroll past, settles under them at the end */
+    @media (min-width:768px) {
+      .hs-tray { position:sticky; bottom:16px; z-index:5; }
+      .hs-tray-groups { max-height:34vh; overflow-y:auto; }
+    }
+    .hs-tray-head { display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+    .hs-tray-title { font-family:var(--serif); font-weight:600; font-size:clamp(22px,2.2vw,28px); margin:0; color:var(--cream); }
+    .hs-tray-count { font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber-lt); margin:0; }
+    .hs-tray-empty { font-family:var(--sans); font-size:15px; color:var(--muted, #c3ccda); margin:10px 0 0; }
+    .hs-tray-groups { list-style:none; margin:14px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:12px 22px; }
+    .hs-tray-groups:empty, .hs-tray-groups:not(:has(> li:not([hidden]))) { margin:0; }
+    .hs-tray-group { display:flex; align-items:flex-start; gap:10px; min-width:0; max-width:340px; }
+    .hs-tray-group[hidden] { display:none; }
+    .hs-tray-mascot { --hs-mascot-size:52px; flex:none; }
+    .hs-tray-group-name { font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber-lt); margin:4px 0 4px; }
+    .hs-tray-picks { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:4px 12px; }
+    .hs-tray-picks li { font-family:var(--sans); font-size:14px; line-height:1.4; color:var(--cream); }
+    .hs-tray-actions { display:flex; flex-wrap:wrap; gap:18px 22px; margin-top:18px; }
+    button.hs-next-btn { border:0; padding:0; background:none; font:inherit; cursor:pointer; }
+
+    .hs-dont-in { position:relative; }
+    .hs-dont-mascot { --hs-mascot-size:120px; position:absolute; top:-10px; right:0; }
+    @media (max-width:640px) {
+      .hs-dont-mascot { --hs-mascot-size:88px; position:relative; top:auto; right:auto; margin:0 0 10px -8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hs-chip-face, .hs-chip-face::before { transition:none; }
+    }
   </style>
 </head>
 
@@ -390,8 +462,129 @@
   </section>
   </div>
 
+  <section class="hs-build" id="build" aria-labelledby="build-title">
+    <div class="hs-build-in">
+      <h2 class="hs-build-title" id="build-title">Build your handstart</h2>
+      <p class="hs-build-lede">Tap whatever sounds like your business. Your picks collect below and come with you when you get in touch.</p>
+      <div class="hs-build-grid">
+        <div class="hs-build-card" role="group" aria-labelledby="build-brand">
+          <figure class="hs-mascot hs-build-mascot" data-mascot="lightbulb" data-state="reveal"></figure>
+          <h3 class="hs-build-card-title" id="build-brand">Brand Strategy</h3>
+          <p class="hs-build-card-q">What makes your brand yours?</p>
+          <ul class="hs-chips">
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="positioning-messaging" data-group="brand"><span class="hs-chip-face">Positioning &amp; Messaging</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="logo-brand-identity" data-group="brand"><span class="hs-chip-face">Logo &amp; Brand Identity</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="visual-systems" data-group="brand"><span class="hs-chip-face">Visual Systems</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="brand-guidelines" data-group="brand"><span class="hs-chip-face">Brand Guidelines</span></label></li>
+          </ul>
+        </div>
+        <div class="hs-build-card" role="group" aria-labelledby="build-web">
+          <figure class="hs-mascot hs-build-mascot" data-mascot="browser-window" data-state="reveal"></figure>
+          <h3 class="hs-build-card-title" id="build-web">Web Design &amp; Development</h3>
+          <p class="hs-build-card-q">Is your website working against you?</p>
+          <ul class="hs-chips">
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="website-design-build" data-group="web"><span class="hs-chip-face">Website Design &amp; Build</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="landing-pages" data-group="web"><span class="hs-chip-face">Landing Pages</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="mobile-speed-fixes" data-group="web"><span class="hs-chip-face">Mobile &amp; Speed Fixes</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="ongoing-site-maintenance" data-group="web"><span class="hs-chip-face">Ongoing Site Maintenance</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="website-analytics" data-group="web"><span class="hs-chip-face">Website Analytics</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="web-hosting" data-group="web"><span class="hs-chip-face">Web Hosting</span></label></li>
+          </ul>
+        </div>
+        <div class="hs-build-card" role="group" aria-labelledby="build-seo">
+          <figure class="hs-mascot hs-build-mascot" data-mascot="magnifier" data-state="reveal"></figure>
+          <h3 class="hs-build-card-title" id="build-seo">SEO &amp; Organic Presence</h3>
+          <p class="hs-build-card-q">Is it difficult to find you?</p>
+          <ul class="hs-chips">
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="seo" data-group="seo"><span class="hs-chip-face">SEO</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="google-business-profile" data-group="seo"><span class="hs-chip-face">Google Business Profile</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="local-listings" data-group="seo"><span class="hs-chip-face">Local Listings</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="content-strategy" data-group="seo"><span class="hs-chip-face">Content Strategy</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="technical-seo" data-group="seo"><span class="hs-chip-face">Technical SEO</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="ai-search-llm-visibility-aeo-geo" data-group="seo"><span class="hs-chip-face">AI Search/LLM Visibility (AEO/GEO)</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="review-management-strategy" data-group="seo"><span class="hs-chip-face">Review Management &amp; Strategy</span></label></li>
+          </ul>
+        </div>
+        <div class="hs-build-card" role="group" aria-labelledby="build-performance">
+          <figure class="hs-mascot hs-build-mascot" data-mascot="megaphone" data-state="reveal"></figure>
+          <h3 class="hs-build-card-title" id="build-performance">Performance Marketing</h3>
+          <p class="hs-build-card-q">Do you need customers now?</p>
+          <ul class="hs-chips">
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="meta-instagram-ads" data-group="performance"><span class="hs-chip-face">Meta &amp; Instagram Ads</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="microsoft-ads" data-group="performance"><span class="hs-chip-face">Microsoft Ads</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="reddit-ads" data-group="performance"><span class="hs-chip-face">Reddit Ads</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="linkedin-ads" data-group="performance"><span class="hs-chip-face">LinkedIn Ads</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="google-suite-google-ads-performance-max-demand-gen" data-group="performance"><span class="hs-chip-face">Google Suite (Google Ads, Performance Max, Demand Gen)</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="llm-ads-chatgpt-gemini-copilot" data-group="performance"><span class="hs-chip-face">LLM Ads (ChatGPT, Gemini, Copilot)</span></label></li>
+          </ul>
+        </div>
+        <div class="hs-build-card" role="group" aria-labelledby="build-retention">
+          <figure class="hs-mascot hs-build-mascot" data-mascot="speech-bubble" data-state="reveal"></figure>
+          <h3 class="hs-build-card-title" id="build-retention">Retention &amp; General Presence</h3>
+          <p class="hs-build-card-q">How is your brand&#x27;s ongoing presence?</p>
+          <ul class="hs-chips">
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="social-media-management" data-group="retention"><span class="hs-chip-face">Social Media Management</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="email-marketing" data-group="retention"><span class="hs-chip-face">Email Marketing</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="sms-marketing" data-group="retention"><span class="hs-chip-face">SMS Marketing</span></label></li>
+            <li><label class="hs-chip"><input type="checkbox" name="services" value="loyalty-referral-programs" data-group="retention"><span class="hs-chip-face">Loyalty &amp; Referral Programs</span></label></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hs-tray" data-tray role="region" aria-labelledby="tray-title">
+        <div class="hs-tray-head">
+          <h3 class="hs-tray-title" id="tray-title">My handstart</h3>
+          <p class="hs-tray-count" data-tray-count aria-live="polite">Nothing picked yet</p>
+        </div>
+        <p class="hs-tray-empty" data-tray-empty>Pick anything above and it lands here.</p>
+        <ul class="hs-tray-groups" data-tray-groups>
+          <li class="hs-tray-group" data-tray-group="brand" hidden>
+            <span class="hs-mascot hs-tray-mascot" data-mascot="lightbulb" data-state="idle"></span>
+            <div class="hs-tray-group-text">
+              <p class="hs-tray-group-name">Brand Strategy</p>
+              <ul class="hs-tray-picks" data-tray-picks></ul>
+            </div>
+          </li>
+          <li class="hs-tray-group" data-tray-group="web" hidden>
+            <span class="hs-mascot hs-tray-mascot" data-mascot="browser-window" data-state="idle"></span>
+            <div class="hs-tray-group-text">
+              <p class="hs-tray-group-name">Web Design &amp; Development</p>
+              <ul class="hs-tray-picks" data-tray-picks></ul>
+            </div>
+          </li>
+          <li class="hs-tray-group" data-tray-group="seo" hidden>
+            <span class="hs-mascot hs-tray-mascot" data-mascot="magnifier" data-state="idle"></span>
+            <div class="hs-tray-group-text">
+              <p class="hs-tray-group-name">SEO &amp; Organic Presence</p>
+              <ul class="hs-tray-picks" data-tray-picks></ul>
+            </div>
+          </li>
+          <li class="hs-tray-group" data-tray-group="performance" hidden>
+            <span class="hs-mascot hs-tray-mascot" data-mascot="megaphone" data-state="idle"></span>
+            <div class="hs-tray-group-text">
+              <p class="hs-tray-group-name">Performance Marketing</p>
+              <ul class="hs-tray-picks" data-tray-picks></ul>
+            </div>
+          </li>
+          <li class="hs-tray-group" data-tray-group="retention" hidden>
+            <span class="hs-mascot hs-tray-mascot" data-mascot="speech-bubble" data-state="idle"></span>
+            <div class="hs-tray-group-text">
+              <p class="hs-tray-group-name">Retention &amp; General Presence</p>
+              <ul class="hs-tray-picks" data-tray-picks></ul>
+            </div>
+          </li>
+        </ul>
+        <div class="hs-tray-actions">
+          <button class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" type="button" data-book-call data-cal-link="aidanpaggao/15min" data-cal-namespace="15min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}'><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Book a call</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></button>
+          <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact" data-send-message><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Send a message</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section data-anim="clip" style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
-    <div style="max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
+    <div class="hs-dont-in" style="max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
+      <figure class="hs-mascot hs-dont-mascot" data-mascot="glove-stop" data-state="reveal"></figure>
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What we don't do:</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); margin:clamp(12px,1.6vw,16px) 0 clamp(24px,3vw,32px);">Being honest about fit saves everyone time.</p>
       <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0; width:100%;">
@@ -559,6 +752,8 @@
 <script src="/assets/js/SplitText.min.js"></script>
 <script src="/assets/js/lenis.min.js"></script>
 <script src="/assets/js/hs-motion.js"></script>
+<script src="/assets/js/hs-mascots.js"></script>
+<script src="/assets/js/hs-mascot-loader.js"></script>
 <script>
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -719,6 +914,148 @@
     });
   })();
 </script>
+
+
+<script>
+  // Build your handstart: chips are real checkboxes. This keeps the tray, sessionStorage,
+  // the contact link and the Cal.com notes in sync with whatever is checked.
+  (function () {
+    var root = document.getElementById('build');
+    if (!root) return;
+    var STORE_KEY = 'hs_selected_services';
+    var boxes = [].slice.call(root.querySelectorAll('.hs-chip input'));
+    var countEl = root.querySelector('[data-tray-count]');
+    var emptyEl = root.querySelector('[data-tray-empty]');
+    var sendLink = root.querySelector('[data-send-message]');
+    var bookBtn = root.querySelector('[data-book-call]');
+    var baseCal = JSON.parse(bookBtn.getAttribute('data-cal-config'));
+    var groupNames = {};
+    var trayGroups = {};
+    root.querySelectorAll('[data-tray-group]').forEach(function (li) {
+      var gid = li.getAttribute('data-tray-group');
+      trayGroups[gid] = li;
+      groupNames[gid] = document.getElementById('build-' + gid).textContent;
+    });
+
+    // Join animation on desktop with motion allowed; everything else gets instant changes.
+    var animate = false;
+    if (window.gsap && gsap.matchMedia) {
+      gsap.matchMedia().add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', function () {
+        animate = true;
+        return function () { animate = false; };
+      });
+    }
+
+    function picked() {
+      return boxes.filter(function (b) { return b.checked; }).map(function (b) {
+        return { id: b.value, label: b.nextElementSibling.textContent, gid: b.getAttribute('data-group') };
+      });
+    }
+
+    function shownGroups() {
+      return Object.keys(trayGroups).map(function (k) { return trayGroups[k]; }).filter(function (li) { return !li.hidden; });
+    }
+
+    // FLIP: note where the shown groups sit, apply the change, then slide each from its old spot.
+    function flip(change) {
+      if (!animate) { change(); return; }
+      var before = shownGroups().map(function (li) { return [li, li.getBoundingClientRect()]; });
+      change();
+      before.forEach(function (pair) {
+        var li = pair[0];
+        if (li.hidden) return;
+        var r = li.getBoundingClientRect();
+        var dx = pair[1].left - r.left, dy = pair[1].top - r.top;
+        if (dx || dy) gsap.fromTo(li, { x: dx, y: dy }, { x: 0, y: 0, duration: 0.45, ease: 'power3.out' });
+      });
+    }
+
+    function join(li) {
+      if (li._leave) { li._leave.kill(); li._leave = null; if (window.gsap) gsap.set(li, { clearProps: 'opacity,scale' }); }
+      if (!li.hidden) return;
+      flip(function () { li.hidden = false; });
+      if (!animate) return;
+      gsap.from(li, { scale: 0.3, y: -28, rotation: -10, opacity: 0, transformOrigin: '0% 50%', duration: 0.6, ease: 'back.out(2.2)' });
+      var mascot = li.querySelector('.hs-tray-mascot');
+      gsap.fromTo(mascot, { y: 0 }, { y: -14, duration: 0.18, ease: 'power2.out', yoyo: true, repeat: 1, delay: 0.35 });
+    }
+
+    function leave(li) {
+      if (li.hidden || li._leave) return;
+      if (!animate) { li.hidden = true; return; }
+      li._leave = gsap.to(li, {
+        scale: 0.5, opacity: 0, duration: 0.22, ease: 'power2.in',
+        onComplete: function () {
+          li._leave = null;
+          flip(function () { li.hidden = true; });
+          gsap.set(li, { clearProps: 'opacity,scale' });
+        }
+      });
+    }
+
+    function render(changed) {
+      var list = picked();
+      Object.keys(trayGroups).forEach(function (gid) {
+        var li = trayGroups[gid];
+        var mine = list.filter(function (p) { return p.gid === gid; });
+        var ul = li.querySelector('[data-tray-picks]');
+        if (mine.length) {
+          ul.innerHTML = '';
+          mine.forEach(function (p) {
+            var item = document.createElement('li');
+            item.textContent = p.label;
+            ul.appendChild(item);
+            if (animate && changed && changed.checked && changed.value === p.id && !li.hidden) {
+              gsap.from(item, { opacity: 0, x: -8, duration: 0.25, ease: 'power2.out' });
+            }
+          });
+          join(li);
+        } else {
+          leave(li);
+        }
+      });
+
+      var n = list.length;
+      countEl.textContent = n ? n + (n === 1 ? ' service picked' : ' services picked') : 'Nothing picked yet';
+      emptyEl.hidden = n > 0;
+
+      var stored = list.map(function (p) { return { id: p.id, label: p.label, group: groupNames[p.gid] }; });
+      try { sessionStorage.setItem(STORE_KEY, JSON.stringify(stored)); } catch (e) {}
+
+      sendLink.href = '/contact' + (n ? '?services=' + list.map(function (p) { return encodeURIComponent(p.id); }).join(',') : '');
+
+      var cfg = {};
+      for (var k in baseCal) cfg[k] = baseCal[k];
+      if (n) cfg.notes = 'Interested in: ' + list.map(function (p) { return p.label; }).join('; ');
+      bookBtn.setAttribute('data-cal-config', JSON.stringify(cfg));
+    }
+
+    root.addEventListener('change', function (e) {
+      if (e.target.matches('.hs-chip input')) render(e.target);
+    });
+
+    // Restore picks from earlier in this browser session, without the join animation.
+    try {
+      var saved = JSON.parse(sessionStorage.getItem(STORE_KEY)) || [];
+      var ids = saved.map(function (p) { return p && p.id; });
+      boxes.forEach(function (b) { b.checked = ids.indexOf(b.value) !== -1; });
+    } catch (e) {}
+    var wasAnimating = animate;
+    animate = false;
+    render(null);
+    animate = wasAnimating;
+  })();
+</script>
+
+  <!-- Cal element-click embed code begins -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "15min", {origin:"https://app.cal.com"});
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    Cal.ns["15min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#C8873A"},"dark":{"cal-brand":"#C8873A"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+  <!-- Cal element-click embed code ends -->
 
 </body>
 </html>

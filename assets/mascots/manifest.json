@@ -18,5 +18,6 @@
   "baton": { "blob": "butter" },
   "ribbon": { "blob": "butter" },
   "green-flag": { "blob": "sage" },
-  "glove-stop": { "blob": "tint" }
+  "glove-stop": { "blob": "tint" },
+  "speech-bubble": { "blob": "dusty-blue" }
 }

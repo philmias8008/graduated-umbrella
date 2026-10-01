@@ -18,7 +18,7 @@ IDS = [
     "hero-bib-hand", "foam-finger", "power-button", "stopwatch", "magnifier",
     "megaphone", "clipboard", "lightbulb", "piggy-bank", "bullseye",
     "browser-window", "bar-chart", "handshake", "high-five", "podium",
-    "compass", "baton", "ribbon", "green-flag", "glove-stop",
+    "compass", "baton", "ribbon", "green-flag", "glove-stop", "speech-bubble",
 ]
 
 NAVY = "#1B2B4B"
