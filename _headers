@@ -48,8 +48,6 @@
   Cache-Control: public, max-age=604800
 /terms/assets/*
   Cache-Control: public, max-age=604800
-/the-difference/assets/*
-  Cache-Control: public, max-age=604800
 /mascot-test/demo/*.webp
   Cache-Control: public, max-age=604800
 

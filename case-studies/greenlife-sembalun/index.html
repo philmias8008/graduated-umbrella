@@ -135,11 +135,6 @@
   .hs-results-head { display: flex; align-items: center; gap: clamp(12px,1.6vw,18px); margin-bottom: clamp(22px,2.6vw,30px); }
   .hs-results-head .hs-results-sub { margin-bottom: 0; }
   .hs-results-mascot { --hs-mascot-size: clamp(72px,8vw,92px); flex: none; }
-  /* placeholders stay loud on purpose so they get filled before launch */
-  .hs-todo-list { margin: clamp(20px,2.4vw,28px) 0 0; display: flex; flex-direction: column; gap: 8px; }
-  .hs-todo { display: flex; flex-wrap: wrap; gap: 4px 10px; border: 1.5px dashed var(--amber); border-radius: 8px; padding: 8px 12px; background: rgba(200,135,58,0.06); }
-  .hs-todo dt { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
-  .hs-todo dd { margin: 0; font-family: var(--sans); font-size: 14px; color: var(--navy); }
   .hs-results-sub { font-family: var(--sans); font-size: 14px; font-weight: 400; line-height: 1.5; color: #8b8578; margin-top: 6px; margin-bottom: clamp(22px,2.6vw,30px); }
   .hs-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px,1fr)); gap: clamp(20px,2.6vw,36px); max-width: 900px; }
   .hs-stat { display: flex; flex-direction: column; gap: 6px; padding-top: 20px; border-top: 2px solid var(--navy); }
@@ -245,11 +240,6 @@
             <span class="hs-navlink-bottom" aria-hidden="true"></span>
             <span class="hs-navlink-sr">About</span>
           </a>
-          <a href="/the-difference" class="hs-navlink" data-flip-text="The Difference">
-            <span class="hs-navlink-top" aria-hidden="true"></span>
-            <span class="hs-navlink-bottom" aria-hidden="true"></span>
-            <span class="hs-navlink-sr">The Difference</span>
-          </a>
           <a href="/case-studies" class="hs-navlink is-active" data-flip-text="Case Studies">
             <span class="hs-navlink-top" aria-hidden="true"></span>
             <span class="hs-navlink-bottom" aria-hidden="true"></span>
@@ -268,7 +258,6 @@
     <div class="hs-mnav" id="hs-mnav">
           <a href="/services" class="hs-mnav-link" data-close>Services</a>
           <a href="/about" class="hs-mnav-link" data-close>About</a>
-          <a href="/the-difference" class="hs-mnav-link" data-close>The Difference</a>
           <a href="/case-studies" class="hs-mnav-link is-active" data-close>Case Studies</a>
       <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
     </div>
@@ -328,10 +317,6 @@
           <div class="hs-stat-bar"><div class="hs-stat-bar-old" style="width:16.7%;"></div><div class="hs-stat-bar-new"></div></div>
         </div>
         </div>
-        <dl class="hs-todo-list">
-          <div class="hs-todo" data-todo="timeframe"><dt>Timeframe</dt><dd>TODO timeframe: date range for "old site" and "since re-launch"</dd></div>
-          <div class="hs-todo" data-todo="source"><dt>Source</dt><dd>TODO source: where these numbers come from (e.g. Google Analytics, booking platform)</dd></div>
-        </dl>
       </figure>
 
       <div class="hs-diff-row">
@@ -418,7 +403,6 @@
       <div class="hs-footer-explore">Explore</div>
       <div class="hs-footer-navgrid">
         <a class="hs-footer-navlink" href="/">Home</a>
-        <a class="hs-footer-navlink" href="/the-difference">The Difference</a>
         <a class="hs-footer-navlink" href="/services">Services</a>
         <a class="hs-footer-navlink" href="/case-studies">Case Studies</a>
         <a class="hs-footer-navlink" href="/about">About</a>

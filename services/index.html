@@ -320,6 +320,32 @@
     @media (prefers-reduced-motion: reduce) {
       .hs-chip-face, .hs-chip-face::before { transition:none; }
     }
+
+    /* Real work vs template work (folded in from the old The Difference page) */
+    .hs-real { background:var(--tint); border-top:1px solid var(--hairline); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px); }
+    .hs-real-in { max-width:1040px; margin:0 auto; }
+    .hs-real-head { display:flex; align-items:center; gap:clamp(12px,1.8vw,20px); }
+    .hs-real-mascot { --hs-mascot-size:clamp(76px,8vw,96px); flex:none; }
+    .hs-real-title { font-family:var(--serif); font-weight:600; font-size:clamp(28px,3.8vw,44px); line-height:1.08; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance; }
+    .hs-real-intro { display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:clamp(24px,4vw,48px); align-items:center; margin-top:clamp(20px,2.6vw,28px); }
+    .hs-real-setup { font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.7; color:var(--body); margin:0; }
+    .hs-real-mock { border-radius:14px; overflow:hidden; border:1px solid var(--hairline); box-shadow:0 18px 40px -20px rgba(27,43,75,.45); }
+    .hs-real-mock img { display:block; width:100%; height:auto; }
+    .hs-real-check { display:flex; align-items:flex-start; gap:clamp(14px,2vw,24px); margin-top:clamp(32px,4vw,48px); padding-top:clamp(24px,3vw,32px); border-top:1px solid var(--hairline); }
+    .hs-real-clip { --hs-mascot-size:clamp(72px,7vw,88px); flex:none; margin-top:-6px; }
+    .hs-real-lede { font-family:var(--sans); font-size:clamp(15px,1.3vw,17px); font-weight:600; color:var(--navy); margin:0 0 14px; }
+    .hs-real-list { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:14px clamp(20px,3vw,36px); }
+    .hs-real-list li { position:relative; padding-left:18px; font-family:var(--sans); font-size:15px; line-height:1.55; color:var(--body); }
+    .hs-real-list li::before { content:''; position:absolute; left:0; top:0.6em; width:7px; height:7px; border-radius:50%; background:var(--amber); }
+    .hs-real-offer { margin:clamp(28px,3.6vw,40px) 0 0; }
+    .hs-real-offer a { font-family:var(--serif); font-style:italic; font-weight:600; font-size:clamp(20px,2vw,26px); color:var(--navy); text-decoration:none; border-bottom:1.5px solid var(--amber); padding-bottom:2px; transition:color 180ms ease; }
+    .hs-real-offer a:hover { color:var(--amber); }
+    @media (max-width:760px) {
+      .hs-real-intro { grid-template-columns:1fr; }
+      .hs-real-list { grid-template-columns:1fr; }
+      .hs-real-check { flex-direction:column; gap:6px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .hs-real-offer a { transition:none; } }
   </style>
 </head>
 
@@ -343,11 +369,6 @@
           <span class="hs-navlink-bottom" aria-hidden="true"></span>
           <span class="hs-navlink-sr">About</span>
         </a>
-        <a href="/the-difference" class="hs-navlink" data-flip-text="The Difference">
-          <span class="hs-navlink-top" aria-hidden="true"></span>
-          <span class="hs-navlink-bottom" aria-hidden="true"></span>
-          <span class="hs-navlink-sr">The Difference</span>
-        </a>
         <a href="/case-studies" class="hs-navlink" data-flip-text="Case Studies">
           <span class="hs-navlink-top" aria-hidden="true"></span>
           <span class="hs-navlink-bottom" aria-hidden="true"></span>
@@ -364,7 +385,6 @@
     <div id="mobileNav" hidden style="border-top:1px solid var(--hairline); padding:12px clamp(20px,4vw,44px) 20px; flex-direction:column; gap:6px; background:var(--cream);">
       <a href="/services" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Services</a>
       <a href="/about" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">About</a>
-      <a href="/the-difference" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">The Difference</a>
       <a href="/case-studies" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Case Studies</a>
       <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
     </div>
@@ -598,6 +618,34 @@
     </div>
   </section>
 
+  <section class="hs-real" id="real-work" aria-labelledby="real-title">
+    <div class="hs-real-in">
+      <div class="hs-real-head">
+        <figure class="hs-mascot hs-real-mascot" data-mascot="magnifier" data-state="reveal"></figure>
+        <h2 class="hs-real-title" id="real-title">Real work vs template work</h2>
+      </div>
+      <div class="hs-real-intro">
+        <p class="hs-real-setup">A good template, built on real code and properly customized, is smart money. The one to watch for is the generic AI version: swap the logo and the colors and it's a plumber, a restaurant or an agency. Here's one I made for a plumbing business that doesn't exist.</p>
+        <div class="hs-real-mock"><img src="assets/plumbing-mockup.png" width="1183" height="854" alt="Generic AI-generated template mockup for a fictional plumbing business" loading="lazy"></div>
+      </div>
+      <div class="hs-real-check">
+        <figure class="hs-mascot hs-real-clip" data-mascot="clipboard" data-state="reveal"></figure>
+        <div>
+          <p class="hs-real-lede">Whether you're sizing up a website, a proposal or a piece of content, look for these:</p>
+          <ul class="hs-real-list">
+          <li>A heading with one word italicized or recolored for no clear reason, especially if every heading does it.</li>
+          <li>The same narrow palette everywhere: dark-mode backgrounds, purple or blue accents, endless rounded-corner cards.</li>
+          <li>Generic reassurance copy like "no credit card required" stacked under every button.</li>
+          <li>Copy that reads the same everywhere: the same sentence rhythm, the same "in today's fast-paced world" openers, whatever the topic.</li>
+          <li>Case studies and results for client sites that don't exist: click through and the "clients" are the same template with different names, or nothing comes up when you search them.</li>
+          <li>An Instagram or Facebook ad selling websites from a business with no website of its own: nothing linked in the ad, nothing when you search their name.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="hs-real-offer"><a href="/contact">Send me what you are paying for and I will take a look <span aria-hidden="true">&rarr;</span></a></p>
+    </div>
+  </section>
+
   <section id="why-us" style="background:var(--navy); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
     <div style="max-width:1200px; margin:0 auto;">
       <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--cream); margin:0 0 clamp(28px,3.6vw,40px); text-wrap:balance;">Why Work With Us: Our ABCD</h2>
@@ -724,7 +772,6 @@
       <div style="font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#8791a3; margin:clamp(28px,3.4vw,36px) 0 clamp(14px,2vw,18px);">Explore</div>
       <div class="hs-footer-navgrid">
         <a class="hs-footer-navlink" href="/">Home</a>
-        <a class="hs-footer-navlink" href="/the-difference">The Difference</a>
         <a class="hs-footer-navlink" href="/services">Services</a>
         <a class="hs-footer-navlink" href="/case-studies">Case Studies</a>
         <a class="hs-footer-navlink" href="/about">About</a>
