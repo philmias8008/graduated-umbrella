@@ -21,6 +21,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:wght@400;500;600;700;900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
   <!-- Self-hosted so opentype.js can read real glyph outlines for the draw-on handwriting effect below -->
   <link rel="preload" href="assets/fonts/Caveat-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="/assets/css/hs-mascots.css">
+  <script src="/assets/js/hs-mascot-loader.js" defer></script>
 
   <style>
     :root {
@@ -177,7 +179,7 @@
       padding:clamp(28px,3.6vw,36px) clamp(24px,3vw,32px);
       display:flex; flex-direction:column; align-items:flex-start; gap:16px;
     }
-    .hs-path-icon { width:56px; height:56px; object-fit:contain; }
+    .hs-path-mascot { --hs-mascot-size:88px; margin:-8px 0 -4px -6px; }
     .hs-path-kicker {
       font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.06em;
       text-transform:uppercase; color:var(--amber); margin:0;
@@ -286,7 +288,7 @@
       .hs-steps-fill, .hs-steps-content { transition:none !important; }
     }
 
-    /* Steps sketchbook plate */
+    /* Steps row and mascots */
     .hs-steps-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(24px,4vw,56px); align-items:center; }
     @media (max-width:760px) {
       .hs-steps-row { grid-template-columns:1fr; }
@@ -294,22 +296,12 @@
       .hs-steps-image { order:2; margin-top:0px; }
       .hs-steps-desc { min-height:132px; }
     }
-    .hs-plate-stage { position:relative; aspect-ratio:1/1; max-width:420px; margin:0 auto; }
-    @media (max-width:760px) { .hs-plate-stage { max-width:300px; margin-left:0; margin-right:auto; } }
-    .hs-plate {
-      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-      filter:drop-shadow(0 12px 20px rgba(27,43,75,.28));
-    }
-    .hs-plate img { width:100%; height:100%; object-fit:contain; display:block; }
-    .hs-plate-back { z-index:1; transform:rotate(var(--tilt-back,-1.4deg)); }
-    .hs-plate-front { z-index:2; opacity:0; transform:rotate(var(--tilt-front,-1.4deg)); }
-    .hs-plate-front.is-shown { opacity:1; }
-    .hs-plate-front.is-fading {
-      transition:opacity 600ms ease, transform 600ms ease;
-      opacity:0; transform:rotate(var(--tilt-front,-1.4deg)) scale(1.02);
-    }
+    .hs-step-mascots { position:relative; aspect-ratio:1/1; max-width:420px; margin:0 auto; }
+    @media (max-width:760px) { .hs-step-mascots { max-width:300px; margin-left:0; margin-right:auto; } }
+    .hs-step-mascots > .hs-mascot { position:absolute; inset:0; opacity:0; transition:opacity 600ms ease; }
+    .hs-step-mascots > .hs-mascot.is-active { opacity:1; }
     @media (prefers-reduced-motion: reduce) {
-      .hs-plate-front { transition:none !important; opacity:0 !important; transform:none !important; }
+      .hs-step-mascots > .hs-mascot { transition:none; }
     }
 
     /* Why Work With Us: ABCD panel accordion */
@@ -434,11 +426,33 @@
       :where(#gp-handstart) [data-gp-caption] { opacity: 1 !important; }
     }
 
+    /* Hero heading lockup: inline-block so the magnifier can sit just past the widest line
+       while the heading itself stays centered. */
+    .hp-h1-lockup { display:inline-block; position:relative; }
+    .hp-h1-mascot {
+      --hs-mascot-size: clamp(96px,11vw,136px);
+      position:absolute; left:100%; top:50%;
+      margin:calc(clamp(96px,11vw,136px) / -2) 0 0 clamp(14px,2.4vw,28px);
+    }
+    @media (max-width:700px) {
+      .hp-h1-mascot { --hs-mascot-size:88px; position:relative; left:auto; top:auto; margin:0 auto 10px; }
+    }
+
     /* Landing composition: brand lockup, category label, tagline, entry cue */
     :where(#gp-handstart) [data-hs-landing-top] { position: absolute; inset: clamp(20px,4vw,44px) clamp(20px,4vw,44px) auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     :where(#gp-handstart) [data-hs-landing-category] { font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--slate); }
     :where(#gp-handstart) [data-hs-landing-support] { position: absolute; inset: calc(var(--gp-word-bottom, 50%) + 20px) 6% auto; margin: 0; text-align: center; font-family: var(--serif); font-style: italic; font-size: clamp(20px,2.6vw,26px); color: var(--body); }
     @media (max-width: 640px) { :where(#gp-handstart) [data-hs-landing-category] { max-width: 12ch; text-align: right; } }
+    /* Hangs left of the tagline without moving it. Sized to fit the ~58px gap between
+       the tagline and the entry caption; centered with margin, not translate, because
+       the reveal pop animates translate. No room beside the line on phones. */
+    .hs-landing-line { position: relative; }
+    .hs-landing-mascot {
+      --hs-mascot-size: 60px;
+      position: absolute; right: 100%; top: 50%;
+      margin: -30px 10px 0 0;
+    }
+    @media (max-width: 640px) { .hs-landing-mascot { display: none; } }
   </style>
 </head>
 
@@ -541,7 +555,7 @@
           </a>
           <span data-hs-landing-category>Boutique Digital Marketing</span>
         </div>
-        <p data-hs-landing-support>Let's give your business a hand.</p>
+        <p data-hs-landing-support><span class="hs-landing-line"><span class="hs-mascot hs-landing-mascot" data-mascot="hero-bib-hand" data-state="reveal" data-eager></span>Let's give your business a hand.</span></p>
       </div>
       <span data-gp-fallback aria-hidden="true" style="font-family:'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif; font-weight:900;">HANDSTART</span>
       <div data-gp-caption>
@@ -564,9 +578,12 @@
     </div>
     <div style="position:relative; width:100%; max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start; text-align:left; gap:clamp(7px,1vw,11px); flex:1 1 auto; justify-content:flex-start;">
       <h1 class="hp-h1" style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,9vw,50px); line-height:1.03; letter-spacing:-0.015em; color:var(--cream); margin:0; align-self:stretch; width:100%; text-align:center;">
-        <span style="display:block;">Being online</span>
-        <span style="display:block;">&ne;</span>
-        <span style="display:block;">Being found</span>
+        <span class="hp-h1-lockup">
+          <span class="hs-mascot hp-h1-mascot" data-mascot="magnifier" data-state="reveal"></span>
+          <span style="display:block;">Being online</span>
+          <span style="display:block;">&ne;</span>
+          <span style="display:block;">Being found</span>
+        </span>
       </h1>
       <div class="hp-subcopy" style="display:flex; flex-direction:column; gap:2px; margin-top:28px; width:100%;">
         <span class="hp-subcopy-line" style="font-family:var(--serif); font-style:italic; font-size:clamp(20px,2.4vw,30px); color:var(--cream);">Get a headstart on your competition.</span>
@@ -649,9 +666,11 @@
           </div>
         </div>
         <div class="hs-steps-image">
-          <div class="hs-plate-stage" data-plate-stage>
-            <div class="hs-plate hs-plate-back" data-plate-back><img data-plate-img-back src="assets/steps/step-1-bearings.png" alt="Handstart step illustration"></div>
-            <div class="hs-plate hs-plate-front" data-plate-front><img data-plate-img-front src="assets/steps/step-1-bearings.png" alt="" aria-hidden="true"></div>
+          <div class="hs-step-mascots">
+            <figure class="hs-mascot is-active" data-mascot="compass" data-state="idle" data-step-mascot="0"></figure>
+            <figure class="hs-mascot" data-mascot="clipboard" data-state="idle" data-step-mascot="1"></figure>
+            <figure class="hs-mascot" data-mascot="stopwatch" data-state="idle" data-step-mascot="2"></figure>
+            <figure class="hs-mascot" data-mascot="baton" data-state="idle" data-step-mascot="3"></figure>
           </div>
         </div>
       </div>
@@ -748,7 +767,7 @@
 
       <div class="hs-paths">
         <div class="hs-path-card">
-          <img class="hs-path-icon" src="assets/steps/doodle-find-gaps.png" alt="" aria-hidden="true">
+          <figure class="hs-mascot hs-path-mascot" data-mascot="clipboard" data-state="reveal"></figure>
           <p class="hs-path-kicker">Not sure yet</p>
           <h3 class="hs-path-title">Find your gaps</h3>
           <p class="hs-path-body">Answer a few quick questions and we'll show you where your business is losing ground, and where the easiest wins are.</p>
@@ -770,7 +789,7 @@
           </a>
         </div>
         <div class="hs-path-card">
-          <img class="hs-path-icon" src="assets/steps/doodle-what-we-do.png" alt="" aria-hidden="true">
+          <figure class="hs-mascot hs-path-mascot" data-mascot="power-button" data-state="reveal"></figure>
           <p class="hs-path-kicker">Already know</p>
           <h3 class="hs-path-title">See what we do</h3>
           <p class="hs-path-body">Marketing, design, and the systems behind them. A straight look at the work itself, no assessment required.</p>
@@ -1617,61 +1636,14 @@
     var descEl = root.querySelector('[data-steps-desc]');
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Sketchbook plate: a two-layer crossfade kept in sync with the step change below.
-    // The back layer always instantly holds the correct current image and never animates;
-    // the front layer is a transient overlay of the outgoing image that fades away to
-    // reveal it. Keeping the "correct" layer static avoids any window where a stale or
-    // mid-transition image could show.
-    var STEP_IMAGES = ['assets/steps/step-1-bearings.png', 'assets/steps/step-2-direction.png', 'assets/steps/step-3-building.png', 'assets/steps/step-4-ahead.png'];
-    var STEP_TILTS = [-1.6, 1.2, -0.8, 1.5];
-    var FADE_DURATION = 600;
-    var plateBack = document.querySelector('[data-plate-back]');
-    var plateFront = document.querySelector('[data-plate-front]');
-    var plateImgBack = document.querySelector('[data-plate-img-back]');
-    var plateImgFront = document.querySelector('[data-plate-img-front]');
-    var platesReady = !!(plateBack && plateFront && plateImgBack && plateImgFront);
-    var preloadedPlates = platesReady ? STEP_IMAGES.map(function (src) {
-      var im = new Image();
-      im.src = src;
-      return im;
-    }) : [];
-    var plateAnimating = false;
+    // Step mascots are stacked; CSS crossfades whichever one is active.
+    var stepMascots = document.querySelectorAll('[data-step-mascot]');
 
-    function runPlateTransition(index, prevIndex) {
-      plateFront.classList.remove('is-fading');
-      plateFront.style.transition = 'none';
-      plateFront.classList.add('is-shown');
-      plateFront.style.setProperty('--tilt-front', STEP_TILTS[prevIndex] + 'deg');
-      plateImgFront.src = STEP_IMAGES[prevIndex];
-
-      plateBack.style.setProperty('--tilt-back', STEP_TILTS[index] + 'deg');
-      plateImgBack.src = STEP_IMAGES[index];
-
-      void plateFront.offsetWidth;
-      plateFront.style.transition = '';
-
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          plateFront.classList.remove('is-shown');
-          plateFront.classList.add('is-fading');
-        });
+    function updateStepMascot(index, prevIndex) {
+      if (index === prevIndex) return;
+      stepMascots.forEach(function (m) {
+        m.classList.toggle('is-active', parseInt(m.getAttribute('data-step-mascot'), 10) === index);
       });
-
-      window.setTimeout(function () { plateAnimating = false; }, FADE_DURATION);
-    }
-
-    function updatePlate(index, prevIndex) {
-      if (!platesReady || index === prevIndex) return;
-      if (reduceMotion) {
-        plateBack.style.setProperty('--tilt-back', STEP_TILTS[index] + 'deg');
-        plateImgBack.src = STEP_IMAGES[index];
-        return;
-      }
-      plateAnimating = true;
-      var ready = [preloadedPlates[prevIndex], preloadedPlates[index]].map(function (im) {
-        return im.decode ? im.decode().catch(function () {}) : Promise.resolve();
-      });
-      Promise.all(ready).then(function () { runPlateTransition(index, prevIndex); });
     }
 
     // Draw-on handwriting for each step's headline, using the same self-hosted Caveat
@@ -1812,7 +1784,7 @@
       activeIndex = index;
       startTime = null;
       renderContent(activeIndex, dir);
-      updatePlate(activeIndex, prevIndex);
+      updateStepMascot(activeIndex, prevIndex);
       setFills(activeIndex, 0);
       // restart the fill transition on the next frame so the 0% width above actually commits first
       requestAnimationFrame(function () {
@@ -1832,15 +1804,11 @@
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
         var index = parseInt(tab.getAttribute('data-step-index'), 10);
-        if (index === activeIndex || plateAnimating) return;
+        if (index === activeIndex) return;
         goTo(index, index > activeIndex ? 1 : -1);
       });
     });
 
-    if (platesReady) {
-      plateBack.style.setProperty('--tilt-back', STEP_TILTS[0] + 'deg');
-      plateFront.style.setProperty('--tilt-front', STEP_TILTS[0] + 'deg');
-    }
     renderContent(0, 0);
     setFills(0, 0);
     if (!reduceMotion) {

@@ -90,9 +90,10 @@ Rules for all future work:
   - `data-state`: `idle`, `hover` (held on, for demos), `reveal` (pops in on scroll), `static`. Use `idle` or `reveal` on real pages; real hover triggers the hover state.
   - `data-blob`: `terracotta`, `butter`, `sage`, `dusty-blue`, `tint`, `amber`, or `none`. Optional: every mascot has a default blob in `manifest.json`, and `data-blob` on the figure overrides it. There is no navy blob.
   - Optional: `data-pose`, `data-hover-pose`, `data-boil` (4 fps two-pose swap), `data-eager` (above the fold), `data-label` (alt text; otherwise decorative).
+- Inside phrasing-only elements (`<p>`, `<h1>` to `<h6>`, `<button>`) use `<span class="hs-mascot" ...>` instead of `<figure>`, which is invalid there. The loader and CSS work on any tag.
 - The component draws the blob and shadow. Never bake them into art.
 - Size with `--hs-mascot-size` (defaults to 100% width). `aspect-ratio` reserves the space before art arrives, so there is no layout shift.
 - Every page that shows a mascot loads `/assets/css/hs-mascots.css` and `/assets/js/hs-mascot-loader.js` (both homepage-safe). Pages that already load GSAP may also load `/assets/js/hs-mascots.js` after GSAP and ScrollTrigger. Never on the homepage.
+- Homepage slots: hero-bib-hand beside the portal tagline (desktop and tablet only, no room on phones), magnifier beside the "Being online / Being found" heading, compass / clipboard / stopwatch / baton crossfading with the four steps, clipboard and power-button on the two path cards. The ABCD panels deliberately have no mascots.
 - `assets/mascots/manifest.json` lists every mascot with its default `blob`. Finished art adds `type` and `poses` (optional `ratio`). An entry without a `type` shows its SVG placeholder from `assets/mascots/placeholder/` (regenerate with `python3 tools/make-mascot-placeholders.py`). Raw art goes in `incoming/`, checked art in `final/`.
 - `/mascot-test/` is a dev-only page showing every mascot in every state, in CSS mode and `?gsap` mode, plus demo raster characters from `mascot-test/demo/` (regenerate with `python3 tools/make-demo-raster.py`). It is not linked from the site.
-- Homepage ABCD row ("Why Work With Us"): when mascots are added to those panels, use blob overrides A `dusty-blue`, B `terracotta`, C `sage`, D `butter`.

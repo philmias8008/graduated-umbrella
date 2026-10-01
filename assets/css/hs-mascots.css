@@ -204,6 +204,9 @@
   animation: hs-mascot-pop .7s cubic-bezier(.34, 1.4, .64, 1) both;
 }
 
+/* a slot that failed to load keeps its reserved space but shows nothing */
+.hs-mascot[data-loaded="error"] > * { visibility: hidden; }
+
 /* static */
 .hs-mascot[data-state="static"],
 .hs-mascot[data-state="static"] * {
