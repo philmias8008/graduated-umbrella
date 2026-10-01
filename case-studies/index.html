@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/hs-mascots.css">
+<script src="/assets/js/hs-mascot-loader.js" defer></script>
 <style>
   :root {
     --navy: #1B2B4B; --amber: #C8873A; --amber-lt: #e0a558;
@@ -138,7 +140,28 @@
   .hs-close-in { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
   .hs-close h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(30px,4.4vw,50px); line-height: 1.08; letter-spacing: -0.01em; color: var(--cream); margin: 0; text-wrap: balance; }
   .hs-close p { font-family: var(--sans); font-size: clamp(16px,1.4vw,19px); line-height: 1.55; color: #c3ccda; margin: clamp(14px,1.8vw,20px) 0 clamp(28px,3.4vw,36px); max-width: 44ch; }
-  .hs-close-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .hs-close-btns { display: flex; flex-wrap: wrap; gap: 18px 28px; justify-content: center; align-items: center; }
+  .hs-close-link { font-family: var(--sans); font-size: 16px; font-weight: 600; color: var(--cream); text-decoration: none; border-bottom: 1.5px solid var(--amber); padding-bottom: 2px; transition: color 180ms ease; }
+  .hs-close-link:hover { color: var(--amber-lt); }
+
+  .hs-hero-in { flex-direction: row; align-items: center; justify-content: space-between; gap: clamp(20px,4vw,48px); }
+  .hs-hero-text { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+  .hs-hero-mascots { position: relative; flex: none; display: flex; align-items: flex-end; }
+  .hs-hero-podium { --hs-mascot-size: clamp(104px,12vw,128px); }
+  /* the foam finger leans in from the side, overlapping the podium like it is cheering it on */
+  .hs-hero-finger { --hs-mascot-size: clamp(80px,9vw,96px); margin-left: -22px; margin-bottom: -6px; rotate: 8deg; }
+  @media (max-width: 700px) {
+    .hs-hero-in { flex-direction: column-reverse; align-items: flex-start; gap: 8px; }
+    .hs-hero-podium { --hs-mascot-size: 88px; }
+    .hs-hero-finger { --hs-mascot-size: 68px; margin-left: -16px; }
+  }
+
+  .hs-status { margin-bottom: 10px; display: inline-flex; align-items: center; gap: 6px; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: var(--navy); border-radius: 999px; padding: 3px 10px 3px 8px; }
+  .hs-status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; box-sizing: border-box; }
+  .hs-status--live { background: var(--sage); }
+  .hs-status--live::before { background: var(--navy); }
+  .hs-status--progress { background: var(--butter); }
+  .hs-status--progress::before { border: 1.5px solid var(--navy); }
 
   /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
@@ -227,8 +250,14 @@
 
   <section class="hs-hero">
     <div class="hs-hero-in">
-      <h1>Latest work</h1>
-      <p>Real stories behind our work, showing how we solve problems and create business impact.</p>
+      <div class="hs-hero-text">
+        <h1>Latest work</h1>
+        <p>Real stories behind our work, showing how we solve problems and create business impact.</p>
+      </div>
+      <div class="hs-hero-mascots">
+        <figure class="hs-mascot hs-hero-podium" data-mascot="podium" data-state="idle"></figure>
+        <figure class="hs-mascot hs-hero-finger" data-mascot="foam-finger" data-state="idle"></figure>
+      </div>
     </div>
   </section>
 
@@ -240,6 +269,7 @@
         </div>
         <a href="/case-studies/greenlife-sembalun" class="hs-row-link">
           <div class="hs-row-text">
+            <span class="hs-status hs-status--live">Live</span>
             <h2 class="hs-row-title">Five stars in person, but a question mark online</h2>
             <div class="hs-row-meta">
               <span class="hs-row-tag">Rebrand &amp; Website Rebuild</span>
@@ -256,6 +286,7 @@
         </div>
         <a href="/case-studies/soon" class="hs-row-link">
           <div class="hs-row-text">
+            <span class="hs-status hs-status--progress">In progress</span>
             <h2 class="hs-row-title">Highly grossing motorcycle shop with zero online presence</h2>
             <div class="hs-row-meta">
               <span class="hs-row-tag">E-Commerce Website Build &amp; Social Media Build</span>
@@ -272,6 +303,7 @@
         </div>
         <a href="/case-studies/soon" class="hs-row-link">
           <div class="hs-row-text">
+            <span class="hs-status hs-status--progress">In progress</span>
             <h2 class="hs-row-title">Increase inbound clients and expansion of offerings</h2>
             <div class="hs-row-meta">
               <span class="hs-row-tag">Paid Ads &amp; In-House Marketing Program Launch</span>
@@ -289,11 +321,10 @@
   <section class="hs-close">
     <div class="hs-close-in">
       <h2>Similar problems for you? Or different?</h2>
-      <p>Take the 60-second check, or just tell me what's going on.</p>
+      <p>Tell me what's going on. I'll tell you straight whether I'm the right fit.</p>
       <div class="hs-close-btns">
-        <a class="hs-next-btn hs-next-btn--reverse" href="/#assessment"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Take the Check</span></span></span></a>
-        <a class="hs-next-btn hs-next-btn--reverse" href="/services"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">What We Do</span></span></span></a>
         <a class="hs-next-btn hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+        <a class="hs-close-link" href="/services">See what we do</a>
       </div>
     </div>
   </section>

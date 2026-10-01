@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/hs-mascots.css">
+<script src="/assets/js/hs-mascot-loader.js" defer></script>
 <style>
   :root {
     --navy: #1B2B4B; --amber: #C8873A; --amber-lt: #e0a558;
@@ -130,6 +132,14 @@
   /* results */
   .hs-results { margin: 0; border-top: 1px solid var(--hairline); padding-top: clamp(24px,3vw,34px); }
   .hs-results-title { font-family: var(--serif); font-weight: 600; font-size: clamp(24px,2.8vw,34px); line-height: 1.12; letter-spacing: -0.01em; color: var(--navy); }
+  .hs-results-head { display: flex; align-items: center; gap: clamp(12px,1.6vw,18px); margin-bottom: clamp(22px,2.6vw,30px); }
+  .hs-results-head .hs-results-sub { margin-bottom: 0; }
+  .hs-results-mascot { --hs-mascot-size: clamp(72px,8vw,92px); flex: none; }
+  /* placeholders stay loud on purpose so they get filled before launch */
+  .hs-todo-list { margin: clamp(20px,2.4vw,28px) 0 0; display: flex; flex-direction: column; gap: 8px; }
+  .hs-todo { display: flex; flex-wrap: wrap; gap: 4px 10px; border: 1.5px dashed var(--amber); border-radius: 8px; padding: 8px 12px; background: rgba(200,135,58,0.06); }
+  .hs-todo dt { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
+  .hs-todo dd { margin: 0; font-family: var(--sans); font-size: 14px; color: var(--navy); }
   .hs-results-sub { font-family: var(--sans); font-size: 14px; font-weight: 400; line-height: 1.5; color: #8b8578; margin-top: 6px; margin-bottom: clamp(22px,2.6vw,30px); }
   .hs-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px,1fr)); gap: clamp(20px,2.6vw,36px); max-width: 900px; }
   .hs-stat { display: flex; flex-direction: column; gap: 6px; padding-top: 20px; border-top: 2px solid var(--navy); }
@@ -291,9 +301,12 @@
       </div>
 
       <figure class="hs-results">
-        <figcaption>
-          <div class="hs-results-title">Results</div>
-          <div class="hs-results-sub">Old site vs. new site, weekly averages</div>
+        <figcaption class="hs-results-head">
+          <figure class="hs-mascot hs-results-mascot" data-mascot="bar-chart" data-state="reveal"></figure>
+          <div>
+            <div class="hs-results-title">Results</div>
+            <div class="hs-results-sub">Old site vs. new site, weekly averages</div>
+          </div>
         </figcaption>
         <div class="hs-stats">
         <div class="hs-stat">
@@ -309,12 +322,16 @@
           <div class="hs-stat-bar"><div class="hs-stat-bar-old" style="width:42.9%;"></div><div class="hs-stat-bar-new"></div></div>
         </div>
         <div class="hs-stat">
-          <div class="hs-stat-badge" data-decode="+512%"><span class="tx-txt"></span></div>
+          <div class="hs-stat-badge" data-decode="+500%"><span class="tx-txt"></span></div>
           <div class="hs-stat-name">Guest reviews</div>
           <div class="hs-stat-nums"><span class="old">0.5</span><span class="arrow">&rarr;</span><span class="new">3.0</span><span class="unit">per week</span></div>
           <div class="hs-stat-bar"><div class="hs-stat-bar-old" style="width:16.7%;"></div><div class="hs-stat-bar-new"></div></div>
         </div>
         </div>
+        <dl class="hs-todo-list">
+          <div class="hs-todo" data-todo="timeframe"><dt>Timeframe</dt><dd>TODO timeframe: date range for "old site" and "since re-launch"</dd></div>
+          <div class="hs-todo" data-todo="source"><dt>Source</dt><dd>TODO source: where these numbers come from (e.g. Google Analytics, booking platform)</dd></div>
+        </dl>
       </figure>
 
       <div class="hs-diff-row">
@@ -342,7 +359,7 @@
       <div class="hs-diff-row">
         <div class="hs-diff-text">
           <div class="hs-rule"><span class="hs-rule-line"></span><span class="hs-rule-tab"></span></div>
-          <p class="hs-p">Since re-launch, weekly metrics have increased: unique site visitors by 188%, total guest volume by 133%, and google reviews by 512% (compared to average weekly metrics during the old site and system). Both metrics as a result from the first and second themes in What We Did, and the decision in the third theme supported by no loss in demand or traffic.</p>
+          <p class="hs-p">Since re-launch, weekly metrics have increased: unique site visitors by 188%, total guest volume by 133%, and google reviews by 500% (compared to average weekly metrics during the old site and system). Both metrics as a result from the first and second themes in What We Did, and the decision in the third theme supported by no loss in demand or traffic.</p>
           <p class="hs-p">All of this now driven by a trustworthy and visually cleaned-up website with clear paths to conversion and information flow for prospective guests. On the back-end, stronger SEO best practices to be found by Google and by AI and LLMs. The goal was not to add flashy animations or excessive content, rather to point consideration stage guests quickly to plentiful and reliable information, supported by CTAs. The place that everyone loved and loves now looks the part, digitally. I look forward to working with Roy now that his "base" is built, as we explore his long term expansion goals.</p>
         </div>
         <div class="hs-diff-img">
