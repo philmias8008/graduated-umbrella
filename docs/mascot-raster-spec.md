@@ -51,10 +51,14 @@ Every mascot already has an entry in `assets/mascots/manifest.json` with its def
 
 ## Promoting art
 
-1. Drop the cleaned exports in `assets/mascots/incoming/`.
-2. Check them against this spec: transparent, ground line at 84%, consistent framing across poses, 1x and @2x both present, file names match.
-3. Move them to `assets/mascots/final/`.
-4. Add `type` and `poses` to the mascot's existing manifest entry.
-5. Open `/mascot-test/` and check the mascot in CSS mode and GSAP mode. Its badge should read "final raster". Add the id to the test page's raster section (or temporarily to `DEMO_IDS`) to see every pose, blob color and boil.
+`tools/prepare-mascots.py` does the framing and export, so raw art does not need to be sized by hand.
+
+1. Drop raw images in `assets/mascots/incoming/`, named `{id}-{pose}.png` (or .jpg / .webp), e.g. `magnifier-idle.png`, `magnifier-happy.png`, `magnifier-idle-b.png`. Any size, either transparent or on a flat plain background. Upscale in Midjourney first so the character is at least about 1000px tall; smaller art gets enlarged and the @2x file looks soft.
+2. Run `python3 tools/prepare-mascots.py` (add `--only magnifier` for one mascot, `--dry-run` to preview without writing). It removes a flat background (only background connected to the image edge, so white eyes survive), scales all poses of a mascot together, stands them on the 84% ground line centered on the feet, writes the 600px and 1200px WebPs to `final/` and sets `type` and `poses` in the manifest.
+3. Read its warnings: background not flat, character touching the image edge, poses drawn at very different sizes (rerun with `--fit-each` if the character really is the same size), enlarged art.
+4. Look at the preview sheet in `assets/mascots/incoming/_preview/{id}.png`: every pose should share the same size, feet and center line.
+5. Open `/mascot-test/` and check the mascot in CSS mode and GSAP mode. Its badge should read "final raster".
+
+Raw files and previews are gitignored; only `final/` and the manifest get committed. If a background is busy or the character is cut out badly, remove the background in an editor first and drop in a transparent PNG; the script then keeps the transparency as it is.
 
 An id in the manifest whose idle pose fails to load falls back to its placeholder with a console warning. A missing extra pose only disables the hover swap or boil that needed it.

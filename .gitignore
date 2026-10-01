@@ -1,2 +1,5 @@
 .DS_Store
 Handstart Digital - Services-4.html
+# raw mascot art and prep previews stay local; only processed files in final/ are committed
+assets/mascots/incoming/*
+!assets/mascots/incoming/.gitkeep
