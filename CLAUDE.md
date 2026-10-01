@@ -2,6 +2,8 @@
 
 Static marketing site for Handstart Digital, deployed via Netlify. Plain HTML/CSS/JS, no build step, no framework.
 
+**Current status, open items and what to verify: read `docs/handoff.md` at the start of every session.** Refresh it at the end of a session when things change.
+
 ## Branch safety
 
 - **Never touch `main` without explicit confirmation first.** All work happens on `ported-pages` (or another feature branch); commit and push there.
