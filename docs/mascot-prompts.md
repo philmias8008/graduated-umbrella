@@ -56,6 +56,13 @@ Adjust if needed: outline still black, lower `--sw` to 30. Results copying the G
 - **Upscaled #2 (Subtle) review:** five marks on the back (three dashes, a crease, a dash into the cuff) and a messy overlapping join where the thumb meets the first finger. One Vary Region selection over the back of the hand and that join: `white cartoon glove, completely plain smooth back of the hand, no lines, no creases, no marks, clean single outline where the thumb meets the finger --no stitching, creases, wrinkles, face, lines`. Cleanup also handles the off-white speckled background and the near-black outline.
 - Once #2 is clean it is the locked glove and the `--oref` for the hero and the jump-start poses.
 
+### Glove, Vary Region results and cleanup (2026-10-07)
+
+- Vary Region did not remove the back-of-hand dashes in any of the four results; Midjourney keeps adding them. #13 and #14 also have a notched thumb joint.
+- **Candidate glove: #12.** Cleanest thumb joint, plus small line breaks where the hand meets the cuff.
+- Cleaned with `tools/clean-line-art.py`: the three dashes removed, outline recolored to ink, background pure white. The thumb crease is kept because it is structure, not stitching.
+- Files (local, gitignored): `assets/mascots/incoming/glove-idle.png` (cleaned), originals in `assets/mascots/incoming/_refs/glove-vary-11..14.png`.
+
 ## 2. Hero (hero-bib-hand)
 
 The site's lead mascot: a white glove character with a face on the back of the hand, standing on two fingers like legs, mid-sprint, wearing a racing bib with a 1. It sits beside "Let's give your business a hand" on the homepage.
