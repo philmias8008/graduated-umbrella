@@ -46,6 +46,15 @@ flat 2D vector-style cartoon illustration with a subtle 1930s rubber-hose influe
 
 Adjust if needed: outline still black, lower `--sw` to 30. Results copying the Gemini glove, raise `--ow` or drop it. Wrong pose, move the pose phrase to the very front.
 
+### Glove, round 2 results (2026-10-07)
+
+- Pose fixed (open waves), rubber-hose bounce kept, flat edge shade and golden cuffs good.
+- Still off: outline near-black instead of ink-blue; marks on the back of the hand read as Mickey stitches (#2, #4) or accidental faces (#3, #1); most have four fingers plus a thumb.
+- **Pick: #2** (strongest silhouette, cleanest cuff). Fix it instead of rerolling: upscale, then Vary Region on the back of the hand only with `white cartoon glove, completely plain smooth back of the hand, no lines, no creases, no marks --no stitching, creases, wrinkles, face, lines`.
+- **Outline color is fixed in cleanup**, not in prompts: recolor near-black outline pixels to ink `#1D3F66`.
+- **Spec change: four fingers plus a thumb.** Further from Mickey's three-finger glove and better for grip poses. Replace "a thumb and three fingers" with "four fingers and a thumb" in every later prompt.
+- Once #2 is clean it is the locked glove and the `--oref` for the hero and the jump-start poses.
+
 ## 2. Hero (hero-bib-hand)
 
 The site's lead mascot: a white glove character with a face on the back of the hand, standing on two fingers like legs, mid-sprint, wearing a racing bib with a 1. It sits beside "Let's give your business a hand" on the homepage.
