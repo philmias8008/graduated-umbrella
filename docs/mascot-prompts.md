@@ -59,9 +59,9 @@ Adjust if needed: outline still black, lower `--sw` to 30. Results copying the G
 ### Glove, Vary Region results and cleanup (2026-10-07)
 
 - Vary Region did not remove the back-of-hand dashes in any of the four results; Midjourney keeps adding them. #13 and #14 also have a notched thumb joint.
-- **Candidate glove: #12.** Cleanest thumb joint, plus small line breaks where the hand meets the cuff.
+- **Chosen glove: #11** (Aidan's pick over #12). Same character, with a straighter thumb joint and a closed outline at the cuff.
 - Cleaned with `tools/clean-line-art.py`: the three dashes removed, outline recolored to ink, background pure white. The thumb crease is kept because it is structure, not stitching.
-- Files (local, gitignored): `assets/mascots/incoming/glove-idle.png` (cleaned), originals in `assets/mascots/incoming/_refs/glove-vary-11..14.png`.
+- Files (local, gitignored): `assets/mascots/incoming/glove-idle.png` (cleaned #11), the cleaned #12 as `_refs/glove-12-clean.png`, originals in `_refs/glove-vary-11..14.png`.
 
 ## 2. Hero (hero-bib-hand)
 
