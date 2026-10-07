@@ -6,7 +6,7 @@ Every prompt that produced approved art goes here, with the date and the image i
 
 - **Direction A, modernized:** rubber-hose energy (bouncy rounded shapes, bendy limbs, a classic four-digit cartoon glove) drawn as flat vector: even outline, flat fills, one shade, no texture or grain. Keep clear of Mickey, Cuphead, Pikachu and the Jamm characters.
 - **Colors are Golden hour** (see `CLAUDE.md`): outline in ink `#1D3F66`, cuff in golden `#E3A23B`, shade in a soft blue-grey. Midjourney drifts on exact colors, so correct them in cleanup.
-- **Blob set:** Deeper earth: terracotta `#D2694A`, olive `#7E9F6B`, plum `#9C7AB0`, clay pink `#CF7A86`. Replace `[BIB COLOR]` with one of these once the bib color is picked.
+- **Blob set:** Deeper earth: terracotta `#D2694A`, olive `#7E9F6B`, plum `#9C7AB0`, clay pink `#CF7A86`. The hero's bib is terracotta.
 - **The jump-start hands (motif 5b) are the white glove**, the same character as the hero, not the emoji-yellow hands in the current test code.
 - **References:** `[JAMM URLS]` is the two Jamm (jamm.co) mascots, the jam jar and the toast. Local copies (gitignored, never deployed) are in `assets/mascots/incoming/_refs/`. Upload both to Midjourney and use them as `--sref`, for linework and shading only. What they bring:
   - an even, medium-weight outline in a dark plum-navy rather than black, which sits close to our ink
@@ -36,7 +36,7 @@ flat 2D vector-style cartoon illustration with a subtle 1930s rubber-hose influe
 The site's lead mascot: a white glove character with a face on the back of the hand, standing on two fingers like legs, mid-sprint, wearing a racing bib with a 1. It sits beside "Let's give your business a hand" on the homepage.
 
 ```
-flat 2D vector-style cartoon illustration with a subtle 1930s rubber-hose influence, a cute white cartoon glove hand character with a friendly happy face on the back of the hand, standing upright on two of its fingers like legs and mid-sprint, leaning forward, wearing a small plain [BIB COLOR] racing bib with a bold number 1, golden cuff band, white eyes with large deep ink-blue pupils and a small white crescent highlight, thick even deep ink-blue outline with rounded corners, flat solid fills, one flat soft blue-grey shade, full body, centered, plain pure white background --ar 1:1 --v 7 --oref [APPROVED GLOVE URL] --ow 150 --sref [JAMM URLS] --no shadow, ground, gradient, 3d, texture
+flat 2D vector-style cartoon illustration with a subtle 1930s rubber-hose influence, a cute white cartoon glove hand character with a friendly happy face on the back of the hand, standing upright on two of its fingers like legs and mid-sprint, leaning forward, wearing a small plain terracotta racing bib with a bold number 1, golden cuff band, white eyes with large deep ink-blue pupils and a small white crescent highlight, thick even deep ink-blue outline with rounded corners, flat solid fills, one flat soft blue-grey shade, full body, centered, plain pure white background --ar 1:1 --v 7 --oref [APPROVED GLOVE URL] --ow 150 --sref [JAMM URLS] --no shadow, ground, gradient, 3d, texture
 ```
 
 ## 3. Jump-start hands (motif 5b)

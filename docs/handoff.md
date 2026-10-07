@@ -112,7 +112,7 @@
 - **Blob set:** Deeper earth with clay pink (terracotta, olive, plum, clay pink). Hex values in `CLAUDE.md`.
 - **Mascot style:** Direction A (rubber-hose), modernized: flat fills, one shade, even outline, no texture.
 - **Prompts:** `docs/mascot-prompts.md`. Jamm style references (jam jar and toast) are saved locally in `assets/mascots/incoming/_refs/` (gitignored).
-- **Next:** set the bib color, then run Midjourney round 1 (glove, hero, jump-start poses).
+- **Next:** run Midjourney round 1 (bib is terracotta) (glove, hero, jump-start poses).
 - **Verify after deploy:** `curl -sI https://<site>/docs/handoff.md` and `/CLAUDE.md` should return 404 (hidden by `_redirects`). There is no custom 404 page, so Netlify shows its default one.
 
 ## Open items / verify after the next Netlify deploy
