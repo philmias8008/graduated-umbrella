@@ -2,7 +2,7 @@
 
 ## Basics
 - **Repo:** `~/Documents/Sites/graduated-umbrella`. A static site (plain HTML/CSS/JS, no build step) deployed on Netlify.
-- **Branch:** all work happens on `ported-pages`, which is in sync with origin and 40 commits ahead of `main`. **Never touch `main` without asking.**
+- **Branch:** all work happens on `ported-pages`, which is in sync with origin and 49 commits ahead of `main`. **Never touch `main` without asking.**
 - **Read `CLAUDE.md` first.** It's in the repo, so a new Claude Code chat loads it automatically. It now holds almost everything below: brand tokens, accent tokens, page structure, mascot system, homepage, Services, About and Case Studies slots, the Netlify Forms fields, the noindex rule and how the redirect works.
 - **Git identity:** Aidan Paggao <philmias8008@gmail.com>.
 - **Contact details used on the site:**
@@ -104,16 +104,38 @@
 - **Nav:** Services, About, Case Studies, plus the Contact button. The Difference is gone, and `/the-difference` redirects 301 to `/services#real-work`.
 - **Netlify files:** `_headers` (cache rules plus the thank-you noindex) and `_redirects`.
 
-## Redesign phase (started 2026-10-07)
-- **Palette:** Golden hour is decided; see the "Palette decision" section in `CLAUDE.md`. The site-wide rollout is parked until much later.
-- **Test pages** (uncommitted when this was written): `/palette-test/` and `/motif-test/`.
-- **Hero motion direction:** jump start (motif 5b) at the landing, then the portal dive, coming out into the cloud sky with the hero content.
-- **5b hands:** currently code-drawn emoji-yellow hands with front and back grip layers. Decided: they become the white glove mascot art (the same character as hero-bib-hand) once the Midjourney poses exist.
-- **Blob set:** Deeper earth with clay pink (terracotta, olive, plum, clay pink). Hex values in `CLAUDE.md`.
-- **Mascot style:** Direction A (rubber-hose), modernized: flat fills, one shade, even outline, no texture.
-- **Prompts:** `docs/mascot-prompts.md`. Jamm style references (jam jar and toast) are saved locally in `assets/mascots/incoming/_refs/` (gitignored).
-- **Next:** run Midjourney round 1 (glove, hero with a terracotta bib, jump-start poses).
-- **Verify after deploy:** `curl -sI https://<site>/docs/handoff.md` and `/CLAUDE.md` should return 404 (hidden by `_redirects`). There is no custom 404 page, so Netlify shows its default one.
+## Redesign phase (started 2026-10-07, paused mid mascot round 1)
+
+**Pick up here:** run the hero prompt in Midjourney with the locked glove as `--oref`, then critique the batch.
+
+### Decided
+- **Palette:** Golden hour (ink `#1D3F66`, sky `#7FB5E3`, golden `#E3A23B`, cream unchanged). Full tokens and contrast rules in the "Palette decision" section of `CLAUDE.md`. The site-wide rollout is parked until much later; live pages stay navy and amber.
+- **Blob set:** Deeper earth with clay pink: terracotta `#D2694A`, olive `#7E9F6B`, plum `#9C7AB0`, clay pink `#CF7A86`.
+- **Hero motion direction:** jump start (motif 5b) on HANDSTART at the landing, then the portal dive through a letter, coming out into the golden-hour cloud sky (WebGL shader from `/palette-test/`) where the hero content lives.
+- **5b hands:** become the white glove mascot art once the poses exist (currently code-drawn emoji-yellow hands with back and front grip layers, so the letter sits between palm and fingers).
+- **Mascot style:** Direction A, rubber-hose modernized: flat fills, one flat edge shade, even outline, no texture. Jamm (jam jar, toast) as style reference.
+- **Hero (hero-bib-hand):** white cartoon glove, thumb and three fingers, face on the back of the hand, standing on two fingers mid-sprint, terracotta racing bib with a 1, golden cuff.
+
+### Mascot round 1 progress
+- **Glove: locked.** Midjourney #11 from Vary Region, cleaned with `tools/clean-line-art.py` (stitch dashes removed, outline recolored to ink, background whitened). File: `assets/mascots/incoming/glove-idle.png` (local only, gitignored).
+- **Hero:** next. Prompt is in `docs/mascot-prompts.md`, section 2.
+- **Jump-start poses** (reach, half, grip with green bar, release): after the hero. Section 3 of the prompts doc.
+- **Lessons:** Midjourney turns the Jamm `--sref` outline black and keeps adding Mickey-style stitch dashes on the back of the glove. Fix both in cleanup with the tool, not with more rerolls. Use Subtle upscale, not Creative.
+
+### Where things are
+- `docs/mascot-prompts.md`: every prompt, round results and decisions. Add each approved image there.
+- `tools/clean-line-art.py`: run on every raw Midjourney image before `tools/prepare-mascots.py`.
+- `assets/mascots/incoming/_refs/` (local only): Jamm references, Gemini glove, Vary Region originals, cleaned #12 backup.
+- Test pages (noindex, unlinked, committed): `/palette-test/` (palettes A, B, C, cloud shader, blob sets) and `/motif-test/` (1 fingerprint, 4 on your marks, 5 jump start, 5b jump start with hands).
+- Preview site: https://deploy-preview-1--handstartdigital.netlify.app (palette page: `/palette-test/?p=c`).
+- `_redirects` hides `/CLAUDE.md`, `/README.md`, `/.gitignore`, `/docs/*` and `/tools/*` (404, verified on the preview).
+
+### Later, in order
+1. Hero art, then the jump-start poses, then the remaining mascots with the hero as `--sref`.
+2. Swap the 5b code hands for the glove art (images per pose, mirrored for the right hand).
+3. Logo exploration in Midjourney, rebuilt as SVG.
+4. Golden hour rollout across the site, blob remap in `manifest.json`, the cloud sky after the portal dive.
+5. Copy rework, page by page.
 
 ## Deploy checks on the preview (2026-10-07)
 Preview URL: https://deploy-preview-1--handstartdigital.netlify.app (Netlify adds `X-Robots-Tag: noindex` to every deploy preview).
