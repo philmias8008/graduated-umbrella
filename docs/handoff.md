@@ -112,8 +112,14 @@
 - **Blob set:** Deeper earth with clay pink (terracotta, olive, plum, clay pink). Hex values in `CLAUDE.md`.
 - **Mascot style:** Direction A (rubber-hose), modernized: flat fills, one shade, even outline, no texture.
 - **Prompts:** `docs/mascot-prompts.md`. Jamm style references (jam jar and toast) are saved locally in `assets/mascots/incoming/_refs/` (gitignored).
-- **Next:** run Midjourney round 1 (bib is terracotta) (glove, hero, jump-start poses).
+- **Next:** run Midjourney round 1 (glove, hero with a terracotta bib, jump-start poses).
 - **Verify after deploy:** `curl -sI https://<site>/docs/handoff.md` and `/CLAUDE.md` should return 404 (hidden by `_redirects`). There is no custom 404 page, so Netlify shows its default one.
+
+## Deploy checks on the preview (2026-10-07)
+Preview URL: https://deploy-preview-1--handstartdigital.netlify.app (Netlify adds `X-Robots-Tag: noindex` to every deploy preview).
+- Passed: `/the-difference` returns a 301 to `/services#real-work` with the fragment kept. `_headers` is applied (fonts get the immutable rule, `hs-motion.js` gets must-revalidate). `/CLAUDE.md`, `/docs/*` and `/tools/*` return 404.
+- Can't be confirmed on a preview: the thank-you `X-Robots-Tag`, because the preview adds that header to every page. Check it on the production URL once something deploys there.
+- Still manual: the Netlify Forms test submission and the scroll tests.
 
 ## Open items / verify after the next Netlify deploy
 1. **Redirect:** `curl -sI https://<site>/the-difference` should show a 301 to `/services#real-work`. If the `#real-work` is dropped, switch the destination to `/services`.
