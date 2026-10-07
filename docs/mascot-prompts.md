@@ -52,7 +52,8 @@ Adjust if needed: outline still black, lower `--sw` to 30. Results copying the G
 - Still off: outline near-black instead of ink-blue; marks on the back of the hand read as Mickey stitches (#2, #4) or accidental faces (#3, #1); most have four fingers plus a thumb.
 - **Pick: #2** (strongest silhouette, cleanest cuff). Fix it instead of rerolling: upscale, then Vary Region on the back of the hand only with `white cartoon glove, completely plain smooth back of the hand, no lines, no creases, no marks --no stitching, creases, wrinkles, face, lines`.
 - **Outline color is fixed in cleanup**, not in prompts: recolor near-black outline pixels to ink `#1D3F66`.
-- **Spec change: four fingers plus a thumb.** Further from Mickey's three-finger glove and better for grip poses. Replace "a thumb and three fingers" with "four fingers and a thumb" in every later prompt.
+- **Finger count stays a thumb and three fingers.** (An earlier note here switched to four fingers based on a misread thumbnail; the upscaled #2 has a thumb and three fingers.) The Mickey read comes mainly from back stitching and a white rolled cuff, which the plain back and golden cuff remove.
+- **Upscaled #2 (Subtle) review:** five marks on the back (three dashes, a crease, a dash into the cuff) and a messy overlapping join where the thumb meets the first finger. One Vary Region selection over the back of the hand and that join: `white cartoon glove, completely plain smooth back of the hand, no lines, no creases, no marks, clean single outline where the thumb meets the finger --no stitching, creases, wrinkles, face, lines`. Cleanup also handles the off-white speckled background and the near-black outline.
 - Once #2 is clean it is the locked glove and the `--oref` for the hero and the jump-start poses.
 
 ## 2. Hero (hero-bib-hand)
