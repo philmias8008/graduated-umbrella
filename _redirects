@@ -1,3 +1,10 @@
 # The Difference was folded into Services as the "Real work vs template work" section.
 # One rule covers /the-difference and /the-difference/ (Netlify normalizes trailing slashes).
 /the-difference  /services#real-work  301
+
+# Internal notes and tooling ship with the repo because there is no build step. Keep them off the public site.
+/CLAUDE.md   /404  404!
+/README.md   /404  404!
+/.gitignore  /404  404!
+/docs/*      /404  404!
+/tools/*     /404  404!

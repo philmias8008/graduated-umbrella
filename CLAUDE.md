@@ -9,7 +9,28 @@ Static marketing site for Handstart Digital, deployed via Netlify. Plain HTML/CS
 - **Never touch `main` without explicit confirmation first.** All work happens on `ported-pages` (or another feature branch); commit and push there.
 - Before any destructive git operation (reset, checkout that discards changes, force-push), run `git status` and confirm with the user.
 
-## Brand colors and fonts
+## Palette decision: Golden hour (decided 2026-10-07, NOT rolled out yet)
+
+The navy and amber palette below is still what every live page uses. It is being replaced by the Golden hour palette, chosen on `/palette-test/` (palette C). The site-wide rollout is deliberately parked until much later, after the blob colors and mascots are settled. Until then: build new mascot art, prompts and test pages on Golden hour, and leave live pages on navy and amber unless asked.
+
+```css
+--ink: #1D3F66;         /* replaces navy for text, headings, button faces, footer */
+--sky: #7FB5E3;         /* replaces navy as the surface color: header, bands, hero */
+--sky-top: #3F7DC0;     /* cloud shader gradient, top */
+--sky-bottom: #9DCAEE;  /* cloud shader gradient, bottom */
+--accent: #E3A23B;      /* golden, replaces amber */
+--accent-lt: #F0C46E;   /* proposed light golden, replaces amber-lt */
+--body: #4B5868;        /* paragraph text on cream */
+--cream: #F7F4EE;       /* unchanged; also the cloud color */
+```
+
+- Ink on cream 9.8:1, body on cream 6.6:1, ink on sky 4.9:1, ink on golden 4.9:1. All pass for body text.
+- Golden is never text on cream (2.0:1). Use it for fills, underlines, hovers and glows. Links are ink with a golden underline.
+- In the cloud section, keep paragraph text in the lower, lighter part of the sky or on a cream card. The deep top (`--sky-top`) only supports large headings.
+- Planned motion: the HANDSTART landing, then the portal dive through a letter, coming out into the golden-hour cloud sky (`/palette-test/` shader) where the hero content lives. The cloud shader's sun glow takes its tint from `--accent`.
+- New blob set, chosen with the palette (also parked for the rollout): terracotta `#D2694A`, olive `#7E9F6B`, plum `#9C7AB0`, clay pink `#CF7A86`. The current blob colors (terracotta `#E08E72`, sage, dusty-blue, butter) nearly disappear against sky and golden. `dusty-blue` and `butter` go away; `manifest.json` defaults and `data-blob` values get remapped during the rollout.
+
+## Brand colors and fonts (current live palette)
 
 Defined as CSS custom properties in each page's own `:root` block (no shared stylesheet, repeated per file):
 
@@ -105,4 +126,6 @@ Rules for all future work:
 - "Build your handstart" picks are saved to sessionStorage `hs_selected_services` as `[{id, label, group}]`, passed to the contact link as `?services=` (comma-separated slugs, since some labels contain commas), and sent to Cal.com as `notes`. The contact page prefills its message from `?services=`.
 - `assets/mascots/manifest.json` lists every mascot with its default `blob`. Finished art adds `type` and `poses` (optional `ratio`). An entry without a `type` shows its SVG placeholder from `assets/mascots/placeholder/` (regenerate with `python3 tools/make-mascot-placeholders.py`). Raw art goes in `incoming/`, checked art in `final/`.
 - Final raster art goes through `python3 tools/prepare-mascots.py`: raw `{id}-{pose}.png` files in `assets/mascots/incoming/` (gitignored) come out as framed 600/1200px WebPs in `final/` with the manifest updated. Steps and warnings are in `docs/mascot-raster-spec.md`.
+- `/palette-test/` (palettes, cloud shader, blob options) and `/motif-test/` (fingerprint, on your marks, jump start, jump start with hands) are dev-only ideation pages, noindex and unlinked. Keep them for reference during the redesign.
+- Mascot prompts for Midjourney live in `docs/mascot-prompts.md`. Add every approved prompt there with its result.
 - `/mascot-test/` is a dev-only page showing every mascot in every state, in CSS mode and `?gsap` mode, plus demo raster characters from `mascot-test/demo/` (regenerate with `python3 tools/make-demo-raster.py`). It is not linked from the site.

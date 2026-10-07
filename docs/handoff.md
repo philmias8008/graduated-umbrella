@@ -104,6 +104,17 @@
 - **Nav:** Services, About, Case Studies, plus the Contact button. The Difference is gone, and `/the-difference` redirects 301 to `/services#real-work`.
 - **Netlify files:** `_headers` (cache rules plus the thank-you noindex) and `_redirects`.
 
+## Redesign phase (started 2026-10-07)
+- **Palette:** Golden hour is decided; see the "Palette decision" section in `CLAUDE.md`. The site-wide rollout is parked until much later.
+- **Test pages** (uncommitted when this was written): `/palette-test/` and `/motif-test/`.
+- **Hero motion direction:** jump start (motif 5b) at the landing, then the portal dive, coming out into the cloud sky with the hero content.
+- **5b hands:** currently code-drawn emoji-yellow hands with front and back grip layers. Decided: they become the white glove mascot art (the same character as hero-bib-hand) once the Midjourney poses exist.
+- **Blob set:** Deeper earth with clay pink (terracotta, olive, plum, clay pink). Hex values in `CLAUDE.md`.
+- **Mascot style:** Direction A (rubber-hose), modernized: flat fills, one shade, even outline, no texture.
+- **Prompts:** `docs/mascot-prompts.md`. Jamm style references (jam jar and toast) are saved locally in `assets/mascots/incoming/_refs/` (gitignored).
+- **Next:** set the bib color, then run Midjourney round 1 (glove, hero, jump-start poses).
+- **Verify after deploy:** `curl -sI https://<site>/docs/handoff.md` and `/CLAUDE.md` should return 404 (hidden by `_redirects`). There is no custom 404 page, so Netlify shows its default one.
+
 ## Open items / verify after the next Netlify deploy
 1. **Redirect:** `curl -sI https://<site>/the-difference` should show a 301 to `/services#real-work`. If the `#real-work` is dropped, switch the destination to `/services`.
 2. **Cache headers:** `curl -sI https://<site>/assets/js/hs-motion.js` should show the always-revalidate rule.
