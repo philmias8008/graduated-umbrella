@@ -31,6 +31,21 @@ Every prompt that produced approved art goes here, with the date and the image i
 flat 2D vector-style cartoon illustration with a subtle 1930s rubber-hose influence, a single white cartoon glove hand raised in a friendly ready pose, classic cartoon glove with a thumb and three fingers, bouncy rounded shapes, small golden cuff band at the wrist, thick even deep ink-blue outline with rounded corners, flat solid fills, one flat soft blue-grey shade, bold and simple, readable at small size, no face, centered, plain pure white background --ar 1:1 --v 7 --sref [JAMM URLS] --no shadow, ground, gradient, 3d, text, texture
 ```
 
+### Glove, round 1 results (2026-10-07)
+
+- **With Jamm `--sref`:** best linework (chunky, bouncy, confident), but every image came out as a peace sign, the outline went black instead of ink-blue, and two had Mickey's three stitch lines on the back (one had a cuff button). Fails the Mickey check.
+- **Without `--sref`:** right colors, but stock-clipart feel: thin, timid lines, soft near-gradient shading, scattered poses.
+- **Gemini alternative:** closest to the spec (ink-blue line, flat white fill, one flat edge shade, golden cuff, thumb plus three fingers, no Mickey cues) but generic and emoji-like, and it shows the palm, not the back of the hand. Saved locally as `assets/mascots/incoming/_refs/gemini-glove.png`.
+- **Decision:** not locked. Round 2 combines them: Gemini glove as `--oref` for shape, Jamm as `--sref` at reduced weight for line quality.
+
+### Glove, round 2
+
+```
+flat 2D vector-style cartoon illustration with a subtle 1930s rubber-hose influence, a single white cartoon glove hand, open hand raised with all fingers up and slightly spread in a friendly wave, back of the hand facing the viewer, classic cartoon glove with a thumb and three fingers, plain smooth glove with no stitching lines and no buttons, bouncy rounded shapes, short golden cuff band at the wrist, thick even deep ink-blue outline with rounded corners, flat solid white fill, one flat blue-grey shade along one edge, bold and simple, readable at small size, no face, centered, plain pure white background --ar 1:1 --v 7 --oref [GEMINI GLOVE URL] --ow 60 --sref [JAMM URLS] --sw 60 --no shadow, ground, gradient, 3d, text, texture, peace sign, stitching, button, black outline
+```
+
+Adjust if needed: outline still black, lower `--sw` to 30. Results copying the Gemini glove, raise `--ow` or drop it. Wrong pose, move the pose phrase to the very front.
+
 ## 2. Hero (hero-bib-hand)
 
 The site's lead mascot: a white glove character with a face on the back of the hand, standing on two fingers like legs, mid-sprint, wearing a racing bib with a 1. It sits beside "Let's give your business a hand" on the homepage.
