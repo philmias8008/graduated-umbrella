@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" data-palette="a" data-hero="behind">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Palette Test | Handstart Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Libre+Franklin:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F4EE;
+    --hairline: #D6CFC2;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  /* Each palette sets: sky (surface), sky-top/sky-bottom (shader gradient), ink (text and dark fills), body (paragraph gray), accent */
+  [data-palette="now"] { --sky: #1B2B4B; --sky-top: #1B2B4B; --sky-bottom: #2C4170; --ink: #1B2B4B; --body: #5a6472; --accent: #C8873A; --on-sky: #F7F4EE; }
+  [data-palette="a"]   { --sky: #8CBFE8; --sky-top: #4F8CCB; --sky-bottom: #A8D1F0; --ink: #1E4E7C; --body: #4E5D6E; --accent: #C8873A; --on-sky: #1E4E7C; }
+  [data-palette="b"]   { --sky: #A6CDEB; --sky-top: #6FA4D6; --sky-bottom: #C2DEF2; --ink: #26476B; --body: #55606D; --accent: #E07A5F; --on-sky: #26476B; }
+  [data-palette="c"]   { --sky: #7FB5E3; --sky-top: #3F7DC0; --sky-bottom: #9DCAEE; --ink: #1D3F66; --body: #4B5868; --accent: #E3A23B; --on-sky: #1D3F66; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+
+  .pt-controls {
+    position: fixed; z-index: 200; left: 50%; bottom: 16px; transform: translateX(-50%);
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 8px;
+    max-width: calc(100vw - 32px); background: rgba(20,24,30,0.86); border-radius: 12px;
+    font: 600 12px/1 var(--sans); backdrop-filter: blur(6px);
+  }
+  .pt-controls button {
+    border: 0; border-radius: 7px; padding: 9px 11px; background: transparent; color: #e9e6df; font: inherit; cursor: pointer;
+  }
+  .pt-controls button[aria-pressed="true"] { background: #F7F4EE; color: #14181e; }
+  .pt-controls .pt-sep { width: 1px; background: rgba(255,255,255,0.2); margin: 2px 4px; }
+
+  .pt-header {
+    position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(16px,4vw,44px); background: var(--sky); color: var(--on-sky);
+    border-bottom: 1px solid color-mix(in srgb, var(--on-sky) 16%, transparent);
+  }
+  .pt-logo { font-weight: 900; letter-spacing: 0.02em; font-size: 18px; }
+  .pt-nav { display: flex; gap: 22px; align-items: center; font-weight: 500; font-size: 15px; }
+  .pt-nav a { text-decoration: none; }
+  .pt-nav a:hover { color: var(--accent); }
+  @media (max-width: 720px) { .pt-nav a { display: none; } }
+
+  .pt-hero { position: relative; height: calc(100svh - 58px); min-height: 420px; overflow: hidden; background: linear-gradient(var(--sky-top), var(--sky-bottom)); }
+  .pt-hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+  .pt-word {
+    position: absolute; inset: 0; margin: 0; display: grid; place-items: center;
+    font-weight: 900; font-size: 13.5vw; line-height: 1; letter-spacing: 0; color: var(--ink);
+  }
+  .pt-mask { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
+  .pt-mask text { font-family: var(--sans); font-weight: 900; font-size: 13.5vw; }
+  [data-hero="inside"] .pt-word { visibility: hidden; }
+  [data-hero="inside"] .pt-mask { display: block; }
+  .pt-tagline {
+    position: absolute; left: 0; right: 0; top: calc(50% + 9vw); text-align: center; margin: 0;
+    font-family: var(--serif); font-style: italic; font-weight: 600; font-size: clamp(20px,2.6vw,30px); color: var(--ink);
+  }
+
+  .pt-section { padding: clamp(56px,8vw,96px) clamp(16px,4vw,44px); }
+  .pt-wrap { max-width: 1080px; margin: 0 auto; }
+  .pt-section h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(32px,4.4vw,52px); line-height: 1.1; margin: 0 0 18px; }
+  .pt-section p { color: var(--body); font-size: 17px; line-height: 1.65; max-width: 62ch; margin: 0 0 16px; }
+  .pt-section p a { color: var(--ink); text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .pt-row { display: flex; flex-wrap: wrap; gap: 26px; align-items: center; margin-top: 28px; }
+
+  .pt-band { background: var(--sky); color: var(--on-sky); }
+  .pt-band p { color: var(--on-sky); opacity: 0.88; }
+  .pt-band p a { color: var(--on-sky); }
+
+  .pt-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 30px; }
+  .pt-card { background: #fff; border: 1px solid var(--hairline); border-radius: 14px; padding: 22px; }
+  .pt-card h3 { font-family: var(--serif); font-size: 24px; margin: 0 0 8px; }
+  .pt-card p { font-size: 15px; margin: 0; }
+  .pt-chip { display: inline-block; font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 99px; margin-bottom: 12px; }
+  .pt-chip--accent { background: var(--accent); color: var(--ink); }
+  .pt-chip--sky { background: var(--sky); color: var(--on-sky); }
+
+  /* Same comic-panel button as the live site, with colors pulled from the palette */
+  .pt-btn { position: relative; display: inline-block; text-decoration: none; transform: skewX(-10deg); transition: transform 200ms ease; }
+  .pt-btn-shadow { position: absolute; inset: 0; background: #000; transform: translate(7px,7px); transition: transform 200ms ease, background 200ms ease; }
+  .pt-btn-face { position: relative; display: inline-block; background: var(--ink); padding: 13px 26px; }
+  .pt-btn-label { display: inline-block; transform: skewX(10deg); font-weight: 700; font-size: 15px; letter-spacing: 0.01em; text-transform: uppercase; color: var(--cream); }
+  .pt-btn:hover { transform: skewX(-10deg) translate(3px,3px); }
+  .pt-btn:hover .pt-btn-shadow { transform: translate(11px,11px); background: var(--accent); }
+  .pt-btn--reverse .pt-btn-face { background: var(--cream); }
+  .pt-btn--reverse .pt-btn-label { color: var(--ink); }
+  .pt-btn--accent .pt-btn-face { background: var(--accent); }
+  .pt-btn--accent .pt-btn-label { color: var(--ink); }
+
+  .pt-swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-top: 24px; }
+  .pt-swatch { border-radius: 12px; overflow: hidden; border: 1px solid var(--hairline); background: #fff; }
+  .pt-swatch-color { height: 72px; }
+  .pt-swatch-meta { padding: 10px 12px; font-size: 13px; line-height: 1.5; color: var(--body); }
+  .pt-swatch-meta strong { color: var(--ink); display: block; }
+
+  .pt-table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 14px; }
+  .pt-table th, .pt-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--hairline); }
+  .pt-table td:nth-child(2) { font-variant-numeric: tabular-nums; }
+  .pt-pass { color: #2e7d4f; font-weight: 600; }
+  .pt-fail { color: #b23b2a; font-weight: 600; }
+  .pt-mid { color: #9a6a12; font-weight: 600; }
+  @media (max-width: 560px) { .pt-table td:nth-child(3) { display: none; } .pt-table th:nth-child(3) { display: none; } }
+
+  .pt-blobs { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 24px; }
+  .pt-blob { width: 92px; height: 92px; border-radius: 46% 54% 52% 48% / 55% 45% 55% 45%; display: grid; place-items: center; font-size: 12px; font-weight: 600; color: var(--ink); text-align: center; }
+
+
+  .pt-blobset { margin-top: 26px; }
+  .pt-blobset h3 { font-family: var(--serif); font-size: 24px; margin: 0 0 6px; }
+  .pt-blobrow { display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; border-radius: 14px; }
+  .pt-blobrow--cream { background: var(--cream); border: 1px solid var(--hairline); }
+  .pt-blobrow--sky { background: var(--sky); margin-top: 10px; }
+  .pt-blobcell { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 11px; color: var(--ink); }
+  .pt-blobcell .pt-blob { position: relative; }
+  /* Stand-in for the white glove mascot, so the blob is judged with a white shape on it */
+  .pt-glove { width: 42px; height: 50px; background: #fff; border: 3px solid var(--ink); border-radius: 18px 18px 14px 14px; }
+
+  .pt-footer { background: var(--ink); color: var(--cream); padding: 56px clamp(16px,4vw,44px) 110px; }
+  .pt-footer .pt-wrap { display: flex; flex-wrap: wrap; gap: 28px; justify-content: space-between; align-items: flex-start; }
+  .pt-footer nav { display: flex; flex-direction: column; gap: 10px; font-weight: 500; }
+  .pt-footer nav a { text-decoration: none; transition: color 220ms ease; }
+  .pt-footer nav a:hover { color: var(--accent); }
+  .pt-footer small { opacity: 0.7; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pt-btn, .pt-btn-shadow { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="pt-controls" role="group" aria-label="Test controls">
+  <button type="button" data-set-palette="now">Navy now</button>
+  <button type="button" data-set-palette="a">A Clear day</button>
+  <button type="button" data-set-palette="b">B Soft morning</button>
+  <button type="button" data-set-palette="c">C Golden hour</button>
+  <span class="pt-sep" aria-hidden="true"></span>
+  <button type="button" data-set-hero="behind">Clouds behind</button>
+  <button type="button" data-set-hero="inside">Clouds inside</button>
+</div>
+
+<header class="pt-header">
+  <span class="pt-logo">HANDSTART</span>
+  <nav class="pt-nav">
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#cases">Case Studies</a>
+    <a class="pt-btn pt-btn--sm pt-btn--reverse" href="#contact"><span class="pt-btn-shadow"></span><span class="pt-btn-face" style="padding:9px 18px;"><span class="pt-btn-label" style="font-size:13px;">Contact</span></span></a>
+  </nav>
+</header>
+
+<section class="pt-hero" aria-label="HANDSTART">
+  <canvas id="ptClouds" aria-hidden="true"></canvas>
+  <h1 class="pt-word">HANDSTART</h1>
+  <!-- Cream sheet with the word punched out, so the canvas shows through the letters -->
+  <svg class="pt-mask" aria-hidden="true">
+    <defs>
+      <mask id="ptPunch" maskUnits="userSpaceOnUse">
+        <rect width="100%" height="100%" fill="#fff"/>
+        <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" fill="#000">HANDSTART</text>
+      </mask>
+    </defs>
+    <rect width="100%" height="100%" fill="#F7F4EE" mask="url(#ptPunch)"/>
+  </svg>
+  <p class="pt-tagline">Let's give your business a hand</p>
+</section>
+
+<section class="pt-section" id="services">
+  <div class="pt-wrap">
+    <h2>Real work vs template work</h2>
+    <p>Body copy sits here at the size the live pages use, so you can judge how long paragraphs read in the new ink. A plumber in Tulsa and a dentist in Boise should not end up with the same site and a different logo. <a href="#">This is an inline link.</a></p>
+    <div class="pt-row">
+      <a class="pt-btn" href="#"><span class="pt-btn-shadow"></span><span class="pt-btn-face"><span class="pt-btn-label">Find my gaps</span></span></a>
+      <a class="pt-btn pt-btn--accent" href="#"><span class="pt-btn-shadow"></span><span class="pt-btn-face"><span class="pt-btn-label">Book a call</span></span></a>
+    </div>
+    <div class="pt-cards">
+      <div class="pt-card"><span class="pt-chip pt-chip--accent">Live</span><h3>Greenlife Sembalun</h3><p>Card on white, the way case studies and the Services fork sit today.</p></div>
+      <div class="pt-card"><span class="pt-chip pt-chip--sky">In progress</span><h3>Starting fresh?</h3><p>Sky chip on white, to see whether the light blue holds up as a small label.</p></div>
+      <div class="pt-card"><span class="pt-chip pt-chip--accent">Pick</span><h3>Build your handstart</h3><p>Hover the buttons above: the shadow flips to the accent color.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pt-section pt-band" id="about">
+  <div class="pt-wrap">
+    <h2>A full-width sky section</h2>
+    <p>This is where navy sections live today, like the portal content and the closing blocks. Text here uses the ink color on sky. <a href="#">A link on sky.</a></p>
+    <div class="pt-row">
+      <a class="pt-btn pt-btn--reverse" href="#"><span class="pt-btn-shadow"></span><span class="pt-btn-face"><span class="pt-btn-label">See what we do</span></span></a>
+      <a class="pt-btn" href="#"><span class="pt-btn-shadow"></span><span class="pt-btn-face"><span class="pt-btn-label">Contact</span></span></a>
+    </div>
+  </div>
+</section>
+
+<section class="pt-section" id="cases">
+  <div class="pt-wrap">
+    <h2>The palette</h2>
+    <div class="pt-swatches" id="ptSwatches"></div>
+    <table class="pt-table">
+      <thead><tr><th>Pairing</th><th>Contrast</th><th>Use</th></tr></thead>
+      <tbody id="ptContrast"></tbody>
+    </table>
+    <p style="margin-top:14px; font-size:14px;">4.5 : 1 is the minimum for body text. 3 : 1 is fine for large headings, icons and button fills.</p>
+
+    <h2 style="margin-top:56px;">Mascot blobs on this palette</h2>
+    <p>The current blob colors, shown on cream and on sky. Watch for one disappearing into the sky.</p>
+    <div class="pt-blobs" id="ptBlobsCream"></div>
+    <div class="pt-band" style="margin-top:18px; padding:18px; border-radius:14px;"><div class="pt-blobs" id="ptBlobsSky" style="margin-top:0;"></div></div>
+
+    <h2 style="margin-top:56px;">Blob options for Golden hour</h2>
+    <p>Each blob carries a white shape standing in for the glove mascot. Numbers are contrast against cream, sky, and the glove. Higher means the blob reads more clearly.</p>
+    <div id="ptBlobSets"></div>
+  </div>
+</section>
+
+<footer class="pt-footer" id="contact">
+  <div class="pt-wrap">
+    <div>
+      <div class="pt-logo">HANDSTART</div>
+      <small>Footer on ink. Hover the links for the accent.</small>
+    </div>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#cases">Case Studies</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  function hexToRgb(hex) {
+    hex = hex.trim().replace('#', '');
+    if (hex.length === 3) hex = hex.replace(/./g, '$&$&');
+    return [0, 2, 4].map(function (i) { return parseInt(hex.slice(i, i + 2), 16) / 255; });
+  }
+  function luminance(hex) {
+    var c = hexToRgb(hex).map(function (x) { return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function contrast(a, b) {
+    var x = luminance(a), y = luminance(b);
+    return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+  }
+  function token(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
+
+  var blobs = [['terracotta', '#E08E72'], ['sage', '#A3B899'], ['dusty-blue', '#8FA6C9'], ['butter', '#E8B96A']];
+
+  function renderInfo() {
+    var t = { sky: token('--sky'), ink: token('--ink'), body: token('--body'), accent: token('--accent'), cream: token('--cream'), onSky: token('--on-sky') };
+    document.getElementById('ptSwatches').innerHTML = [
+      ['Sky', t.sky, 'Header, bands, hero'],
+      ['Ink', t.ink, 'Headings, buttons, footer'],
+      ['Body', t.body, 'Paragraph text'],
+      ['Accent', t.accent, 'Hovers, chips, highlights'],
+      ['Cream', t.cream, 'Page and clouds']
+    ].map(function (s) {
+      return '<div class="pt-swatch"><div class="pt-swatch-color" style="background:' + s[1] + '"></div><div class="pt-swatch-meta"><strong>' + s[0] + ' ' + s[1].toUpperCase() + '</strong>' + s[2] + '</div></div>';
+    }).join('');
+
+    var rows = [
+      ['Ink on cream', t.ink, t.cream, 'Headings and text', 4.5],
+      ['Body on cream', t.body, t.cream, 'Paragraphs', 4.5],
+      ['Ink on sky', t.onSky, t.sky, 'Text in sky sections', 4.5],
+      ['Cream on ink', t.cream, t.ink, 'Button labels, footer', 4.5],
+      ['Ink on accent', t.ink, t.accent, 'Accent button labels', 4.5],
+      ['Accent on cream', t.accent, t.cream, 'Accent used as text', 4.5],
+      ['Sky on cream', t.sky, t.cream, 'Sky used as text', 4.5],
+      ['Cream clouds on sky', t.cream, t.sky, 'Cloud visibility', 1.3]
+    ];
+    document.getElementById('ptContrast').innerHTML = rows.map(function (r) {
+      var c = contrast(r[1], r[2]);
+      var cls = c >= r[4] ? 'pt-pass' : (c >= 3 ? 'pt-mid' : 'pt-fail');
+      var label = c >= r[4] ? 'OK' : (c >= 3 ? 'Large only' : 'Too low');
+      if (r[4] < 2) { cls = 'pt-pass'; label = 'Visible'; }
+      return '<tr><td>' + r[0] + '</td><td class="' + cls + '">' + c.toFixed(2) + ' : 1 ' + label + '</td><td>' + r[3] + '</td></tr>';
+    }).join('');
+
+    var blobHtml = blobs.map(function (b) { return '<div class="pt-blob" style="background:' + b[1] + '">' + b[0] + '</div>'; }).join('');
+    document.getElementById('ptBlobsCream').innerHTML = blobHtml;
+    document.getElementById('ptBlobsSky').innerHTML = blobHtml;
+
+    var sets = [
+      ['1 Warm and fresh', [['coral', '#EE8A6B'], ['sage', '#8DB580'], ['lavender', '#B9A3D9'], ['peach', '#F6C3A5']]],
+      ['2 Deeper earth', [['terracotta', '#D2694A'], ['olive', '#7E9F6B'], ['plum', '#9C7AB0'], ['rose', '#E39AA8']]],
+      ['2b Deeper earth, rose swapped', [['terracotta', '#D2694A'], ['olive', '#7E9F6B'], ['plum', '#9C7AB0'], ['raspberry', '#C85A7C']]],
+      ['2c Deeper earth, softer swap', [['terracotta', '#D2694A'], ['olive', '#7E9F6B'], ['plum', '#9C7AB0'], ['clay pink', '#CF7A86']]],
+      ['3 Soft pastel', [['blush', '#F4B9A7'], ['mint', '#A9D7BE'], ['lilac', '#C9B7E6'], ['pink', '#F2A7C3']]]
+    ];
+    document.getElementById('ptBlobSets').innerHTML = sets.map(function (set) {
+      function row(bg) {
+        return set[1].map(function (b) {
+          return '<div class="pt-blobcell"><div class="pt-blob" style="background:' + b[1] + '"><div class="pt-glove"></div></div>' + b[0] + ' ' + b[1] +
+            '<br>' + contrast(b[1], t.cream).toFixed(1) + ' / ' + contrast(b[1], t.sky).toFixed(1) + ' / ' + contrast(b[1], '#FFFFFF').toFixed(1) + '</div>';
+        }).join('');
+      }
+      return '<div class="pt-blobset"><h3>' + set[0] + '</h3><div class="pt-blobrow pt-blobrow--cream">' + row() + '</div><div class="pt-blobrow pt-blobrow--sky">' + row() + '</div></div>';
+    }).join('');
+  }
+
+  function setPressed() {
+    document.querySelectorAll('[data-set-palette]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.setPalette === root.dataset.palette)); });
+    document.querySelectorAll('[data-set-hero]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.setHero === root.dataset.hero)); });
+  }
+
+  function syncUrl() {
+    var u = new URL(location.href);
+    u.searchParams.set('p', root.dataset.palette);
+    u.searchParams.set('hero', root.dataset.hero);
+    history.replaceState(null, '', u);
+  }
+
+  var params = new URLSearchParams(location.search);
+  if (/^(now|a|b|c)$/.test(params.get('p') || '')) root.dataset.palette = params.get('p');
+  if (/^(behind|inside)$/.test(params.get('hero') || '')) root.dataset.hero = params.get('hero');
+
+  document.querySelectorAll('[data-set-palette]').forEach(function (b) {
+    b.addEventListener('click', function () { root.dataset.palette = b.dataset.setPalette; setPressed(); renderInfo(); syncUrl(); clouds.recolor(); });
+  });
+  document.querySelectorAll('[data-set-hero]').forEach(function (b) {
+    b.addEventListener('click', function () { root.dataset.hero = b.dataset.setHero; setPressed(); syncUrl(); });
+  });
+
+  // Cloud shader adapted from Aceternity UI's Cloud Shader (Manu Arora), ported from React to plain WebGL.
+  var clouds = (function () {
+    var canvas = document.getElementById('ptClouds');
+    var noop = { recolor: function () {} };
+    var gl = canvas.getContext('webgl', { alpha: false, antialias: false, premultipliedAlpha: false });
+    if (!gl) { canvas.remove(); return noop; }
+
+    var VERT = 'attribute vec2 a_pos;varying vec2 v_uv;void main(){v_uv=a_pos*0.5+0.5;gl_Position=vec4(a_pos,0.0,1.0);}';
+    var FRAG = [
+      'precision highp float;',
+      'varying vec2 v_uv;',
+      'uniform vec2 u_res;uniform float u_time;uniform float u_count;',
+      'uniform vec3 u_cloud;uniform vec3 u_skyTop;uniform vec3 u_skyBottom;uniform vec3 u_sun;',
+      'const mat2 R=mat2(0.80,0.60,-0.60,0.80);',
+      'float hash(vec2 p){return fract(sin(dot(p,vec2(41.31,289.17)))*26737.367);}',
+      'float vnoise(vec2 p){vec2 i=floor(p);vec2 f=fract(p);f=f*f*(3.0-2.0*f);',
+      ' float a=hash(i);float b=hash(i+vec2(1.0,0.0));float c=hash(i+vec2(0.0,1.0));float d=hash(i+vec2(1.0,1.0));',
+      ' return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);}',
+      'float fbm(vec2 p){float s=0.0;float a=0.5;for(int i=0;i<4;i++){s+=a*vnoise(p);p=R*p*2.03+19.19;a*=0.5;}return s;}',
+      'float billow(vec2 p){float s=0.0;float a=0.5;for(int i=0;i<5;i++){s+=a*(1.0-abs(2.0*vnoise(p)-1.0));p=R*p*2.11+13.37;a*=0.5;}return s;}',
+      'float cloudDensity(vec2 p,vec2 c,vec2 r,float seed,float t){vec2 q=p-c;',
+      ' float ry=q.y>0.0?r.y:r.y*0.42;float env=1.0-length(vec2(q.x/r.x,q.y/ry));if(env<-0.35)return 0.0;',
+      ' vec2 dp=q*(2.4/r.x)+seed;dp+=0.6*vec2(fbm(dp*1.4+t*0.04),fbm(dp*1.4+7.7-t*0.03));',
+      ' return env+(billow(dp*1.6)-0.62)*0.62;}',
+      'vec3 shadeCloud(vec3 color,vec3 sky,vec2 p,vec2 c,vec2 r,float seed,float t,float dist){',
+      ' float d=cloudDensity(p,c,r,seed,t);if(d<0.02)return color;',
+      ' float dUp=cloudDensity(p+vec2(0.0,r.y*0.55),c,r,seed,t);',
+      ' float occl=clamp((dUp-d)*1.1+d*0.55,0.0,1.0);',
+      ' vec3 lit=u_cloud*1.04;vec3 shadow=mix(u_cloud*0.60,sky,0.38);vec3 col=mix(lit,shadow,occl*0.85);',
+      ' float alpha=smoothstep(0.02,0.38,d);',
+      ' float rim=smoothstep(0.02,0.14,d)*(1.0-smoothstep(0.14,0.40,d));col+=rim*0.10;',
+      ' col=mix(col,sky,dist*0.35);alpha*=mix(1.0,0.8,dist);',
+      ' return mix(color,col,alpha);}',
+      'vec3 cloudPass(vec3 color,vec3 sky,vec2 p,float aspect,float t,float spd,float phase,float y,vec2 r,float seed,float dist){',
+      ' float cx=mix(-r.x-0.25,aspect+r.x+0.25,fract(t*spd+phase));',
+      ' float cy=y+sin(t*0.05+phase*6.2831)*0.012;',
+      ' return shadeCloud(color,sky,p,vec2(cx,cy),r,seed,t,dist);}',
+      'void main(){float aspect=u_res.x/u_res.y;vec2 p=vec2(v_uv.x*aspect,v_uv.y);float t=u_time;',
+      ' vec3 sky=mix(u_skyBottom,u_skyTop,v_uv.y);vec3 color=sky;',
+      ' color=mix(color,u_skyBottom*1.06,smoothstep(0.35,0.0,v_uv.y)*0.5);',
+      ' vec2 sunPos=vec2(aspect*0.78,0.92);float sd=length(p-sunPos);',
+      ' color+=u_sun*exp(-sd*sd*5.0)*0.28;',
+      ' float band=smoothstep(0.55,0.8,v_uv.y)*(1.0-smoothstep(0.9,1.0,v_uv.y));',
+      ' if(band>0.01){float st=fbm(vec2(p.x*1.6-t*0.006,p.y*12.0));color=mix(color,u_cloud*0.98,smoothstep(0.52,0.78,st)*band*0.35);}',
+      ' if(u_count>5.5)color=cloudPass(color,sky,p,aspect,t,0.006,0.10,0.84,vec2(0.20,0.10),43.7,1.0);',
+      ' if(u_count>4.5)color=cloudPass(color,sky,p,aspect,t,0.008,0.62,0.73,vec2(0.24,0.12),71.3,0.85);',
+      ' if(u_count>3.5)color=cloudPass(color,sky,p,aspect,t,0.011,0.33,0.60,vec2(0.34,0.16),17.3,0.55);',
+      ' if(u_count>2.5)color=cloudPass(color,sky,p,aspect,t,0.013,0.80,0.47,vec2(0.30,0.15),29.9,0.45);',
+      ' if(u_count>1.5)color=cloudPass(color,sky,p,aspect,t,0.016,0.05,0.35,vec2(0.46,0.20),91.1,0.15);',
+      ' color=cloudPass(color,sky,p,aspect,t,0.020,0.48,0.20,vec2(0.56,0.24),57.2,0.0);',
+      ' gl_FragColor=vec4(color,1.0);}'
+    ].join('\n');
+
+    function compile(type, src) {
+      var s = gl.createShader(type);
+      gl.shaderSource(s, src); gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
+      return s;
+    }
+    var vs = compile(gl.VERTEX_SHADER, VERT), fs = compile(gl.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) { canvas.remove(); return noop; }
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs); gl.attachShader(prog, fs);
+    gl.bindAttribLocation(prog, 0, 'a_pos');
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { canvas.remove(); return noop; }
+    gl.useProgram(prog);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+    var loc = {};
+    ['u_res', 'u_time', 'u_count', 'u_cloud', 'u_skyTop', 'u_skyBottom', 'u_sun'].forEach(function (n) { loc[n] = gl.getUniformLocation(prog, n); });
+
+    // Phones: fewer clouds and a lower internal resolution. Soft clouds survive the upscale and the GPU does a fraction of the work.
+    var small = matchMedia('(max-width: 760px), (pointer: coarse)').matches;
+    var scale = small ? 0.5 : Math.min(window.devicePixelRatio || 1, 1.5) * 0.75;
+    gl.uniform1f(loc.u_count, small ? 4 : 6);
+
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // A fixed time that frames the clouds nicely when motion is off
+    var STILL_T = 14;
+
+    function recolor() {
+      var c = hexToRgb(token('--cream')), top = hexToRgb(token('--sky-top')), bot = hexToRgb(token('--sky-bottom'));
+      gl.uniform3f(loc.u_cloud, c[0], c[1], c[2]);
+      gl.uniform3f(loc.u_skyTop, top[0], top[1], top[2]);
+      gl.uniform3f(loc.u_skyBottom, bot[0], bot[1], bot[2]);
+      var warm = hexToRgb(token('--accent'));
+      gl.uniform3f(loc.u_sun, 0.6 + warm[0] * 0.4, 0.6 + warm[1] * 0.4, 0.6 + warm[2] * 0.4);
+      if (!running) drawAt(lastT);
+    }
+
+    function resize() {
+      var w = Math.max(1, Math.floor(canvas.clientWidth * scale));
+      var h = Math.max(1, Math.floor(canvas.clientHeight * scale));
+      if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+      gl.viewport(0, 0, w, h);
+      gl.uniform2f(loc.u_res, w, h);
+      if (!running) drawAt(lastT);
+    }
+
+    var running = false, frame = 0, visible = true, lastT = reduce ? STILL_T : 0, base = performance.now();
+    function drawAt(t) { lastT = t; gl.uniform1f(loc.u_time, t); gl.drawArrays(gl.TRIANGLES, 0, 3); }
+    function tick(now) {
+      if (!running) return;
+      drawAt((now - base) / 1000);
+      frame = requestAnimationFrame(tick);
+    }
+    function start() {
+      if (running || reduce || !visible || document.hidden) return;
+      running = true;
+      base = performance.now() - lastT * 1000;
+      frame = requestAnimationFrame(tick);
+    }
+    function stop() { running = false; cancelAnimationFrame(frame); }
+
+    new ResizeObserver(resize).observe(canvas);
+    new IntersectionObserver(function (e) { visible = e[0].isIntersecting; visible ? start() : stop(); }).observe(canvas);
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+
+    recolor();
+    resize();
+    drawAt(lastT);
+    start();
+    return { recolor: recolor };
+  })();
+
+  setPressed();
+  renderInfo();
+})();
+</script>
+</body>
+</html>

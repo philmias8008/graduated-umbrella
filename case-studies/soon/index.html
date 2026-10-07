@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Case Study Coming Soon | Handstart Digital</title>
+<meta name="description" content="This case study is being written. Check back soon, or see what I can do for you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/hs-mascots.css">
+<script src="/assets/js/hs-mascot-loader.js" defer></script>
+<style>
+  :root {
+    --navy: #1B2B4B; --amber: #C8873A; --amber-lt: #e0a558;
+    --cream: #F7F4EE; --slate: #3f4a5a; --body: #5a6472;
+    --hairline: #D6CFC2; --tint: #EFEAE0;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body { background: var(--cream); color: var(--navy); font-family: var(--sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; display: flex; flex-direction: column; min-height: 100vh; }
+  a { text-decoration: none; color: inherit; }
+  img { display: block; }
+
+  /* header / nav */
+  .hs-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid var(--hairline); }
+  .hs-header-in { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); height: clamp(72px,10vw,96px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .hs-logo img { height: clamp(44px,5.5vw,58px); width: auto; object-fit: contain; }
+  .hs-nav { display: flex; align-items: center; gap: clamp(20px,2.6vw,34px); }
+    .hs-navlink { position: relative; display: inline-block; overflow: hidden; white-space: nowrap; height: 1.3em; font-family: var(--sans); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--navy); text-decoration: none; }
+    .hs-navlink.is-active { font-weight: 600; }
+    .hs-navlink-top, .hs-navlink-bottom { display: block; }
+    .hs-navlink-bottom { position: absolute; inset: 0; }
+    .hs-navlink-top span, .hs-navlink-bottom span { display: inline-block; transition: transform 210ms ease-in-out; transition-delay: calc(var(--i, 0) * 12ms); }
+    .hs-navlink-bottom span { transform: translateY(100%); color: var(--amber); }
+    .hs-navlink:is(:hover, .is-tapped) .hs-navlink-top span, .hs-navlink:focus-visible .hs-navlink-top span { transform: translateY(-100%); }
+    .hs-navlink:is(:hover, .is-tapped) .hs-navlink-bottom span, .hs-navlink:focus-visible .hs-navlink-bottom span { transform: translateY(0); }
+    .hs-navlink-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (prefers-reduced-motion: reduce) { .hs-navlink-top span, .hs-navlink-bottom span { transition: none !important; } }
+
+  /* Comic-panel Contact button, mirrors the homepage's Find My Gaps button */
+  .hs-next-btn { position: relative; display: inline-flex; text-decoration: none; transform: skewX(-10deg); transition: transform 160ms ease; }
+  .hs-next-shadow { position: absolute; inset: 0; z-index: 0; background: #000; transform: translate(7px,7px); transition: transform 200ms ease, background 200ms ease; }
+  .hs-next-btn:is(:hover, .is-tapped) { transform: skewX(-10deg) translate(3px,3px); }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(11px,11px); background: var(--amber); }
+  .hs-next-face { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 14px; background: var(--navy); padding: 13px 26px 13px 22px; }
+  .hs-next-content { display: inline-flex; align-items: center; gap: 14px; transform: skewX(10deg); }
+  .hs-next-label { font-family: var(--sans); font-weight: 700; font-size: 15px; letter-spacing: 0.01em; text-transform: uppercase; color: var(--cream); white-space: nowrap; }
+  .hs-next-icons { position: relative; width: 30px; height: 20px; }
+  .hs-next-rest, .hs-next-cascade svg { position: absolute; top: 0; left: 0; transition: opacity 220ms ease, transform 220ms cubic-bezier(.65,0,.076,1); }
+  .hs-next-rest path, .hs-next-cascade path { stroke: var(--cream); }
+  .hs-next-rest { opacity: 1; }
+  .hs-next-cascade svg { opacity: 0; }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-next-rest { opacity: 0; transform: translateX(8px); }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-next-cascade svg { opacity: 1; }
+  .hs-next-cascade .hs-arrow-one { transition-delay: 0ms; }
+  .hs-next-cascade .hs-arrow-two { transition-delay: 40ms; }
+  .hs-next-cascade .hs-arrow-three { transition-delay: 80ms; }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one { transform: translateX(3px); }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(10px); }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(17px); }
+  @keyframes hs-arrow-chase { 0%, 100% { stroke: var(--cream); } 50% { stroke: var(--amber); } }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0s; }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0.2s; }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0.4s; }
+  /* Header-size modifier for the Contact button */
+  .hs-next-btn--sm { align-self: flex-start; }
+  .hs-next-btn--sm .hs-next-face { padding: 10px 20px 10px 16px; gap: 10px; }
+  .hs-next-btn--sm .hs-next-content { gap: 10px; }
+  .hs-next-btn--sm .hs-next-label { font-size: 13px; }
+  .hs-next-btn--sm .hs-next-icons { width: 22px; height: 15px; }
+  .hs-next-btn--sm .hs-next-shadow { transform: translate(5px,5px); }
+  .hs-next-btn--sm:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(8px,8px); }
+  .hs-next-btn--sm:is(:hover, .is-tapped) .hs-next-rest { transform: translateX(6px); }
+  .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-one { transform: translateX(2px); }
+  .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(7px); }
+  .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(12px); }
+
+  /* Navy-background modifier: flips face/label/icon colors for use on a navy backdrop */
+  .hs-next-btn--reverse .hs-next-face { background: var(--cream); }
+  .hs-next-btn--reverse .hs-next-label { color: var(--navy); }
+  .hs-next-btn--reverse .hs-next-rest path, .hs-next-btn--reverse .hs-next-cascade path { stroke: var(--navy); }
+  @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--amber); } }
+  .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-one path { animation-name: hs-arrow-chase-reverse; }
+  .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-two path { animation-name: hs-arrow-chase-reverse; }
+  .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-three path { animation-name: hs-arrow-chase-reverse; }
+  @media (prefers-reduced-motion: reduce) {
+    .hs-next-btn, .hs-next-shadow, .hs-next-rest, .hs-next-cascade svg { transition: none !important; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: none !important; stroke: var(--amber) !important; }
+  }
+
+
+  /* hamburger / mobile nav */
+  .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid var(--hairline); border-radius: 9px; cursor: pointer; color: var(--navy); }
+  .hs-mnav { display: none; border-top: 1px solid var(--hairline); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--cream); }
+  .hs-mnav.is-open { display: flex; }
+  .hs-mnav-link { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--slate); padding: 11px 0; }
+  .hs-mnav-link.is-active { color: var(--navy); font-weight: 600; }
+  @media (max-width: 900px) {
+    .hs-nav { display: none !important; }
+    .hs-hamburger { display: inline-flex !important; }
+  }
+
+  /* body */
+  .hs-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: clamp(64px,10vw,120px) clamp(24px,6vw,80px); text-align: center; }
+  .hs-body-in { max-width: 600px; display: flex; flex-direction: column; align-items: center; }
+  .hs-back { font-family: var(--sans); font-size: 14px; font-weight: 600; color: #8b8578; margin-bottom: clamp(24px,3vw,34px); transition: color 180ms ease; }
+  .hs-back:hover { color: var(--navy); }
+  .hs-soon-mascot { --hs-mascot-size: clamp(104px,13vw,136px); margin-bottom: 4px; }
+  .hs-eyebrow { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
+  .hs-body h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(34px,4.8vw,56px); line-height: 1.06; letter-spacing: -0.015em; color: var(--navy); margin: clamp(14px,1.8vw,20px) 0 0; text-wrap: balance; }
+  .hs-body p { font-family: var(--sans); font-size: clamp(16px,1.4vw,19px); line-height: 1.6; color: var(--body); max-width: 46ch; margin: clamp(16px,2vw,22px) 0 clamp(28px,3.4vw,36px); }
+  .hs-body-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+
+  /* footer */
+  .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
+  .hs-footer-in { max-width: 1200px; margin: 0 auto; }
+  .hs-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
+  .hs-footer-logo img { height: 48px; width: auto; object-fit: contain; }
+  .hs-footer-explore { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8791a3; margin: clamp(28px,3.4vw,36px) 0 clamp(14px,2vw,18px); }
+  .hs-footer-navgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; row-gap: 14px; align-content: start; }
+  @media (max-width: 640px) { .hs-footer-navgrid { grid-template-columns: 1fr; row-gap: 10px; } }
+  .hs-footer-navlink { display: block; font-family: var(--sans); font-weight: 500; font-size: 17px; color: var(--cream); transition: color 220ms ease; }
+  .hs-footer-navlink:hover { color: var(--amber); }
+  @media (prefers-reduced-motion: reduce) { .hs-footer-navlink { transition: none; } }
+  .hs-footer-email { font-family: var(--sans); font-size: 15px; font-weight: 500; color: #c3ccda; transition: color 180ms ease; }
+  .hs-footer-email:hover { color: var(--amber); }
+  .hs-social-list { list-style: none; margin: 0; padding: 0; display: flex; gap: 12px; }
+  .hs-social-icon { position: relative; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: var(--cream); text-decoration: none; overflow: hidden; }
+  .hs-social-icon::before { content: ''; position: absolute; left: 0; bottom: -100%; width: 100%; height: 100%; border-radius: 50%; transition: bottom 1100ms cubic-bezier(.4,0,.2,1); }
+  .hs-social-icon--facebook::before { background: #1877F2; }
+  .hs-social-icon--linkedin::before { background: #0A66C2; }
+  .hs-social-icon--instagram::before { background: linear-gradient(45deg, #FEDA77, #F58529, #DD2A7B, #8134AF, #515BD4); }
+  .hs-social-icon svg { position: relative; z-index: 1; width: 15px; height: 15px; fill: #111111; transition: fill 700ms ease, transform 700ms ease; }
+  .hs-social-icon:is(:hover, .is-tapped)::before, .hs-social-icon:focus-visible::before { bottom: 0; }
+  .hs-social-icon:is(:hover, .is-tapped) svg, .hs-social-icon:focus-visible svg { fill: var(--cream); transform: rotateY(360deg); }
+  @media (prefers-reduced-motion: reduce) { .hs-social-icon::before, .hs-social-icon svg { transition: none; } }
+  .hs-footer-divider { height: 1px; background: rgba(247,244,238,0.16); margin: clamp(28px,3.4vw,36px) 0 clamp(18px,2.2vw,22px); }
+  .hs-footer-legal { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+  .hs-footer-copy { display: flex; flex-direction: column; gap: 4px; }
+  .hs-footer-copy .c1 { font-family: var(--sans); font-size: 13px; color: #8791a3; }
+  .hs-footer-copy .c2 { font-family: var(--sans); font-size: 12px; color: #6b7488; }
+  .hs-footer-sub { display: flex; align-items: center; gap: 8px; font-family: var(--sans); font-size: 13px; color: #8791a3; }
+  .hs-footer-sub a { color: #8791a3; transition: color 180ms ease; }
+  .hs-footer-sub a:hover { color: var(--amber); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hs-back { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="hs-header">
+    <div class="hs-header-in">
+      <a class="hs-logo" href="/" aria-label="Handstart Digital home">
+        <img src="assets/handstart-logo-header.png" alt="Handstart Digital">
+      </a>
+      <nav class="hs-nav" aria-label="Primary">
+          <a href="/services" class="hs-navlink" data-flip-text="Services">
+            <span class="hs-navlink-top" aria-hidden="true"></span>
+            <span class="hs-navlink-bottom" aria-hidden="true"></span>
+            <span class="hs-navlink-sr">Services</span>
+          </a>
+          <a href="/about" class="hs-navlink" data-flip-text="About">
+            <span class="hs-navlink-top" aria-hidden="true"></span>
+            <span class="hs-navlink-bottom" aria-hidden="true"></span>
+            <span class="hs-navlink-sr">About</span>
+          </a>
+          <a href="/case-studies" class="hs-navlink is-active" data-flip-text="Case Studies">
+            <span class="hs-navlink-top" aria-hidden="true"></span>
+            <span class="hs-navlink-bottom" aria-hidden="true"></span>
+            <span class="hs-navlink-sr">Case Studies</span>
+          </a>
+        <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+      </nav>
+      <button class="hs-hamburger" id="hs-hamburger" aria-label="Menu" aria-expanded="false" aria-controls="hs-mnav">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <line x1="4" y1="7" x2="20" y2="7" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="12" x2="20" y2="12" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="17" x2="20" y2="17" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="hs-mnav" id="hs-mnav">
+          <a href="/services" class="hs-mnav-link" data-close>Services</a>
+          <a href="/about" class="hs-mnav-link" data-close>About</a>
+          <a href="/case-studies" class="hs-mnav-link is-active" data-close>Case Studies</a>
+      <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+    </div>
+  </header>
+
+  <section class="hs-body">
+    <div class="hs-body-in">
+      <a class="hs-back" href="/case-studies">&larr; All case studies</a>
+      <figure class="hs-mascot hs-soon-mascot" data-mascot="clipboard" data-state="reveal"></figure>
+      <h1>This one's being written.</h1>
+      <p>Check back soon, or see what I can do for you.</p>
+      <div class="hs-body-btns">
+        <a class="hs-next-btn" href="/services"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">What I Do</span></span></span></a>
+        <a class="hs-next-btn" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="hs-footer">
+    <div class="hs-footer-in">
+      <div class="hs-footer-top">
+        <a class="hs-footer-logo" href="/" aria-label="Handstart Digital home">
+          <img src="assets/handstart-logo-footer.png" alt="Handstart Digital">
+        </a>
+        <div class="hs-footer-contact" style="display:flex; flex-direction:column; align-items:flex-end; gap:12px;">
+          <a class="hs-footer-email" href="mailto:contact@handstartdigital.com">contact@handstartdigital.com</a>
+          <ul class="hs-social-list">
+            <li>
+              <a class="hs-social-icon hs-social-icon--facebook" aria-label="Facebook" style="cursor:default;" tabindex="-1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"></path></svg>
+              </a>
+            </li>
+            <li>
+              <a class="hs-social-icon hs-social-icon--linkedin" href="https://www.linkedin.com/in/aidanpaggao/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.8-2.05 3.7-2.05 3.96 0 4.69 2.6 4.69 6V21h-4v-5.3c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z"></path></svg>
+              </a>
+            </li>
+            <li>
+              <a class="hs-social-icon hs-social-icon--instagram" aria-label="Instagram" style="cursor:default;" tabindex="-1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.24.06 2.08.25 2.82.54a5.7 5.7 0 0 1 2.06 1.34 5.7 5.7 0 0 1 1.34 2.06c.29.74.48 1.58.54 2.82.07 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.06 1.24-.25 2.08-.54 2.82a5.7 5.7 0 0 1-1.34 2.06 5.7 5.7 0 0 1-2.06 1.34c-.74.29-1.58.48-2.82.54-1.25.07-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.24-.06-2.08-.25-2.82-.54a5.7 5.7 0 0 1-2.06-1.34A5.7 5.7 0 0 1 .93 20.9c-.29-.74-.48-1.58-.54-2.82C.32 16.83.32 16.43.32 13.23s0-3.6.07-4.85c.06-1.24.25-2.08.54-2.82A5.7 5.7 0 0 1 2.27 3.5 5.7 5.7 0 0 1 4.33 2.16c.74-.29 1.58-.48 2.82-.54C8.4 1.55 8.8 1.55 12 1.55zm0 3a6.85 6.85 0 1 0 0 13.7 6.85 6.85 0 0 0 0-13.7zm0 11.3a4.45 4.45 0 1 1 0-8.9 4.45 4.45 0 0 1 0 8.9zm7.12-11.57a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0z"></path></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hs-footer-explore">Explore</div>
+      <div class="hs-footer-navgrid">
+        <a class="hs-footer-navlink" href="/">Home</a>
+        <a class="hs-footer-navlink" href="/services">Services</a>
+        <a class="hs-footer-navlink" href="/case-studies">Case Studies</a>
+        <a class="hs-footer-navlink" href="/about">About</a>
+        <a class="hs-footer-navlink" href="/contact">Contact</a>
+      </div>
+
+      <div class="hs-footer-divider"></div>
+      <div class="hs-footer-legal">
+        <div class="hs-footer-copy">
+          <div class="c1">&copy; <span id="hs-year">2026</span> Handstart Digital. All rights reserved.</div>
+          <div class="c2">Handstart Digital and the Handstart Digital logo are trademarks of Aidan Paggao.</div>
+        </div>
+        <div class="hs-footer-sub">
+          <a href="/privacy">Privacy</a>
+          <span>&middot;</span>
+          <a href="/terms">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+
+  // Tap-to-preview: on touch devices, tapping an animated button/link plays
+  // its hover animation for a beat before following the link, instead of
+  // skipping straight to the destination with no animation shown at all.
+  (function () {
+    var isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+    if (!isTouch) return;
+    var SELECTOR = '.hs-navlink, .hs-next-btn, .flip-link, .hs-social-icon';
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest(SELECTOR);
+      if (!el || el.tagName !== 'A' || !el.href) return;
+      if (el.classList.contains('is-tapped')) return;
+      e.preventDefault();
+      el.classList.add('is-tapped');
+      setTimeout(function () { window.location.href = el.href; }, 1000);
+    }, true);
+  })();
+
+    var y = document.getElementById('hs-year');
+    if (y) y.textContent = new Date().getFullYear();
+
+    var burger = document.getElementById('hs-hamburger');
+    var mnav = document.getElementById('hs-mnav');
+    if (burger && mnav) {
+      burger.addEventListener('click', function () {
+        var open = mnav.classList.toggle('is-open');
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      mnav.querySelectorAll('[data-close]').forEach(function (a) {
+        a.addEventListener('click', function () {
+          mnav.classList.remove('is-open');
+          burger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  })();
+  
+  // Header nav flip: builds the per-letter spans for both rows at runtime,
+  // same mechanic as the Explore More flip links.
+  (function () {
+    document.querySelectorAll('.hs-navlink[data-flip-text]').forEach(function (link) {
+      var text = link.getAttribute('data-flip-text');
+      var top = link.querySelector('.hs-navlink-top');
+      var bottom = link.querySelector('.hs-navlink-bottom');
+      if (!top || !bottom) return;
+      text.split('').forEach(function (ch, i) {
+        var display = ch === ' ' ? '\u00A0' : ch;
+        var a = document.createElement('span'); a.textContent = display; a.style.setProperty('--i', i);
+        var b = document.createElement('span'); b.textContent = display; b.style.setProperty('--i', i);
+        top.appendChild(a);
+        bottom.appendChild(b);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

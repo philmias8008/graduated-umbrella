@@ -1,0 +1,131 @@
+# Handstart Digital site
+
+Static marketing site for Handstart Digital, deployed via Netlify. Plain HTML/CSS/JS, no build step, no framework.
+
+**Current status, open items and what to verify: read `docs/handoff.md` at the start of every session.** Refresh it at the end of a session when things change.
+
+## Branch safety
+
+- **Never touch `main` without explicit confirmation first.** All work happens on `ported-pages` (or another feature branch); commit and push there.
+- Before any destructive git operation (reset, checkout that discards changes, force-push), run `git status` and confirm with the user.
+
+## Palette decision: Golden hour (decided 2026-10-07, NOT rolled out yet)
+
+The navy and amber palette below is still what every live page uses. It is being replaced by the Golden hour palette, chosen on `/palette-test/` (palette C). The site-wide rollout is deliberately parked until much later, after the blob colors and mascots are settled. Until then: build new mascot art, prompts and test pages on Golden hour, and leave live pages on navy and amber unless asked.
+
+```css
+--ink: #1D3F66;         /* replaces navy for text, headings, button faces, footer */
+--sky: #7FB5E3;         /* replaces navy as the surface color: header, bands, hero */
+--sky-top: #3F7DC0;     /* cloud shader gradient, top */
+--sky-bottom: #9DCAEE;  /* cloud shader gradient, bottom */
+--accent: #E3A23B;      /* golden, replaces amber */
+--accent-lt: #F0C46E;   /* proposed light golden, replaces amber-lt */
+--body: #4B5868;        /* paragraph text on cream */
+--cream: #F7F4EE;       /* unchanged; also the cloud color */
+```
+
+- Ink on cream 9.8:1, body on cream 6.6:1, ink on sky 4.9:1, ink on golden 4.9:1. All pass for body text.
+- Golden is never text on cream (2.0:1). Use it for fills, underlines, hovers and glows. Links are ink with a golden underline.
+- In the cloud section, keep paragraph text in the lower, lighter part of the sky or on a cream card. The deep top (`--sky-top`) only supports large headings.
+- Planned motion: the HANDSTART landing, then the portal dive through a letter, coming out into the golden-hour cloud sky (`/palette-test/` shader) where the hero content lives. The cloud shader's sun glow takes its tint from `--accent`.
+- New blob set, chosen with the palette (also parked for the rollout): terracotta `#D2694A`, olive `#7E9F6B`, plum `#9C7AB0`, clay pink `#CF7A86`. The current blob colors (terracotta `#E08E72`, sage, dusty-blue, butter) nearly disappear against sky and golden. `dusty-blue` and `butter` go away; `manifest.json` defaults and `data-blob` values get remapped during the rollout.
+
+## Brand colors and fonts (current live palette)
+
+Defined as CSS custom properties in each page's own `:root` block (no shared stylesheet, repeated per file):
+
+```css
+--navy: #1B2B4B;      /* primary dark, backgrounds/headings */
+--amber: #C8873A;     /* accent, CTAs, links */
+--amber-lt: #e0a558;  /* lighter accent variant */
+--cream: #F7F4EE;     /* light background */
+--slate: #3f4a5a;
+--body: #5a6472;       /* body text on light backgrounds */
+--hairline: #D6CFC2;   /* borders/dividers */
+--tint: #EFEAE0;
+--muted: #c3ccda;      /* muted text on dark backgrounds */
+```
+
+Accent tokens for mascot blobs (defined in `assets/css/hs-mascots.css`; `--tint` above stays the neutral):
+
+```css
+--terracotta: #E08E72;
+--sage: #A3B899;
+--dusty-blue: #8FA6C9;
+--butter: #E8B96A;
+```
+
+Font stack (Google Fonts, loaded per-page via `<link>`):
+- `--serif`: Cormorant Garamond: headings, italic emphasis
+- `--sans`: Libre Franklin: body text, UI
+- `--script`: Caveat: handwriting/cursive accents only
+
+Caveat is also self-hosted as a static TTF at `assets/fonts/Caveat-SemiBold.ttf` (instantiated from Google's variable font via `fonttools`) for the homepage's draw-on animation, because opentype.js needs direct file access to glyph outlines and can't parse the woff2 that Google Fonts serves. Keep using the Google Fonts `<link>` for normal CSS text rendering; only self-host when a library needs to read outlines directly.
+
+## No em dashes
+
+Never use em dashes (—) anywhere: not in page copy, not in code, not in code comments, not in docs, not in commit messages. Use a period, comma, or colon instead.
+
+## URL structure: folder-per-page, clean URLs
+
+Every route is a folder with its own `index.html`, so URLs are clean (`/about`, not `/about.html`):
+
+```
+about/index.html
+case-studies/index.html
+case-studies/greenlife-sembalun/index.html
+case-studies/soon/index.html
+contact/index.html
+contact/thank-you/index.html
+privacy/index.html
+services/index.html
+terms/index.html
+index.html   <- homepage, root level
+```
+
+Each page folder keeps its own self-contained `assets/` subfolder (e.g. `about/assets/handstart-logo-header.png`) with copies of the header/footer logos, rather than referencing a shared root path. The homepage is the exception: it pulls its logos from the root-level `assets/` folder. Follow whichever pattern matches the file you're editing; don't consolidate them into a shared path without asking.
+
+## Other standing conventions
+
+- **`<meta name="robots" content="noindex">`** is present on every current page (site isn't live/indexed yet). Keep it on new pages unless told the site has launched. At launch, remove it everywhere **except `contact/thank-you/`**, which is permanently noindex (its tag is marked with a comment, and `_headers` also sends `X-Robots-Tag: noindex` for it). If a sitemap is ever added, leave `/contact/thank-you/` out of it. Do not add a robots.txt `Disallow` for it: that would stop crawlers from seeing the noindex.
+- **Title tag pattern**: `<title>Page Name | Handstart Digital</title>` for every page except the homepage, which is bare `Handstart Digital`.
+- **Contact form** uses Netlify Forms (`data-netlify="true"`, `netlify-honeypot="bot-field"`, hidden `form-name` input) with an explicit `action="/contact/thank-you/"` redirect to `contact/thank-you/index.html`. No backend or JS form handling. Every field Netlify should capture must exist in the static HTML (including the hidden `services` field, which JS only fills in). Fields: name, email, website (optional, plain text so "mybiz.com" passes), services (hidden), message.
+- **Analytics:** none installed. `hsConversion()` on the thank-you page is an empty hook called on load; wire tracking there if it is ever added.
+- **External scripts**: pin to an exact CDN version (e.g. `opentype.js@1.3.4` from cdnjs) rather than a floating `@latest` tag.
+- **Legacy root files** (`style.css`, `main.js`, `logo.png`, `hero-logo.png`) are leftovers from an earlier version of the site and are not referenced by any current page. Don't assume they're live; don't build on them without checking first.
+- Git identity for this repo is set locally to `Aidan Paggao <philmias8008@gmail.com>`.
+
+## Mascot system and build rules
+
+Rules for all future work:
+
+- **No em dashes** anywhere in code, copy, comments, or docs (see "No em dashes" above).
+- **Homepage stays library-free for motion.** Lenis, GSAP, and ScrollTrigger must never load on the homepage. Homepage animation is CSS or vanilla JS only. (opentype.js for the handwriting draw-on is a font parser, not a motion library.)
+- **Reduced motion.** Every animation needs a `prefers-reduced-motion` fallback that shows a static state.
+- **No generic HTML comments** like `<!-- header -->`. Remove existing ones when you touch a file. Use specific comments only when they explain a non-obvious decision.
+- **Brand tokens** stay as defined in "Brand colors and fonts" above. Fonts: Cormorant Garamond, Libre Franklin, Caveat.
+- **Workflow.** Before editing, show a short plan. After editing, summarize what changed and which files.
+
+### Using mascots
+
+- Mascots are raster by default: transparent WebP from Midjourney, spec in `docs/mascot-raster-spec.md`. `docs/mascot-svg-contract.md` is optional, for the logo and any code-built geometric characters.
+- Markup: `<figure class="hs-mascot" data-mascot="magnifier" data-state="idle" data-blob="amber"></figure>`.
+  - `data-state`: `idle`, `hover` (held on, for demos), `reveal` (pops in on scroll), `static`. Use `idle` or `reveal` on real pages; real hover triggers the hover state.
+  - `data-blob`: `terracotta`, `butter`, `sage`, `dusty-blue`, `tint`, `amber`, or `none`. Optional: every mascot has a default blob in `manifest.json`, and `data-blob` on the figure overrides it. There is no navy blob.
+  - Optional: `data-pose`, `data-hover-pose`, `data-boil` (4 fps two-pose swap), `data-eager` (above the fold), `data-label` (alt text; otherwise decorative).
+- Inside phrasing-only elements (`<p>`, `<h1>` to `<h6>`, `<button>`) use `<span class="hs-mascot" ...>` instead of `<figure>`, which is invalid there. The loader and CSS work on any tag.
+- The component draws the blob and shadow. Never bake them into art.
+- Size with `--hs-mascot-size` (defaults to 100% width). `aspect-ratio` reserves the space before art arrives, so there is no layout shift.
+- Every page that shows a mascot loads `/assets/css/hs-mascots.css` and `/assets/js/hs-mascot-loader.js` (both homepage-safe). Pages that already load GSAP may also load `/assets/js/hs-mascots.js` after GSAP and ScrollTrigger. Never on the homepage.
+- Homepage slots: hero-bib-hand beside the portal tagline (desktop and tablet only, no room on phones), magnifier beside the "Being online / Being found" heading, compass / clipboard / stopwatch / baton crossfading with the four steps, clipboard and power-button on the two path cards. The ABCD panels deliberately have no mascots.
+- The Difference page is gone: its content now opens the Services page as the "Real work vs template work" section (`#real-work`, the page's only `h1`, ending in a two-card fork: "Already paying someone?" to /contact, "Starting fresh?" down to `#work-together`), and `_redirects` sends `/the-difference` there with a 301. It is not in any nav.
+- Services order: Real work vs template work, How We Can Work Together (`#work-together`), the pinned problem stack, Build your handstart, What we don't do, closing. Services has no ABCD block; ABCD lives on the homepage only.
+- Services slots: lightbulb, browser-window, magnifier, megaphone and speech-bubble on the five "Build your handstart" cards (plus mini copies in the tray), glove-stop beside "What we don't do", magnifier and clipboard in "Real work vs template work". Services loads the GSAP enhancement (`hs-mascots.js`).
+- About slots: bar-chart peeking over the credentials card (the card clips overflow, so the mascot sits in `.hs-cred-wrap`, which now carries the sticky), handshake beside paragraph 1, ribbon across the corner of the "red tape" paragraph, power-button beside the "I see it, we decide it, we start it." pull-line, megaphone hanging off the left of the ticker. About loads the GSAP enhancement.
+- Case Studies slots: podium with foam-finger in the hero, clipboard on the coming-soon page, bar-chart in the Greenlife results header. Ledger entries carry a status chip (`hs-status--live` sage, `hs-status--progress` butter) above the title.
+- "Build your handstart" picks are saved to sessionStorage `hs_selected_services` as `[{id, label, group}]`, passed to the contact link as `?services=` (comma-separated slugs, since some labels contain commas), and sent to Cal.com as `notes`. The contact page prefills its message from `?services=`.
+- `assets/mascots/manifest.json` lists every mascot with its default `blob`. Finished art adds `type` and `poses` (optional `ratio`). An entry without a `type` shows its SVG placeholder from `assets/mascots/placeholder/` (regenerate with `python3 tools/make-mascot-placeholders.py`). Raw art goes in `incoming/`, checked art in `final/`.
+- Final raster art goes through `python3 tools/prepare-mascots.py`: raw `{id}-{pose}.png` files in `assets/mascots/incoming/` (gitignored) come out as framed 600/1200px WebPs in `final/` with the manifest updated. Steps and warnings are in `docs/mascot-raster-spec.md`.
+- `/palette-test/` (palettes, cloud shader, blob options) and `/motif-test/` (fingerprint, on your marks, jump start, jump start with hands) are dev-only ideation pages, noindex and unlinked. Keep them for reference during the redesign.
+- Mascot prompts for Midjourney live in `docs/mascot-prompts.md`. Add every approved prompt there with its result.
+- `/mascot-test/` is a dev-only page showing every mascot in every state, in CSS mode and `?gsap` mode, plus demo raster characters from `mascot-test/demo/` (regenerate with `python3 tools/make-demo-raster.py`). It is not linked from the site.

@@ -1,0 +1,12 @@
+{
+  "demo-bean": {
+    "type": "raster",
+    "poses": [
+      "idle",
+      "happy",
+      "idle-b"
+    ],
+    "blob": "butter",
+    "path": "/mascot-test/demo/"
+  }
+}
