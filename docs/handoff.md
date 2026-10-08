@@ -130,8 +130,28 @@
 - Preview site: https://deploy-preview-1--handstartdigital.netlify.app (palette page: `/palette-test/?p=c`).
 - `_redirects` hides `/CLAUDE.md`, `/README.md`, `/.gitignore`, `/docs/*` and `/tools/*` (404, verified on the preview).
 
+### Hero landing sequence (planned 2026-10-07, prototyped 2026-10-08 on `/mascot-test/run/`)
+The hero is now a Recraft SVG with a code rig (`/mascot-test/run/`, `tools/build-hero-rig.py`). Aidan approved the run cycle as is. Planned sequence on the homepage:
+1. User lands on HANDSTART. The hero's arms come in from the sides, grab the letters and jolt them.
+2. The hero appears beside "Let's give your business a handstart", standing and facing the camera (two thumbs up).
+3. On scroll he runs across and off the screen, ramping from a slow jog to a full sprint as he goes.
+
+To-dos:
+- [x] **Speed ramp** (prototyped in `mascot-test/run/sequence.js`: holds a 1.0s stride for 0.2s, grows exponentially to a 0.3s full sprint over 0.9s, then keeps accelerating exponentially (legs cycling faster, down to 0.16s) until he's off screen; ground speed matched to the stride. Aidan asked for a faster start, a fuller sprint at the end, and exponential acceleration): stride time from 1.5s down to about 0.5s across the exit, with stride, kick, lean and bounce scaling up with it (one speed dial driving them all). Decided: a timer. Once the user scrolls far enough it starts and always plays through to the end.
+- [ ] **Grip hands for the jolt:** new Recraft SVGs of the glove hand reaching open and gripping (gripping split into back and front layers so the letter sits between palm and fingers, as in motif 5b). The arms themselves are rig strokes, no art needed.
+- [ ] **Electricity effect:** SVG bolts and glow around the letters and hands. Likely drawn in code (jagged paths redrawn every frame) rather than generated.
+- [x] **Idle pose** (rigged; bounce at 1.3s approved by Aidan): Recraft gave a victory pose (both fists raised, same body angle as the runner) instead of thumbs up; kept as the idle (`_refs/hero-idle-recraft.svg`), rigged like the runner with arms and legs as strokes. An optional thumbs-up moment could still be drawn in code.
+- [x] **Idle to run transition** (prototyped): decided: squash and pop. He crouches, a dust puff hides the swap, he comes out running. No extra pose.
+- [ ] **Exit transition** (prototyped on a mock stage, not yet on the homepage): decided: a wipe that follows the hero off screen, replacing the portal zoom. It must land exactly where the current portal ride does: the `#gp-handstart` sequence ends by revealing `#top` ("Being online / Being found").
+- [ ] **Placement and run path:** he stands to the left of the tagline, facing right into it (same direction as the run, so the squash and pop needs no turn). On the run he crosses in front of the line and off to the right; the wipe's edge tracks his position so the line is wiped away right behind him. On phones too he stands to the left of the line (tagline in a column to his right) and runs the full width the same way.
+- [ ] **Cloud sky after landing:** the wipe reveals the golden-hour cloud shader (from `/palette-test/`) behind `#top`. Recommended a cream pre-scroll screen (HANDSTART, the jolt, then tagline and hero) so the sky reveal has contrast. Paragraph text on the sky needs the lower, lighter part or a cream card. Pause the shader when off screen. Being the first Golden hour piece on a live page, it needs a decision on the still-navy header around it.
+- [ ] **Clouds inside HANDSTART:** decided (Aidan): the letters start empty, the jolt switches them on and they fill with the moving cloud sky, previewing what the wipe reveals. One shader canvas behind the whole landing; the cream page sits on top with the letters cut out as windows (reusing the portal's SVG letter shapes); the wipe removes the cream layer, so the same sky goes full screen. Keep a solid ink outline on each letter so HANDSTART stays legible.
+- [ ] **Golden hour on the whole homepage:** decided (Aidan): header, footer, every section and the homepage mascots' blob colors. Other pages stay navy until their turn, so the header differs between the homepage and the rest for a while. Homepage mascots take the new blob colors through `data-blob`; the shared `manifest.json` defaults change in the later site-wide rollout.
+- [ ] **Full landing prototype:** cream HANDSTART, placeholder jolt (fists until the grip hands exist), hero and tagline, run and wipe, live cloud sky with the real `#top` text, on a dev page before the homepage.
+- [ ] **Rollout:** piece by piece, each piece proven on a dev page first. Nothing goes on live pages until approved.
+
 ### Later, in order
-1. Hero art, then the jump-start poses, then the remaining mascots with the hero as `--sref`.
+1. Hero art, then the jump-start poses, then the remaining mascots with the hero as the style reference.
 2. Swap the 5b code hands for the glove art (images per pose, mirrored for the right hand).
 3. Logo exploration in Midjourney, rebuilt as SVG.
 4. Golden hour rollout across the site, blob remap in `manifest.json`, the cloud sky after the portal dive.

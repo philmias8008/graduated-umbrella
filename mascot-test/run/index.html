@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Hero Run Test | Handstart Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1D3F66;
+    --sky: #7FB5E3;
+    --accent: #E3A23B;
+    --accent-lt: #F0C46E;
+    --body: #4B5868;
+    --cream: #F7F4EE;
+    --hairline: #D6CFC2;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Libre Franklin', Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); }
+  .rt-bar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center;
+    padding: 12px 16px; background: var(--ink); color: var(--cream); font-size: 14px;
+  }
+  .rt-bar h1 { margin: 0 auto 0 0; font-family: var(--serif); font-weight: 600; font-size: 24px; }
+  .rt-bar button {
+    font: 600 13px var(--sans); color: var(--ink); background: var(--accent-lt);
+    border: 2px solid var(--cream); border-radius: 6px; padding: 6px 12px; cursor: pointer;
+  }
+  .rt-wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px 80px; }
+  .rt-wrap > h2 { font-family: var(--serif); font-weight: 600; font-size: 30px; margin: 36px 0 4px; }
+  .rt-wrap > p { margin: 0 0 12px; color: var(--body); font-size: 14px; max-width: 70ch; }
+  .rt-note { background: var(--accent-lt); padding: 10px 14px; border-radius: 8px; font-size: 14px; margin-top: 16px; }
+  .rt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .rt-card { background: #fff; border: 1px solid var(--hairline); border-radius: 12px; overflow: hidden; }
+  .rt-card.sky { background: var(--sky); border-color: var(--sky); }
+  .rt-card svg, .rt-card img { display: block; width: 100%; aspect-ratio: 1; }
+  .rt-card p { margin: 0; padding: 8px 12px 12px; font-size: 13px; color: var(--body); }
+  .rt-card.sky p { color: var(--ink); }
+  .rt-card b { color: var(--ink); }
+  .seq-stage { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; border: 1px solid var(--hairline); }
+  .seq-next, .seq-current { position: absolute; inset: 0; display: flex; align-items: center; }
+  .seq-next { background: var(--sky); justify-content: center; }
+  .seq-current { background: var(--cream); padding-left: 42%; padding-right: 6%; }
+  .seq-h, .seq-tag { margin: 0; font-family: var(--serif); font-weight: 600; color: var(--ink); line-height: 1.05; }
+  .seq-h { font-size: clamp(26px, 5vw, 60px); text-align: center; }
+  .seq-tag { font-size: clamp(24px, 4.4vw, 54px); }
+  .seq-tag em { color: var(--accent); }
+  .seq-hero { position: absolute; left: 5%; bottom: 8%; width: 32%; aspect-ratio: 900 / 920; }
+  .seq-hero svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transform-origin: 50% 93%; }
+  .seq-puff { pointer-events: none; }
+  .seq-controls { display: flex; gap: 10px; margin-top: 12px; }
+  .seq-controls button {
+    font: 600 14px var(--sans); color: var(--ink); background: var(--accent-lt);
+    border: 2px solid var(--ink); border-radius: 8px; padding: 8px 14px; cursor: pointer;
+  }
+  .rt-frames { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .rt-play { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+  .rt-play .rt-card { position: sticky; top: 70px; }
+  .rt-sliders { display: grid; gap: 10px; font-size: 14px; }
+  .rt-sliders label { display: grid; grid-template-columns: 110px 1fr 48px; gap: 10px; align-items: center; }
+  .rt-sliders input { width: 100%; accent-color: var(--accent); }
+  .rt-sliders output { font-variant-numeric: tabular-nums; text-align: right; }
+  .rt-sliders pre {
+    margin: 6px 0 0; padding: 10px; background: #fff; border: 1px solid var(--hairline);
+    border-radius: 8px; font-size: 12px; white-space: pre-wrap; word-break: break-word;
+  }
+  @media (max-width: 720px) {
+    .rt-grid, .rt-frames { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .rt-card p { padding: 6px 8px 10px; font-size: 12px; }
+    .rt-play { grid-template-columns: 1fr; }
+    .rt-play .rt-card { position: static; }
+    .seq-stage { aspect-ratio: 1 / 1; }
+    .seq-current { padding-left: 50%; padding-right: 14px; }
+    .seq-tag { font-size: 26px; }
+    .seq-hero { left: 2%; top: 50%; bottom: auto; width: 46%; margin-top: -23.5%; }
+  }
+</style>
+</head>
+<body>
+<div class="rt-bar">
+  <h1>Hero run test</h1>
+  <button type="button" id="rt-pause">Pause</button>
+</div>
+
+<main class="rt-wrap">
+  <p class="rt-note" id="rt-reduced" hidden>Your device asks for reduced motion, so every hero shows the still pose. Turn it off in your system settings to see the run cycle.</p>
+
+  <h2>The landing sequence</h2>
+  <p>He waits beside the tagline, bouncing. On the real page, scrolling far enough starts the run; here the button does. He crouches, pops out of a dust puff already running, speeds up to a sprint, and the wipe follows his back into the next section.</p>
+  <div class="seq-stage" id="seq">
+    <div class="seq-next" data-seq-next><p class="seq-h">Being online<br>&ne;<br>Being found</p></div>
+    <div class="seq-current" data-seq-current><p class="seq-tag">Let's give your business a <em>handstart</em>.</p></div>
+    <div class="seq-hero" data-seq-hero>
+      <svg data-seq-idle viewBox="90 80 900 920" aria-hidden="true"></svg>
+      <svg data-seq-run viewBox="60 40 900 920" aria-hidden="true"></svg>
+    </div>
+  </div>
+  <div class="seq-controls">
+    <button type="button" id="seq-go">Start the run</button>
+    <button type="button" id="seq-again">Replay</button>
+  </div>
+
+  <h2>Original and rig</h2>
+  <p>Recraft's running drawing recolored to Golden hour, the rig in the drawing's own pose (rebuilt limbs, separate eyes), and the rig running with the default settings.</p>
+  <div class="rt-grid">
+    <div class="rt-card"><img src="hero-original.svg" alt="Recraft original, recolored"><p><b>Original</b>, Recraft A, recolored</p></div>
+    <div class="rt-card"><svg data-mode="rest"></svg><p><b>Rig, still pose</b></p></div>
+    <div class="rt-card"><svg data-opts="{}"></svg><p><b>Rig, running</b>, defaults</p></div>
+  </div>
+
+  <h2>Idle</h2>
+  <p>The victory pose, waiting beside the tagline before the run. A gentle bounce, fist pumps and blinks.</p>
+  <div class="rt-grid">
+    <div class="rt-card"><img src="hero-idle-original.svg" alt="Recraft idle original, recolored"><p><b>Original</b>, Recraft idle, recolored</p></div>
+    <div class="rt-card"><svg data-kind="idle" data-mode="rest"></svg><p><b>Rig, still</b></p></div>
+    <div class="rt-card"><svg data-kind="idle" data-opts="{}"></svg><p><b>Rig, bouncing</b>, 1.3s</p></div>
+    <div class="rt-card"><svg data-kind="idle" data-opts='{"period":0.8,"dip":18,"pump":24}'></svg><p><b>Excited</b>, 0.8s</p></div>
+    <div class="rt-card sky"><svg data-kind="idle" data-opts="{}"></svg><p><b>On the sky</b></p></div>
+  </div>
+
+  <h2>One stride, frame by frame</h2>
+  <p>The default cycle frozen at eight points, left to right. Frame 1 is the near foot landing.</p>
+  <div class="rt-grid rt-frames" id="rt-frames"></div>
+
+  <h2>Speed</h2>
+  <p>Seconds per full stride (two steps).</p>
+  <div class="rt-grid">
+    <div class="rt-card"><svg data-opts='{"period":1.0}'></svg><p><b>Jog</b>, 1.0s</p></div>
+    <div class="rt-card"><svg data-opts='{"period":0.75}'></svg><p><b>Run</b>, 0.75s</p></div>
+    <div class="rt-card"><svg data-opts='{"period":0.5}'></svg><p><b>Sprint</b>, 0.5s</p></div>
+  </div>
+
+  <h2>Stride and kick</h2>
+  <p>How far the feet travel and how high the back foot kicks.</p>
+  <div class="rt-grid">
+    <div class="rt-card"><svg data-opts='{"stride":110,"lift":80}'></svg><p><b>Short</b>, stride 110, kick 80</p></div>
+    <div class="rt-card"><svg data-opts='{"stride":150,"lift":120}'></svg><p><b>Medium</b>, stride 150, kick 120</p></div>
+    <div class="rt-card"><svg data-opts='{"stride":190,"lift":160}'></svg><p><b>Long</b>, stride 190, kick 160</p></div>
+  </div>
+
+  <h2>Limb thickness</h2>
+  <p>White core of legs and arms; the outline stays the same.</p>
+  <div class="rt-grid">
+    <div class="rt-card"><svg data-opts='{"legCore":18,"armCore":13}'></svg><p><b>Thin</b>, 18 / 13</p></div>
+    <div class="rt-card"><svg data-opts='{"legCore":25,"armCore":18}'></svg><p><b>As drawn</b>, 25 / 18</p></div>
+    <div class="rt-card"><svg data-opts='{"legCore":34,"armCore":25}'></svg><p><b>Chunky</b>, 34 / 25</p></div>
+  </div>
+
+  <h2>Bounce and lean</h2>
+  <p>How much the body drops on each step, and how far it leans into the run.</p>
+  <div class="rt-grid">
+    <div class="rt-card"><svg data-opts='{"bob":6,"lean":3}'></svg><p><b>Calm</b>, bob 6, lean 3</p></div>
+    <div class="rt-card"><svg data-opts='{"bob":14,"lean":6}'></svg><p><b>Springy</b>, bob 14, lean 6</p></div>
+    <div class="rt-card"><svg data-opts='{"bob":26,"lean":11}'></svg><p><b>Bouncy</b>, bob 26, lean 11</p></div>
+  </div>
+
+  <h2>On the sky</h2>
+  <p>Where the hero will live, after the portal dive.</p>
+  <div class="rt-grid">
+    <div class="rt-card sky"><svg data-mode="rest"></svg><p><b>Still</b></p></div>
+    <div class="rt-card sky"><svg data-opts="{}"></svg><p><b>Running</b>, defaults</p></div>
+    <div class="rt-card sky"><svg data-opts='{"period":0.5,"stride":190,"lift":160,"bob":20,"lean":10}'></svg><p><b>Sprinting</b></p></div>
+  </div>
+
+  <h2>Playground</h2>
+  <p>Tune every setting and copy the result back to me.</p>
+  <div class="rt-play">
+    <div class="rt-card"><svg id="rt-play-svg"></svg></div>
+    <div class="rt-sliders" id="rt-sliders"></div>
+  </div>
+</main>
+
+<script src="rig.js"></script>
+<script src="sequence.js"></script>
+<script>
+  (function () {
+    var SLIDERS = [
+      ['period', 'Stride time', 0.3, 1.5, 0.05], ['stride', 'Stride', 60, 240, 5], ['lift', 'Kick', 0, 220, 5],
+      ['bob', 'Bob', 0, 40, 1], ['lean', 'Lean', -5, 20, 1], ['armSwing', 'Arm pump', 0, 1.5, 0.05],
+      ['legCore', 'Leg core', 10, 44, 1], ['armCore', 'Arm core', 8, 36, 1], ['line', 'Outline', 4, 12, 0.5],
+      ['legLength', 'Leg length', 170, 280, 5], ['armReach', 'Arm reach', 80, 150, 2]
+    ];
+    var DEFAULTS = { period: 0.75, stride: 150, lift: 120, bob: 14, lean: 6, armSwing: 1,
+      legCore: 25, armCore: 18, line: 7.5, legLength: 245, armReach: 112 };
+
+    HeroRig.ready.then(function () {
+      document.getElementById('rt-reduced').hidden = !HeroRig.reducedMotion;
+      var seq = new HeroSequence(document.getElementById('seq'));
+      document.getElementById('seq-go').addEventListener('click', function () { seq.start(); });
+      document.getElementById('seq-again').addEventListener('click', function () { seq.reset(); });
+      var at = parseFloat(new URLSearchParams(location.search).get('seqt'));
+      if (at >= 0) { seq.start(); seq.advance(at); HeroRig.pause(true); seq.tick = function () {}; }
+
+      var frames = document.getElementById('rt-frames');
+      for (var i = 0; i < 8; i++) {
+        frames.insertAdjacentHTML('beforeend', '<div class="rt-card"><svg data-mode="frame" data-opts=\'{"phase":' +
+          (i / 8) + ',"blink":false}\'></svg><p><b>' + (i + 1) + '</b></p></div>');
+      }
+      document.querySelectorAll('.rt-card svg:not(#rt-play-svg)').forEach(function (svg) {
+        HeroRig.mount(svg, JSON.parse(svg.dataset.opts || '{}'), svg.dataset.mode, svg.dataset.kind);
+      });
+
+      var hero = HeroRig.mount(document.getElementById('rt-play-svg'), {});
+      var box = document.getElementById('rt-sliders');
+      var out = document.createElement('pre');
+      function show() {
+        var o = {};
+        SLIDERS.forEach(function (s) { o[s[0]] = hero.o[s[0]]; });
+        out.textContent = JSON.stringify(o);
+      }
+      SLIDERS.forEach(function (s) {
+        var label = document.createElement('label');
+        label.innerHTML = '<span>' + s[1] + '</span><input type="range" min="' + s[2] + '" max="' + s[3] +
+          '" step="' + s[4] + '" value="' + DEFAULTS[s[0]] + '"><output>' + DEFAULTS[s[0]] + '</output>';
+        var input = label.querySelector('input'), o = label.querySelector('output');
+        input.addEventListener('input', function () {
+          var v = parseFloat(input.value), patch = {};
+          patch[s[0]] = v; o.textContent = v; hero.set(patch); show();
+        });
+        box.appendChild(label);
+      });
+      box.appendChild(out);
+      show();
+    });
+
+    var paused = false, btn = document.getElementById('rt-pause');
+    btn.addEventListener('click', function () {
+      paused = !paused; HeroRig.pause(paused); btn.textContent = paused ? 'Play' : 'Pause';
+    });
+  })();
+</script>
+</body>
+</html>

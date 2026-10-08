@@ -9,9 +9,9 @@ Static marketing site for Handstart Digital, deployed via Netlify. Plain HTML/CS
 - **Never touch `main` without explicit confirmation first.** All work happens on `ported-pages` (or another feature branch); commit and push there.
 - Before any destructive git operation (reset, checkout that discards changes, force-push), run `git status` and confirm with the user.
 
-## Palette decision: Golden hour (decided 2026-10-07, NOT rolled out yet)
+## Palette decision: Golden hour (decided 2026-10-07; homepage first, rest of the site later)
 
-The navy and amber palette below is still what every live page uses. It is being replaced by the Golden hour palette, chosen on `/palette-test/` (palette C). The site-wide rollout is deliberately parked until much later, after the blob colors and mascots are settled. Until then: build new mascot art, prompts and test pages on Golden hour, and leave live pages on navy and amber unless asked.
+The navy and amber palette below is still what every live page uses. It is being replaced by the Golden hour palette, chosen on `/palette-test/` (palette C). The homepage goes Golden hour first (decided 2026-10-08, as part of the new landing sequence); the rest of the site's rollout is parked until later. Until then: build new mascot art, prompts, test pages and the homepage on Golden hour, and leave the other live pages on navy and amber unless asked.
 
 ```css
 --ink: #1D3F66;         /* replaces navy for text, headings, button faces, footer */
