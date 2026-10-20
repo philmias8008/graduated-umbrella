@@ -1659,6 +1659,8 @@
     armL: [434, 622], armR: [696, 604],       // where each arm leaves the band, near the top of its sides
     thumbScale: 0.17, thumbTilt: 4,
     SIDE: [1690, 1290],    // the wrist on the side of the thumbs-up drawing (mk-hand-thumbflat space)
+    // the right leg ends a little left of the drawing's ankle, so its rounded end covers the shoe's collar lip
+    ankleR: [586, 780],
     // his own shadow, centred under both shoes (the loader's sits under the drawing's middle)
     ownShadow: true, shadow: { at: [566, 916], rx: 235, ry: 34 },
 
@@ -1670,6 +1672,9 @@
       r.fistL.style.display = 'none'; r.fistR.style.display = 'none';
       // both arms in front of his body, tucked under the band where they leave it
       r.body.insertBefore(r.armR.ink.parentNode, r.band);
+      // legs over the shoes, so each leg's rounded end covers the drawing's lumpy collar where it goes in
+      r.body.insertBefore(r.legL.ink.parentNode, r.torso);
+      r.body.insertBefore(r.legR.ink.parentNode, r.torso);
       r.thumbs = [new Hand(r.body, 1, this.thumbScale), new Hand(r.body, 1, this.thumbScale)];
       // the wink: his right eye swaps its pupil for a happy closed arc
       r.wink = el('path', { d: 'M608 384Q640 346 672 384', fill: 'none', stroke: INK, 'stroke-width': 16, 'stroke-linecap': 'round', opacity: 0 }, r.torso);
@@ -1690,7 +1695,7 @@
       r.body.removeAttribute('transform');
       r.torso.setAttribute('transform', body); r.band.setAttribute('transform', body); r.number.setAttribute('transform', body);
       function onBody(pt) { return [pt[0], pt[1] + down]; }
-      [['L', V.hipL, V.ankleL, 1, r.legL], ['R', V.hipR, V.ankleR, -1, r.legR]].forEach(function (s) {
+      [['L', V.hipL, V.ankleL, 1, r.legL], ['R', V.hipR, A.ankleR, -1, r.legR]].forEach(function (s) {
         s[4].draw(hose(onBody(s[1]), s[2], Math.hypot(s[2][0] - s[1][0], s[2][1] - s[1][1]) * 1.03, s[3]));
       });
       r.shoeL.removeAttribute('transform'); r.shoeR.removeAttribute('transform');

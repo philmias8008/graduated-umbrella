@@ -33,7 +33,7 @@
   var SVG_NS = 'http://www.w3.org/2000/svg';
   var BLOB_PATH = 'M104 6C150 4 190 36 194 84C198 132 170 178 118 190C66 202 18 172 8 118C-2 64 36 10 104 6Z';
   var RASTER_1X = 600;
-  var RIG_SRC = '/assets/js/hs-mascot-rig.js?v=20261019zt';
+  var RIG_SRC = '/assets/js/hs-mascot-rig.js?v=20261019zu';
 
   // Lets the CSS hide reveal-state mascots only when JS is running to reveal them.
   document.documentElement.classList.add('hs-mascots-js');

@@ -79,6 +79,22 @@ DRAWINGS = {
         # are copied too, "with"), so it runs unbroken behind the arm. The hole's notch at the band
         # (418 628 to 360 700) drops Recraft's own dark nub there.
         "shadow": {"clip": "M100 170H440V720H100Z", "offset": (-15, 7), "with": [9, 10, 22], "with_offset": (-15, 0)},
+        # 2026-10-19: under the lowest finger, the drawing's dark left edge ends in a knob and the palm's
+        # edge starts a few units further out, so the edge hooks and its pale shade stripe steps (Aidan
+        # spotted it on the thank-you hero). Redrawn smooth from x 258 to 306: the dark edge between the
+        # shade line ("bd") and the outer edge, the shade stripe between the white line ("wb") and "bd",
+        # and a little white above "wb"; "trim" cuts the knob off outside the new edge. The points are the
+        # clean edges measured either side of the seam (1024 space).
+        # 2026-10-19: where the right arm used to join, the arm hole leaves the glove's right edge squared
+        # off out to x 712 just above the band (the arm covers it in the landing; the thank-you hero's arms
+        # don't). Everything right of the natural edge (about 708.6) is cut away there.
+        "trim": ["M708.8 520H760V577H708.8Z"],
+        "smooth": [
+            {"fill": INK, "x": (262, 306), "trim": (262, 286), "top": [(250, 385.2), (254, 396.8), (258, 404.0), (262, 409.8), (266, 414.6), (272, 421.2), (278, 427.0), (284, 432.0), (290, 436.3), (296, 441.0), (302, 444.4), (306, 445.6), (310, 446.9), (314, 448.2)],
+             "bottom": [(246, 428.1), (250, 432.2), (254, 436.1), (258, 439.6), (262, 442.9), (270, 449.9), (278, 455.6), (286, 459.5), (290, 460.8), (294, 462.0), (298, 463.5), (302, 465.1), (306, 466.8), (310, 468.5)]},
+            {"fill": "#A9BACD", "x": (282, 308), "top": [(274, 390.0), (278, 397.0), (282, 402.6), (286, 407.5), (291, 413.8), (296, 419.6), (301, 424.8), (306, 428.6), (310, 430.4), (314, 431.6), (318, 433.1)], "bottom": [(250, 385.2), (254, 396.8), (258, 404.0), (262, 409.8), (266, 414.6), (272, 421.2), (278, 427.0), (284, 432.0), (290, 436.3), (296, 441.0), (302, 444.4), (306, 445.6), (310, 446.9), (314, 448.2)]},
+            {"fill": "#FFFFFF", "x": (288, 308), "top_offset": -12, "top": [(274, 390.0), (278, 397.0), (282, 402.6), (286, 407.5), (291, 413.8), (296, 419.6), (301, 424.8), (306, 428.6), (310, 430.4), (314, 431.6), (318, 433.1)], "bottom": [(274, 390.0), (278, 397.0), (282, 402.6), (286, 407.5), (291, 413.8), (296, 419.6), (301, 424.8), (306, 428.6), (310, 430.4), (314, 431.6), (318, 433.1)]},
+        ],
         # white shapes that are really background showing through (between the legs, inside
         # the left arm's bend): cut out of the silhouette so the page shows through instead
         "background": [16, 21],
@@ -155,6 +171,27 @@ def scale_of(tr):
 def path(p, **attrs):
     a = {"transform": p["tr"], "d": p["d"], "fill": p["fill"], **attrs}
     return "<path " + " ".join(f'{k.replace("_", "-")}="{v}"' for k, v in a.items() if v != "") + "/>"
+
+
+def catmull_rom(pts, x):
+    """A smooth curve through (x, y) points, read at x."""
+    P = sorted(pts)
+    X = [p[0] for p in P]
+    i = max(1, min(len(P) - 3, sum(1 for v in X if v <= x) - 1))
+    (x0, y0), (x1, y1), (x2, y2), (x3, y3) = P[i - 1], P[i], P[i + 1], P[i + 2]
+    t = (x - x1) / (x2 - x1)
+    m1 = (y2 - y0) / (x2 - x0) * (x2 - x1)
+    m2 = (y3 - y1) / (x3 - x1) * (x2 - x1)
+    return ((2 * t ** 3 - 3 * t ** 2 + 1) * y1 + (t ** 3 - 2 * t ** 2 + t) * m1
+            + (-2 * t ** 3 + 3 * t ** 2) * y2 + (t ** 3 - t ** 2) * m2)
+
+
+def band_patch(top, bottom, x0, x1, fill, top_offset=0, n=40):
+    """A filled strip between two smooth curves from x0 to x1 (1024 space, no transform)."""
+    xs = [x0 + (x1 - x0) * k / (n - 1) for k in range(n)]
+    up = " ".join(f"{x:.2f} {catmull_rom(top, x) + top_offset:.2f}" for x in xs)
+    down = " ".join(f"{x:.2f} {catmull_rom(bottom, x):.2f}" for x in reversed(xs))
+    return f'<path d="M{up} L{down}Z" fill="{fill}"/>'
 
 
 def stroked(p, color, width_1024):
@@ -245,6 +282,17 @@ def build_body(D, P, sil, defs, parts):
     patch = D.get("patch")
     Q = load(ROOT / patch["src"]) if patch else []
     body = [f'<g id="{k}-body">']
+    # "trim": cut away anything outside a smoothed edge (a knob in the drawing poking past it)
+    trims = [sm for sm in D.get("smooth", []) if "trim" in sm]
+    if trims or D.get("trim"):
+        cut = "".join(D.get("trim", []))
+        for sm in trims:
+            a, b = sm["trim"]
+            xs = [a + (b - a) * j / 39 for j in range(40)]
+            edge = " ".join(f"{x:.2f} {catmull_rom(sm['bottom'], x):.2f}" for x in xs)
+            cut += f"M{edge} L{b:.2f} {catmull_rom(sm['bottom'], b) + 40:.2f} L{a:.2f} {catmull_rom(sm['bottom'], a) + 40:.2f}Z"
+        defs.append(f'<clipPath id="{k}-c-trim"><path clip-rule="evenodd" d="M-200 -200H1224V1224H-200Z {cut}"/></clipPath>')
+        body.append(f'<g clip-path="url(#{k}-c-trim)">')
     shadow = D.get("shadow")
     if shadow:
         defs.append(f'<clipPath id="{k}-c-shadow"><path d="{shadow["clip"]}"/></clipPath>')
@@ -261,10 +309,16 @@ def build_body(D, P, sil, defs, parts):
     body.append(masked_silhouette(sil, f"{k}-m-body"))
     body += [path(Q[i]) for i in (patch["fills"] if patch else [])]
     body += [path(P[i]) for i in D["body_fills"] + D["mouth"]]
+    # smooth over a seam in the drawing: strips that redraw its dark edge, shade stripe and white
+    # along curves fitted to the clean edges either side (see "smooth" in the drawing's settings)
+    for sm in D.get("smooth", []):
+        body.append(band_patch(sm["top"], sm["bottom"], sm["x"][0], sm["x"][1], sm["fill"], sm.get("top_offset", 0)))
     # white patch over Recraft's own eyes, kept inside the glove, so a blink never reveals them
     body.append(f'<g clip-path="url(#{k}-c-glove)">' + "".join(
         f'<ellipse cx="{cx}" cy="{cy}" rx="{rx + EYE_LINE}" ry="{ry + EYE_LINE}" fill="#FFFFFF"/>'
         for _, cx, cy, rx, ry, *_ in D["eyes"]) + "</g>")
+    if trims or D.get("trim"):
+        body.append("</g>")
     body.append("</g>")
     parts.append("".join(body))
 
