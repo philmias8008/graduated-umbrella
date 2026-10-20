@@ -8,3 +8,10 @@
 /.gitignore  /404  404!
 /docs/*      /404  404!
 /tools/*     /404  404!
+
+# Dev-only test pages: local use only, never on the public site (launch, 2026-10-19).
+/mascot-test/*   /404  404!
+/font-test/*     /404  404!
+/logo-test/*     /404  404!
+/palette-test/*  /404  404!
+/motif-test/*    /404  404!
