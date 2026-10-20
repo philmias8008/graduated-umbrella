@@ -9,7 +9,7 @@ Static marketing site for Handstart Digital, deployed via Netlify. Plain HTML/CS
 ## Branch safety
 
 - **Never touch `main` without explicit confirmation first.** All work happens on `ported-pages` (or another feature branch).
-- **Current hold (from 2026-10-08):** the redesign stays offline as uncommitted changes on the local branch `landing-v2`. Don't commit, merge into `ported-pages` (the Netlify preview branch) or push until Aidan says so.
+- **Redesign workflow (from 2026-10-19):** the redesign is built on the local branch `landing-v2` and was released to the Netlify preview branch `ported-pages` on 2026-10-19. Commit when Aidan asks; only merge into `ported-pages` or push when he explicitly says so. `main` (the live site) stays untouched without his explicit confirmation.
 - Before any destructive git operation (reset, checkout that discards changes, force-push), run `git status` and confirm with the user.
 
 ## Palette: Golden hour (decided 2026-10-07; homepage 2026-10-08; every page 2026-10-15)
