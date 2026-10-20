@@ -3,20 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="robots" content="noindex">
 <title>Greenlife Sembalun: Rebrand &amp; Website Rebuild | Handstart Digital</title>
 <meta name="description" content="Five stars in person, but a question mark online. How a Lombok hostel-campsite's reputation finally got conveyed digitally.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/hs-mascots.css">
-<script src="/assets/js/hs-mascot-loader.js" defer></script>
+<link rel="preload" href="/assets/fonts/LibreFranklin-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/BricolageGrotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/hs-fonts.css?v=20261019a">
 <style>
   :root {
-    --navy: #1B2B4B; --amber: #C8873A; --amber-lt: #e0a558;
-    --cream: #F7F4EE; --slate: #3f4a5a; --body: #5a6472;
+    /* Golden hour (decided 2026-10-07, homepage 2026-10-08, every page 2026-10-15) */
+    --ink: #1D3F66; --sky: #7FB5E3; --sky-top: #3F7DC0; --sky-bottom: #9DCAEE;
+    --accent: #E3A23B; --accent-lt: #F0C46E; --accent-dk: #B57A1E;
+    --display: 'Bricolage Grotesque', 'Libre Franklin', sans-serif;
+    --navy: var(--ink); --amber: var(--accent); --amber-lt: var(--accent-lt);
+    --cream: #F7F4EE; --slate: #3f4a5a; --body: #4B5868;
     --hairline: #D6CFC2; --tint: #EFEAE0;
-    --serif: 'Cormorant Garamond', Georgia, serif;
+    --serif: var(--display); /* Cormorant retired: headings are Bricolage */
     --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
   }
   * { box-sizing: border-box; }
@@ -27,32 +32,34 @@
   img { display: block; max-width: 100%; }
 
   /* header / nav */
-  .hs-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid var(--hairline); }
+  .hs-header { position: sticky; top: 0; z-index: 50; background: var(--sky); border-bottom: 1px solid rgba(29,63,102,0.18); }
   .hs-header-in { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); height: clamp(72px,10vw,96px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .hs-logo img { height: clamp(44px,5.5vw,58px); width: auto; object-fit: contain; }
+  /* the header logo fills the room the nav leaves it, as on the homepage */
+  .hs-header-logo { display: block; width: min(445px, calc(100vw - 560px)); height: auto; }
+  @media (max-width: 900px) { .hs-header-logo { width: min(360px, calc(100vw - 100px)); } }
   .hs-nav { display: flex; align-items: center; gap: clamp(20px,2.6vw,34px); }
     .hs-navlink { position: relative; display: inline-block; overflow: hidden; white-space: nowrap; height: 1.3em; font-family: var(--sans); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--navy); text-decoration: none; }
     .hs-navlink.is-active { font-weight: 600; }
     .hs-navlink-top, .hs-navlink-bottom { display: block; }
     .hs-navlink-bottom { position: absolute; inset: 0; }
     .hs-navlink-top span, .hs-navlink-bottom span { display: inline-block; transition: transform 210ms ease-in-out; transition-delay: calc(var(--i, 0) * 12ms); }
-    .hs-navlink-bottom span { transform: translateY(100%); color: var(--amber); }
+    .hs-navlink-bottom span { transform: translateY(100%); color: var(--ink); }
     .hs-navlink:is(:hover, .is-tapped) .hs-navlink-top span, .hs-navlink:focus-visible .hs-navlink-top span { transform: translateY(-100%); }
     .hs-navlink:is(:hover, .is-tapped) .hs-navlink-bottom span, .hs-navlink:focus-visible .hs-navlink-bottom span { transform: translateY(0); }
     .hs-navlink-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     @media (prefers-reduced-motion: reduce) { .hs-navlink-top span, .hs-navlink-bottom span { transition: none !important; } }
 
-  /* Comic-panel Contact button, mirrors the homepage's Find My Gaps button */
+  /* Comic-panel Contact button, mirrors the homepage's Find Your Gaps button */
   .hs-next-btn { position: relative; display: inline-flex; text-decoration: none; transform: skewX(-10deg); transition: transform 160ms ease; }
   .hs-next-shadow { position: absolute; inset: 0; z-index: 0; background: #000; transform: translate(7px,7px); transition: transform 200ms ease, background 200ms ease; }
   .hs-next-btn:is(:hover, .is-tapped) { transform: skewX(-10deg) translate(3px,3px); }
-  .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(11px,11px); background: var(--amber); }
-  .hs-next-face { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 14px; background: var(--navy); padding: 13px 26px 13px 22px; }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(11px,11px); background: var(--cream); }
+  .hs-next-face { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 14px; background: var(--amber); padding: 13px 26px 13px 22px; }
   .hs-next-content { display: inline-flex; align-items: center; gap: 14px; transform: skewX(10deg); }
-  .hs-next-label { font-family: var(--sans); font-weight: 700; font-size: 15px; letter-spacing: 0.01em; text-transform: uppercase; color: var(--cream); white-space: nowrap; }
+  .hs-next-label { font-family: var(--sans); font-weight: 700; font-size: 15px; letter-spacing: 0.01em; text-transform: uppercase; color: var(--navy); white-space: nowrap; }
   .hs-next-icons { position: relative; width: 30px; height: 20px; }
   .hs-next-rest, .hs-next-cascade svg { position: absolute; top: 0; left: 0; transition: opacity 220ms ease, transform 220ms cubic-bezier(.65,0,.076,1); }
-  .hs-next-rest path, .hs-next-cascade path { stroke: var(--cream); }
+  .hs-next-rest path, .hs-next-cascade path { stroke: var(--navy); }
   .hs-next-rest { opacity: 1; }
   .hs-next-cascade svg { opacity: 0; }
   .hs-next-btn:is(:hover, .is-tapped) .hs-next-rest { opacity: 0; transform: translateX(8px); }
@@ -63,7 +70,7 @@
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one { transform: translateX(3px); }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(10px); }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(17px); }
-  @keyframes hs-arrow-chase { 0%, 100% { stroke: var(--cream); } 50% { stroke: var(--amber); } }
+  @keyframes hs-arrow-chase { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--cream); } }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0s; }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0.2s; }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0.4s; }
@@ -80,25 +87,25 @@
   .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(7px); }
   .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(12px); }
 
-  /* Navy-background modifier: flips face/label/icon colors for use on a navy backdrop */
-  .hs-next-btn--reverse .hs-next-face { background: var(--cream); }
+  /* Reverse modifier: since 2026-10-19 every arrow button is golden with navy text, so this matches the default */
+  .hs-next-btn--reverse .hs-next-face { background: var(--amber); }
   .hs-next-btn--reverse .hs-next-label { color: var(--navy); }
   .hs-next-btn--reverse .hs-next-rest path, .hs-next-btn--reverse .hs-next-cascade path { stroke: var(--navy); }
-  @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--amber); } }
+  @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--cream); } }
   .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-one path { animation-name: hs-arrow-chase-reverse; }
   .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-two path { animation-name: hs-arrow-chase-reverse; }
   .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-three path { animation-name: hs-arrow-chase-reverse; }
   @media (prefers-reduced-motion: reduce) {
     .hs-next-btn, .hs-next-shadow, .hs-next-rest, .hs-next-cascade svg { transition: none !important; }
-    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: none !important; stroke: var(--amber) !important; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: none !important; stroke: var(--cream) !important; }
   }
 
 
   /* hamburger / mobile nav */
-  .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid var(--hairline); border-radius: 9px; cursor: pointer; color: var(--navy); }
-  .hs-mnav { display: none; border-top: 1px solid var(--hairline); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--cream); }
+  .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid rgba(29,63,102,0.35); border-radius: 9px; cursor: pointer; color: var(--navy); }
+  .hs-mnav { display: none; border-top: 1px solid rgba(29,63,102,0.18); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--sky); }
   .hs-mnav.is-open { display: flex; }
-  .hs-mnav-link { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--slate); padding: 11px 0; }
+  .hs-mnav-link { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--ink); padding: 11px 0; }
   .hs-mnav-link.is-active { color: var(--navy); font-weight: 600; }
   @media (max-width: 900px) {
     .hs-nav { display: none !important; }
@@ -111,10 +118,11 @@
   .hs-back { font-family: var(--sans); font-size: 14px; font-weight: 600; color: #8b8578; margin-bottom: clamp(20px,2.4vw,28px); transition: color 180ms ease; }
   .hs-back:hover { color: var(--navy); }
   .hs-tagrow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
-  .hs-tag { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); }
+  .hs-tag { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; }
+  .hs-tag::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
   .hs-dot { width: 4px; height: 4px; border-radius: 50%; background: #c7bfb0; }
   .hs-place { font-family: var(--sans); font-size: 14px; font-weight: 500; color: #8b8578; }
-  .hs-hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(32px,4.6vw,54px); line-height: 1.06; letter-spacing: -0.015em; color: var(--navy); margin: clamp(14px,1.8vw,18px) 0 0; text-wrap: balance; }
+  .hs-hero h1 { font-family: var(--display); font-weight: 800; font-size: clamp(32px,4.6vw,54px); line-height: 1.06; letter-spacing: -0.035em; color: var(--navy); margin: clamp(14px,1.8vw,18px) 0 0; text-wrap: balance; }
 
   /* body / article */
   .hs-body { padding: 0 clamp(24px,6vw,80px) clamp(20px,3vw,40px); }
@@ -124,22 +132,21 @@
   .hs-ba { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(18px,2.4vw,28px); }
   .hs-ba-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
   .hs-ba-label { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8b8578; }
-  .hs-ba-label--after { color: var(--amber); }
+  .hs-ba-label--after { color: var(--accent-dk); }
   .hs-img-bevel { position: relative; width: 100%; aspect-ratio: 4/3; overflow: hidden; background: #FBF9F4; border-radius: 14px; }
   .hs-img-bevel img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .hs-img-after { object-position: left center; }
 
   /* results */
   .hs-results { margin: 0; border-top: 1px solid var(--hairline); padding-top: clamp(24px,3vw,34px); }
-  .hs-results-title { font-family: var(--serif); font-weight: 600; font-size: clamp(24px,2.8vw,34px); line-height: 1.12; letter-spacing: -0.01em; color: var(--navy); }
+  .hs-results-title { font-family: var(--display); font-weight: 800; font-size: clamp(24px,2.8vw,34px); line-height: 1.12; letter-spacing: -0.035em; color: var(--navy); }
   .hs-results-head { display: flex; align-items: center; gap: clamp(12px,1.6vw,18px); margin-bottom: clamp(22px,2.6vw,30px); }
   .hs-results-head .hs-results-sub { margin-bottom: 0; }
-  .hs-results-mascot { --hs-mascot-size: clamp(72px,8vw,92px); flex: none; }
   .hs-results-sub { font-family: var(--sans); font-size: 14px; font-weight: 400; line-height: 1.5; color: #8b8578; margin-top: 6px; margin-bottom: clamp(22px,2.6vw,30px); }
   .hs-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px,1fr)); gap: clamp(20px,2.6vw,36px); max-width: 900px; }
   .hs-stat { display: flex; flex-direction: column; gap: 6px; padding-top: 20px; border-top: 2px solid var(--navy); }
-  .hs-stat-badge { font-family: var(--serif); font-weight: 600; font-size: clamp(44px,6vw,64px); line-height: 1; letter-spacing: -0.02em; color: var(--amber); min-height: 1em; }
-  .hs-stat-name { font-family: var(--serif); font-weight: 600; font-size: clamp(17px,1.8vw,20px); line-height: 1.2; color: var(--navy); }
+  .hs-stat-badge { font-family: var(--display); font-weight: 800; font-size: clamp(44px,6vw,64px); line-height: 1; letter-spacing: -0.035em; color: var(--accent-dk); min-height: 1em; }
+  .hs-stat-name { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; font-size: clamp(17px,1.8vw,20px); line-height: 1.2; color: var(--navy); }
   .hs-stat-nums { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; font-family: var(--sans); }
   .hs-stat-nums .old { font-size: 14px; font-weight: 600; color: #8b8578; }
   .hs-stat-nums .arrow { font-size: 13px; color: var(--hairline); }
@@ -153,7 +160,8 @@
   .hs-rule { position: relative; height: 3px; margin-bottom: 20px; }
   .hs-rule-line { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--hairline); }
   .hs-rule-tab { position: absolute; left: 0; bottom: 0; width: 140px; height: 3px; background: #A9B0BE; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 0 100%); }
-  .hs-type-eyebrow { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 18px; min-height: 1.2em; }
+  .hs-type-eyebrow { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; min-height: 1.2em; }
+  .hs-type-eyebrow::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
   @keyframes hpBlink { 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
   .tx-caret { display: inline-block; width: 2px; height: 1em; background: var(--amber); margin-left: 3px; vertical-align: -.08em; animation: hpBlink 1s step-end infinite; }
   .hs-diff-row { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,0.85fr); gap: clamp(48px,5vw,64px); align-items: start; }
@@ -166,7 +174,7 @@
 
   /* quote */
   .hs-quote { max-width: 720px; margin: 0; padding: clamp(24px,3vw,34px) 0 0; border-top: 2px solid var(--amber); display: flex; flex-direction: column; gap: clamp(14px,1.6vw,18px); }
-  .hs-quote p { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(21px,2.6vw,29px); line-height: 1.34; letter-spacing: -0.01em; color: var(--navy); margin: 0; text-wrap: pretty; }
+  .hs-quote p { font-family: var(--display); font-weight: 600; font-size: clamp(21px,2.6vw,29px); line-height: 1.34; letter-spacing: -0.02em; color: var(--navy); margin: 0; text-wrap: pretty; }
   .hs-quote footer { font-family: var(--sans); font-size: 15px; font-weight: 700; letter-spacing: 0.02em; color: #8b8578; }
 
   @media (max-width: 900px) {
@@ -179,7 +187,7 @@
   /* closing CTA */
   .hs-close { background: var(--navy); margin-top: clamp(40px,6vw,72px); padding: clamp(60px,9vw,110px) clamp(24px,6vw,80px); text-align: center; }
   .hs-close-in { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-  .hs-close h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(30px,4.4vw,50px); line-height: 1.08; letter-spacing: -0.01em; color: var(--cream); margin: 0; text-wrap: balance; }
+  .hs-close h2 { font-family: var(--display); font-weight: 800; font-size: clamp(30px,4.4vw,50px); line-height: 1.08; letter-spacing: -0.035em; color: var(--cream); margin: 0; text-wrap: balance; }
   .hs-close p { font-family: var(--sans); font-size: clamp(16px,1.4vw,19px); line-height: 1.55; color: #c3ccda; margin: clamp(14px,1.8vw,20px) 0 clamp(28px,3.4vw,36px); max-width: 44ch; }
   .hs-close-btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 
@@ -187,7 +195,7 @@
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
   .hs-footer-in { max-width: 1200px; margin: 0 auto; }
   .hs-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
-  .hs-footer-logo img { height: 48px; width: auto; object-fit: contain; }
+  .hs-footer-logo img { width: min(560px, calc(100vw - 2 * clamp(24px,6vw,80px))); height: auto; }
   .hs-footer-explore { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8791a3; margin: clamp(28px,3.4vw,36px) 0 clamp(14px,2vw,18px); }
   .hs-footer-navgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; row-gap: 14px; align-content: start; }
   @media (max-width: 640px) { .hs-footer-navgrid { grid-template-columns: 1fr; row-gap: 10px; } }
@@ -227,9 +235,14 @@
   <header class="hs-header">
     <div class="hs-header-in">
       <a class="hs-logo" href="/" aria-label="Handstart Digital home">
-        <img src="assets/handstart-logo-header.png" alt="Handstart Digital">
+        <img class="hs-header-logo" src="/assets/brand/handstart-logo.svg" alt="Handstart Digital">
       </a>
       <nav class="hs-nav" aria-label="Primary">
+          <a href="/#top" class="hs-navlink" data-flip-text="Home">
+            <span class="hs-navlink-top" aria-hidden="true"></span>
+            <span class="hs-navlink-bottom" aria-hidden="true"></span>
+            <span class="hs-navlink-sr">Home</span>
+          </a>
           <a href="/services" class="hs-navlink" data-flip-text="Services">
             <span class="hs-navlink-top" aria-hidden="true"></span>
             <span class="hs-navlink-bottom" aria-hidden="true"></span>
@@ -245,21 +258,22 @@
             <span class="hs-navlink-bottom" aria-hidden="true"></span>
             <span class="hs-navlink-sr">Case Studies</span>
           </a>
-        <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+        <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
       </nav>
       <button class="hs-hamburger" id="hs-hamburger" aria-label="Menu" aria-expanded="false" aria-controls="hs-mnav">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <line x1="4" y1="7" x2="20" y2="7" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
-          <line x1="4" y1="12" x2="20" y2="12" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
-          <line x1="4" y1="17" x2="20" y2="17" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="7" x2="20" y2="7" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="12" x2="20" y2="12" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="17" x2="20" y2="17" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line>
         </svg>
       </button>
     </div>
     <div class="hs-mnav" id="hs-mnav">
+          <a href="/#top" class="hs-mnav-link" data-close>Home</a>
           <a href="/services" class="hs-mnav-link" data-close>Services</a>
           <a href="/about" class="hs-mnav-link" data-close>About</a>
           <a href="/case-studies" class="hs-mnav-link is-active" data-close>Case Studies</a>
-      <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+      <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
     </div>
   </header>
 
@@ -291,7 +305,6 @@
 
       <figure class="hs-results">
         <figcaption class="hs-results-head">
-          <figure class="hs-mascot hs-results-mascot" data-mascot="bar-chart" data-state="reveal"></figure>
           <div>
             <div class="hs-results-title">Results</div>
             <div class="hs-results-sub">Old site vs. new site, weekly averages</div>
@@ -322,8 +335,8 @@
       <div class="hs-diff-row">
         <div class="hs-diff-text">
           <div class="hs-rule"><span class="hs-rule-line"></span><span class="hs-rule-tab"></span></div>
-          <p class="hs-p">Roy runs a top-rated place to stay in Sembalun, Lombok. 5 star Google reviews, 9.6 out of 10 on Hostelworld, first on the list for the whole valley. His business is an exceptionally unique experience in Lombok: a hostel-campsite in the mountains.</p>
-          <p class="hs-p">The challenge was that his website did not tell this story. Worse, it did not establish trust for potential guests during their consideration phase for booking. This was something I personally experienced when I went myself, and found other guests experienced after arriving.</p>
+          <p class="hs-p">Roy runs a top-rated place to stay in Sembalun, Lombok: 5-star Google reviews, 9.6 out of 10 on Hostelworld, and first on the list for the whole valley. His business is a genuinely unique experience in Lombok: a hostel-campsite in the mountains.</p>
+          <p class="hs-p">The challenge was that his website didn't tell this story. Worse, it didn't build trust with potential guests while they were deciding whether to book. I experienced this myself when I stayed there, and other guests told me the same once they'd arrived.</p>
           <p class="hs-p">Through the eyes of the prospective guest, the site did nothing to build confidence in the experience: location, safety, pricing. On the technical side, there was no funnel or clear user action, and no SEO or LLM strategy. The reputation was real. It just wasn't conveyed anywhere that it could do the work of earning trust.</p>
         </div>
         <div class="hs-diff-img">
@@ -333,9 +346,9 @@
       <div class="hs-diff-row hs-row--imgleft">
         <div class="hs-diff-text">
           <div class="hs-rule"><span class="hs-rule-line"></span><span class="hs-rule-tab"></span></div>
-          <p class="hs-p">The foundation: The old name contained the word Rinjani which conflicted with many unrelated businesses and tours related to Mount Rinjani, which resulted in an unnecessary google ranking nightmare. The business was renamed Greenlife Sembalun and repositioned from "Rinjani camping" to a Sembalun basecamp in the hills. The site was rebuilt from scratch natively. The site is now multiple pages (there was only one before) and informational with a proper flow. Across both the site and HostelWorld, the copy is updated, baking in SEO and AI-search strategy on every page.</p>
-          <p class="hs-p">The system: A two-message WhatsApp flow that handles arrivals and asks for a review on the way out, so the online reputation continues to compound. Reviews are now front and center, across multiple platforms.</p>
-          <p class="hs-p">Pricing: with expansion and new hires future plans, we rebuilt the pricing model while competitive prices for his unique offering to the island.</p>
+          <p class="hs-p">The foundation: The old name contained the word Rinjani, which clashed with countless unrelated businesses and tours around Mount Rinjani and made ranking on Google an unnecessary nightmare. The business was renamed Greenlife Sembalun and repositioned from "Rinjani camping" to a Sembalun basecamp in the hills. The site was rebuilt from scratch: it now has multiple pages instead of one, with useful information and a proper flow. Across both the site and Hostelworld, the copy was rewritten with SEO and AI-search strategy built into every page.</p>
+          <p class="hs-p">The system: A two-message WhatsApp flow that welcomes guests on arrival and asks every guest for a review on the way out, so the online reputation keeps compounding. Reviews are now front and center across multiple platforms.</p>
+          <p class="hs-p">Pricing: With plans to expand and hire, Roy and I rebuilt the pricing model while keeping prices competitive for a one-of-a-kind offering on the island.</p>
         </div>
         <div class="hs-diff-img">
           <div class="hs-diff-imgbox"><img src="assets/approach.jpg" alt="Greenlife Sembalun terrain and surroundings" loading="lazy"></div>
@@ -344,8 +357,8 @@
       <div class="hs-diff-row">
         <div class="hs-diff-text">
           <div class="hs-rule"><span class="hs-rule-line"></span><span class="hs-rule-tab"></span></div>
-          <p class="hs-p">Since re-launch, weekly metrics have increased: unique site visitors by 188%, total guest volume by 133%, and google reviews by 500% (compared to average weekly metrics during the old site and system). Both metrics as a result from the first and second themes in What We Did, and the decision in the third theme supported by no loss in demand or traffic.</p>
-          <p class="hs-p">All of this now driven by a trustworthy and visually cleaned-up website with clear paths to conversion and information flow for prospective guests. On the back-end, stronger SEO best practices to be found by Google and by AI and LLMs. The goal was not to add flashy animations or excessive content, rather to point consideration stage guests quickly to plentiful and reliable information, supported by CTAs. The place that everyone loved and loves now looks the part, digitally. I look forward to working with Roy now that his "base" is built, as we explore his long term expansion goals.</p>
+          <p class="hs-p">Since the relaunch, weekly averages are up compared with the old site and system: unique site visitors by 188%, guest bookings by 133% and Google reviews by 500%. The gains in visitors and reviews line up with the new site and the review system, and the new pricing went in with no drop in demand or traffic.</p>
+          <p class="hs-p">All of this is now driven by a trustworthy, cleaned-up website with clear paths to booking and a clear flow of information for prospective guests. Behind the scenes, stronger SEO best practices help it get found by Google and by AI search. The goal wasn't flashy animations or extra content: it was to point guests who are still deciding to plentiful, reliable information quickly, backed by clear calls to action. The place everyone loved, and still loves, now looks the part online. I look forward to working with Roy now that his "base" is built, as we explore his long-term expansion goals.</p>
         </div>
         <div class="hs-diff-img">
           <div class="hs-diff-imgbox"><img src="assets/impact.jpg" alt="Mount Rinjani and Sembalun valley farmland" loading="lazy"></div>
@@ -363,10 +376,9 @@
   <section class="hs-close">
     <div class="hs-close-in">
       <h2>Ready to work with me?</h2>
-      <p>Take the 60-second check on your business gaps, or just tell me what's going on.</p>
+      <p>Pick the pieces your business needs and build your handstart, or just tell me what's going on.</p>
       <div class="hs-close-btns">
-        <a class="hs-next-btn hs-next-btn--reverse" href="/#assessment"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Find My Gaps</span></span></span></a>
-        <a class="hs-next-btn hs-next-btn--reverse" href="/services"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">What We Do</span></span></span></a>
+        <a class="hs-next-btn hs-next-btn--reverse" href="/services"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Build your handstart</span><span class="hs-next-icons"><svg class="hs-next-rest" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
         <a class="hs-next-btn hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
       </div>
     </div>
@@ -376,7 +388,7 @@
     <div class="hs-footer-in">
       <div class="hs-footer-top">
         <a class="hs-footer-logo" href="/" aria-label="Handstart Digital home">
-          <img src="assets/handstart-logo-footer.png" alt="Handstart Digital">
+          <img src="/assets/brand/handstart-logo-cream.svg" alt="Handstart Digital">
         </a>
         <div class="hs-footer-contact" style="display:flex; flex-direction:column; align-items:flex-end; gap:12px;">
           <a class="hs-footer-email" href="mailto:contact@handstartdigital.com">contact@handstartdigital.com</a>
@@ -402,7 +414,7 @@
 
       <div class="hs-footer-explore">Explore</div>
       <div class="hs-footer-navgrid">
-        <a class="hs-footer-navlink" href="/">Home</a>
+        <a class="hs-footer-navlink" href="/#top">Home</a>
         <a class="hs-footer-navlink" href="/services">Services</a>
         <a class="hs-footer-navlink" href="/case-studies">Case Studies</a>
         <a class="hs-footer-navlink" href="/about">About</a>

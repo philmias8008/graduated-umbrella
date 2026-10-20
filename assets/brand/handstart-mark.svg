@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14 12 84 102" role="img" aria-label="Handstart Digital">
+  <defs>
+    <!-- the 1 is Bricolage Grotesque ExtraBold, knocked out of the palm -->
+    <mask id="hs-mark-one" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="120">
+      <rect width="120" height="120" fill="#fff"/>
+      <path transform="translate(53.4 92) scale(0.052 -0.052)" d="M108 0V438H20V577Q61 577 89.5 591.5Q118 606 128 660H270V0Z" fill="#000"/>
+    </mask>
+  </defs>
+  <g fill="#1D3F66" stroke="#1D3F66" stroke-linecap="round" mask="url(#hs-mark-one)">
+    <line x1="43" y1="66" x2="43" y2="30" stroke-width="16"/>
+    <line x1="61" y1="66" x2="61" y2="22" stroke-width="16"/>
+    <line x1="79" y1="66" x2="79" y2="36" stroke-width="16"/>
+    <line x1="46" y1="84" x2="25" y2="60" stroke-width="16"/>
+    <rect x="35" y="50" width="52" height="46" rx="14" stroke="none"/>
+    <rect x="31" y="97.5" width="60" height="14" rx="6" stroke="none"/>
+  </g>
+</svg>

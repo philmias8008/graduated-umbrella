@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 659 660" role="img" aria-label="A">
+  <!-- Bricolage Grotesque ExtraBold A with its crossbar swapped for a hand reaching across,
+       offering a handshake. Drawn in font units (y up), flipped onto the baseline. A gap the
+       background color is cut around the hand where it crosses the legs, so it reads as a hand. -->
+  <defs>
+    <g id="hs-a-hand">
+      <rect x="40" y="138" width="270" height="84" rx="10"/>
+      <path d="M296 128C360 110 420 110 470 116L606 124C642 127 656 148 650 166C646 184 626 192 602 192L506 196C482 198 466 204 456 214C462 240 478 266 494 286C506 302 496 324 476 318C448 302 418 268 402 242C380 238 340 238 296 234Z"/>
+    </g>
+    <mask id="hs-a-gap" maskUnits="userSpaceOnUse" x="-100" y="-100" width="900" height="900">
+      <rect x="-100" y="-100" width="900" height="900" fill="#fff"/>
+      <use href="#hs-a-hand" fill="#000" stroke="#000" stroke-width="44" stroke-linejoin="round"/>
+    </mask>
+    <!-- wrist line and finger grooves, cut out of the hand -->
+    <mask id="hs-a-cuts" maskUnits="userSpaceOnUse" x="-100" y="-100" width="900" height="900">
+      <rect x="-100" y="-100" width="900" height="900" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-width="14" stroke-linecap="round">
+        <line x1="303" y1="150" x2="303" y2="212"/>
+        <path d="M508 146C560 144 600 146 628 150"/>
+        <path d="M512 172C562 170 602 172 636 174"/>
+      </g>
+    </mask>
+  </defs>
+  <g transform="translate(0 660) scale(1 -1)" fill="#1D3F66">
+    <path d="M4 0 225 660H435L655 0H480L332 529H326L177 0Z" mask="url(#hs-a-gap)"/>
+    <use href="#hs-a-hand" mask="url(#hs-a-cuts)"/>
+  </g>
+</svg>

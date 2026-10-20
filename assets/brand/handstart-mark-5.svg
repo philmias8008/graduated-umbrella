@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 12 85 102" role="img" aria-label="Handstart Digital">
+  <defs>
+    <!-- five-finger variant for comparison; the 1 is Bricolage Grotesque ExtraBold, knocked out of the palm -->
+    <mask id="hs-mark-one" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="120">
+      <rect width="120" height="120" fill="#fff"/>
+      <!-- the ring/pinky gap: the wedge between the two fingers' own edges, cleared of the palm's corner so it runs lower than the other gaps -->
+      <path d="M79.16 49L83.4 49L78.4 60.5Z" fill="#000"/>
+      <path transform="translate(50.5 92) scale(0.052 -0.052)" d="M108 0V438H20V577Q61 577 89.5 591.5Q118 606 128 660H270V0Z" fill="#000"/>
+    </mask>
+  </defs>
+  <g fill="#1D3F66" stroke="#1D3F66" stroke-linecap="round" mask="url(#hs-mark-one)">
+    <!-- index and ring lean out a little from the middle finger, so their gaps open slightly toward the tips -->
+    <line x1="40.5" y1="66" x2="38" y2="28" stroke-width="13"/>
+    <line x1="56" y1="66" x2="56" y2="21" stroke-width="13"/>
+    <line x1="71.5" y1="66" x2="74" y2="31" stroke-width="13"/>
+    <line x1="78" y1="76" x2="89.5" y2="50" stroke-width="12"/>
+    <line x1="43" y1="84" x2="22" y2="60" stroke-width="15"/>
+    <rect x="33" y="50" width="50" height="46" rx="14" stroke="none"/>
+    <rect x="29" y="97.5" width="58" height="14" rx="6" stroke="none"/>
+  </g>
+</svg>

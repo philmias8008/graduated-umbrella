@@ -19,12 +19,15 @@
   composes on top without overwriting them.
 */
 
-/* blob accent tokens, also listed in CLAUDE.md; tint #EFEAE0 stays the neutral */
+/* blob accent tokens (Golden hour set, also listed in CLAUDE.md); tint #EFEAE0 stays the neutral.
+   dusty-blue and butter were retired in the rollout: they stay as aliases for old markup and test pages. */
 :root {
-  --terracotta: #E08E72;
-  --sage: #A3B899;
-  --dusty-blue: #8FA6C9;
-  --butter: #E8B96A;
+  --terracotta: #D2694A;
+  --sage: #7E9F6B;
+  --plum: #9C7AB0;
+  --clay-pink: #CF7A86;
+  --dusty-blue: var(--plum);
+  --butter: var(--clay-pink);
 }
 
 .hs-mascot {
@@ -40,11 +43,13 @@
 
 /* blob colors: the loader sets data-blob from manifest.json unless the figure already has one */
 .hs-mascot[data-blob="terracotta"] { --hs-blob-fill: var(--terracotta); }
+.hs-mascot[data-blob="plum"]       { --hs-blob-fill: var(--plum); }
+.hs-mascot[data-blob="clay-pink"]  { --hs-blob-fill: var(--clay-pink); }
 .hs-mascot[data-blob="butter"]     { --hs-blob-fill: var(--butter); }
 .hs-mascot[data-blob="sage"]       { --hs-blob-fill: var(--sage); }
 .hs-mascot[data-blob="dusty-blue"] { --hs-blob-fill: var(--dusty-blue); }
 .hs-mascot[data-blob="tint"]       { --hs-blob-fill: #EFEAE0; }
-.hs-mascot[data-blob="amber"]      { --hs-blob-fill: #C8873A; }
+.hs-mascot[data-blob="amber"]      { --hs-blob-fill: #E3A23B; }
 .hs-mascot[data-blob="none"] .hs-mascot__blob { display: none; }
 
 .hs-mascot__blob {
@@ -68,7 +73,7 @@
   top: 81%;
   height: 6%;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(27, 43, 75, .32), rgba(27, 43, 75, 0));
+  background: radial-gradient(closest-side, rgba(29, 63, 102, .32), rgba(29, 63, 102, 0));
 }
 
 .hs-mascot__art {
@@ -194,6 +199,10 @@
     animation: hs-mascot-wave-l .35s ease-in-out infinite alternate;
   }
 }
+
+/* rigs move themselves (hs-mascot-rig.js): no CSS bob, wiggle or shadow pulse */
+.hs-mascot[data-type="rig"] .hs-mascot__art,
+.hs-mascot[data-type="rig"] .hs-mascot__shadow { animation: none !important; }
 
 /* reveal: the pop lives on the figure so hover (on the art) can't restart it.
    Hidden only when the loader is running, so no-JS visitors still see the mascot. */

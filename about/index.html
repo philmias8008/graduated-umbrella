@@ -3,20 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="robots" content="noindex">
 <title>About | Handstart Digital</title>
-<meta name="description" content="Handstart is not a corporation with account managers and junior handoffs. You deal with me directly, and I own the agreed upon output of our projects from start to finish.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/hs-mascots.css">
+<meta name="description" content="Handstart is not a corporation with account managers and junior handoffs. You deal with me directly, and I own the agreed-upon output of our projects from start to finish.">
+<link rel="preload" href="/assets/fonts/LibreFranklin-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/BricolageGrotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/hs-fonts.css?v=20261019a">
+<link rel="stylesheet" href="/assets/css/hs-mascots.css?v=20261017a">
 <style>
   :root {
-    --navy: #1B2B4B; --amber: #C8873A; --amber-lt: #e0a558;
-    --cream: #F7F4EE; --slate: #3f4a5a; --body: #5a6472;
+    /* Golden hour (decided 2026-10-07, homepage 2026-10-08, every page 2026-10-15) */
+    --ink: #1D3F66; --sky: #7FB5E3; --sky-top: #3F7DC0; --sky-bottom: #9DCAEE;
+    --accent: #E3A23B; --accent-lt: #F0C46E; --accent-dk: #B57A1E;
+    --display: 'Bricolage Grotesque', 'Libre Franklin', sans-serif;
+    --navy: var(--ink); --amber: var(--accent); --amber-lt: var(--accent-lt);
+    --cream: #F7F4EE; --slate: #3f4a5a; --body: #4B5868;
     --hairline: #D6CFC2; --tint: #EFEAE0;
-    --serif: 'Cormorant Garamond', Georgia, serif;
+    --serif: var(--display); /* Cormorant retired: headings are Bricolage */
     --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+    --script: 'Caveat', 'Segoe Script', cursive;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -26,32 +34,34 @@
   img { display: block; }
 
   /* header / nav */
-  .hs-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid var(--hairline); }
+  .hs-header { position: sticky; top: 0; z-index: 50; background: var(--sky); border-bottom: 1px solid rgba(29,63,102,0.18); }
   .hs-header-in { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); height: clamp(72px,10vw,96px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .hs-logo img { height: clamp(44px,5.5vw,58px); width: auto; object-fit: contain; }
+  /* the header logo fills the room the nav leaves it, as on the homepage */
+  .hs-header-logo { display: block; width: min(445px, calc(100vw - 560px)); height: auto; }
+  @media (max-width: 900px) { .hs-header-logo { width: min(360px, calc(100vw - 100px)); } }
   .hs-nav { display: flex; align-items: center; gap: clamp(20px,2.6vw,34px); }
     .hs-navlink { position: relative; display: inline-block; overflow: hidden; white-space: nowrap; height: 1.3em; font-family: var(--sans); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--navy); text-decoration: none; }
     .hs-navlink.is-active { font-weight: 600; }
     .hs-navlink-top, .hs-navlink-bottom { display: block; }
     .hs-navlink-bottom { position: absolute; inset: 0; }
     .hs-navlink-top span, .hs-navlink-bottom span { display: inline-block; transition: transform 210ms ease-in-out; transition-delay: calc(var(--i, 0) * 12ms); }
-    .hs-navlink-bottom span { transform: translateY(100%); color: var(--amber); }
+    .hs-navlink-bottom span { transform: translateY(100%); color: var(--ink); }
     .hs-navlink:is(:hover, .is-tapped) .hs-navlink-top span, .hs-navlink:focus-visible .hs-navlink-top span { transform: translateY(-100%); }
     .hs-navlink:is(:hover, .is-tapped) .hs-navlink-bottom span, .hs-navlink:focus-visible .hs-navlink-bottom span { transform: translateY(0); }
     .hs-navlink-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     @media (prefers-reduced-motion: reduce) { .hs-navlink-top span, .hs-navlink-bottom span { transition: none !important; } }
 
-  /* Comic-panel Contact button, mirrors the homepage's Find My Gaps button */
+  /* Comic-panel Contact button, mirrors the homepage's Find Your Gaps button */
   .hs-next-btn { position: relative; display: inline-flex; text-decoration: none; transform: skewX(-10deg); transition: transform 160ms ease; }
   .hs-next-shadow { position: absolute; inset: 0; z-index: 0; background: #000; transform: translate(7px,7px); transition: transform 200ms ease, background 200ms ease; }
   .hs-next-btn:is(:hover, .is-tapped) { transform: skewX(-10deg) translate(3px,3px); }
-  .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(11px,11px); background: var(--amber); }
-  .hs-next-face { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 14px; background: var(--navy); padding: 13px 26px 13px 22px; }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(11px,11px); background: var(--cream); }
+  .hs-next-face { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 14px; background: var(--amber); padding: 13px 26px 13px 22px; }
   .hs-next-content { display: inline-flex; align-items: center; gap: 14px; transform: skewX(10deg); }
-  .hs-next-label { font-family: var(--sans); font-weight: 700; font-size: 15px; letter-spacing: 0.01em; text-transform: uppercase; color: var(--cream); white-space: nowrap; }
+  .hs-next-label { font-family: var(--sans); font-weight: 700; font-size: 15px; letter-spacing: 0.01em; text-transform: uppercase; color: var(--navy); white-space: nowrap; }
   .hs-next-icons { position: relative; width: 30px; height: 20px; }
   .hs-next-rest, .hs-next-cascade svg { position: absolute; top: 0; left: 0; transition: opacity 220ms ease, transform 220ms cubic-bezier(.65,0,.076,1); }
-  .hs-next-rest path, .hs-next-cascade path { stroke: var(--cream); }
+  .hs-next-rest path, .hs-next-cascade path { stroke: var(--navy); }
   .hs-next-rest { opacity: 1; }
   .hs-next-cascade svg { opacity: 0; }
   .hs-next-btn:is(:hover, .is-tapped) .hs-next-rest { opacity: 0; transform: translateX(8px); }
@@ -62,7 +72,7 @@
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one { transform: translateX(3px); }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(10px); }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(17px); }
-  @keyframes hs-arrow-chase { 0%, 100% { stroke: var(--cream); } 50% { stroke: var(--amber); } }
+  @keyframes hs-arrow-chase { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--cream); } }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0s; }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0.2s; }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0.4s; }
@@ -79,25 +89,25 @@
   .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(7px); }
   .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(12px); }
 
-  /* Navy-background modifier: flips face/label/icon colors for use on a navy backdrop */
-  .hs-next-btn--reverse .hs-next-face { background: var(--cream); }
+  /* Reverse modifier: since 2026-10-19 every arrow button is golden with navy text, so this matches the default */
+  .hs-next-btn--reverse .hs-next-face { background: var(--amber); }
   .hs-next-btn--reverse .hs-next-label { color: var(--navy); }
   .hs-next-btn--reverse .hs-next-rest path, .hs-next-btn--reverse .hs-next-cascade path { stroke: var(--navy); }
-  @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--amber); } }
+  @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--cream); } }
   .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-one path { animation-name: hs-arrow-chase-reverse; }
   .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-two path { animation-name: hs-arrow-chase-reverse; }
   .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-three path { animation-name: hs-arrow-chase-reverse; }
   @media (prefers-reduced-motion: reduce) {
     .hs-next-btn, .hs-next-shadow, .hs-next-rest, .hs-next-cascade svg { transition: none !important; }
-    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: none !important; stroke: var(--amber) !important; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: none !important; stroke: var(--cream) !important; }
   }
 
 
   /* hamburger / mobile nav */
-  .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid var(--hairline); border-radius: 9px; cursor: pointer; color: var(--navy); }
-  .hs-mnav { display: none; border-top: 1px solid var(--hairline); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--cream); }
+  .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid rgba(29,63,102,0.35); border-radius: 9px; cursor: pointer; color: var(--navy); }
+  .hs-mnav { display: none; border-top: 1px solid rgba(29,63,102,0.18); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--sky); }
   .hs-mnav.is-open { display: flex; }
-  .hs-mnav-link { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--slate); padding: 11px 0; }
+  .hs-mnav-link { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--ink); padding: 11px 0; }
   .hs-mnav-link.is-active { color: var(--navy); font-weight: 600; }
   @media (max-width: 900px) {
     .hs-nav { display: none !important; }
@@ -112,71 +122,64 @@
   }
 
   /* credentials card (shine sweep + count-up) */
-  .hs-cred { position: sticky; top: clamp(88px,11vw,112px); align-self: start; background: var(--navy); border-radius: 18px; padding: clamp(28px,3vw,36px); box-shadow: 0 18px 40px rgba(27,43,75,0.18); overflow: hidden; }
+  .hs-cred { position: sticky; top: clamp(88px,11vw,112px); align-self: start; background: var(--navy); border-radius: 18px; padding: clamp(28px,3vw,36px); box-shadow: 0 18px 40px rgba(29,63,102,0.18); overflow: hidden; }
   @media (max-width: 900px) { .hs-cred { position: static; } }
-  .cr-shine { position: absolute; top: 0; left: 0; width: 40%; height: 100%; background: linear-gradient(105deg, transparent, rgba(200,135,58,.22), transparent); pointer-events: none; transform: translateX(-120%); }
+  .cr-shine { position: absolute; top: 0; left: 0; width: 40%; height: 100%; background: linear-gradient(105deg, transparent, rgba(227,162,59,.22), transparent); pointer-events: none; transform: translateX(-120%); }
   [data-anim="cred"][data-in="true"] .cr-shine { animation: crShine 1.6s ease-out .3s both; }
   @keyframes crShine { 0% { transform: translateX(-120%); } 60%,100% { transform: translateX(320%); } }
   .hs-cred-photo { width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; margin-bottom: 22px; }
   .hs-cred-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-  .hs-cred-name { font-family: var(--serif); font-weight: 600; font-size: 23px; color: var(--cream); }
+  .hs-cred-name { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; font-size: 23px; color: var(--cream); }
   .hs-cred-role { font-family: var(--sans); font-size: 13px; color: #c3ccda; margin-top: 4px; }
   .hs-cred-divider { height: 1px; background: rgba(247,244,238,.16); margin: 22px 0; }
   .hs-cred-stats { display: flex; flex-direction: column; gap: 18px; }
-  .hs-cred-stat-num { font-family: var(--serif); font-weight: 700; font-size: 26px; color: var(--amber); }
+  .hs-cred-stat-num { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; font-size: 26px; color: var(--amber); }
   .hs-cred-stat-num--sm { font-size: 22px; }
   .hs-cred-stat-label { font-family: var(--sans); font-size: 12px; color: #8791a3; }
 
   /* narrative */
-  .hs-eyebrow { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
-  .hs-about h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(32px,4.6vw,54px); line-height: 1.08; letter-spacing: -0.015em; color: var(--navy); margin: clamp(10px,1.4vw,14px) 0 clamp(20px,2.4vw,28px); text-wrap: balance; }
+  .hs-eyebrow { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; }
+  .hs-eyebrow::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .hs-about h1 { font-family: var(--display); font-weight: 800; font-size: clamp(32px,4.6vw,54px); line-height: 1.08; letter-spacing: -0.035em; color: var(--navy); margin: clamp(10px,1.4vw,14px) 0 clamp(20px,2.4vw,28px); text-wrap: balance; }
   .hs-narrative { display: flex; flex-direction: column; gap: clamp(14px,1.6vw,18px); max-width: 60ch; }
   .hs-narrative p { font-family: var(--sans); font-size: clamp(15px,1.3vw,17px); font-weight: 400; line-height: 1.7; color: var(--body); margin: 0; }
 
   /* closing CTA */
   .hs-close { background: var(--navy); padding: clamp(60px,9vw,110px) clamp(24px,6vw,80px); text-align: center; }
   .hs-close-in { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-  .hs-close h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(30px,4.4vw,50px); line-height: 1.08; letter-spacing: -0.01em; color: var(--cream); margin: 0; text-wrap: balance; }
+  .hs-close h2 { font-family: var(--display); font-weight: 800; font-size: clamp(30px,4.4vw,50px); line-height: 1.08; letter-spacing: -0.035em; color: var(--cream); margin: 0; text-wrap: balance; }
   .hs-close p { font-family: var(--sans); font-size: clamp(16px,1.4vw,19px); line-height: 1.55; color: #c3ccda; margin: clamp(14px,1.8vw,20px) 0 clamp(28px,3.4vw,36px); max-width: 44ch; }
   .hs-close-btns { display: flex; flex-wrap: wrap; gap: 18px 28px; justify-content: center; align-items: center; }
-  .hs-close-link { font-family: var(--sans); font-size: 16px; font-weight: 600; color: var(--cream); text-decoration: none; border-bottom: 1.5px solid var(--amber); padding-bottom: 2px; transition: color 180ms ease; }
-  .hs-close-link:hover { color: var(--amber-lt); }
 
-  /* bar-chart peeks over the card: the card clips its own overflow, so the mascot lives in a
-     wrapper behind it. The wrapper takes over the sticky, a little lower so the fixed header
-     does not cover the peek. */
-  .hs-cred-wrap { position: sticky; top: calc(clamp(88px,11vw,112px) + 48px); align-self: start; margin-top: 48px; }
+  /* the card sits in a wrapper that carries the sticky (it once held a mascot peeking over the
+     card, removed 2026-10-18) */
+  /* the hello (about 42px tall on desktop) takes the space the card's 48px top margin used to, so the card itself sits where it did */
+  .hs-cred-wrap { position: sticky; top: calc(clamp(88px,11vw,112px) + 6px); align-self: start; margin-top: 6px; }
   .hs-cred-wrap .hs-cred { position: relative; top: auto; z-index: 1; }
-  .hs-cred-peek { --hs-mascot-size: 104px; position: absolute; top: -62px; right: 22px; z-index: 0; }
   @media (max-width: 900px) { .hs-cred-wrap { position: relative; top: auto; margin-top: 56px; } }
-
-  /* side mascots sit in the empty space right of the 60ch text column when there is room,
-     and float into the text below that */
-  .hs-has-side { position: relative; }
-  .hs-side-mascot { --hs-mascot-size: 64px; float: right; margin: 2px 0 6px 14px; }
-  .hs-side-mascot--tape { rotate: 14deg; }
-  @media (min-width: 1260px) {
-    .hs-side-mascot { --hs-mascot-size: 104px; float: none; position: absolute; top: -6px; left: calc(100% + 28px); margin: 0; }
-    /* tilted and nudged left so it cuts across the paragraph's top corner like tape, clear of the words */
-    .hs-side-mascot--tape { top: -34px; left: calc(100% - 4px); }
+  /* a handwritten hello above the card: small on desktop, bigger on phones and tablets, where the card comes first */
+  .hs-hello { font-family: var(--script); font-weight: 600; font-size: 34px; line-height: 1; color: var(--ink); margin: 0 0 8px 4px; transform: rotate(-3deg); transform-origin: left bottom; }
+  @media (max-width: 900px) {
+    .hs-hello { font-size: clamp(38px,10vw,48px); margin-bottom: 14px; }
   }
-  .hs-narrative .hs-pull { display: flex; align-items: center; gap: 14px; font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(22px,2.2vw,28px); line-height: 1.25; color: var(--navy); margin: 2px 0 4px; }
-  .hs-pull-mascot { --hs-mascot-size: 72px; flex: none; }
 
-  /* The ticker needs its full width, so on desktop the megaphone hangs off its left edge
+  .hs-narrative .hs-pull { display: flex; align-items: center; gap: 14px; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: clamp(22px,2.2vw,28px); line-height: 1.25; color: var(--navy); margin: 2px 0 4px; }
+  .hs-pull-mascot { --hs-mascot-size: 96px; flex: none; }
+
+  /* The ticker needs its full width, so on desktop the stopwatch hangs off its left edge
      instead of sharing the row; below that it stacks above the number. */
   .hs-ticker-row { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-  .hs-ticker-mascot { --hs-mascot-size: 88px; }
+  .hs-ticker-mascot { --hs-mascot-size: 116px; }
   @media (min-width: 900px) {
     .hs-ticker-row { display: block; position: relative; width: fit-content; margin: 0 auto; }
-    .hs-ticker-mascot { --hs-mascot-size: clamp(96px,8vw,116px); position: absolute; right: calc(100% + clamp(16px,2vw,28px)); top: 50%; margin-top: calc(clamp(96px,8vw,116px) / -2); }
+    .hs-ticker-mascot { --hs-mascot-size: clamp(124px,10vw,152px); position: absolute; right: calc(100% + clamp(16px,2vw,28px)); top: 50%; margin-top: calc(clamp(124px,10vw,152px) / -2); }
   }
 
   /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
   .hs-footer-in { max-width: 1200px; margin: 0 auto; }
   .hs-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
-  .hs-footer-logo img { height: 48px; width: auto; object-fit: contain; }
+  .hs-footer-logo img { width: min(560px, calc(100vw - 2 * clamp(24px,6vw,80px))); height: auto; }
   .hs-footer-explore { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8791a3; margin: clamp(28px,3.4vw,36px) 0 clamp(14px,2vw,18px); }
   .hs-footer-navgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; row-gap: 14px; align-content: start; }
   @media (max-width: 640px) { .hs-footer-navgrid { grid-template-columns: 1fr; row-gap: 10px; } }
@@ -211,11 +214,72 @@
     .hs-ticker-val { transition: none !important; }
   }
 
-  /* Marketing spend ticker */
+  /* Daily counts ticker */
   .hs-ticker { display:inline-flex; align-items:baseline; justify-content:center; gap:2px; font-family:var(--sans); font-weight:700; font-variant-numeric:tabular-nums; font-size:clamp(36px,7vw,84px); color:var(--cream); }
-  .hs-ticker-dollar { margin-right:2px; }
+  .hs-ticker-stack { transition:opacity 350ms ease; }
+  .hs-ticker-stack.is-swapping { opacity:0; }
+  .hs-ticker-label { font-family:var(--display); font-weight:600; letter-spacing:-0.02em; font-size:clamp(22px,2.6vw,32px); color:var(--amber-lt); margin:6px 0 0; }
   .hs-ticker-col { position:relative; display:inline-block; overflow:hidden; height:1em; perspective:300px; }
   .hs-ticker-val { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transition:transform 300ms cubic-bezier(.22,1,.36,1), opacity 300ms ease; }
+
+  /* Why Work With Us: ABCD panel accordion */
+  .hs-abcd { display:flex; width:100%; height:clamp(280px,30vw,360px); gap:6px; margin-top:clamp(28px,3.6vw,40px); }
+  /* tablets and small laptops: the open panel is narrow, so its copy wraps more and needs a taller row */
+  @media (min-width: 901px) and (max-width: 1200px) { .hs-abcd { height:calc(430px + (1200px - 100vw) * 0.2); } }
+  .hs-abcd-panel {
+    position:relative; overflow:hidden; flex:1 1 0%; min-width:0; appearance:none;
+    background:var(--abcd-bg); border:none; border-radius:14px; cursor:pointer;
+    padding:clamp(20px,2.4vw,32px); text-align:left; font:inherit;
+    display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start;
+    transition:flex-grow 480ms cubic-bezier(.4,0,.2,1);
+    container-type:inline-size;
+    --abcd-letter-size:clamp(90px,68cqw,210px);
+  }
+  .hs-abcd-panel.is-active { flex-grow:3; }
+  .hs-abcd-letter {
+    position:absolute; top:70%; right:0; transform:translateY(-50%);
+    font-family:var(--display); font-weight:800; letter-spacing:-0.035em; font-size:var(--abcd-letter-size); line-height:1;
+    color:var(--navy); opacity:0.12; pointer-events:none; white-space:nowrap;
+    transition:opacity 480ms ease;
+  }
+  .hs-abcd-panel.is-active .hs-abcd-letter { opacity:0.9; }
+  .hs-abcd-toggle { display:none; }
+  .hs-abcd-body { position:relative; z-index:1; max-width:min(60ch, calc(100% - var(--abcd-letter-size) * 0.72)); opacity:0; transition:opacity 260ms ease; }
+  .hs-abcd-panel.is-active .hs-abcd-body { opacity:1; transition-delay:180ms; }
+  .hs-abcd-heading {
+    font-family:var(--display); font-weight:800; font-size:clamp(24px,2.3vw,31px); letter-spacing:-0.035em;
+    color:var(--navy); margin:0 0 10px; white-space:nowrap;
+  }
+  .hs-abcd-desc { font-family:var(--sans); font-size:clamp(15px,1.1vw,17px); line-height:1.55; color:var(--abcd-text, var(--body)); margin:0 0 clamp(24px,3vw,40px); }
+  .hs-abcd-impl-label {
+    font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--slate); margin:0 0 10px;
+  }
+  .hs-abcd-impl ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .hs-abcd-impl li { font-family:var(--sans); font-size:15px; color:var(--abcd-text, var(--body)); padding-left:16px; position:relative; }
+  .hs-abcd-impl li::before {
+    content:''; position:absolute; left:0; top:0.55em; width:6px; height:6px; border-radius:50%; background:var(--abcd-dot, var(--amber));
+  }
+  @media (max-width: 900px) {
+    .hs-abcd { flex-direction:column; height:auto; gap:8px; }
+    .hs-abcd-panel { flex:none !important; height:auto; padding:16px clamp(16px,4vw,24px); gap:14px; }
+    .hs-abcd-letter { display:none; }
+    .hs-abcd-toggle { display:flex; align-items:center; gap:12px; width:100%; }
+    .hs-abcd-toggle-key {
+      flex:none; width:28px; height:28px; border-radius:50%; background:var(--navy); color:var(--cream);
+      font-family:var(--sans); font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center;
+    }
+    .hs-abcd-toggle-heading { font-family:var(--display); font-weight:700; letter-spacing:-0.02em; font-size:20px; color:var(--navy); flex:1; }
+    .hs-abcd-chevron { flex:none; width:16px; height:16px; color:var(--navy); transition:transform 300ms ease; }
+    .hs-abcd-panel.is-active .hs-abcd-chevron { transform:rotate(180deg); }
+    .hs-abcd-body { max-width:none; }
+    .hs-abcd-body .hs-abcd-heading { display:none; }
+    .hs-abcd-panel:not(.is-active) .hs-abcd-body { height:0; overflow:hidden; padding:0; margin:0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hs-abcd-panel, .hs-abcd-letter, .hs-abcd-body, .hs-abcd-chevron { transition:none !important; }
+  }
+
 
   /* Lenis smooth scroll (required Lenis CSS) */
   html.lenis, html.lenis body { height: auto; }
@@ -228,9 +292,14 @@
   <header class="hs-header">
     <div class="hs-header-in">
       <a class="hs-logo" href="/" aria-label="Handstart Digital home">
-        <img src="assets/handstart-logo-header.png" alt="Handstart Digital">
+        <img class="hs-header-logo" src="/assets/brand/handstart-logo.svg" alt="Handstart Digital">
       </a>
       <nav class="hs-nav" aria-label="Primary">
+          <a href="/#top" class="hs-navlink" data-flip-text="Home">
+            <span class="hs-navlink-top" aria-hidden="true"></span>
+            <span class="hs-navlink-bottom" aria-hidden="true"></span>
+            <span class="hs-navlink-sr">Home</span>
+          </a>
           <a href="/services" class="hs-navlink" data-flip-text="Services">
             <span class="hs-navlink-top" aria-hidden="true"></span>
             <span class="hs-navlink-bottom" aria-hidden="true"></span>
@@ -246,21 +315,22 @@
             <span class="hs-navlink-bottom" aria-hidden="true"></span>
             <span class="hs-navlink-sr">Case Studies</span>
           </a>
-        <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+        <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
       </nav>
       <button class="hs-hamburger" id="hs-hamburger" aria-label="Menu" aria-expanded="false" aria-controls="hs-mnav">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <line x1="4" y1="7" x2="20" y2="7" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
-          <line x1="4" y1="12" x2="20" y2="12" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
-          <line x1="4" y1="17" x2="20" y2="17" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="7" x2="20" y2="7" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="12" x2="20" y2="12" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="17" x2="20" y2="17" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line>
         </svg>
       </button>
     </div>
     <div class="hs-mnav" id="hs-mnav">
+          <a href="/#top" class="hs-mnav-link" data-close>Home</a>
           <a href="/services" class="hs-mnav-link" data-close>Services</a>
           <a href="/about" class="hs-mnav-link is-active" data-close>About</a>
           <a href="/case-studies" class="hs-mnav-link" data-close>Case Studies</a>
-      <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+      <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
     </div>
   </header>
 
@@ -268,7 +338,7 @@
     <div class="hs-profile-grid">
 
       <div class="hs-cred-wrap">
-      <figure class="hs-mascot hs-cred-peek" data-mascot="bar-chart" data-state="reveal"></figure>
+      <p class="hs-hello">hi, I'm Aidan</p>
       <aside class="hs-cred" data-reveal data-anim="cred">
         <span class="cr-shine" aria-hidden="true"></span>
         <div class="hs-cred-photo"><img src="assets/aidan.jpg" alt="Aidan Paggao"></div>
@@ -295,12 +365,11 @@
       <div>
         <h1>Offering the "human touch" in a rapidly advancing digital world</h1>
         <div class="hs-narrative">
-          <p class="hs-has-side"><span class="hs-mascot hs-side-mascot" data-mascot="handshake" data-state="reveal"></span>Handstart is not a corporation with account managers and junior handoffs. You deal with me directly, and I own the agreed upon output of our projects from start to finish.</p>
-          <p>Three things will always be clear: who you're working with, how long the work takes, and what it costs. For heavier website builds I recommend bringing in a developer I trust, same goes for my designer when it comes to intricate design work.</p>
-          <p>I don't take on every project. It has to be the right fit, for both of us. I would rather create real impact for you and build a relationship built on trust, rather than deliver cheap fixes and templates. I have no reason to upsell you: I recommend what fits your goals, not what grows the invoice.</p>
-          <p class="hs-has-side"><span class="hs-mascot hs-side-mascot hs-side-mascot--tape" data-mascot="ribbon" data-state="reveal"></span>Handstart began when the red tape of big companies became tiresome. Weeks of approvals delayed innovation and speed to market. I wanted to work the way work should actually move:</p>
+          <p>Handstart is not a corporation with account managers and junior handoffs. You deal with me directly, and I own the agreed-upon output of our projects from start to finish. Three things will always be clear: who you're working with, how long the work takes, and what it costs.</p>
+          <p>I don't take on every project. It has to be the right fit, for both of us. I&#x27;d rather create real impact for you, and a relationship built on trust, than deliver cheap fixes and templates. I have no reason to upsell you: I recommend what fits your goals, not what grows the invoice.</p>
+          <p>Handstart began when the red tape of big companies delayed innovation. I wanted to work in a way I felt it should be:</p>
           <p class="hs-pull"><span class="hs-mascot hs-pull-mascot" data-mascot="power-button" data-state="reveal"></span><span class="hs-pull-text">I see it, we decide it, we start it.</span></p>
-          <p>That's why it's called Handstart. A helping human hand in a digital world that moves faster than most businesses can keep pace with. It might just be what you need to get a head start against your competition.</p>
+          <p>That's why it's called Handstart. A helping human hand in a digital world that moves faster than most businesses can keep pace with. It might just be what you need to get a head start on your competition.</p>
           <p>Based in Philadelphia, working everywhere.</p>
         </div>
       </div>
@@ -308,15 +377,99 @@
     </div>
   </section>
 
+  <section id="why-us" style="background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
+    <div style="max-width:1200px; margin:0 auto;">
+      <h2 style="font-family:var(--display); font-weight:800; font-size:clamp(30px,4vw,48px); line-height:1.1; letter-spacing:-0.035em; color:var(--navy); margin:0; text-wrap:balance;">Why work with me: my ABCD</h2>
+
+      <div class="hs-abcd" data-abcd>
+        <button type="button" class="hs-abcd-panel is-active" data-abcd-panel data-abcd-key="a" style="--abcd-bg:var(--cream);">
+          <span class="hs-abcd-letter" aria-hidden="true">A</span>
+          <div class="hs-abcd-toggle">
+            <span class="hs-abcd-toggle-key">A</span>
+            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">A</span>I does not come first</span>
+            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hs-abcd-body">
+            <p class="hs-abcd-heading">/ <span style="font-weight:700;">A</span>I does not come first</p>
+            <p class="hs-abcd-desc">While AI is inevitable in most digital tools, it won't replace the human element. I lead with human creativity and my own strategic thinking.</p>
+            <div class="hs-abcd-impl">
+              <ul>
+                <li>Strategy from someone who can actually walk through your front door and understand your business</li>
+                <li>Modern tools, old-fashioned care</li>
+              </ul>
+            </div>
+          </div>
+        </button>
+        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="b" style="--abcd-bg:#FFFFFF;">
+          <span class="hs-abcd-letter" aria-hidden="true">B</span>
+          <div class="hs-abcd-toggle">
+            <span class="hs-abcd-toggle-key">B</span>
+            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">B</span>efore execution: direction</span>
+            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hs-abcd-body">
+            <p class="hs-abcd-heading">/ <span style="font-weight:700;">B</span>efore execution: direction</p>
+            <p class="hs-abcd-desc">You don't run a marathon like it's a hundred-meter dash. I map the pace and the distance before the whistle blows.</p>
+            <div class="hs-abcd-impl">
+              <ul>
+                <li>I ask "why" before I ask "what color"</li>
+                <li>Competitors' moves are analyzed before we make ours</li>
+                <li>Budget follows strategy, not the other way around</li>
+              </ul>
+            </div>
+          </div>
+        </button>
+        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="c" style="--abcd-bg:var(--amber-lt); --abcd-text:var(--navy); --abcd-dot:var(--navy);">
+          <span class="hs-abcd-letter" aria-hidden="true">C</span>
+          <div class="hs-abcd-toggle">
+            <span class="hs-abcd-toggle-key">C</span>
+            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">C</span>lear systems that scale</span>
+            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hs-abcd-body">
+            <p class="hs-abcd-heading">/ <span style="font-weight:700;">C</span>lear systems that scale</p>
+            <p class="hs-abcd-desc">You don't want to set it up in a way you'll outgrow. I build the kind of foundation that holds whether you're a team of three or thirty.</p>
+            <div class="hs-abcd-impl">
+              <ul>
+                <li>No rebuild required when you grow</li>
+                <li>Every piece built once, ready to reuse</li>
+                <li>Rules anyone on the team can follow</li>
+              </ul>
+            </div>
+          </div>
+        </button>
+        <button type="button" class="hs-abcd-panel" data-abcd-panel data-abcd-key="d" style="--abcd-bg:var(--amber); --abcd-text:var(--navy); --abcd-dot:var(--navy);">
+          <span class="hs-abcd-letter" aria-hidden="true">D</span>
+          <div class="hs-abcd-toggle">
+            <span class="hs-abcd-toggle-key">D</span>
+            <span class="hs-abcd-toggle-heading"><span style="font-weight:700;">D</span>eliver with clarity</span>
+            <svg class="hs-abcd-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hs-abcd-body">
+            <p class="hs-abcd-heading">/ <span style="font-weight:700;">D</span>eliver with clarity</p>
+            <p class="hs-abcd-desc">Strategy comes before the visuals, not after. Reporting follows suit - telling the story with the data and results.</p>
+            <div class="hs-abcd-impl">
+              <ul>
+                <li>Every visual has a reason behind it</li>
+                <li>Clear messaging built around you</li>
+                <li>Reports that don't need a translator</li>
+              </ul>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- test section, not final -->
   <section style="background:var(--navy); padding:clamp(56px,9vw,110px) clamp(24px,6vw,80px) clamp(36px,5vw,64px); text-align:center;">
     <div style="max-width:760px; margin:0 auto;">
-      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,3vw,38px); line-height:1.15; letter-spacing:-0.01em; color:var(--cream); margin:0 0 clamp(24px,3.4vw,40px); text-wrap:balance;">Our guess on how much the world has spent on marketing so far today</h2>
+      <h2 style="font-family:var(--display); font-weight:800; font-size:clamp(24px,3vw,38px); line-height:1.15; letter-spacing:-0.035em; color:var(--cream); margin:0 0 clamp(24px,3.4vw,40px); text-wrap:balance;">Based on daily averages, here&#x27;s my guess at how many, so far today:</h2>
       <div class="hs-ticker-row">
-        <figure class="hs-mascot hs-ticker-mascot" data-mascot="megaphone" data-state="reveal"></figure>
-        <div class="hs-ticker" id="hsTicker" aria-live="off">
-          <span class="hs-ticker-dollar">$</span>
-          <span class="hs-ticker-digits" id="hsTickerDigits"></span>
+        <figure class="hs-mascot hs-ticker-mascot" data-mascot="stopwatch" data-state="reveal"></figure>
+        <div class="hs-ticker-stack" id="hsTicker" aria-live="off">
+          <div class="hs-ticker"><span class="hs-ticker-digits" id="hsTickerDigits"></span></div>
+          <p class="hs-ticker-label" id="hsTickerLabel">websites were launched</p>
         </div>
       </div>
       <p style="font-family:var(--sans); font-size:13px; color:#c3ccda; margin:clamp(16px,2vw,22px) 0 0;">Ticking up in real time, resets at midnight</p>
@@ -325,11 +478,11 @@
 
   <section class="hs-close">
     <div class="hs-close-in">
-      <h2>That number keeps climbing. Want in - or curious if we're a fit?</h2>
-      <p>Tell me what's going on. I'll tell you straight whether I'm the right fit.</p>
+      <h2>Ready to add yours to the mix?</h2>
+      <p>See what I do and build your handstart, or get in touch:</p>
       <div class="hs-close-btns">
+        <a class="hs-next-btn hs-next-btn--reverse" href="/services"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Build your handstart</span><span class="hs-next-icons"><svg class="hs-next-rest" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
         <a class="hs-next-btn hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="16" height="20" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
-        <a class="hs-close-link" href="/services">See what we do</a>
       </div>
     </div>
   </section>
@@ -338,7 +491,7 @@
     <div class="hs-footer-in">
       <div class="hs-footer-top">
         <a class="hs-footer-logo" href="/" aria-label="Handstart Digital home">
-          <img src="assets/handstart-logo-footer.png" alt="Handstart Digital">
+          <img src="/assets/brand/handstart-logo-cream.svg" alt="Handstart Digital">
         </a>
         <div class="hs-footer-contact" style="display:flex; flex-direction:column; align-items:flex-end; gap:12px;">
           <a class="hs-footer-email" href="mailto:contact@handstartdigital.com">contact@handstartdigital.com</a>
@@ -364,7 +517,7 @@
 
       <div class="hs-footer-explore">Explore</div>
       <div class="hs-footer-navgrid">
-        <a class="hs-footer-navlink" href="/">Home</a>
+        <a class="hs-footer-navlink" href="/#top">Home</a>
         <a class="hs-footer-navlink" href="/services">Services</a>
         <a class="hs-footer-navlink" href="/case-studies">Case Studies</a>
         <a class="hs-footer-navlink" href="/about">About</a>
@@ -391,8 +544,8 @@
   <script src="/assets/js/SplitText.min.js"></script>
   <script src="/assets/js/lenis.min.js"></script>
   <script src="/assets/js/hs-motion.js"></script>
-  <script src="/assets/js/hs-mascots.js"></script>
-  <script src="/assets/js/hs-mascot-loader.js"></script>
+  <script src="/assets/js/hs-mascots.js?v=20261017a"></script>
+  <script src="/assets/js/hs-mascot-loader.js?v=20261019zt"></script>
   <script>
   (function () {
 
@@ -414,17 +567,37 @@
   })();
 
 
-    // Marketing spend ticker: $117,475 added every 5s means a rate of
-    // $23,495/sec. The displayed value is recomputed from real elapsed
-    // seconds since local midnight each tick rather than just incremented,
-    // so it self-corrects for tab throttling and resets cleanly at midnight
-    // instead of drifting.
+    // Daily counts ticker: rough worldwide daily averages (sources in docs/handoff.md), spread
+    // evenly over the day. Each value is recomputed from real seconds since local midnight
+    // on every 5s tick rather than incremented, so it self-corrects for tab throttling and
+    // resets cleanly at midnight. The three counts take turns, 15s each.
     (function () {
       var el = document.getElementById('hsTickerDigits');
-      if (!el) return;
-      var RATE_PER_SEC = 117475 / 5;
+      var label = document.getElementById('hsTickerLabel');
+      var stack = document.getElementById('hsTicker');
+      if (!el || !label || !stack) return;
+      var COUNTS = [
+        { perDay: 252000, label: 'websites were launched' },
+        { perDay: 5000000, label: 'ads were pushed live' },
+        { perDay: 600000000, label: 'social media posts were made' }
+      ];
+      var TICK_MS = 5000, TICKS_EACH = 3;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var which = 0, ticks = 0;
       var formatter = new Intl.NumberFormat('en-US');
       var prevChars = [];
+      var DIGIT_EM = 0.62, COMMA_EM = 0.3;
+
+      // Reserve the width of the longest value any count reaches by midnight, so the number
+      // never resizes its row and the stopwatch beside it stays put.
+      var widest = 0;
+      COUNTS.forEach(function (c) {
+        var w = formatter.format(c.perDay).split('').reduce(function (sum, ch) {
+          return sum + (ch === ',' ? COMMA_EM : DIGIT_EM);
+        }, 0);
+        widest = Math.max(widest, w);
+      });
+      el.parentNode.style.minWidth = widest.toFixed(2) + 'em';
 
       function secondsSinceMidnight() {
         var now = new Date();
@@ -433,7 +606,7 @@
       }
 
       function currentValue() {
-        return Math.floor(secondsSinceMidnight() * RATE_PER_SEC);
+        return Math.floor(secondsSinceMidnight() * COUNTS[which].perDay / 86400);
       }
 
       function render() {
@@ -444,7 +617,7 @@
           chars.forEach(function (ch) {
             var col = document.createElement('span');
             col.className = 'hs-ticker-col';
-            col.style.width = ch === ',' ? '0.3em' : '0.62em';
+            col.style.width = (ch === ',' ? COMMA_EM : DIGIT_EM) + 'em';
             var val = document.createElement('span');
             val.className = 'hs-ticker-val';
             val.textContent = ch;
@@ -478,8 +651,22 @@
         prevChars = chars;
       }
 
+      function swap() {
+        stack.classList.add('is-swapping');
+        setTimeout(function () {
+          which = (which + 1) % COUNTS.length;
+          label.textContent = COUNTS[which].label;
+          prevChars = [];
+          render();
+          stack.classList.remove('is-swapping');
+        }, reduce ? 0 : 350);
+      }
+
       render();
-      setInterval(render, 5000);
+      setInterval(function () {
+        ticks += 1;
+        if (ticks % TICKS_EACH === 0) swap(); else render();
+      }, TICK_MS);
     })();
 
     var y = document.getElementById('hs-year');
@@ -562,6 +749,49 @@
         bottom.appendChild(b);
       });
     });
+  })();
+
+  // Why work with me: the ABCD panels open on hover (desktop) or tap (touch)
+  (function () {
+    var group = document.querySelector('[data-abcd]');
+    if (!group) return;
+    var panels = group.querySelectorAll('[data-abcd-panel]');
+    if (!panels.length) return;
+    var defaultKey = panels[0].getAttribute('data-abcd-key');
+    var supportsHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function syncAria() {
+      panels.forEach(function (p) {
+        p.setAttribute('aria-expanded', p.classList.contains('is-active') ? 'true' : 'false');
+      });
+    }
+
+    function setActive(key) {
+      panels.forEach(function (p) {
+        p.classList.toggle('is-active', p.getAttribute('data-abcd-key') === key);
+      });
+      syncAria();
+    }
+
+    if (supportsHover) {
+      panels.forEach(function (panel) {
+        var key = panel.getAttribute('data-abcd-key');
+        panel.addEventListener('mouseenter', function () { setActive(key); });
+        panel.addEventListener('focus', function () { setActive(key); });
+      });
+      group.addEventListener('mouseleave', function () { setActive(defaultKey); });
+    } else {
+      panels.forEach(function (panel) {
+        panel.addEventListener('click', function () {
+          var wasActive = panel.classList.contains('is-active');
+          panels.forEach(function (p) { p.classList.remove('is-active'); });
+          if (!wasActive) panel.classList.add('is-active');
+          syncAria();
+        });
+      });
+    }
+
+    setActive(defaultKey);
   })();
 </script>
 

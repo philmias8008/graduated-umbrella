@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Mascot rigs | Handstart Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #1D3F66; --cream: #F7F4EE; --body: #4B5868; --hairline: #D6CFC2; --sage: #7E9F6B; --accent: #E3A23B; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font: 16px/1.5 'Libre Franklin', sans-serif; padding: 24px 16px 64px; }
+  h1 { font: 800 clamp(28px, 5vw, 44px)/1.05 'Bricolage Grotesque', sans-serif; letter-spacing: -0.035em; margin: 0 0 6px; }
+  h2 { font: 700 20px/1.2 'Bricolage Grotesque', sans-serif; letter-spacing: -0.02em; margin: 0 0 12px; }
+  p { color: var(--body); margin: 0 0 16px; max-width: 60ch; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 16px 0 24px; }
+  button, select { font: 600 14px 'Libre Franklin', sans-serif; color: var(--ink); background: #fff; border: 1px solid var(--hairline); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+  button:hover { border-color: var(--ink); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .card { background: #fff; border: 1px solid var(--hairline); border-radius: 16px; padding: 16px; }
+  svg[data-rig] { overflow: visible; }
+  .big svg { width: 100%; max-width: 560px; display: block; margin: 0 auto; }
+  .row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+  .row svg { width: 120px; }
+  .blob { position: relative; width: 260px; margin: 0 auto; }
+  .blob::before { content: ''; position: absolute; inset: 12% 8% 18% 8%; background: var(--sage); border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%; }
+  .blob svg { position: relative; width: 100%; display: block; }
+  .still svg { width: 200px; display: block; margin: 0 auto; }
+  .pick { font: 600 14px 'Libre Franklin', sans-serif; color: var(--ink); text-decoration: none; border: 1px solid var(--hairline); border-radius: 999px; padding: 8px 16px; background: #fff; }
+  .pick[aria-current] { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .note { font-size: 13px; color: var(--body); margin: 8px 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Mascot rigs</h1>
+  <p>Dev only, not linked. Each rig bounces, blinks and scans, then plays its gag every few seconds. Hover or tap any of them to play the gag now.</p>
+  <div class="bar">
+    <a class="pick" href="?m=magnifier">Magnifier</a>
+    <a class="pick" href="?m=lightbulb">Lightbulb</a>
+    <a class="pick" href="?m=megaphone">Megaphone</a>
+    <a class="pick" href="?m=browser-window">Computer</a>
+    <a class="pick" href="?m=speech-bubble">Speech bubble</a>
+    <a class="pick" href="?m=finish-flag">Finish flag</a>
+    <a class="pick" href="?m=compass">Compass</a>
+    <a class="pick" href="?m=clipboard">Clipboard</a>
+    <a class="pick" href="?m=stopwatch">Stopwatch</a>
+    <a class="pick" href="?m=block">Block</a>
+    <a class="pick" href="?m=power-button">Power button</a>
+    <a class="pick" href="?m=high-five">High-five</a>
+    <a class="pick" href="?m=handshake">Handshake</a>
+    <a class="pick" href="?m=hero-cheer">Hero cheer</a>
+    <a class="pick" href="?m=hero-thumbs">Hero thumbs-up</a>
+    <a class="pick" href="?m=case-files">Case files</a>
+    <button type="button" data-gag>Play gag</button>
+    <button type="button" data-pause>Pause</button>
+    <label>Speed
+      <select data-speed><option value="1">1x</option><option value="0.5">0.5x</option><option value="0.25">0.25x</option><option value="0.1">0.1x</option></select>
+    </label>
+  </div>
+  <div class="grid">
+    <div class="card big"><h2>Large</h2><svg data-rig="magnifier" aria-hidden="true"></svg></div>
+    <div class="card">
+      <h2>On its blob</h2>
+      <div class="blob"><svg data-rig="magnifier" aria-hidden="true"></svg></div>
+      <h2 style="margin-top:24px">Small, out of sync</h2>
+      <div class="row"><svg data-rig="magnifier" aria-hidden="true"></svg><svg data-rig="magnifier" aria-hidden="true"></svg><svg data-rig="magnifier" aria-hidden="true"></svg></div>
+    </div>
+    <div class="card still">
+      <h2>Still (repeats, reduced motion)</h2>
+      <svg data-rig="magnifier" data-mode="rest" aria-hidden="true"></svg>
+      <p class="note">Freeze any moment of the gag with <code>&amp;p=0.5</code> (0 to 1) in the address bar.</p>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/hs-mascot-rig.js?v=20261019zt"></script>
+<script>
+  (function () {
+    var q = new URLSearchParams(location.search), freeze = q.get('p'), id = q.get('m') || 'magnifier';
+    document.querySelectorAll('.pick').forEach(function (a) {
+      if (a.getAttribute('href') === '?m=' + id) a.setAttribute('aria-current', 'page');
+    });
+    document.querySelectorAll('[data-rig]').forEach(function (svg) { svg.dataset.rig = id; });
+    MascotRig.ready(id).then(function () {
+      var rigs = [].map.call(document.querySelectorAll('[data-rig]'), function (svg, i) {
+        if (freeze !== null) {
+          var r = MascotRig.mount(svg, svg.dataset.rig, 'rest');
+          r.C.pose(r, 0.8 * r.C.hop.period, i === 0 ? +freeze : -1);
+          return r;
+        }
+        return MascotRig.mount(svg, svg.dataset.rig, svg.dataset.mode || 'loop');
+      });
+      document.querySelector('[data-gag]').onclick = function () { rigs.forEach(function (r) { r.gag(); }); };
+      var paused = false, speed = 1;
+      document.querySelector('[data-pause]').onclick = function () {
+        paused = !paused; MascotRig.speed = paused ? 0 : speed; this.textContent = paused ? 'Play' : 'Pause';
+      };
+      document.querySelector('[data-speed]').onchange = function () {
+        speed = +this.value; if (!paused) MascotRig.speed = speed;
+      };
+    });
+  })();
+</script>
+</body>
+</html>

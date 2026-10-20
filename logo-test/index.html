@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Logo Test | Handstart Digital</title>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,100,600..800&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1D3F66; --sky: #7FB5E3; --body: #4B5868; --cream: #F7F4EE;
+    --display: 'Bricolage Grotesque', 'Libre Franklin', sans-serif;
+    --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  .lt-wrap { max-width: 1100px; margin: 0 auto; padding: 28px 16px 48px; }
+  .lt-wrap > h1 { font: 800 24px/1.2 var(--display); letter-spacing: -0.03em; margin: 0 0 6px; }
+  .lt-wrap > p { margin: 0 0 8px; color: var(--body); font-size: 15px; line-height: 1.5; max-width: 66ch; }
+  .lt-wrap code { font-size: 13px; }
+  .lt-label { font: 600 12px var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--body); margin: 32px 0 12px; }
+  .lt-row { display: flex; flex-wrap: wrap; gap: 16px; }
+  .lt-col { display: flex; flex-direction: column; gap: 10px; }
+  .lt-tile { border-radius: 18px; padding: 24px 20px; display: flex; align-items: center; justify-content: center; gap: 24px; flex: 1 1 260px; min-width: 0; }
+  .lt-band { padding: 20px; border-radius: 0; justify-content: flex-start; flex: none; }
+  .lt-white { background: #fff; box-shadow: inset 0 0 0 1px rgba(29,63,102,0.1); }
+  .lt-sky { background: var(--sky); }
+  .lt-ink { background: var(--ink); }
+  .lt-dark { background: #202124; color: #e8eaed; }
+  .lt-band img { display: block; height: auto; max-width: 100%; }
+  /* the hand A in cream: the ink file used as a mask over a cream fill */
+  .lt-a-cream { display: block; width: 220px; aspect-ratio: 1263 / 1175; background: var(--cream);
+    -webkit-mask: url(/assets/brand/handstart-a-recraft.svg) center / contain no-repeat;
+    mask: url(/assets/brand/handstart-a-recraft.svg) center / contain no-repeat; }
+  .lt-sizes { display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; justify-content: center; }
+  .lt-sizes figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; font: 500 11px var(--sans); }
+  .lt-tab { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #333; border-radius: 10px 10px 0 0; padding: 8px 14px; font: 400 13px var(--sans); box-shadow: 0 0 0 1px rgba(0,0,0,0.08); }
+  .lt-dark .lt-tab { background: #35363a; color: #e8eaed; }
+  .lt-tab img { width: 16px; height: 16px; }
+</style>
+</head>
+<body>
+  <div class="lt-wrap">
+    <h1>Logo</h1>
+    <p>One line: HANDSTART Digital&trade; in Bricolage Grotesque (HANDSTART 800, Digital 600), the first A replaced by the Recraft hand A. Letters are outlined. Files live in <code>/assets/brand/</code>; rebuild the wordmark with <code>tools/build-logo.py</code>.</p>
+    <p>The earlier directions (glove, five-finger and natural hand marks, the hand A built on Bricolage's A) are kept as files in <code>/assets/brand/</code> but no longer shown here.</p>
+
+    <p class="lt-label">The logo: header widths, then footer</p>
+    <div class="lt-col">
+      <div class="lt-tile lt-band lt-sky"><img src="/assets/brand/handstart-logo.svg" alt="Handstart Digital" style="width:min(445px,100%)"></div>
+      <div class="lt-tile lt-band lt-sky"><img src="/assets/brand/handstart-logo.svg" alt="Handstart Digital" style="width:290px"></div>
+      <div class="lt-tile lt-band lt-white"><img src="/assets/brand/handstart-logo.svg" alt="Handstart Digital" style="width:min(445px,100%)"></div>
+      <div class="lt-tile lt-band lt-ink"><img src="/assets/brand/handstart-logo-cream.svg" alt="Handstart Digital" style="width:min(560px,100%)"></div>
+    </div>
+
+    <p class="lt-label">The hand A on its own</p>
+    <div class="lt-row">
+      <div class="lt-tile lt-white"><img src="/assets/brand/handstart-a-recraft.svg" alt="" style="width:220px"></div>
+      <div class="lt-tile lt-ink"><span class="lt-a-cream"></span></div>
+    </div>
+
+    <p class="lt-label">Favicon and app icon</p>
+    <div class="lt-row">
+      <div class="lt-tile lt-white" style="flex-direction:column;">
+        <span class="lt-tab"><img src="/favicon.ico" alt="">Handstart Digital</span>
+        <div class="lt-sizes">
+          <figure><img src="/favicon.ico" alt="" width="16" height="16">16</figure>
+          <figure><img src="/favicon.ico" alt="" width="32" height="32">32</figure>
+          <figure><img src="/favicon.ico" alt="" width="48" height="48">48</figure>
+          <figure><img src="/apple-touch-icon.png" alt="" width="90" height="90" style="border-radius:20px">apple touch</figure>
+        </div>
+      </div>
+      <div class="lt-tile lt-dark" style="flex-direction:column;">
+        <span class="lt-tab"><img src="/favicon.ico" alt="">Handstart Digital</span>
+        <div class="lt-sizes">
+          <figure><img src="/favicon.ico" alt="" width="16" height="16">16</figure>
+          <figure><img src="/favicon.ico" alt="" width="32" height="32">32</figure>
+          <figure><img src="/favicon.ico" alt="" width="48" height="48">48</figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

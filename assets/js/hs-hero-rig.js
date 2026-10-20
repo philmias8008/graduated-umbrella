@@ -1,9 +1,11 @@
-/* Hero run-cycle rig (dev test). Vanilla JS, no libraries, so it stays homepage-safe.
-   Parts come from hero-parts.svg (built by tools/build-hero-rig.py); arms and legs are
-   drawn here as rubber-hose strokes that bend to keep their length. All coordinates are
-   in the art's 1024 space. */
+/* Hero rig: the running hero and the idle victory pose. Vanilla JS, no libraries, so it is
+   homepage-safe. Parts come from assets/mascots/hero/ (built by tools/build-hero-rig.py);
+   arms and legs are drawn here as rubber-hose strokes that bend to keep their length. All
+   coordinates are in each drawing's 1024 space. Load with data-base pointing at the parts. */
 (function () {
   'use strict';
+
+  var BASE = (document.currentScript && document.currentScript.dataset.base) || '/assets/mascots/hero/';
 
   var NS = 'http://www.w3.org/2000/svg';
   var INK = '#1D3F66';
@@ -255,6 +257,7 @@
     });
     this.armL = limb(g);
     this.band = use('hi-band', g);
+    this.number = use('hi-number', g);
     this.fistL = use('hi-fist-l', g);
     this.fistR = use('hi-fist-r', g);
     this.nextBlink = 1 + Math.random() * 2;
@@ -284,6 +287,7 @@
     var body = 'translate(0 ' + down.toFixed(1) + ')';
     this.body.setAttribute('transform', body);
     this.band.setAttribute('transform', body);
+    this.number.setAttribute('transform', body);
     function onBody(p) { return [p[0], p[1] + down]; }
 
     var legLen = { L: Math.hypot(A.ankleL[0] - A.hipL[0], A.ankleL[1] - A.hipL[1]) * 1.03,
@@ -302,20 +306,69 @@
       place(self['fist' + s[0]], wr, turn, wr0);
     });
 
-    var squash = 1;
+    blinkEyes(this, A.eyes, time);
+  };
+
+  // Float: the celebration after the run. Recraft's floating pose, its arms and legs kept as
+  // drawn pieces: the body bobs slowly and the limbs trail it a touch, hanging loose.
+  var FLOAT = { hips: [575, 622], shoulderL: [405, 478], shoulderR: [688, 480], mirrorX: 500,
+    eyes: { r: [640, 294], l: [542, 312] } };
+
+  function Float(svg, opts) {
+    this.o = Object.assign({ period: 2.4, bob: 12, blink: true, glance: true, mirror: false }, opts || {});
+    var self = this;
+    svg.setAttribute('viewBox', svg.getAttribute('viewBox') || '90 10 900 980');
+    var g = this.root = el('g', {}, svg);
+    this.legs = use('hf-legs', g);
+    use('hf-body', g);
+    this.eyes = {};
+    ['r', 'l'].forEach(function (e) {
+      var eg = el('g', {}, g);
+      use('hf-eye-' + e + '-white', eg);
+      var clip = el('g', { 'clip-path': 'url(#hf-c-eye-' + e + ')' }, eg);
+      var pupil = use('hf-pupil-' + e, clip);
+      use('hf-eye-' + e + '-line', eg);
+      self.eyes[e] = { g: eg, pupil: pupil };
+    });
+    this.number = use('hf-number', g);
+    this.numberCx = +document.getElementById('hf-number').getAttribute('data-cx');
+    this.armL = use('hf-arm-l', g);
+    this.armR = use('hf-arm-r', g);
+    this.nextBlink = 1 + Math.random() * 2;
+  }
+  Float.prototype.set = function (o) { Object.assign(this.o, o); };
+  Float.prototype.rest = function () { this.pose(0); };
+  Float.prototype.pose = function (u, time) {
+    var o = this.o, F = FLOAT, w = 2 * Math.PI * u;
+    this.root.setAttribute('transform', (o.mirror ? 'translate(' + 2 * F.mirrorX + ' 0) scale(-1 1) ' : '') +
+      'translate(0 ' + (-o.bob * Math.sin(w)).toFixed(1) + ')');
+    this.number.setAttribute('transform', o.mirror ? 'translate(' + 2 * this.numberCx + ' 0) scale(-1 1)' : '');
+    // limbs lag the bob: legs settle a little lower and sway, arms swing out a touch
+    var lag = Math.sin(w - 0.9);
+    this.legs.setAttribute('transform', 'translate(0 ' + (3 * lag).toFixed(1) + ') rotate(' + (1.2 * Math.sin(w - 1.3)).toFixed(2) +
+      ' ' + F.hips[0] + ' ' + F.hips[1] + ')');
+    var arm = 2.5 * lag;
+    this.armL.setAttribute('transform', 'rotate(' + arm.toFixed(2) + ' ' + F.shoulderL[0] + ' ' + F.shoulderL[1] + ')');
+    this.armR.setAttribute('transform', 'rotate(' + (-arm).toFixed(2) + ' ' + F.shoulderR[0] + ' ' + F.shoulderR[1] + ')');
+    blinkEyes(this, F.eyes, time);
+  };
+
+  // blink every few seconds and drift the pupils; shared by the idle and the float
+  function blinkEyes(h, centres, time) {
+    var o = h.o, squash = 1;
     if (o.blink && time !== undefined) {
-      var dt = time - this.nextBlink;
-      if (dt > 0.16) this.nextBlink = time + 2 + Math.random() * 3;
+      var dt = time - h.nextBlink;
+      if (dt > 0.16) h.nextBlink = time + 2 + Math.random() * 3;
       else if (dt > 0) squash = 0.1 + 0.9 * Math.abs(dt - 0.08) / 0.08;
     }
     var look = o.glance && time !== undefined ? 5 * Math.sin(time * 0.9) : 0;
     ['r', 'l'].forEach(function (e) {
-      var c = A.eyes[e];
-      self.eyes[e].g.setAttribute('transform', squash < 1
+      var c = centres[e];
+      h.eyes[e].g.setAttribute('transform', squash < 1
         ? 'translate(0 ' + c[1] + ') scale(1 ' + squash.toFixed(2) + ') translate(0 ' + (-c[1]) + ')' : '');
-      self.eyes[e].pupil.setAttribute('transform', 'translate(' + look.toFixed(1) + ' 0)');
+      h.eyes[e].pupil.setAttribute('transform', 'translate(' + look.toFixed(1) + ' 0)');
     });
-  };
+  }
 
   // Shared clock: one requestAnimationFrame loop drives every hero on the page.
   var heroes = [], running = true, last = null, started = false;
@@ -333,8 +386,9 @@
   }
 
   window.HeroRig = {
-    ready: Promise.all(['hero-parts.svg', 'hero-idle-parts.svg'].map(function (f) {
-      return fetch(f).then(function (r) { return r.text(); });
+    ready: Promise.all(['hero-parts.svg', 'hero-idle-parts.svg', 'hero-float-parts.svg', 'hero-jolt-parts.svg'].map(function (f) {
+      // revalidate each load so a rebuilt part is never stale; unchanged files come back as 304s
+      return fetch(BASE + f, { cache: 'no-cache' }).then(function (r) { return r.text(); });
     })).then(function (txts) {
       var holder = document.createElement('div');
       holder.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
@@ -342,9 +396,9 @@
       document.body.prepend(holder);
     }),
     // mode: 'run' animates, 'rest' shows the drawing's pose, 'frame' one still phase
-    // kind: 'run' (default) or 'idle'
+    // kind: 'run' (default), 'idle', or 'float' (the celebration after the run)
     mount: function (svg, opts, mode, kind) {
-      var h = kind === 'idle' ? new Idle(svg, opts) : new Hero(svg, opts);
+      var h = kind === 'float' ? new Float(svg, opts) : kind === 'idle' ? new Idle(svg, opts) : new Hero(svg, opts);
       // 'frame' holds one phase of the cycle still
       h.mode = mode === 'frame' ? 'frame' : reduce.matches ? 'rest' : (mode || 'run');
       h.u = (opts && opts.phase) || 0; h.t = 0;

@@ -3,18 +3,23 @@
 
   Markup:  <figure class="hs-mascot" data-mascot="magnifier" data-state="idle"></figure>
   Optional attributes:
-    data-blob="sage"         overrides the mascot's default blob from manifest.json
+    data-blob="sage"         draws a blob behind it (dev pages only: the site has none)
     data-label="..."         alt text; without it the mascot is decorative
     data-pose="happy"        base pose instead of idle (raster only)
     data-hover-pose="happy"  pose shown on hover (default: first pose not starting with "idle")
     data-boil                alternate idle and idle-b at 4 fps; or data-boil="idle happy"
     data-eager               load the base pose immediately (above-the-fold mascots)
+    data-still="rest"        rigs only: the still shows the drawing at rest, not the gag's moment
+    data-gag-cue             rigs only: no gag on a timer; the page calls svg.__rig.gag()
+    data-first-gag="0.9"     rigs only: seconds to the first gag (default: a random moment)
 
-  Reads /assets/mascots/manifest.json, where every id has a default blob
-  color and finished art also has a type. Raster ids load
+  Reads /assets/mascots/manifest.json, where finished art has a type (the
+  blob colours listed there are unused since the site dropped blobs). Raster ids load
   final/{id}-{pose}.webp with an @2x srcset; svg ids are inlined from
-  final/{id}.svg so their named layers can animate. Ids without a type, or
-  whose art fails, fall back to placeholder/{id}.svg.
+  final/{id}.svg so their named layers can animate. Rig ids are drawn and
+  animated by /assets/js/hs-mascot-rig.js (loaded only when a page has one):
+  data-state="static" shows the rig's still, any other state its loop.
+  Ids without a type, or whose art fails, fall back to placeholder/{id}.svg.
   The blob and shadow are drawn here, never baked into the art.
 
   Pages can merge test manifests before this script loads:
@@ -28,6 +33,7 @@
   var SVG_NS = 'http://www.w3.org/2000/svg';
   var BLOB_PATH = 'M104 6C150 4 190 36 194 84C198 132 170 178 118 190C66 202 18 172 8 118C-2 64 36 10 104 6Z';
   var RASTER_1X = 600;
+  var RIG_SRC = '/assets/js/hs-mascot-rig.js?v=20261019zt';
 
   // Lets the CSS hide reveal-state mascots only when JS is running to reveal them.
   document.documentElement.classList.add('hs-mascots-js');
@@ -38,7 +44,7 @@
   var revealObserver = null;
 
   function fetchJson(url) {
-    return fetch(url)
+    return fetch(url, { cache: 'no-cache' })
       .then(function (r) { return r.ok ? r.json() : {}; })
       .catch(function () { return {}; });
   }
@@ -250,6 +256,46 @@
     });
   }
 
+  /* rig */
+
+  var rigScript = null;
+  function getRig() {
+    if (window.MascotRig) return Promise.resolve(window.MascotRig);
+    if (!rigScript) {
+      rigScript = new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = RIG_SRC;
+        s.onload = function () { resolve(window.MascotRig); };
+        s.onerror = function () { rigScript = null; reject(new Error('Could not load ' + RIG_SRC)); };
+        document.head.appendChild(s);
+      });
+    }
+    return rigScript;
+  }
+
+  function fillWithRig(figure, art, id) {
+    return getRig().then(function (rig) {
+      return rig.ready(id).then(function () {
+        var svg = document.createElementNS(SVG_NS, 'svg');
+        svg.setAttribute('focusable', 'false');
+        var label = figure.getAttribute('data-label');
+        if (label) { svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', label); }
+        else art.setAttribute('aria-hidden', 'true');
+        art.textContent = '';
+        art.appendChild(svg);
+        figure.setAttribute('data-type', 'rig');
+        figure.setAttribute('data-source', 'final');
+        // data-gag-cue: the page plays the gag itself (svg.__rig.gag()), so the rig's own timer is off.
+        // data-still="rest": a still of the drawing at rest rather than the gag's moment.
+        var opts = {};
+        if (figure.hasAttribute('data-gag-cue')) opts.idle = 0;
+        if (figure.getAttribute('data-still') === 'rest') opts.still = 'rest';
+        if (figure.hasAttribute('data-first-gag')) opts.firstGag = +figure.getAttribute('data-first-gag') || 0;
+        rig.mount(svg, id, figure.getAttribute('data-state') === 'static' ? 'rest' : 'loop', opts);
+      });
+    });
+  }
+
   /* shared */
 
   function buildShell(figure, id) {
@@ -307,10 +353,9 @@
     figure._hsLoad = getManifest().then(function (manifest) {
       var entry = manifest[id];
       var art = buildShell(figure, id);
-      // A data-blob written on the figure wins over the manifest default.
-      if (!figure.hasAttribute('data-blob')) {
-        figure.setAttribute('data-blob', (entry && entry.blob) || 'tint');
-      }
+      // No blobs on the site (2026-10-18): a mascot only gets one if its figure asks with
+      // data-blob (the dev pages do); the manifest's blob colours are no longer used.
+      if (!figure.hasAttribute('data-blob')) figure.setAttribute('data-blob', 'none');
       if (entry && Number(entry.ratio)) {
         figure.style.setProperty('--hs-mascot-ratio', String(Number(entry.ratio)));
       }
@@ -318,6 +363,12 @@
       if (entry && entry.type === 'raster') {
         fillWithRaster(figure, art, id, entry);
         return;
+      }
+      if (entry && entry.type === 'rig') {
+        return fillWithRig(figure, art, id).catch(function (err) {
+          console.warn('Mascot "' + id + '" rig failed to load. Using placeholder.', err);
+          return fillWithSvg(figure, art, placeholderUrl, id, 'placeholder');
+        });
       }
       if (entry && entry.type === 'svg') {
         return fillWithSvg(figure, art, (entry.path || FINAL) + id + '.svg', id, 'final').catch(function (err) {

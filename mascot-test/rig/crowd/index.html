@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Mascot crowd | Handstart Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #1D3F66; --cream: #F7F4EE; --body: #4B5868; --hairline: #D6CFC2; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font: 16px/1.5 'Libre Franklin', sans-serif; padding: 24px 16px 64px; }
+  h1 { font: 800 clamp(28px, 5vw, 44px)/1.05 'Bricolage Grotesque', sans-serif; letter-spacing: -0.035em; margin: 0 0 6px; }
+  p { color: var(--body); margin: 0 0 16px; max-width: 64ch; }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 16px 0 32px; }
+  button, select { font: 600 14px 'Libre Franklin', sans-serif; color: var(--ink); background: #fff; border: 1px solid var(--hairline); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+  /* the crowd: one row on wide screens, wrapping into staggered rows below that */
+  .crowd { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 4px 0; }
+  .crowd svg { width: clamp(72px, 8vw, 104px); height: clamp(72px, 8vw, 104px); overflow: visible; display: block; }
+  .crowd .lead svg { width: clamp(88px, 10vw, 128px); height: clamp(88px, 10vw, 128px); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Mascot crowd</h1>
+  <p>Dev only, not linked. The whole cast in a row, the hero in the middle. Each runs its own idle; every few seconds a wave runs left to right, each one playing its own gag in turn. Hover or tap any of them to play its gag.</p>
+  <div class="bar">
+    <button type="button" data-wave>Run the wave</button>
+    <button type="button" data-pause>Pause</button>
+    <label>Speed
+      <select data-speed><option value="1">1x</option><option value="0.5">0.5x</option><option value="0.25">0.25x</option></select>
+    </label>
+  </div>
+  <div class="crowd" data-crowd></div>
+</div>
+<script src="/assets/js/hs-mascot-rig.js?v=20261019h"></script>
+<script>
+  (function () {
+    // left to right, the hero in the middle
+    var CAST = ['magnifier', 'lightbulb', 'megaphone', 'browser-window', 'speech-bubble', 'power-button',
+                'hero-cheer', 'compass', 'clipboard', 'block', 'finish-flag', 'stopwatch'];
+    var LEAD = 'hero-cheer';
+    // the block's box is zoomed out to fit its finished pyramid, so it reads small next to the rest
+    var SCALE = { block: 1.4, magnifier: 1.12 };
+    var STAGGER = 0.22;      // seconds between neighbours in the wave
+    var EVERY = 9;           // seconds from one wave to the next
+    var crowd = document.querySelector('[data-crowd]');
+    Promise.all(CAST.map(MascotRig.ready)).then(function () {
+      var rigs = CAST.map(function (id) {
+        var cell = document.createElement('div');
+        if (id === LEAD) cell.className = 'lead';
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('aria-hidden', 'true');
+        if (SCALE[id]) svg.style.cssText = 'width:calc(' + SCALE[id] + ' * clamp(72px, 8vw, 104px));height:calc(' + SCALE[id] + ' * clamp(72px, 8vw, 104px))';
+        cell.appendChild(svg);
+        crowd.appendChild(cell);
+        // their own timers off: the wave plays the gags
+        return MascotRig.mount(svg, id, 'loop', { idle: 0 });
+      });
+      var timers = [];
+      function wave() {
+        timers.forEach(clearTimeout); timers = [];
+        rigs.forEach(function (r, i) {
+          timers.push(setTimeout(function () { r.gag(); }, i * STAGGER * 1000 / (MascotRig.speed || 1)));
+        });
+      }
+      setTimeout(wave, 1200);
+      setInterval(function () { if (MascotRig.speed) wave(); }, EVERY * 1000);
+      document.querySelector('[data-wave]').onclick = wave;
+      var paused = false, speed = 1;
+      document.querySelector('[data-pause]').onclick = function () {
+        paused = !paused; MascotRig.speed = paused ? 0 : speed; this.textContent = paused ? 'Play' : 'Pause';
+      };
+      document.querySelector('[data-speed]').onchange = function () { speed = +this.value; if (!paused) MascotRig.speed = speed; };
+    });
+  })();
+</script>
+</body>
+</html>

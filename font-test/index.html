@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Font Test | Handstart Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Libre+Franklin:wght@400;500;600;800;900&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1D3F66; --sky: #7FB5E3; --sky-top: #3F7DC0; --sky-bottom: #9DCAEE;
+    --accent: #E3A23B; --accent-lt: #F0C46E; --body: #4B5868; --cream: #F7F4EE;
+    --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+    --script: 'Caveat', cursive;
+  }
+  /* each option sets the heading font and how headings are set */
+  [data-opt="cormorant"] { --head: 'Cormorant Garamond', Georgia, serif; --hw: 600; --ls: -0.01em; --italic: italic; }
+  [data-opt="bricolage"] { --head: 'Bricolage Grotesque', var(--sans); --hw: 800; --ls: -0.035em; --italic: normal; }
+  [data-opt="bricolage-soft"] { --head: 'Bricolage Grotesque', var(--sans); --hw: 700; --ls: -0.025em; --italic: normal; --wdth: 88; }
+  [data-opt="franklin"] { --head: var(--sans); --hw: 900; --ls: -0.04em; --italic: normal; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  .ft-intro { max-width: 1100px; margin: 0 auto; padding: 32px 16px 8px; }
+  .ft-intro h1 { font: 800 22px/1.2 var(--sans); margin: 0 0 6px; }
+  .ft-intro p { margin: 0; color: var(--body); font-size: 15px; line-height: 1.5; max-width: 62ch; }
+  .ft-intro a { color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 2px; }
+
+  .ft-opt { max-width: 1100px; margin: 0 auto; padding: 28px 16px 36px; border-bottom: 2px dashed rgba(29,63,102,0.18); }
+  .ft-label { font: 600 12px var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--body); margin: 0 0 18px; }
+  .ft-head { font-family: var(--head); font-weight: var(--hw); letter-spacing: var(--ls); font-variation-settings: 'wdth' var(--wdth, 100); }
+
+  .ft-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 16px; }
+  .ft-tile { border-radius: 18px; padding: 22px 20px; min-width: 0; }
+  .ft-tile--cream { background: #fff; box-shadow: inset 0 0 0 1px rgba(29,63,102,0.1); }
+  .ft-tile--sky { background: linear-gradient(var(--sky-top), var(--sky-bottom)); }
+  .ft-tile--ink { background: var(--ink); color: var(--cream); }
+
+  /* wordmark with a placeholder mark */
+  .ft-wm { display: flex; align-items: center; gap: 0.32em; line-height: 1; white-space: nowrap; }
+  .ft-wm-mark { width: 1.05em; height: 1.05em; border-radius: 50%; border: 0.12em solid currentColor; flex: 0 0 auto; }
+  .ft-wm sup { font-size: 0.4em; font-family: var(--sans); font-weight: 600; letter-spacing: 0; vertical-align: top; position: relative; top: -0.15em; margin-left: 0.08em; }
+  .ft-wm-row { display: flex; flex-direction: column; gap: 18px; }
+  .ft-wm--xl { font-size: clamp(26px, 7.4vw, 40px); }
+  .ft-wm--md { font-size: 24px; }
+  .ft-wm--sm { font-size: 16px; }
+
+  .ft-h1 { font-size: clamp(34px, 8vw, 56px); line-height: 1.02; margin: 0; text-align: center; color: var(--cream); }
+  .ft-h2 { font-size: clamp(28px, 5vw, 44px); line-height: 1.06; margin: 0 0 12px; text-wrap: balance; }
+  .ft-h2 u { text-decoration-color: var(--accent); text-decoration-thickness: 0.12em; text-underline-offset: 0.12em; text-decoration-skip-ink: none; }
+  .ft-card { background: var(--cream); border-radius: 18px; padding: 20px 16px; margin-top: 18px; text-align: center; color: var(--ink); }
+  .ft-line { font-family: var(--head); font-style: var(--italic); font-weight: 600; font-size: clamp(20px, 2.4vw, 26px); letter-spacing: calc(var(--ls) / 2); margin: 0; }
+  [data-opt="cormorant"] .ft-line { font-weight: 600; }
+  .ft-found { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 4px 10px; margin-top: 4px; }
+  .ft-found .ft-script { font: 600 clamp(26px, 3vw, 34px) var(--script); }
+  .ft-body { font-size: 16px; line-height: 1.65; color: var(--body); margin: 12px 0 0; }
+  .ft-tile--ink .ft-body { color: #c3ccda; }
+  .ft-hi { font: 600 28px var(--script); margin: 0 0 4px; }
+</style>
+</head>
+<body>
+  <div class="ft-intro">
+    <h1>Heading font test</h1>
+    <p>Cormorant (now) against Bricolage Grotesque, with Libre Franklin Black for reference. Body text stays Libre Franklin and the handwriting stays Caveat in every option. The circle is a stand-in for the logo mark. To see the real homepage in Bricolage, open <a href="/?font=bricolage">the homepage with ?font=bricolage</a>.</p>
+  </div>
+
+  <template id="ft-sample">
+    <div class="ft-grid">
+      <div class="ft-tile ft-tile--cream">
+        <div class="ft-wm-row">
+          <div class="ft-wm ft-wm--xl ft-head"><span class="ft-wm-mark"></span><span>Handstart Digital<sup>TM</sup></span></div>
+          <div class="ft-wm ft-wm--md ft-head"><span class="ft-wm-mark"></span><span>Handstart Digital<sup>TM</sup></span></div>
+          <div class="ft-wm ft-wm--sm ft-head"><span class="ft-wm-mark"></span><span>Handstart Digital<sup>TM</sup></span></div>
+        </div>
+      </div>
+      <div class="ft-tile ft-tile--sky">
+        <h2 class="ft-h1 ft-head">Being online<br>&ne;<br>Being found</h2>
+        <div class="ft-card">
+          <p class="ft-line">Get a headstart on your competition.</p>
+          <div class="ft-found"><span class="ft-line">Get found:</span><span class="ft-script">Website Builds</span></div>
+        </div>
+      </div>
+      <div class="ft-tile ft-tile--cream">
+        <p class="ft-hi">hi, I'm Aidan</p>
+        <h3 class="ft-h2 ft-head">How We Get Your <u>Handstart</u></h3>
+        <p class="ft-body">In an automated world, Handstart prioritizes human eyes and effort for your business. Brand, website, search, ads and the follow-up, handled by the person you talk to.</p>
+      </div>
+      <div class="ft-tile ft-tile--ink">
+        <div class="ft-wm ft-wm--md ft-head" style="margin-bottom:16px;"><span class="ft-wm-mark"></span><span>Handstart Digital<sup>TM</sup></span></div>
+        <h3 class="ft-h2 ft-head">What makes your brand yours?</h3>
+        <p class="ft-body">This is how people recognize you, and decide you are the one to call.</p>
+      </div>
+    </div>
+  </template>
+
+  <section class="ft-opt" data-opt="cormorant"><p class="ft-label">A. Cormorant Garamond 600 (current)</p></section>
+  <section class="ft-opt" data-opt="bricolage"><p class="ft-label">B. Bricolage Grotesque 800, tight (like your Claude chat mockup)</p></section>
+  <section class="ft-opt" data-opt="bricolage-soft"><p class="ft-label">C. Bricolage Grotesque 700, slightly narrower</p></section>
+  <section class="ft-opt" data-opt="franklin"><p class="ft-label">D. Libre Franklin Black (reference, no new font)</p></section>
+
+  <script>
+    var tpl = document.getElementById('ft-sample');
+    document.querySelectorAll('.ft-opt').forEach(function (sec) {
+      sec.appendChild(tpl.content.cloneNode(true));
+    });
+  </script>
+</body>
+</html>

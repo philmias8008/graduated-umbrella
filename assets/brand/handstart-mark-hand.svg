@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 6 86 104" role="img" aria-label="Handstart Digital">
+  <defs>
+    <!-- natural open hand, drawn from scratch; the 1 is Bricolage Grotesque ExtraBold, knocked out of the palm -->
+    <mask id="hs-mark-one" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="120">
+      <rect width="120" height="120" fill="#fff"/>
+      <path data-one="" transform="translate(57 93) scale(0.054 -0.054)" d="M108 0V438H20V577Q61 577 89.5 591.5Q118 606 128 660H270V0Z" fill="#000"/>
+      <path data-crease="" d="M50 82Q60 70 74 72" fill="none" stroke="#000" stroke-width="2.4" stroke-linecap="round" display="none"/>
+    </mask>
+  </defs>
+  <g fill="#1D3F66" stroke="#1D3F66" stroke-linecap="round" mask="url(#hs-mark-one)">
+    <line x1="44" y1="62" x2="41.5" y2="21" stroke-width="12"/>
+    <line x1="58.5" y1="60" x2="58.5" y2="13" stroke-width="12"/>
+    <line x1="73" y1="62" x2="75.5" y2="22" stroke-width="12"/>
+    <line x1="83" y1="70" x2="88.5" y2="38" stroke-width="11"/>
+    <line x1="44" y1="88" x2="22" y2="66" stroke-width="12.5"/>
+    <path d="M38 56Q38 50 44 50H78Q88.5 52 88.5 66V80C88.5 97 78 106 63 106C47 106 38 96 38 80Z" stroke="none"/>
+  </g>
+</svg>

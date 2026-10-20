@@ -3,20 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="robots" content="noindex">
 <title>Contact | Handstart Digital</title>
 <meta name="description" content="Tell me what's going on. What's working, what isn't, what you're trying to overcome. I'll tell you what I'd look at first.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/hs-mascots.css">
-<script src="/assets/js/hs-mascot-loader.js" defer></script>
+<link rel="preload" href="/assets/fonts/LibreFranklin-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/BricolageGrotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/hs-fonts.css?v=20261019a">
+<link rel="stylesheet" href="/assets/css/hs-mascots.css?v=20261017a">
+<script src="/assets/js/hs-mascot-loader.js?v=20261019zt" defer></script>
 <style>
   :root {
-    --navy: #1B2B4B; --amber: #C8873A; --amber-lt: #e0a558;
-    --cream: #F7F4EE; --slate: #3f4a5a; --body: #5a6472;
+    /* Golden hour (decided 2026-10-07, homepage 2026-10-08, every page 2026-10-15) */
+    --ink: #1D3F66; --sky: #7FB5E3; --sky-top: #3F7DC0; --sky-bottom: #9DCAEE;
+    --accent: #E3A23B; --accent-lt: #F0C46E; --accent-dk: #B57A1E;
+    --display: 'Bricolage Grotesque', 'Libre Franklin', sans-serif;
+    --navy: var(--ink); --amber: var(--accent); --amber-lt: var(--accent-lt);
+    --cream: #F7F4EE; --slate: #3f4a5a; --body: #4B5868;
     --hairline: #D6CFC2; --tint: #EFEAE0;
-    --serif: 'Cormorant Garamond', Georgia, serif;
+    --serif: var(--display); /* Cormorant retired: headings are Bricolage */
     --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
   }
   * { box-sizing: border-box; }
@@ -27,34 +34,36 @@
   img { display: block; }
 
   /* header / nav */
-  .hs-header { position: sticky; top: 0; z-index: 50; background: var(--cream); border-bottom: 1px solid var(--hairline); }
+  .hs-header { position: sticky; top: 0; z-index: 50; background: var(--sky); border-bottom: 1px solid rgba(29,63,102,0.18); }
   .hs-header-in { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); height: clamp(72px,10vw,96px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .hs-logo img { height: clamp(44px,5.5vw,58px); width: auto; object-fit: contain; }
+  /* the header logo fills the room the nav leaves it, as on the homepage */
+  .hs-header-logo { display: block; width: min(445px, calc(100vw - 560px)); height: auto; }
+  @media (max-width: 900px) { .hs-header-logo { width: min(360px, calc(100vw - 100px)); } }
   .hs-nav { display: flex; align-items: center; gap: clamp(20px,2.6vw,34px); }
     .hs-navlink { position: relative; display: inline-block; overflow: hidden; white-space: nowrap; height: 1.3em; font-family: var(--sans); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--navy); text-decoration: none; }
     .hs-navlink.is-active { font-weight: 600; }
     .hs-navlink-top, .hs-navlink-bottom { display: block; }
     .hs-navlink-bottom { position: absolute; inset: 0; }
     .hs-navlink-top span, .hs-navlink-bottom span { display: inline-block; transition: transform 210ms ease-in-out; transition-delay: calc(var(--i, 0) * 12ms); }
-    .hs-navlink-bottom span { transform: translateY(100%); color: var(--amber); }
+    .hs-navlink-bottom span { transform: translateY(100%); color: var(--ink); }
     .hs-navlink:is(:hover, .is-tapped) .hs-navlink-top span, .hs-navlink:focus-visible .hs-navlink-top span { transform: translateY(-100%); }
     .hs-navlink:is(:hover, .is-tapped) .hs-navlink-bottom span, .hs-navlink:focus-visible .hs-navlink-bottom span { transform: translateY(0); }
     .hs-navlink-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     @media (prefers-reduced-motion: reduce) { .hs-navlink-top span, .hs-navlink-bottom span { transition: none !important; } }
 
-  /* Comic-panel Contact button, mirrors the homepage's Find My Gaps button */
+  /* Comic-panel Contact button, mirrors the homepage's Find Your Gaps button */
   .hs-next-btn { position: relative; display: inline-flex; text-decoration: none; transform: skewX(-10deg); transition: transform 160ms ease; }
   button.hs-next-btn { -webkit-appearance: none; appearance: none; background: none; border: 0; outline: none; box-shadow: none; padding: 0; margin: 0; font: inherit; cursor: pointer; }
   button.hs-next-btn::-moz-focus-inner { border: 0; padding: 0; }
   .hs-next-shadow { position: absolute; inset: 0; z-index: 0; background: #000; transform: translate(7px,7px); transition: transform 200ms ease, background 200ms ease; }
   .hs-next-btn:is(:hover, .is-tapped) { transform: skewX(-10deg) translate(3px,3px); }
-  .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(11px,11px); background: var(--amber); }
-  .hs-next-face { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 14px; background: var(--navy); padding: 13px 26px 13px 22px; }
+  .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform: translate(11px,11px); background: var(--cream); }
+  .hs-next-face { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 14px; background: var(--amber); padding: 13px 26px 13px 22px; }
   .hs-next-content { display: inline-flex; align-items: center; gap: 14px; transform: skewX(10deg); }
-  .hs-next-label { font-family: var(--sans); font-weight: 700; font-size: 15px; letter-spacing: 0.01em; text-transform: uppercase; color: var(--cream); white-space: nowrap; }
+  .hs-next-label { font-family: var(--sans); font-weight: 700; font-size: 15px; letter-spacing: 0.01em; text-transform: uppercase; color: var(--navy); white-space: nowrap; }
   .hs-next-icons { position: relative; width: 30px; height: 20px; }
   .hs-next-rest, .hs-next-cascade svg { position: absolute; top: 0; left: 0; transition: opacity 220ms ease, transform 220ms cubic-bezier(.65,0,.076,1); }
-  .hs-next-rest path, .hs-next-cascade path { stroke: var(--cream); }
+  .hs-next-rest path, .hs-next-cascade path { stroke: var(--navy); }
   .hs-next-rest { opacity: 1; }
   .hs-next-cascade svg { opacity: 0; }
   .hs-next-btn:is(:hover, .is-tapped) .hs-next-rest { opacity: 0; transform: translateX(8px); }
@@ -65,7 +74,7 @@
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one { transform: translateX(3px); }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(10px); }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(17px); }
-  @keyframes hs-arrow-chase { 0%, 100% { stroke: var(--cream); } 50% { stroke: var(--amber); } }
+  @keyframes hs-arrow-chase { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--cream); } }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0s; }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0.2s; }
   .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: hs-arrow-chase 1.2s ease-in-out infinite; animation-delay: 0.4s; }
@@ -82,25 +91,25 @@
   .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(7px); }
   .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(12px); }
 
-  /* Navy-background modifier: flips face/label/icon colors for use on a navy backdrop */
-  .hs-next-btn--reverse .hs-next-face { background: var(--cream); }
+  /* Reverse modifier: since 2026-10-19 every arrow button is golden with navy text, so this matches the default */
+  .hs-next-btn--reverse .hs-next-face { background: var(--amber); }
   .hs-next-btn--reverse .hs-next-label { color: var(--navy); }
   .hs-next-btn--reverse .hs-next-rest path, .hs-next-btn--reverse .hs-next-cascade path { stroke: var(--navy); }
-  @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--amber); } }
+  @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--cream); } }
   .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-one path { animation-name: hs-arrow-chase-reverse; }
   .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-two path { animation-name: hs-arrow-chase-reverse; }
   .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-three path { animation-name: hs-arrow-chase-reverse; }
   @media (prefers-reduced-motion: reduce) {
     .hs-next-btn, .hs-next-shadow, .hs-next-rest, .hs-next-cascade svg { transition: none !important; }
-    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: none !important; stroke: var(--amber) !important; }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation: none !important; stroke: var(--cream) !important; }
   }
 
 
   /* hamburger / mobile nav */
-  .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid var(--hairline); border-radius: 9px; cursor: pointer; color: var(--navy); }
-  .hs-mnav { display: none; border-top: 1px solid var(--hairline); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--cream); }
+  .hs-hamburger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 1px solid rgba(29,63,102,0.35); border-radius: 9px; cursor: pointer; color: var(--navy); }
+  .hs-mnav { display: none; border-top: 1px solid rgba(29,63,102,0.18); padding: 12px clamp(20px,4vw,44px) 20px; flex-direction: column; gap: 6px; background: var(--sky); }
   .hs-mnav.is-open { display: flex; }
-  .hs-mnav-link { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--slate); padding: 11px 0; }
+  .hs-mnav-link { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--ink); padding: 11px 0; }
   @media (max-width: 900px) {
     .hs-nav { display: none !important; }
     .hs-hamburger { display: inline-flex !important; }
@@ -113,8 +122,9 @@
     .hs-contact-grid { grid-template-columns: 1fr !important; }
   }
   .hs-pitch { display: flex; flex-direction: column; align-items: flex-start; }
-  .hs-eyebrow { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
-  .hs-pitch h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(34px,4.8vw,56px); line-height: 1.05; letter-spacing: -0.015em; color: var(--navy); margin: clamp(14px,1.8vw,20px) 0 0; text-wrap: balance; }
+  .hs-eyebrow { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; }
+  .hs-eyebrow::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .hs-pitch h1 { font-family: var(--display); font-weight: 800; font-size: clamp(34px,4.8vw,56px); line-height: 1.05; letter-spacing: -0.035em; color: var(--navy); margin: clamp(14px,1.8vw,20px) 0 0; text-wrap: balance; }
   .hs-pitch-sub { font-family: var(--sans); font-size: clamp(16px,1.4vw,19px); font-weight: 400; line-height: 1.6; color: var(--body); max-width: 48ch; margin: clamp(16px,2vw,22px) 0 0; }
   .hs-pitch-rule { width: 100%; max-width: 420px; height: 1px; background: var(--hairline); margin: clamp(28px,3.4vw,38px) 0 clamp(20px,2.4vw,26px); }
   .hs-pitch-note { font-family: var(--sans); font-size: 15px; line-height: 1.6; color: #8b8578; margin: 0; max-width: 44ch; }
@@ -122,13 +132,13 @@
   .hs-pitch-email:hover { color: var(--amber); }
 
   /* form card */
-  .hs-form-card { background: #FBF9F4; border: 1px solid var(--hairline); border-radius: 18px; padding: clamp(24px,3vw,40px); box-shadow: 0 18px 40px rgba(27,43,75,0.10); }
+  .hs-form-card { background: #FBF9F4; border: 1px solid var(--hairline); border-radius: 18px; padding: clamp(24px,3vw,40px); box-shadow: 0 18px 40px rgba(29,63,102,0.10); }
   .hs-form { display: flex; flex-direction: column; gap: clamp(16px,1.8vw,20px); }
   .hs-form-label { display: flex; flex-direction: column; gap: 7px; }
   .hs-form-label span { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--navy); }
   .hs-field { width: 100%; font-family: var(--sans); font-size: 16px; color: var(--navy); background: #FBF9F4; border: 1px solid var(--hairline); border-radius: 10px; padding: 13px 15px; transition: border-color 180ms ease, box-shadow 180ms ease; }
   .hs-field::placeholder { color: #a89f90; }
-  .hs-field:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(200,135,58,0.15); }
+  .hs-field:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(227,162,59,0.15); }
   textarea.hs-field { resize: vertical; min-height: 140px; line-height: 1.55; font-family: var(--sans); }
   .hs-honeypot-field { display: none; }
   .hs-form-label .hs-optional { font-weight: 400; color: #8b8578; }
@@ -138,21 +148,16 @@
   .hs-picked-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .hs-picked-chip { display: inline-flex; align-items: center; gap: 2px; font-family: var(--sans); font-size: 14px; font-weight: 500; line-height: 1.3; color: var(--navy); background: var(--amber-lt); border: 1.5px solid var(--amber); border-radius: 999px; padding: 4px 5px 4px 14px; }
   .hs-picked-x { appearance: none; -webkit-appearance: none; border: 0; background: transparent; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 19px; line-height: 1; color: var(--navy); cursor: pointer; }
-  .hs-picked-x:hover { background: rgba(27,43,75,0.12); }
+  .hs-picked-x:hover { background: rgba(29,63,102,0.12); }
   .hs-picked-x:focus-visible { outline: 2px solid var(--navy); outline-offset: 1px; }
   .hs-form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 24px; margin-top: 4px; }
   .hs-submit-mascot { --hs-mascot-size: 40px; margin: -12px -6px -12px -10px; }
-  /* Pressed on hover: squash toward the feet. The mascot CSS animates translate and rotate on the art, so scale is free to use here. */
-  .hs-submit-mascot .hs-mascot__art { transition: scale 140ms ease; }
-  .hs-submit:is(:hover, .is-tapped, :focus-visible) .hs-submit-mascot .hs-mascot__art { scale: 1.14 0.76; }
-  .hs-submit:is(:hover, .is-tapped, :focus-visible) .hs-submit-mascot[data-hover-ready] .hs-mascot__pose.is-base { opacity: 0; }
-  .hs-submit:is(:hover, .is-tapped, :focus-visible) .hs-submit-mascot[data-hover-ready] .hs-mascot__pose.is-hover { opacity: 1; }
 
   /* footer */
   .hs-footer { background: var(--navy); padding: clamp(44px,6vw,64px) clamp(24px,6vw,80px) clamp(28px,4vw,36px); }
   .hs-footer-in { max-width: 1200px; margin: 0 auto; }
   .hs-footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; }
-  .hs-footer-logo img { height: 48px; width: auto; object-fit: contain; }
+  .hs-footer-logo img { width: min(560px, calc(100vw - 2 * clamp(24px,6vw,80px))); height: auto; }
   .hs-footer-explore { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #8791a3; margin: clamp(28px,3.4vw,36px) 0 clamp(14px,2vw,18px); }
   .hs-footer-navgrid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; row-gap: 14px; align-content: start; }
   @media (max-width: 640px) { .hs-footer-navgrid { grid-template-columns: 1fr; row-gap: 10px; } }
@@ -183,7 +188,6 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hs-pitch-email, .hs-field { transition: none; }
-    .hs-submit-mascot .hs-mascot__art { transition: none; scale: none !important; }
   }
 </style>
 </head>
@@ -192,9 +196,14 @@
   <header class="hs-header">
     <div class="hs-header-in">
       <a class="hs-logo" href="/" aria-label="Handstart Digital home">
-        <img src="assets/handstart-logo-header.png" alt="Handstart Digital">
+        <img class="hs-header-logo" src="/assets/brand/handstart-logo.svg" alt="Handstart Digital">
       </a>
       <nav class="hs-nav" aria-label="Primary">
+          <a href="/#top" class="hs-navlink" data-flip-text="Home">
+            <span class="hs-navlink-top" aria-hidden="true"></span>
+            <span class="hs-navlink-bottom" aria-hidden="true"></span>
+            <span class="hs-navlink-sr">Home</span>
+          </a>
           <a href="/services" class="hs-navlink" data-flip-text="Services">
             <span class="hs-navlink-top" aria-hidden="true"></span>
             <span class="hs-navlink-bottom" aria-hidden="true"></span>
@@ -210,21 +219,22 @@
             <span class="hs-navlink-bottom" aria-hidden="true"></span>
             <span class="hs-navlink-sr">Case Studies</span>
           </a>
-        <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+        <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
       </nav>
       <button class="hs-hamburger" id="hs-hamburger" aria-label="Menu" aria-expanded="false" aria-controls="hs-mnav">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <line x1="4" y1="7" x2="20" y2="7" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
-          <line x1="4" y1="12" x2="20" y2="12" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
-          <line x1="4" y1="17" x2="20" y2="17" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="7" x2="20" y2="7" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="12" x2="20" y2="12" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="4" y1="17" x2="20" y2="17" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line>
         </svg>
       </button>
     </div>
     <div class="hs-mnav" id="hs-mnav">
+          <a href="/#top" class="hs-mnav-link" data-close>Home</a>
           <a href="/services" class="hs-mnav-link" data-close>Services</a>
           <a href="/about" class="hs-mnav-link" data-close>About</a>
           <a href="/case-studies" class="hs-mnav-link" data-close>Case Studies</a>
-      <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+      <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
     </div>
   </header>
 
@@ -235,7 +245,7 @@
         <h1>Tell me what's going on.</h1>
         <p class="hs-pitch-sub">What's working? What isn't?<br>Then I'll tell you what I'd look at first.</p>
         <div class="hs-pitch-rule"></div>
-        <p class="hs-pitch-note">I read every message myself. I will respond either same day or within two business days.</p>
+        <p class="hs-pitch-note">I read every message myself. I&#x27;ll reply the same day or within two business days.</p>
         <a class="hs-pitch-email" href="mailto:contact@handstartdigital.com">contact@handstartdigital.com</a>
       </div>
 
@@ -271,7 +281,7 @@
           </label>
 
           <div class="hs-form-actions">
-            <button class="hs-next-btn hs-submit" type="submit"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-mascot hs-submit-mascot" data-mascot="power-button" data-state="idle" data-hover-pose="pressed"></span><span class="hs-next-label">Send it</span></span></span></button>
+            <button class="hs-next-btn hs-submit" type="submit"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-mascot hs-submit-mascot" data-mascot="power-button" data-state="idle" data-gag-cue></span><span class="hs-next-label">Send it</span></span></span></button>
             <button class="hs-next-btn hs-next-btn--reverse" type="button" data-book-call data-cal-link="aidanpaggao/15min" data-cal-namespace="15min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}'><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Book a call</span></span></span></button>
           </div>
         </form>
@@ -284,7 +294,7 @@
     <div class="hs-footer-in">
       <div class="hs-footer-top">
         <a class="hs-footer-logo" href="/" aria-label="Handstart Digital home">
-          <img src="assets/handstart-logo-footer.png" alt="Handstart Digital">
+          <img src="/assets/brand/handstart-logo-cream.svg" alt="Handstart Digital">
         </a>
         <div class="hs-footer-contact" style="display:flex; flex-direction:column; align-items:flex-end; gap:12px;">
           <a class="hs-footer-email" href="mailto:contact@handstartdigital.com">contact@handstartdigital.com</a>
@@ -310,7 +320,7 @@
 
       <div class="hs-footer-explore">Explore</div>
       <div class="hs-footer-navgrid">
-        <a class="hs-footer-navlink" href="/">Home</a>
+        <a class="hs-footer-navlink" href="/#top">Home</a>
         <a class="hs-footer-navlink" href="/services">Services</a>
         <a class="hs-footer-navlink" href="/case-studies">Case Studies</a>
         <a class="hs-footer-navlink" href="/about">About</a>
@@ -467,15 +477,43 @@
   })();
   </script>
 
-  <!-- Cal element-click embed code begins -->
-  <script type="text/javascript">
-    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-    Cal("init", "15min", {origin:"https://app.cal.com"});
-    Cal.config = Cal.config || {};
-    Cal.config.forwardQueryParams = true;
-    Cal.ns["15min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#C8873A"},"dark":{"cal-brand":"#C8873A"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  <script>
+    // the power button on "Send it" switches itself on when the button is hovered, focused or tapped
+    (function () {
+      var btn = document.querySelector('.hs-submit');
+      if (!btn) return;
+      function go() {
+        var svg = btn.querySelector('.hs-mascot__art svg');
+        if (svg && svg.__rig) svg.__rig.gag();
+      }
+      ['pointerenter', 'focus', 'touchstart'].forEach(function (e) { btn.addEventListener(e, go, { passive: true }); });
+    })();
   </script>
-  <!-- Cal element-click embed code ends -->
+  <script>
+  // Cal.com loads on the first "Book a call" click, not with the page: no request to Cal.com for
+  // visitors who never book. That click opens the booking pop-up itself (with the button's current
+  // notes); after that Cal's own click handling takes over for every [data-cal-link] button.
+  (function () {
+    var started = false;
+    function start() {
+      started = true;
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+      Cal("init", "15min", {origin:"https://app.cal.com"});
+      Cal.config = Cal.config || {};
+      Cal.config.forwardQueryParams = true;
+      Cal.ns["15min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#E3A23B"},"dark":{"cal-brand":"#E3A23B"}},"hideEventTypeDetails":false,"layout":"month_view"});
+    }
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('[data-cal-link]');
+      if (!btn || started) return;
+      e.preventDefault();
+      start();
+      var config = {};
+      try { config = JSON.parse(btn.getAttribute('data-cal-config') || '{}'); } catch (err) {}
+      Cal.ns["15min"]("modal", { calLink: btn.getAttribute('data-cal-link'), config: config });
+    });
+  })();
+  </script>
 
 </body>
 </html>

@@ -3,26 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta name="robots" content="noindex">
   <title>Services | Handstart Digital</title>
   <meta name="description" content="How we can work together. Brand strategy, web design, SEO, performance marketing, and retention for small businesses.">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/hs-mascots.css">
+  <link rel="preload" href="/assets/fonts/LibreFranklin-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/BricolageGrotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/hs-fonts.css?v=20261019a">
+  <link rel="stylesheet" href="/assets/css/hs-mascots.css?v=20261017a">
 
   <style>
     :root {
-      --navy: #1B2B4B;
-      --amber: #C8873A;
-      --amber-lt: #e0a558;
+    /* Golden hour (decided 2026-10-07, homepage 2026-10-08, every page 2026-10-15) */
+    --ink: #1D3F66; --sky: #7FB5E3; --sky-top: #3F7DC0; --sky-bottom: #9DCAEE;
+    --accent: #E3A23B; --accent-lt: #F0C46E; --accent-dk: #B57A1E;
+    --display: 'Bricolage Grotesque', 'Libre Franklin', sans-serif;
+      --navy: var(--ink);
+      --amber: var(--accent);
+      --amber-lt: var(--accent-lt);
       --cream: #F7F4EE;
       --slate: #3f4a5a;
-      --body: #5a6472;
+      --body: #4B5868;
       --hairline: #D6CFC2;
       --tint: #EFEAE0;
-      --serif: 'Cormorant Garamond', Georgia, serif;
+      --serif: var(--display); /* Cormorant retired: headings are Bricolage */
       --sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
@@ -45,11 +52,15 @@
     .hs-navlink-top, .hs-navlink-bottom { display: block; }
     .hs-navlink-bottom { position: absolute; inset: 0; }
     .hs-navlink-top span, .hs-navlink-bottom span { display: inline-block; transition: transform 210ms ease-in-out; transition-delay: calc(var(--i, 0) * 12ms); }
-    .hs-navlink-bottom span { transform: translateY(100%); color: var(--amber); }
+    .hs-navlink-bottom span { transform: translateY(100%); color: var(--ink); }
     .hs-navlink:is(:hover, .is-tapped) .hs-navlink-top span, .hs-navlink:focus-visible .hs-navlink-top span { transform: translateY(-100%); }
     .hs-navlink:is(:hover, .is-tapped) .hs-navlink-bottom span, .hs-navlink:focus-visible .hs-navlink-bottom span { transform: translateY(0); }
     .hs-navlink-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     @media (prefers-reduced-motion: reduce) { .hs-navlink-top span, .hs-navlink-bottom span { transition: none !important; } }
+
+    /* the header logo fills the room the nav leaves it, as on the homepage */
+    .hs-header-logo { display: block; width: min(445px, calc(100vw - 560px)); height: auto; }
+    @media (max-width: 900px) { .hs-header-logo { width: min(360px, calc(100vw - 100px)); } }
 
     /* Hamburger / mobile nav */
     .hs-hamburger { display: none; }
@@ -123,19 +134,19 @@
       transform:translate(7px,7px); transition:transform 200ms ease, background 200ms ease;
     }
     .hs-next-btn:is(:hover, .is-tapped) { transform:skewX(-10deg) translate(3px,3px); }
-    .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform:translate(11px,11px); background:var(--amber); }
+    .hs-next-btn:is(:hover, .is-tapped) .hs-next-shadow { transform:translate(11px,11px); background:var(--cream); }
     .hs-next-face {
       position:relative; z-index:1; display:inline-flex; align-items:center; gap:16px;
-      background:var(--navy); padding:18px 34px 18px 28px;
+      background:var(--amber); padding:18px 34px 18px 28px;
     }
     .hs-next-content { display:inline-flex; align-items:center; gap:16px; transform:skewX(10deg); }
     .hs-next-label {
       font-family:var(--sans); font-weight:700; font-size:20px;
-      letter-spacing:0.01em; text-transform:uppercase; color:var(--cream);
+      letter-spacing:0.01em; text-transform:uppercase; color:var(--navy);
     }
     .hs-next-icons { position:relative; width:38px; height:24px; }
     .hs-next-rest, .hs-next-cascade svg { position:absolute; top:0; left:0; transition:opacity 220ms ease, transform 220ms cubic-bezier(.65,0,.076,1); }
-    .hs-next-rest path, .hs-next-cascade path { stroke:var(--cream); }
+    .hs-next-rest path, .hs-next-cascade path { stroke:var(--navy); }
     .hs-next-rest { opacity:1; }
     .hs-next-cascade svg { opacity:0; }
     .hs-next-btn:is(:hover, .is-tapped) .hs-next-rest { opacity:0; transform:translateX(10px); }
@@ -147,8 +158,8 @@
     .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two { transform:translateX(13px); }
     .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three { transform:translateX(22px); }
     @keyframes hs-arrow-chase {
-      0%, 100% { stroke:var(--cream); }
-      50% { stroke:var(--amber); }
+      0%, 100% { stroke:var(--navy); }
+      50% { stroke:var(--cream); }
     }
     .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path { animation:hs-arrow-chase 1.2s ease-in-out infinite; animation-delay:0s; }
     .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path { animation:hs-arrow-chase 1.2s ease-in-out infinite; animation-delay:0.2s; }
@@ -166,18 +177,18 @@
       .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-two { transform: translateX(7px); }
       .hs-next-btn--sm:is(:hover, .is-tapped) .hs-arrow-three { transform: translateX(12px); }
 
-      /* Navy-background modifier: flips face/label/icon colors for use on a navy backdrop */
-      .hs-next-btn--reverse .hs-next-face { background: var(--cream); }
+      /* Reverse modifier: since 2026-10-19 every arrow button is golden with navy text, so this matches the default */
+      .hs-next-btn--reverse .hs-next-face { background: var(--amber); }
       .hs-next-btn--reverse .hs-next-label { color: var(--navy); }
       .hs-next-btn--reverse .hs-next-rest path, .hs-next-btn--reverse .hs-next-cascade path { stroke: var(--navy); }
-      @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--amber); } }
+      @keyframes hs-arrow-chase-reverse { 0%, 100% { stroke: var(--navy); } 50% { stroke: var(--cream); } }
       .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-one path { animation-name: hs-arrow-chase-reverse; }
       .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-two path { animation-name: hs-arrow-chase-reverse; }
       .hs-next-btn--reverse:is(:hover, .is-tapped) .hs-arrow-three path { animation-name: hs-arrow-chase-reverse; }
 
     @media (prefers-reduced-motion: reduce) {
       .hs-next-btn, .hs-next-shadow, .hs-next-rest, .hs-next-cascade svg { transition:none !important; }
-      .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation:none !important; stroke:var(--amber) !important; }
+      .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-one path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-two path, .hs-next-btn:is(:hover, .is-tapped) .hs-arrow-three path { animation:none !important; stroke:var(--cream) !important; }
     }
 
     /* Lenis smooth scroll (required Lenis CSS) */
@@ -185,70 +196,84 @@
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
     .lenis.lenis-stopped { overflow: hidden; }
 
-    /* Pinned service panel stack: plain stacked flow by default
-       (mobile, no-JS, reduced motion all land here); hs-motion.js only
-       promotes this to a pinned, scrubbed cover-wipe at tablet width and up
-       when motion is allowed, and tears it back down below that width. */
-    @media (min-width: 768px) {
-      .hs-pin-panel { min-height: 100vh; display: flex; align-items: center; }
-      .hs-pin-panel > div { width: 100%; }
-    }
+    /* Opening */
+    /* the opening sits on the homepage's cloud sky (lighter part of the gradient, so navy text reads); without WebGL the gradient shows */
+    .hs-open { position:relative; isolation:isolate; padding:clamp(40px,6vw,72px) clamp(24px,6vw,80px) clamp(44px,6vw,64px);
+      --sky-top: var(--sky); --sky-bottom: #B4D6F2; background:linear-gradient(var(--sky-top), var(--sky-bottom)); }
+    .hs-open-sky { position:absolute; inset:0; width:100%; height:100%; display:block; z-index:-1; }
+    .hs-open-in { max-width:1040px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start; }
+    .hs-open-title { font-family:var(--display); font-weight:800; font-size:clamp(36px,5.4vw,64px); line-height:1.04; letter-spacing:-0.035em; color:var(--ink); margin:0; text-wrap:balance; }
+    .hs-open-lede { font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); line-height:1.65; color:var(--ink); max-width:58ch; margin:clamp(20px,2.4vw,28px) 0 0; }
+    /* the page's real call to action, so it reads louder than the lede */
+    .hs-open-cta { font-family:var(--display); font-weight:600; letter-spacing:-0.02em; font-size:clamp(20px,2vw,26px); line-height:1.3; color:var(--ink); max-width:34ch; margin:clamp(14px,1.8vw,20px) 0 0; padding-left:clamp(14px,1.6vw,18px); border-left:4px solid var(--accent); text-wrap:pretty; }
+    /* "tap" on touch screens, "click" where there's a mouse or trackpad (decided by the pointer, not the screen width) */
+    .hs-word-mouse { display:none; }
+    @media (hover: hover) and (pointer: fine) { .hs-word-touch { display:none; } .hs-word-mouse { display:inline; } }
 
-    /* Build your handstart */
-    .hs-build { background:var(--tint); border-top:1px solid var(--hairline); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px); }
-    .hs-build-in { max-width:1120px; margin:0 auto; }
-    .hs-build-title { font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance; }
-    .hs-build-lede { font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:56ch; margin:clamp(12px,1.6vw,16px) 0 clamp(28px,3.6vw,40px); }
-    .hs-build-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:clamp(14px,2vw,20px); }
-    .hs-build-card { grid-column:span 2; background:#fff; border:1px solid var(--hairline); border-radius:16px; padding:clamp(20px,2.4vw,28px); display:flex; flex-direction:column; align-items:flex-start; }
-    .hs-build-card:nth-child(4) { grid-column:2 / span 2; }
-    @media (max-width:1000px) {
-      .hs-build-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .hs-build-card, .hs-build-card:nth-child(4) { grid-column:auto; }
-    }
-    @media (max-width:640px) { .hs-build-grid { grid-template-columns:1fr; } }
-    .hs-build-mascot { --hs-mascot-size:88px; margin:-6px 0 6px -8px; }
-    .hs-build-card-title { font-family:var(--serif); font-weight:600; font-size:clamp(22px,2vw,26px); line-height:1.15; color:var(--navy); margin:0; }
-    .hs-build-card-q { font-family:var(--sans); font-size:14px; line-height:1.5; color:var(--body); margin:6px 0 16px; }
-    .hs-chips { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px; }
-    .hs-chip { position:relative; display:inline-flex; cursor:pointer; }
+    /* Build your handstart: every service panel is also the picker */
+    .hs-svc-panel { background:var(--cream); border-top:1px solid var(--hairline); padding:clamp(32px,4.6vw,56px) clamp(24px,6vw,80px); }
+    .hs-svc-panel--tint { background:var(--tint); }
+    .hs-svc-in { max-width:1040px; margin:0 auto; display:grid; grid-template-columns:minmax(0,4fr) minmax(0,6fr); gap:clamp(24px,4.5vw,64px); align-items:center; }
+    .hs-svc-mascot { --hs-mascot-size:128px; margin:-6px 0 6px -8px; }
+    .hs-svc-group { margin:0 0 14px; font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink); min-height:1.2em; display:flex; align-items:center; gap:8px; }
+    .hs-svc-group::before { content:""; flex:none; width:8px; height:8px; border-radius:50%; background:var(--accent); }
+    .hs-svc-q { font-family:var(--display); font-weight:800; font-size:clamp(26px,3vw,38px); line-height:1.08; letter-spacing:-0.035em; color:var(--ink); margin:10px 0 0; text-wrap:balance; }
+    .hs-svc-pitch { font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); margin:clamp(12px,1.6vw,16px) 0 0; }
+    .hs-svc-list { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:10px; }
+    .hs-chip { position:relative; display:block; cursor:pointer; }
     /* the real checkbox stays in the accessibility tree and takes focus; the face is what you see */
-    .hs-chip input { position:absolute; inset:0; margin:0; opacity:0; cursor:pointer; }
-    .hs-chip-face {
-      display:inline-flex; align-items:center; gap:6px;
-      font-family:var(--sans); font-size:14px; font-weight:500; line-height:1.3; color:var(--navy);
-      background:var(--cream); border:1.5px solid var(--hairline); border-radius:999px; padding:7px 14px;
-      transition:background 160ms ease, border-color 160ms ease, color 160ms ease;
+    .hs-chip input { position:absolute; inset:0; width:100%; height:100%; margin:0; opacity:0; cursor:pointer; }
+    .hs-svc-face { display:flex; align-items:center; gap:10px; background:#fff; border:1.5px solid var(--hairline); border-radius:999px; padding:10px 18px 10px 12px; transition:background 160ms ease, border-color 160ms ease; }
+    .hs-svc-tick { flex:none; position:relative; width:20px; height:20px; border-radius:50%; border:1.5px solid var(--hairline); background:var(--cream); transition:background 160ms ease, border-color 160ms ease; }
+    .hs-svc-tick::after { content:""; position:absolute; left:6px; top:2px; width:5px; height:10px; border:solid var(--ink); border-width:0 2px 2px 0; transform:rotate(45deg); opacity:0; transition:opacity 160ms ease; }
+    .hs-svc-text { display:flex; flex-direction:column; gap:3px; min-width:0; }
+    .hs-svc-name { font-family:var(--sans); font-size:15px; font-weight:600; line-height:1.3; color:var(--ink); }
+    .hs-chip:hover .hs-svc-face { border-color:var(--accent); }
+    .hs-chip input:checked + .hs-svc-face { background:#FBEFD6; border-color:var(--accent); }
+    .hs-chip input:checked + .hs-svc-face .hs-svc-tick { background:var(--accent-lt); border-color:var(--accent); }
+    .hs-chip input:checked + .hs-svc-face .hs-svc-tick::after { opacity:1; }
+    .hs-chip input:focus-visible + .hs-svc-face { outline:2px solid var(--ink); outline-offset:2px; }
+    @media (max-width:860px) {
+      .hs-svc-in { grid-template-columns:1fr; }
+      .hs-svc-mascot { --hs-mascot-size:100px; }
     }
-    .hs-chip-face::before {
-      content:''; width:0; height:10px; overflow:hidden; flex:none;
-      border:solid var(--navy); border-width:0 2px 2px 0; transform:rotate(45deg) translate(-1px,-2px);
-      opacity:0; transition:width 160ms ease, opacity 160ms ease;
-    }
-    .hs-chip:hover .hs-chip-face { border-color:var(--amber); }
-    .hs-chip input:checked + .hs-chip-face { background:var(--amber-lt); border-color:var(--amber); }
-    .hs-chip input:checked + .hs-chip-face::before { width:5px; opacity:1; }
-    .hs-chip input:focus-visible + .hs-chip-face { outline:2px solid var(--navy); outline-offset:2px; }
 
-    .hs-tray {
-      margin-top:clamp(24px,3vw,32px); background:var(--navy); color:var(--cream);
-      border-radius:16px; padding:clamp(18px,2.4vw,26px) clamp(20px,2.6vw,30px);
-      box-shadow:0 18px 40px -18px rgba(27,43,75,.55);
+    /* rides along the bottom of the screen while the panels scroll past, then hands over to the full tray */
+    .hs-build-panels { position:relative; }
+    .hs-minibar {
+      position:sticky; bottom:14px; z-index:6; box-sizing:border-box;
+      width:calc(100% - 2 * clamp(16px,4vw,48px)); max-width:1040px; margin:14px auto 0;
+      display:flex; align-items:center; gap:14px; background:var(--ink); color:var(--cream);
+      border-radius:999px; padding:10px 10px 10px 22px; box-shadow:0 14px 34px -14px rgba(29,63,102,.6);
     }
-    /* desktop: rides along the bottom of the screen while the cards scroll past, settles under them at the end */
-    @media (min-width:768px) {
-      .hs-tray { position:sticky; bottom:16px; z-index:5; }
-      .hs-tray-groups { max-height:34vh; overflow-y:auto; }
+    .hs-minibar-title { font-family:var(--display); font-weight:700; letter-spacing:-0.02em; font-size:18px; white-space:nowrap; }
+    .hs-minibar-count { min-width:0; overflow:hidden; text-overflow:ellipsis; font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent-lt); white-space:nowrap; }
+    .hs-minibar-names { flex:1 1 auto; min-width:0; font-family:var(--sans); font-size:14px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .hs-minibar-go { flex:none; margin-left:auto; font-family:var(--sans); font-size:14px; font-weight:700; color:var(--ink); background:var(--accent-lt); border-radius:999px; padding:9px 16px; text-decoration:none; transition:background 160ms ease; }
+    .hs-minibar-go:hover { background:var(--accent); }
+    .hs-minibar-go:focus-visible { outline:2px solid var(--cream); outline-offset:2px; }
+    @media (max-width:640px) {
+      .hs-minibar { padding-left:18px; gap:10px; }
+      .hs-minibar-names { display:none; }
+      .hs-minibar-title { font-size:16px; }
+    }
+
+    .hs-tray-wrap { background:var(--tint); padding:clamp(40px,6vw,72px) clamp(24px,6vw,80px) clamp(56px,8vw,96px); scroll-margin-top:clamp(72px,10vw,96px); }
+    .hs-tray-wrap-in { max-width:1040px; margin:0 auto; }
+    .hs-tray {
+      background:var(--navy); color:var(--cream);
+      border-radius:16px; padding:clamp(18px,2.4vw,26px) clamp(20px,2.6vw,30px);
+      box-shadow:0 18px 40px -18px rgba(29,63,102,.55);
     }
     .hs-tray-head { display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
-    .hs-tray-title { font-family:var(--serif); font-weight:600; font-size:clamp(22px,2.2vw,28px); margin:0; color:var(--cream); }
+    .hs-tray-title { font-family:var(--display); font-weight:700; letter-spacing:-0.02em; font-size:clamp(22px,2.2vw,28px); margin:0; color:var(--cream); }
     .hs-tray-count { font-family:var(--sans); font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber-lt); margin:0; }
     .hs-tray-empty { font-family:var(--sans); font-size:15px; color:var(--muted, #c3ccda); margin:10px 0 0; }
     .hs-tray-groups { list-style:none; margin:14px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:12px 22px; }
     .hs-tray-groups:empty, .hs-tray-groups:not(:has(> li:not([hidden]))) { margin:0; }
     .hs-tray-group { display:flex; align-items:flex-start; gap:10px; min-width:0; max-width:340px; }
     .hs-tray-group[hidden] { display:none; }
-    .hs-tray-mascot { --hs-mascot-size:52px; flex:none; }
+    .hs-tray-mascot { --hs-mascot-size:64px; flex:none; }
     .hs-tray-group-name { font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber-lt); margin:4px 0 4px; }
     .hs-tray-picks { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:4px 12px; }
     .hs-tray-picks li { font-family:var(--sans); font-size:14px; line-height:1.4; color:var(--cream); }
@@ -256,59 +281,80 @@
     button.hs-next-btn { border:0; padding:0; background:none; font:inherit; cursor:pointer; }
 
     .hs-dont-in { position:relative; }
-    .hs-dont-mascot { --hs-mascot-size:120px; position:absolute; top:-10px; right:0; }
-    @media (max-width:640px) {
-      .hs-dont-mascot { --hs-mascot-size:88px; position:relative; top:auto; right:auto; margin:0 0 10px -8px; }
-    }
 
     @media (prefers-reduced-motion: reduce) {
-      .hs-chip-face, .hs-chip-face::before { transition:none; }
+      .hs-svc-face, .hs-svc-tick, .hs-svc-tick::after, .hs-minibar-go { transition:none; }
     }
 
-    /* Real work vs template work: the page opener (folded in from the old The Difference page) */
+    /* How to spot template work (folded in from the old The Difference page; /the-difference redirects here) */
     .hs-real { background:var(--cream); padding:clamp(40px,6vw,72px) clamp(24px,6vw,80px) clamp(48px,6vw,72px); }
     .hs-real-in { max-width:1040px; margin:0 auto; }
     .hs-real-head { display:flex; align-items:center; gap:clamp(12px,1.8vw,20px); }
-    .hs-real-mascot { --hs-mascot-size:clamp(76px,8vw,96px); flex:none; }
-    .hs-real-title { font-family:var(--serif); font-weight:600; font-size:clamp(32px,4.6vw,54px); line-height:1.08; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance; }
+    .hs-real-mascot { --hs-mascot-size:clamp(100px,10vw,128px); flex:none; }
+    .hs-real-title { font-family:var(--display); font-weight:800; font-size:clamp(32px,4.6vw,54px); line-height:1.08; letter-spacing:-0.035em; color:var(--navy); margin:0; text-wrap:balance; }
     .hs-real-intro { display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:clamp(24px,4vw,48px); align-items:center; margin-top:clamp(20px,2.6vw,28px); }
     .hs-real-setup { font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.7; color:var(--body); margin:0; }
-    .hs-real-mock { border-radius:14px; overflow:hidden; border:1px solid var(--hairline); box-shadow:0 18px 40px -20px rgba(27,43,75,.45); }
+    .hs-real-setup + .hs-real-setup { margin-top:1em; }
+    .hs-real-mock { border-radius:14px; overflow:hidden; border:1px solid var(--hairline); box-shadow:0 18px 40px -20px rgba(29,63,102,.45); }
     .hs-real-mock img { display:block; width:100%; height:auto; }
     .hs-real-check { display:flex; align-items:flex-start; gap:clamp(14px,2vw,24px); margin-top:clamp(24px,3vw,36px); padding-top:clamp(20px,2.4vw,28px); border-top:1px solid var(--hairline); }
-    .hs-real-clip { --hs-mascot-size:clamp(72px,7vw,88px); flex:none; margin-top:-6px; }
-    .hs-real-lede { font-family:var(--sans); font-size:clamp(15px,1.3vw,17px); font-weight:600; color:var(--navy); margin:0 0 14px; }
-    .hs-real-list { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:10px clamp(20px,3vw,36px); }
-    .hs-real-list li { position:relative; padding-left:18px; font-family:var(--sans); font-size:14px; line-height:1.5; color:var(--body); }
+    .hs-real-clip { --hs-mascot-size:clamp(96px,9vw,116px); flex:none; margin-top:-6px; }
+    .hs-real-lede { font-family:var(--sans); font-size:clamp(17px,1.5vw,20px); font-weight:600; color:var(--navy); margin:0 0 16px; }
+    .hs-real-list { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:12px clamp(20px,3vw,36px); }
+    .hs-real-list li { position:relative; padding-left:20px; font-family:var(--sans); font-size:clamp(16px,1.3vw,18px); line-height:1.5; color:var(--body); }
+    /* the six tells: two columns that each stack on their own (no shared rows, so no gaps under the short ones), last lines never a lone word */
+    .hs-real-list:not(.hs-real-list--fav) { display:block; columns:2; column-gap:clamp(20px,3vw,36px); }
+    .hs-real-list:not(.hs-real-list--fav) li { break-inside:avoid; margin-bottom:12px; text-wrap:pretty; }
     .hs-real-list li::before { content:''; position:absolute; left:0; top:0.6em; width:7px; height:7px; border-radius:50%; background:var(--amber); }
-    /* the fork bridges into the services: people who have been pitched before go to /contact, first-timers scroll on */
-    .hs-fork { display:grid; grid-template-columns:1fr 1fr; gap:clamp(12px,2vw,20px); margin-top:clamp(28px,3.6vw,40px); }
-    .hs-fork-card { display:flex; flex-direction:column; gap:6px; text-decoration:none; background:#fff; border:1.5px solid var(--hairline); border-radius:14px; padding:clamp(16px,2vw,22px) clamp(18px,2.2vw,26px); transition:border-color 180ms ease, transform 180ms ease; }
-    .hs-fork-card:hover { border-color:var(--amber); transform:translateY(-2px); }
-    .hs-fork-card:focus-visible { outline:2px solid var(--navy); outline-offset:3px; }
-    .hs-fork-kicker { font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--amber); }
-    .hs-fork-line { font-family:var(--serif); font-style:italic; font-weight:600; font-size:clamp(19px,1.9vw,24px); line-height:1.25; color:var(--navy); }
-    #work-together { scroll-margin-top:clamp(72px,10vw,96px); }
+    /* "And my personal favorites:": centred over the list's width, three tells in a row below it */
+    .hs-real-fav { font-family:var(--sans); font-size:clamp(17px,1.5vw,20px); font-weight:600; color:var(--navy); text-align:center; margin:clamp(26px,3vw,36px) 0 16px; }
+    /* sized to their text, not equal thirds, so the short one isn't squeezed onto two lines and all three end about level */
+    /* the section's last word: bigger, centred under the lists */
+    .hs-real-close { font-family:var(--display); font-weight:700; letter-spacing:-0.02em; font-size:clamp(20px,2vw,26px); line-height:1.3; color:var(--navy); text-align:center; max-width:40ch; margin:clamp(32px,4vw,48px) auto 0; text-wrap:balance; }
+    /* the wrap-up under the tells: a full-width band of the homepage's cloud sky (lighter part of
+       the gradient, so the navy text reads); without WebGL the gradient alone shows */
+    .hs-real-sky { position:relative; isolation:isolate; margin:clamp(36px,5vw,56px) calc(-1 * clamp(24px,6vw,80px)) calc(-1 * clamp(48px,6vw,72px)); padding:clamp(48px,6vw,80px) clamp(24px,6vw,80px);
+      --sky-top: var(--sky); --sky-bottom: #B4D6F2; background:linear-gradient(var(--sky-top), var(--sky-bottom)); }
+    .hs-real-sky-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; z-index:-1; }
+    .hs-real-sky-in { max-width:1040px; margin:0 auto; }
+    .hs-real-sky .hs-real-close { margin-top:0; }
+    .hs-real-btns .hs-next-label { white-space:nowrap; }
+    /* phones: the page-size buttons are too big for a narrow screen here, so they step down */
+    @media (max-width:560px) {
+      .hs-real-btns .hs-next-face { padding:13px 22px 13px 18px; gap:12px; }
+      .hs-real-btns .hs-next-content { gap:12px; }
+      .hs-real-btns .hs-next-label { font-size:16px; }
+      .hs-real-btns .hs-next-icons { width:30px; height:20px; }
+    }
+    .hs-real-talk { font-family:var(--sans); font-size:clamp(17px,1.5vw,20px); font-weight:600; color:var(--navy); text-align:center; margin:clamp(24px,3vw,32px) 0 18px; }
+    .hs-real-btns { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:18px 28px; }
+    .hs-real-list--fav { display:flex; justify-content:space-between; gap:12px clamp(20px,3vw,36px); }
+    .hs-real-list--fav li { flex:0 1 auto; text-wrap:balance; }
+    @media (max-width:760px) { .hs-real-list--fav { flex-direction:column; } }
     @media (max-width:760px) {
       .hs-real-intro { grid-template-columns:1fr; }
       .hs-real-list { grid-template-columns:1fr; }
+      .hs-real-list:not(.hs-real-list--fav) { columns:1; }
       .hs-real-check { flex-direction:column; gap:6px; }
-      .hs-fork { grid-template-columns:1fr; }
     }
-    @media (prefers-reduced-motion: reduce) { .hs-fork-card { transition:none; } .hs-fork-card:hover { transform:none; } }
   </style>
 </head>
 
 <body>
 <div style="min-height:100vh; background:var(--cream); color:var(--navy);">
 
-  <header style="position:sticky; top:0; z-index:50; background:var(--cream); border-bottom:1px solid var(--hairline);">
+  <header style="position:sticky; top:0; z-index:50; background:var(--sky); border-bottom:1px solid rgba(29,63,102,0.18);">
     <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,4vw,44px); height:clamp(72px,10vw,96px); display:flex; align-items:center; justify-content:space-between; gap:16px;">
       <a href="/" style="display:flex; align-items:center; gap:12px;">
-        <img src="assets/handstart-logo-header.png" alt="Handstart Digital" style="height:clamp(44px,5.5vw,58px); width:auto; object-fit:contain; display:block;">
+        <img class="hs-header-logo" src="/assets/brand/handstart-logo.svg" alt="Handstart Digital">
       </a>
 
       <nav class="hs-nav-links" style="display:flex; align-items:center; gap:clamp(20px,2.6vw,34px);">
+        <a href="/#top" class="hs-navlink" data-flip-text="Home">
+          <span class="hs-navlink-top" aria-hidden="true"></span>
+          <span class="hs-navlink-bottom" aria-hidden="true"></span>
+          <span class="hs-navlink-sr">Home</span>
+        </a>
         <a href="/services" class="hs-navlink is-active" data-flip-text="Services">
           <span class="hs-navlink-top" aria-hidden="true"></span>
           <span class="hs-navlink-bottom" aria-hidden="true"></span>
@@ -324,257 +370,182 @@
           <span class="hs-navlink-bottom" aria-hidden="true"></span>
           <span class="hs-navlink-sr">Case Studies</span>
         </a>
-        <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+        <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
       </nav>
 
-      <button class="hs-hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false" style="align-items:center; justify-content:center; width:44px; height:44px; padding:0; background:none; border:1px solid var(--hairline); border-radius:9px; cursor:pointer; color:var(--navy);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="4" y1="7" x2="20" y2="7" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="12" x2="20" y2="12" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="17" x2="20" y2="17" stroke="#1B2B4B" stroke-width="2" stroke-linecap="round"></line></svg>
+      <button class="hs-hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false" style="align-items:center; justify-content:center; width:44px; height:44px; padding:0; background:none; border:1px solid rgba(29,63,102,0.35); border-radius:9px; cursor:pointer; color:var(--navy);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="4" y1="7" x2="20" y2="7" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="12" x2="20" y2="12" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line><line x1="4" y1="17" x2="20" y2="17" stroke="#1D3F66" stroke-width="2" stroke-linecap="round"></line></svg>
       </button>
     </div>
 
-    <div id="mobileNav" hidden style="border-top:1px solid var(--hairline); padding:12px clamp(20px,4vw,44px) 20px; flex-direction:column; gap:6px; background:var(--cream);">
-      <a href="/services" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Services</a>
-      <a href="/about" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">About</a>
-      <a href="/case-studies" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--slate); padding:11px 0;">Case Studies</a>
-      <a class="hs-next-btn hs-next-btn--sm" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+    <div id="mobileNav" hidden style="border-top:1px solid rgba(29,63,102,0.18); padding:12px clamp(20px,4vw,44px) 20px; flex-direction:column; gap:6px; background:var(--sky);">
+      <a href="/#top" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--ink); padding:11px 0;">Home</a>
+      <a href="/services" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--ink); padding:11px 0;">Services</a>
+      <a href="/about" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--ink); padding:11px 0;">About</a>
+      <a href="/case-studies" style="font-family:var(--sans); font-size:16px; font-weight:500; color:var(--ink); padding:11px 0;">Case Studies</a>
+      <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
     </div>
   </header>
 
-  <section class="hs-real" id="real-work" aria-labelledby="real-title">
-    <div class="hs-real-in">
-      <div class="hs-real-head">
-        <figure class="hs-mascot hs-real-mascot" data-mascot="magnifier" data-state="idle"></figure>
-        <h1 class="hs-real-title" id="real-title">Real work vs template work</h1>
-      </div>
-      <div class="hs-real-intro">
-        <p class="hs-real-setup">A good template, built on real code and properly customized, is smart money. The one to watch for is the generic AI version: swap the logo and the colors and it's a plumber, a restaurant or an agency. I check every agency that runs an ad in my feed, and about one in four is selling a site like this, complete with results for clients that don't exist. Here's one I built for a plumber I made up.</p>
-        <div class="hs-real-mock"><img src="assets/plumbing-mockup.png" width="1183" height="854" alt="Generic AI-generated template mockup for a fictional plumbing business"></div>
-      </div>
-      <div class="hs-real-check">
-        <figure class="hs-mascot hs-real-clip" data-mascot="clipboard" data-state="reveal"></figure>
-        <div>
-          <p class="hs-real-lede">Whether you're sizing up a website, a proposal or a piece of content, look for these:</p>
-          <ul class="hs-real-list">
-          <li>A heading with one word italicized or recolored for no clear reason, especially if every heading does it.</li>
-          <li>The same narrow palette everywhere: dark-mode backgrounds, purple or blue accents, endless rounded-corner cards.</li>
-          <li>Generic reassurance copy like "no credit card required" stacked under every button.</li>
-          <li>Copy that reads the same everywhere: the same sentence rhythm, the same "in today's fast-paced world" openers, whatever the topic.</li>
-          <li>Case studies and results for client sites that don't exist: click through and the "clients" are the same template with different names, or nothing comes up when you search them.</li>
-          <li>An Instagram or Facebook ad selling websites from a business with no website of its own: nothing linked in the ad, nothing when you search their name.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="hs-fork">
-        <a class="hs-fork-card" href="/contact">
-          <span class="hs-fork-kicker">Already paying someone?</span>
-          <span class="hs-fork-line">Send me what you are paying for and I will take a look <span aria-hidden="true">&rarr;</span></span>
-        </a>
-        <a class="hs-fork-card" href="#work-together">
-          <span class="hs-fork-kicker">Starting fresh?</span>
-          <span class="hs-fork-line">See how we can work together <span aria-hidden="true">&darr;</span></span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section id="work-together" style="background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px);">
-    <div style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
-      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(32px,4.6vw,54px); line-height:1.06; letter-spacing:-0.015em; color:var(--navy); margin:0;">How We Can Work Together</h2>
-      <div style="width:100%; max-width:620px; display:flex; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--hairline); border-radius:999px; box-shadow:0 12px 30px rgba(27,43,75,.10); padding:16px 22px; margin:clamp(14px,1.8vw,20px) 0 0; text-align:left;">
+  <section class="hs-open" aria-labelledby="open-title">
+    <canvas class="hs-open-sky" data-open-sky aria-hidden="true"></canvas>
+    <div class="hs-open-in">
+      <h1 class="hs-open-title" id="open-title">So, what are we working on?</h1>
+      <div style="width:100%; max-width:620px; display:flex; align-items:center; gap:12px; background:#fff; border:1.5px solid var(--hairline); border-radius:999px; box-shadow:0 12px 30px rgba(29,63,102,.10); padding:16px 22px; margin:clamp(18px,2.2vw,24px) 0 0; text-align:left;">
         <span style="display:inline-flex; flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#8b8578" stroke-width="2"></circle><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="#8b8578" stroke-width="2" stroke-linecap="round"></line></svg></span>
         <span style="font-family:var(--sans); font-size:clamp(16px,1.5vw,19px); font-weight:500; color:var(--navy); min-height:1.2em; display:inline-flex; align-items:center;"><span id="typeSearch"></span><span class="tx-caret"></span></span>
       </div>
-      <p style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:600; line-height:1.6; color:var(--navy); max-width:60ch; margin:clamp(28px,3.2vw,36px) 0 0;">Handstart is Human-First, never leading with generic AI work.</p>
-      <p style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; line-height:1.6; color:var(--navy); max-width:60ch; margin:clamp(8px,1vw,10px) 0 0;">See if any of the questions below sound like questions you may have.<br>We may have the answers.</p>
+      <p class="hs-open-lede">Whether you're starting from nothing or fixing something that's bugged you for years, this is everything I can help with.</p>
+      <p class="hs-open-cta">Read the questions below and <span class="hs-word-touch">tap</span><span class="hs-word-mouse">click</span> anything that sounds like you. Your picks pile up at the bottom of the screen, and I'll take it from there.</p>
     </div>
   </section>
 
-  <!-- pinned wipe stack on tablet and desktop -->
-  <div class="hs-pin-stack" data-pin-stack>
-  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
-    <div style="max-width:900px; margin:0 auto;">
-      <h2 data-anim="split-text" style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What makes your brand yours?</h2>
-      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">This is how people recognize you, and decide you are the one to call.</p>
-      <div data-js="type" data-text="Brand Strategy" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Brand Strategy</noscript></div>
-      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Positioning &amp; Messaging</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Logo &amp; Brand Identity</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Visual Systems</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Brand Guidelines</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
-    <div style="max-width:900px; margin:0 auto;">
-      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is your website working against you?</h2>
-      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">It's outdated, hard to use on a phone, or doesn't exist yet. For most small businesses, this is where it starts. The base needs to be built, and built right.</p>
-      <div data-js="type" data-text="Web Design &amp; Development" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Web Design &amp; Development</noscript></div>
-      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Website Design &amp; Build</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Landing Pages</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Mobile &amp; Speed Fixes</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Ongoing Site Maintenance</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Website Analytics</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Web Hosting</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
-    <div style="max-width:900px; margin:0 auto;">
-      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Is it difficult to find you?</h2>
-      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">You exist, but when someone searches for what you do, you're not as easy to find as you could be. There are many ways to make it easier.</p>
-      <div data-js="type" data-text="SEO &amp; Organic Presence" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>SEO &amp; Organic Presence</noscript></div>
-      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">SEO</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Google Business Profile</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Local Listings</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Content Strategy</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Technical SEO</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">AI Search/LLM Visibility (AEO/GEO)</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Review Management &amp; Strategy</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--tint); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline);">
-    <div style="max-width:900px; margin:0 auto;">
-      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">Do you need customers now?</h2>
-      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">Sometimes you can't wait for slow growth. Performance marketing or paid strategy puts you in front of customers today.</p>
-      <div data-js="type" data-text="Performance Marketing" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Performance Marketing</noscript></div>
-      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Meta &amp; Instagram Ads</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Microsoft Ads</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Reddit Ads</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">LinkedIn Ads</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">Google Suite (Google Ads, Performance Max, Demand Gen)</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid #DED6C7;">LLM Ads (ChatGPT, Gemini, Copilot)</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="hs-pin-panel" data-reveal style="padding:clamp(48px,7vw,80px) clamp(24px,6vw,80px); background:var(--cream);">
-    <div style="max-width:900px; margin:0 auto;">
-      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">How is your brand's ongoing presence?</h2>
-      <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); max-width:60ch; margin:clamp(12px,1.6vw,18px) 0 0;">Existing or potential customers forget about you. Keeping your brand visible keeps them coming back.</p>
-      <div data-js="type" data-text="Retention &amp; General Presence" style="font-family:var(--sans); font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin:clamp(22px,2.6vw,30px) 0 0; min-height:1.2em;"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Retention &amp; General Presence</noscript></div>
-      <ul style="list-style:none; margin:clamp(14px,1.6vw,18px) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:0;">
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Social Media Management</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Email Marketing</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">SMS Marketing</li>
-        <li style="font-family:var(--sans); font-size:clamp(15px,1.2vw,17px); font-weight:500; color:var(--navy); padding:9px 0; margin-right:26px; border-bottom:1px solid var(--hairline);">Loyalty &amp; Referral Programs</li>
-      </ul>
-    </div>
-  </section>
-  </div>
-
-  <section class="hs-build" id="build" aria-labelledby="build-title">
-    <div class="hs-build-in">
-      <h2 class="hs-build-title" id="build-title">Build your handstart</h2>
-      <p class="hs-build-lede">Tap whatever sounds like your business. Your picks collect below and come with you when you get in touch.</p>
-      <div class="hs-build-grid">
-        <div class="hs-build-card" role="group" aria-labelledby="build-brand">
-          <figure class="hs-mascot hs-build-mascot" data-mascot="lightbulb" data-state="reveal"></figure>
-          <h3 class="hs-build-card-title" id="build-brand">Brand Strategy</h3>
-          <p class="hs-build-card-q">What makes your brand yours?</p>
-          <ul class="hs-chips">
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="positioning-messaging" data-group="brand"><span class="hs-chip-face">Positioning &amp; Messaging</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="logo-brand-identity" data-group="brand"><span class="hs-chip-face">Logo &amp; Brand Identity</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="visual-systems" data-group="brand"><span class="hs-chip-face">Visual Systems</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="brand-guidelines" data-group="brand"><span class="hs-chip-face">Brand Guidelines</span></label></li>
-          </ul>
+  <div class="hs-build" id="build">
+    <div class="hs-build-panels">
+    <section class="hs-svc-panel" data-group-panel="brand" data-group-name="Brand Strategy" aria-labelledby="q-brand">
+      <div class="hs-svc-in">
+        <div class="hs-svc-intro">
+          <figure class="hs-mascot hs-svc-mascot" data-blob="none" data-mascot="lightbulb" data-state="reveal"></figure>
+          <h2 class="hs-svc-q" id="q-brand" data-anim="split-text">What makes your brand yours?</h2>
+          <p class="hs-svc-pitch">It&#x27;s the reason someone picks you over the place down the road. If your logo took ten minutes and your tagline could belong to anyone, start here.</p>
         </div>
-        <div class="hs-build-card" role="group" aria-labelledby="build-web">
-          <figure class="hs-mascot hs-build-mascot" data-mascot="browser-window" data-state="reveal"></figure>
-          <h3 class="hs-build-card-title" id="build-web">Web Design &amp; Development</h3>
-          <p class="hs-build-card-q">Is your website working against you?</p>
-          <ul class="hs-chips">
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="website-design-build" data-group="web"><span class="hs-chip-face">Website Design &amp; Build</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="landing-pages" data-group="web"><span class="hs-chip-face">Landing Pages</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="mobile-speed-fixes" data-group="web"><span class="hs-chip-face">Mobile &amp; Speed Fixes</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="ongoing-site-maintenance" data-group="web"><span class="hs-chip-face">Ongoing Site Maintenance</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="website-analytics" data-group="web"><span class="hs-chip-face">Website Analytics</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="web-hosting" data-group="web"><span class="hs-chip-face">Web Hosting</span></label></li>
-          </ul>
-        </div>
-        <div class="hs-build-card" role="group" aria-labelledby="build-seo">
-          <figure class="hs-mascot hs-build-mascot" data-mascot="magnifier" data-state="reveal"></figure>
-          <h3 class="hs-build-card-title" id="build-seo">SEO &amp; Organic Presence</h3>
-          <p class="hs-build-card-q">Is it difficult to find you?</p>
-          <ul class="hs-chips">
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="seo" data-group="seo"><span class="hs-chip-face">SEO</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="google-business-profile" data-group="seo"><span class="hs-chip-face">Google Business Profile</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="local-listings" data-group="seo"><span class="hs-chip-face">Local Listings</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="content-strategy" data-group="seo"><span class="hs-chip-face">Content Strategy</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="technical-seo" data-group="seo"><span class="hs-chip-face">Technical SEO</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="ai-search-llm-visibility-aeo-geo" data-group="seo"><span class="hs-chip-face">AI Search/LLM Visibility (AEO/GEO)</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="review-management-strategy" data-group="seo"><span class="hs-chip-face">Review Management &amp; Strategy</span></label></li>
-          </ul>
-        </div>
-        <div class="hs-build-card" role="group" aria-labelledby="build-performance">
-          <figure class="hs-mascot hs-build-mascot" data-mascot="megaphone" data-state="reveal"></figure>
-          <h3 class="hs-build-card-title" id="build-performance">Performance Marketing</h3>
-          <p class="hs-build-card-q">Do you need customers now?</p>
-          <ul class="hs-chips">
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="meta-instagram-ads" data-group="performance"><span class="hs-chip-face">Meta &amp; Instagram Ads</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="microsoft-ads" data-group="performance"><span class="hs-chip-face">Microsoft Ads</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="reddit-ads" data-group="performance"><span class="hs-chip-face">Reddit Ads</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="linkedin-ads" data-group="performance"><span class="hs-chip-face">LinkedIn Ads</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="google-suite-google-ads-performance-max-demand-gen" data-group="performance"><span class="hs-chip-face">Google Suite (Google Ads, Performance Max, Demand Gen)</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="llm-ads-chatgpt-gemini-copilot" data-group="performance"><span class="hs-chip-face">LLM Ads (ChatGPT, Gemini, Copilot)</span></label></li>
-          </ul>
-        </div>
-        <div class="hs-build-card" role="group" aria-labelledby="build-retention">
-          <figure class="hs-mascot hs-build-mascot" data-mascot="speech-bubble" data-state="reveal"></figure>
-          <h3 class="hs-build-card-title" id="build-retention">Retention &amp; General Presence</h3>
-          <p class="hs-build-card-q">How is your brand&#x27;s ongoing presence?</p>
-          <ul class="hs-chips">
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="social-media-management" data-group="retention"><span class="hs-chip-face">Social Media Management</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="email-marketing" data-group="retention"><span class="hs-chip-face">Email Marketing</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="sms-marketing" data-group="retention"><span class="hs-chip-face">SMS Marketing</span></label></li>
-            <li><label class="hs-chip"><input type="checkbox" name="services" value="loyalty-referral-programs" data-group="retention"><span class="hs-chip-face">Loyalty &amp; Referral Programs</span></label></li>
+        <div class="hs-svc-pick">
+          <div class="hs-svc-group" data-js="type" data-text="Brand Strategy"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Brand Strategy</noscript></div>
+          <ul class="hs-svc-list" role="group" aria-labelledby="q-brand">
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="positioning-messaging" data-group="brand" data-label="Positioning &amp; Messaging"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Positioning &amp; Messaging</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="logo-brand-identity" data-group="brand" data-label="Logo &amp; Brand Identity"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Logo &amp; Brand Identity</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="visual-systems" data-group="brand" data-label="Visual Systems"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Visual Systems</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="brand-guidelines" data-group="brand" data-label="Brand Guidelines"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Brand Guidelines</span></span></span></label></li>
           </ul>
         </div>
       </div>
-
+    </section>
+    <section class="hs-svc-panel hs-svc-panel--tint" data-group-panel="web" data-group-name="Web Design &amp; Development" aria-labelledby="q-web">
+      <div class="hs-svc-in">
+        <div class="hs-svc-intro">
+          <figure class="hs-mascot hs-svc-mascot" data-blob="none" data-mascot="browser-window" data-state="reveal"></figure>
+          <h2 class="hs-svc-q" id="q-web">Is your website as good as your business?</h2>
+          <p class="hs-svc-pitch">Maybe it was built in 2006 and it shows. Maybe it&#x27;s fine on a laptop and a mess on a phone. Maybe it doesn&#x27;t exist yet. Either way, this is usually where things start.</p>
+        </div>
+        <div class="hs-svc-pick">
+          <div class="hs-svc-group" data-js="type" data-text="Web Design &amp; Development"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Web Design &amp; Development</noscript></div>
+          <ul class="hs-svc-list" role="group" aria-labelledby="q-web">
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="website-design-build" data-group="web" data-label="Website Design &amp; Build"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Website Design &amp; Build</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="shopify-ecommerce-stores" data-group="web" data-label="Shopify &amp; E-commerce Stores"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Shopify &amp; E-commerce Stores</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="landing-pages" data-group="web" data-label="Landing Pages"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Landing Pages</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="mobile-speed-fixes" data-group="web" data-label="Mobile &amp; Speed Fixes"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Mobile &amp; Speed Fixes</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="ongoing-site-maintenance" data-group="web" data-label="Ongoing Site Maintenance"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Ongoing Site Maintenance</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="website-analytics" data-group="web" data-label="Website Analytics"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Website Analytics</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="web-hosting" data-group="web" data-label="Web Hosting"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Web Hosting</span></span></span></label></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="hs-svc-panel" data-group-panel="seo" data-group-name="SEO &amp; Organic Presence" aria-labelledby="q-seo">
+      <div class="hs-svc-in">
+        <div class="hs-svc-intro">
+          <figure class="hs-mascot hs-svc-mascot" data-blob="none" data-mascot="magnifier" data-state="reveal"></figure>
+          <h2 class="hs-svc-q" id="q-seo">Is it difficult to find you?</h2>
+          <p class="hs-svc-pitch">You&#x27;re out there, but when someone searches for what you do, a competitor shows up first. That&#x27;s fixable, and usually without paying for every click.</p>
+        </div>
+        <div class="hs-svc-pick">
+          <div class="hs-svc-group" data-js="type" data-text="SEO &amp; Organic Presence"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>SEO &amp; Organic Presence</noscript></div>
+          <ul class="hs-svc-list" role="group" aria-labelledby="q-seo">
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="seo" data-group="seo" data-label="SEO"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">SEO</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="google-business-profile" data-group="seo" data-label="Google Business Profile"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Google Business Profile</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="local-listings" data-group="seo" data-label="Local Listings"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Local Listings</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="content-strategy" data-group="seo" data-label="Content Strategy"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Content Strategy</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="technical-seo" data-group="seo" data-label="Technical SEO"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Technical SEO</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="ai-search-visibility-aeo-geo" data-group="seo" data-label="AI Search Visibility (AEO/GEO)"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">AI Search Visibility (AEO/GEO)</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="review-management-strategy" data-group="seo" data-label="Review Management &amp; Strategy"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Review Management &amp; Strategy</span></span></span></label></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="hs-svc-panel hs-svc-panel--tint" data-group-panel="performance" data-group-name="Performance Marketing" aria-labelledby="q-performance">
+      <div class="hs-svc-in">
+        <div class="hs-svc-intro">
+          <figure class="hs-mascot hs-svc-mascot" data-blob="none" data-mascot="megaphone" data-state="reveal"></figure>
+          <h2 class="hs-svc-q" id="q-performance">Do you need customers now?</h2>
+          <p class="hs-svc-pitch">SEO is a slow cook. If you need the phone ringing this month, paid ads put you in front of people today, and every bit of spend gets tracked.</p>
+        </div>
+        <div class="hs-svc-pick">
+          <div class="hs-svc-group" data-js="type" data-text="Performance Marketing"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Performance Marketing</noscript></div>
+          <ul class="hs-svc-list" role="group" aria-labelledby="q-performance">
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="meta-instagram-ads" data-group="performance" data-label="Meta &amp; Instagram Ads"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Meta &amp; Instagram Ads</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="microsoft-ads" data-group="performance" data-label="Microsoft Ads"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Microsoft Ads</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="reddit-ads" data-group="performance" data-label="Reddit Ads"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Reddit Ads</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="linkedin-ads" data-group="performance" data-label="LinkedIn Ads"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">LinkedIn Ads</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="google-ads-search-performance-max-demand-gen" data-group="performance" data-label="Google Ads (Search, Performance Max, Demand Gen)"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Google Ads (Search, Performance Max, Demand Gen)</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="llm-ads-chatgpt-gemini-copilot" data-group="performance" data-label="LLM Ads (ChatGPT, Gemini, Copilot)"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">LLM Ads (ChatGPT, Gemini, Copilot)</span></span></span></label></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="hs-svc-panel" data-group-panel="retention" data-group-name="Retention &amp; General Presence" aria-labelledby="q-retention">
+      <div class="hs-svc-in">
+        <div class="hs-svc-intro">
+          <figure class="hs-mascot hs-svc-mascot" data-blob="none" data-mascot="speech-bubble" data-state="reveal"></figure>
+          <h2 class="hs-svc-q" id="q-retention">How is your brand&#x27;s ongoing presence?</h2>
+          <p class="hs-svc-pitch">Winning a customer once is the hard part. Staying in their head, so they come back and bring a friend, is easier and a lot cheaper.</p>
+        </div>
+        <div class="hs-svc-pick">
+          <div class="hs-svc-group" data-js="type" data-text="Retention &amp; General Presence"><span class="tx-txt"></span><span class="tx-caret"></span><noscript>Retention &amp; General Presence</noscript></div>
+          <ul class="hs-svc-list" role="group" aria-labelledby="q-retention">
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="social-media-management" data-group="retention" data-label="Social Media Management"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Social Media Management</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="email-marketing" data-group="retention" data-label="Email Marketing"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Email Marketing</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="sms-marketing" data-group="retention" data-label="SMS Marketing"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">SMS Marketing</span></span></span></label></li>
+              <li><label class="hs-chip hs-svc"><input type="checkbox" name="services" value="loyalty-referral-programs" data-group="retention" data-label="Loyalty &amp; Referral Programs"><span class="hs-svc-face"><span class="hs-svc-tick" aria-hidden="true"></span><span class="hs-svc-text"><span class="hs-svc-name">Loyalty &amp; Referral Programs</span></span></span></label></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <div class="hs-minibar" data-minibar>
+      <span class="hs-minibar-title">My handstart</span>
+      <span class="hs-minibar-count" data-minibar-count>None yet</span>
+      <span class="hs-minibar-names" data-minibar-names></span>
+      <a class="hs-minibar-go" href="#my-handstart">Review <span aria-hidden="true">&darr;</span></a>
+    </div>
+    </div>
+    <section class="hs-tray-wrap" id="my-handstart" aria-label="My handstart">
+      <div class="hs-tray-wrap-in">
       <div class="hs-tray" data-tray role="region" aria-labelledby="tray-title">
         <div class="hs-tray-head">
           <h3 class="hs-tray-title" id="tray-title">My handstart</h3>
           <p class="hs-tray-count" data-tray-count aria-live="polite">Nothing picked yet</p>
         </div>
-        <p class="hs-tray-empty" data-tray-empty>Pick anything above and it lands here.</p>
+        <p class="hs-tray-empty" data-tray-empty>Nothing yet. Scroll back up and <span class="hs-word-touch">tap</span><span class="hs-word-mouse">click</span> anything that sounds like your business.</p>
         <ul class="hs-tray-groups" data-tray-groups>
           <li class="hs-tray-group" data-tray-group="brand" hidden>
-            <span class="hs-mascot hs-tray-mascot" data-mascot="lightbulb" data-state="idle"></span>
+            <span class="hs-mascot hs-tray-mascot" data-blob="none" data-mascot="lightbulb" data-state="static"></span>
             <div class="hs-tray-group-text">
               <p class="hs-tray-group-name">Brand Strategy</p>
               <ul class="hs-tray-picks" data-tray-picks></ul>
             </div>
           </li>
           <li class="hs-tray-group" data-tray-group="web" hidden>
-            <span class="hs-mascot hs-tray-mascot" data-mascot="browser-window" data-state="idle"></span>
+            <span class="hs-mascot hs-tray-mascot" data-blob="none" data-mascot="browser-window" data-state="static"></span>
             <div class="hs-tray-group-text">
               <p class="hs-tray-group-name">Web Design &amp; Development</p>
               <ul class="hs-tray-picks" data-tray-picks></ul>
             </div>
           </li>
           <li class="hs-tray-group" data-tray-group="seo" hidden>
-            <span class="hs-mascot hs-tray-mascot" data-mascot="magnifier" data-state="idle"></span>
+            <span class="hs-mascot hs-tray-mascot" data-blob="none" data-mascot="magnifier" data-state="static"></span>
             <div class="hs-tray-group-text">
               <p class="hs-tray-group-name">SEO &amp; Organic Presence</p>
               <ul class="hs-tray-picks" data-tray-picks></ul>
             </div>
           </li>
           <li class="hs-tray-group" data-tray-group="performance" hidden>
-            <span class="hs-mascot hs-tray-mascot" data-mascot="megaphone" data-state="idle"></span>
+            <span class="hs-mascot hs-tray-mascot" data-blob="none" data-mascot="megaphone" data-state="static"></span>
             <div class="hs-tray-group-text">
               <p class="hs-tray-group-name">Performance Marketing</p>
               <ul class="hs-tray-picks" data-tray-picks></ul>
             </div>
           </li>
           <li class="hs-tray-group" data-tray-group="retention" hidden>
-            <span class="hs-mascot hs-tray-mascot" data-mascot="speech-bubble" data-state="idle"></span>
+            <span class="hs-mascot hs-tray-mascot" data-blob="none" data-mascot="speech-bubble" data-state="static"></span>
             <div class="hs-tray-group-text">
               <p class="hs-tray-group-name">Retention &amp; General Presence</p>
               <ul class="hs-tray-picks" data-tray-picks></ul>
@@ -582,21 +553,68 @@
           </li>
         </ul>
         <div class="hs-tray-actions">
-          <button class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" type="button" data-book-call data-cal-link="aidanpaggao/15min" data-cal-namespace="15min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}'><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Book a call</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></button>
-          <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact" data-send-message><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Send a message</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+          <button class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" type="button" data-book-call data-cal-link="aidanpaggao/15min" data-cal-namespace="15min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}'><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Book a call</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></button>
+          <a class="hs-next-btn hs-next-btn--sm hs-next-btn--reverse" href="/contact" data-send-message><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Send a message</span><span class="hs-next-icons"><svg class="hs-next-rest" width="12" height="15" viewBox="0 0 16 20" fill="none" aria-hidden="true"><path d="M3 2 L13 10 L3 18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="8" height="15" viewBox="0 0 11 20" fill="none" aria-hidden="true"><path d="M2 2 L9 10 L2 18" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+        </div>
+      </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="hs-real" id="real-work" aria-labelledby="real-title">
+    <div class="hs-real-in">
+      <div class="hs-real-head">
+        <figure class="hs-mascot hs-real-mascot" data-blob="none" data-mascot="magnifier" data-state="static"></figure>
+        <h2 class="hs-real-title" id="real-title">How to spot template work</h2>
+      </div>
+      <div class="hs-real-intro">
+        <div class="hs-real-text">
+        <p class="hs-real-setup">Generic AI templates are the new snake oil these days: swap the logo and the colors and it's a plumber, a restaurant or an agency. Here's one I built for a plumber I made up as an example.</p>
+        <p class="hs-real-setup">Almost every agency running ads in my feed cites something like this as their... "work." I'll be scrolling Instagram, and half the time their ads aren't even showing fully - so automated they didn't notice the ad they paid for is missing the top 30% of the image.</p>
+        </div>
+        <div class="hs-real-mock"><img src="assets/plumbing-mockup.png?v=2" width="1183" height="854" alt="Generic AI-generated template mockup for a fictional plumbing business"></div>
+      </div>
+      <div class="hs-real-check">
+        <figure class="hs-mascot hs-real-clip" data-blob="none" data-mascot="clipboard" data-state="reveal"></figure>
+        <div>
+          <p class="hs-real-lede">These are things to watch out for when sizing up website work - but they generally apply to everything, like strategy, content, flyers, and so on:</p>
+          <ul class="hs-real-list">
+          <li>A heading with one word italicized or recolored for no clear reason, especially if every heading does it.</li>
+          <li>Generic reassurance copy like "no credit card required" stacked under every button.</li>
+          <li>Case studies and results for client sites that don't exist: click through and the "clients" are the same template with different names, or nothing comes up when you search them.</li>
+          <li>The same narrow palette everywhere: dark-mode backgrounds, purple or blue accents, endless rounded-corner cards.</li>
+          <li>Copy that reads the same everywhere: the same sentence rhythm, the same "in today's fast-paced world" openers, whatever the topic.</li>
+          <li>An Instagram or Facebook ad selling websites from a business with no website of its own: nothing linked in the ad, nothing when you search their name.</li>
+          </ul>
+          <p class="hs-real-fav">And my personal favorites:</p>
+          <ul class="hs-real-list hs-real-list--fav">
+          <li>"We'll build your site in 2&nbsp;hours"</li>
+          <li>"We'll build your site for [insert suspiciously low price]"</li>
+          <li>"We'll build your site free, and if you don't like it, you don't pay for it"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="hs-real-sky">
+      <canvas class="hs-real-sky-canvas" data-real-sky aria-hidden="true"></canvas>
+      <div class="hs-real-sky-in">
+        <p class="hs-real-close">Ask yourself, is that quality of work worth paying for, just to end up looking like everyone else who got the same pitch?</p>
+        <p class="hs-real-talk">Let's talk about it more:</p>
+        <div class="hs-real-btns">
+          <a class="hs-next-btn" href="#build"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Build your handstart</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
+          <a class="hs-next-btn" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
         </div>
       </div>
     </div>
   </section>
 
-  <section data-anim="clip" style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
+  <!-- data-reveal opts this section out of the scroll-in wipe; it just sits there -->
+  <section data-reveal style="background:var(--cream); padding:clamp(56px,8vw,96px) clamp(24px,6vw,80px);">
     <div class="hs-dont-in" style="max-width:760px; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start;">
-      <figure class="hs-mascot hs-dont-mascot" data-mascot="glove-stop" data-state="reveal"></figure>
-      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.01em; color:var(--navy); margin:0; text-wrap:balance;">What we don't do:</h2>
+      <h2 style="font-family:var(--display); font-weight:800; font-size:clamp(24px,2.8vw,34px); line-height:1.1; letter-spacing:-0.035em; color:var(--navy); margin:0; text-wrap:balance;">What I don't do:</h2>
       <p style="font-family:var(--sans); font-size:clamp(15px,1.3vw,18px); line-height:1.6; color:var(--body); margin:clamp(12px,1.6vw,16px) 0 clamp(24px,3vw,32px);">Being honest about fit saves everyone time.</p>
       <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0; width:100%;">
         <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0;">Print production and fabrication</li>
-        <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Big-budget video production</li>
         <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Going viral on demand</li>
         <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Anything I can't measure or justify</li>
         <li style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); font-weight:500; color:var(--slate); padding:16px 0; border-top:1px solid var(--hairline);">Pretending your business needs things it doesn't</li>
@@ -606,10 +624,10 @@
 
   <section style="background:var(--navy); padding:clamp(60px,9vw,110px) clamp(24px,6vw,80px); text-align:center;">
     <div style="max-width:640px; margin:0 auto; display:flex; flex-direction:column; align-items:center;">
-      <h2 style="font-family:var(--serif); font-weight:600; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.01em; color:var(--cream); margin:0; text-wrap:balance;">Not sure where you fit?</h2>
-      <p style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); line-height:1.55; color:#c3ccda; margin:clamp(14px,1.8vw,20px) 0 clamp(28px,3.4vw,36px); max-width:44ch;">Explore some work we've already done, or let's connect on what you need done and double click on how we will do it</p>
+      <h2 style="font-family:var(--display); font-weight:800; font-size:clamp(30px,4.4vw,50px); line-height:1.08; letter-spacing:-0.035em; color:var(--cream); margin:0; text-wrap:balance;">Still not sure where to start?</h2>
+      <p style="font-family:var(--sans); font-size:clamp(16px,1.4vw,19px); line-height:1.55; color:#c3ccda; margin:clamp(14px,1.8vw,20px) 0 clamp(28px,3.4vw,36px); max-width:44ch;">See the work I've already done, or tell me what you need and I'll show you how I'd do it.</p>
       <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center;">
-        <a class="hs-next-btn hs-next-btn--reverse" href="/case-studies"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Latest Work</span></span></span></a>
+        <a class="hs-next-btn hs-next-btn--reverse" href="/case-studies"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Latest Work</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
         <a class="hs-next-btn hs-next-btn--reverse" href="/contact"><span class="hs-next-shadow" aria-hidden="true"></span><span class="hs-next-face"><span class="hs-next-content"><span class="hs-next-label">Contact</span><span class="hs-next-icons"><svg class="hs-next-rest" width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true"><path d="M4 3 L16 12 L4 21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hs-next-cascade"><svg class="hs-arrow-one" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-two" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="hs-arrow-three" width="14" height="24" viewBox="0 0 14 24" fill="none" aria-hidden="true"><path d="M2 3 L11 12 L2 21" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span></span></a>
       </div>
     </div>
@@ -619,7 +637,7 @@
     <div style="max-width:1200px; margin:0 auto;">
       <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:22px;">
         <a href="/" style="display:flex; align-items:center; gap:12px;">
-          <img src="assets/handstart-logo-footer.png" alt="Handstart Digital" style="height:48px; width:auto; object-fit:contain; display:block;">
+          <img src="/assets/brand/handstart-logo-cream.svg" alt="Handstart Digital" style="width:min(560px, calc(100vw - 2 * clamp(24px,6vw,80px))); height:auto; display:block;">
         </a>
         <div class="hs-footer-contact" style="display:flex; flex-direction:column; align-items:flex-end; gap:12px;">
           <a href="mailto:contact@handstartdigital.com" style="font-family:var(--sans); font-size:15px; font-weight:500; color:#c3ccda;">contact@handstartdigital.com</a>
@@ -645,7 +663,7 @@
 
       <div style="font-family:var(--sans); font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#8791a3; margin:clamp(28px,3.4vw,36px) 0 clamp(14px,2vw,18px);">Explore</div>
       <div class="hs-footer-navgrid">
-        <a class="hs-footer-navlink" href="/">Home</a>
+        <a class="hs-footer-navlink" href="/#top">Home</a>
         <a class="hs-footer-navlink" href="/services">Services</a>
         <a class="hs-footer-navlink" href="/case-studies">Case Studies</a>
         <a class="hs-footer-navlink" href="/about">About</a>
@@ -655,7 +673,7 @@
       <div style="height:1px; background:rgba(247,244,238,0.16); margin:clamp(28px,3.4vw,36px) 0 clamp(18px,2.2vw,22px);"></div>
       <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
         <div style="display:flex; flex-direction:column; gap:4px;">
-          <div style="font-family:var(--sans); font-size:13px; color:#8791a3;">© <span id="year"></span> Handstart Digital. All rights reserved.</div>
+          <div style="font-family:var(--sans); font-size:13px; color:#8791a3;">© <span id="year">2026</span> Handstart Digital. All rights reserved.</div>
           <div style="font-family:var(--sans); font-size:12px; color:#6b7488;">Handstart Digital and the Handstart Digital logo are trademarks of Aidan Paggao.</div>
         </div>
         <div style="display:flex; align-items:center; gap:8px; font-family:var(--sans); font-size:13px; color:#8791a3;">
@@ -674,8 +692,16 @@
 <script src="/assets/js/SplitText.min.js"></script>
 <script src="/assets/js/lenis.min.js"></script>
 <script src="/assets/js/hs-motion.js"></script>
-<script src="/assets/js/hs-mascots.js"></script>
-<script src="/assets/js/hs-mascot-loader.js"></script>
+<script src="/assets/js/hs-mascots.js?v=20261017a"></script>
+<script src="/assets/js/hs-mascot-loader.js?v=20261019zt"></script>
+<script src="/assets/js/hs-sky.js?v=20261019a"></script>
+<script>
+  // the clouds behind the opening and the template-work wrap-up
+  (function () {
+    if (!window.HsSky) return;
+    ['[data-open-sky]', '[data-real-sky]'].forEach(function (sel) { var c = document.querySelector(sel); if (c) window.HsSky(c); });
+  })();
+</script>
 <script>
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -798,8 +824,8 @@
 
 
 <script>
-  // Build your handstart: chips are real checkboxes. This keeps the tray, sessionStorage,
-  // the contact link and the Cal.com notes in sync with whatever is checked.
+  // Build your handstart: every service row in the panels is a real checkbox. This keeps the
+  // floating bar, the tray, sessionStorage, the contact link and the Cal.com notes in sync.
   (function () {
     var root = document.getElementById('build');
     if (!root) return;
@@ -809,13 +835,16 @@
     var emptyEl = root.querySelector('[data-tray-empty]');
     var sendLink = root.querySelector('[data-send-message]');
     var bookBtn = root.querySelector('[data-book-call]');
+    var barCount = root.querySelector('[data-minibar-count]');
+    var barNames = root.querySelector('[data-minibar-names]');
     var baseCal = JSON.parse(bookBtn.getAttribute('data-cal-config'));
     var groupNames = {};
     var trayGroups = {};
+    root.querySelectorAll('[data-group-panel]').forEach(function (panel) {
+      groupNames[panel.getAttribute('data-group-panel')] = panel.getAttribute('data-group-name');
+    });
     root.querySelectorAll('[data-tray-group]').forEach(function (li) {
-      var gid = li.getAttribute('data-tray-group');
-      trayGroups[gid] = li;
-      groupNames[gid] = document.getElementById('build-' + gid).textContent;
+      trayGroups[li.getAttribute('data-tray-group')] = li;
     });
 
     // Join animation on desktop with motion allowed; everything else gets instant changes.
@@ -829,7 +858,7 @@
 
     function picked() {
       return boxes.filter(function (b) { return b.checked; }).map(function (b) {
-        return { id: b.value, label: b.nextElementSibling.textContent, gid: b.getAttribute('data-group') };
+        return { id: b.value, label: b.getAttribute('data-label'), gid: b.getAttribute('data-group') };
       });
     }
 
@@ -899,6 +928,8 @@
       var n = list.length;
       countEl.textContent = n ? n + (n === 1 ? ' service picked' : ' services picked') : 'Nothing picked yet';
       emptyEl.hidden = n > 0;
+      barCount.textContent = n ? n + ' picked' : 'None yet';
+      barNames.textContent = list.map(function (p) { return p.label; }).join(', ');
 
       var stored = list.map(function (p) { return { id: p.id, label: p.label, group: groupNames[p.gid] }; });
       try { sessionStorage.setItem(STORE_KEY, JSON.stringify(stored)); } catch (e) {}
@@ -928,15 +959,31 @@
   })();
 </script>
 
-  <!-- Cal element-click embed code begins -->
-  <script type="text/javascript">
-    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-    Cal("init", "15min", {origin:"https://app.cal.com"});
-    Cal.config = Cal.config || {};
-    Cal.config.forwardQueryParams = true;
-    Cal.ns["15min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#C8873A"},"dark":{"cal-brand":"#C8873A"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  <script>
+  // Cal.com loads on the first "Book a call" click, not with the page: no request to Cal.com for
+  // visitors who never book. That click opens the booking pop-up itself (with the button's current
+  // notes); after that Cal's own click handling takes over for every [data-cal-link] button.
+  (function () {
+    var started = false;
+    function start() {
+      started = true;
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+      Cal("init", "15min", {origin:"https://app.cal.com"});
+      Cal.config = Cal.config || {};
+      Cal.config.forwardQueryParams = true;
+      Cal.ns["15min"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#E3A23B"},"dark":{"cal-brand":"#E3A23B"}},"hideEventTypeDetails":false,"layout":"month_view"});
+    }
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('[data-cal-link]');
+      if (!btn || started) return;
+      e.preventDefault();
+      start();
+      var config = {};
+      try { config = JSON.parse(btn.getAttribute('data-cal-config') || '{}'); } catch (err) {}
+      Cal.ns["15min"]("modal", { calLink: btn.getAttribute('data-cal-link'), config: config });
+    });
+  })();
   </script>
-  <!-- Cal element-click embed code ends -->
 
 </body>
 </html>

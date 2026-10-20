@@ -103,7 +103,8 @@
     fig._hsEnhanced = true;
     fig.classList.add('hs-mascot--gsap');
     if (fig.getAttribute('data-state') === 'reveal') wireReveal(fig);
-    if (canHover) wireHover(fig);
+    // rigs play their own gag on hover
+    if (canHover && fig.getAttribute('data-type') !== 'rig') wireHover(fig);
   }
 
   document.addEventListener('hs-mascot:loaded', function (e) { enhance(e.target); });
