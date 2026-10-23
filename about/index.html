@@ -126,7 +126,7 @@
   .cr-shine { position: absolute; top: 0; left: 0; width: 40%; height: 100%; background: linear-gradient(105deg, transparent, rgba(227,162,59,.22), transparent); pointer-events: none; transform: translateX(-120%); }
   [data-anim="cred"][data-in="true"] .cr-shine { animation: crShine 1.6s ease-out .3s both; }
   @keyframes crShine { 0% { transform: translateX(-120%); } 60%,100% { transform: translateX(320%); } }
-  .hs-cred-photo { width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; margin-bottom: 22px; }
+  .hs-cred-photo { width: 100%; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; margin-bottom: 22px; }
   .hs-cred-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
   .hs-cred-name { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; font-size: 23px; color: var(--cream); }
   .hs-cred-role { font-family: var(--sans); font-size: 13px; color: #c3ccda; margin-top: 4px; }
@@ -156,6 +156,8 @@
   .hs-cred-wrap { position: sticky; top: calc(clamp(88px,11vw,112px) + 6px); align-self: start; margin-top: 6px; }
   .hs-cred-wrap .hs-cred { position: relative; top: auto; z-index: 1; }
   @media (max-width: 900px) { .hs-cred-wrap { position: relative; top: auto; margin-top: 56px; } }
+  /* the portrait photo makes the card taller than a short laptop screen, where sticking would hide its bottom */
+  @media (min-width: 901px) and (max-height: 860px) { .hs-cred-wrap { position: relative; top: auto; } }
   /* a handwritten hello above the card: small on desktop, bigger on phones and tablets, where the card comes first */
   .hs-hello { font-family: var(--script); font-weight: 600; font-size: 34px; line-height: 1; color: var(--ink); margin: 0 0 8px 4px; transform: rotate(-3deg); transform-origin: left bottom; }
   @media (max-width: 900px) {
@@ -340,7 +342,7 @@
       <p class="hs-hello">hi, I'm Aidan</p>
       <aside class="hs-cred" data-reveal data-anim="cred">
         <span class="cr-shine" aria-hidden="true"></span>
-        <div class="hs-cred-photo"><img src="assets/aidan.jpg" alt="Aidan Paggao"></div>
+        <div class="hs-cred-photo"><img src="assets/aidan-brick.jpg" alt="Aidan Paggao"></div>
         <div class="hs-cred-name">Aidan Paggao</div>
         <div class="hs-cred-role">Founder, Handstart Digital</div>
         <div class="hs-cred-divider"></div>
@@ -364,11 +366,11 @@
       <div>
         <h1>Offering the "human touch" in a rapidly advancing digital world</h1>
         <div class="hs-narrative">
-          <p>Handstart is not a corporation with account managers and junior handoffs. You deal with me directly, and I own the agreed-upon output of our projects from start to finish. Three things will always be clear: who you're working with, how long the work takes, and what it costs.</p>
+          <p>Handstart is not a corporation with account managers and junior handoffs. You deal with me directly, and I own the agreed-upon output of our projects from start to finish. Three things will always be clear: who you're working with, how long the work takes, and what it costs. And if you'd like real photos of your business, I can call on an East Coast photographer I trust.</p>
           <p>I don't take on every project. It has to be the right fit, for both of us. I&#x27;d rather create real impact for you, and a relationship built on trust, than deliver cheap fixes and templates. I have no reason to upsell you: I recommend what fits your goals, not what grows the invoice.</p>
-          <p>Handstart began when the red tape of big companies delayed innovation. I wanted to work in a way I felt it should be:</p>
+          <p>Handstart began when I cut myself loose from corporate red tape. I wanted to work in a way I felt it should be:</p>
           <p class="hs-pull"><span class="hs-mascot hs-pull-mascot" data-mascot="power-button" data-state="reveal"></span><span class="hs-pull-text">I see it, we decide it, we start it.</span></p>
-          <p>That's why it's called Handstart. A helping human hand in a digital world that moves faster than most businesses can keep pace with. It might just be what you need to get a head start on your competition.</p>
+          <p>That's why it's called Handstart: a real person's hand to get you started, and a head start on your competition.</p>
           <p>Based in Philadelphia, working everywhere.</p>
         </div>
       </div>

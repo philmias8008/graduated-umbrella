@@ -2,7 +2,7 @@
 
 ## Basics
 - **Repo:** `~/Documents/Sites/graduated-umbrella`. A static site (plain HTML/CSS/JS, no build step) deployed on Netlify.
-- **Branch:** the redesign lives on the local branch `landing-v2`, **uncommitted and offline: no commits, merges or pushes until Aidan says** (see "Redesign phase"). `ported-pages` (the Netlify preview branch) has one unpushed commit, `41ef00c`. **Never touch `main` without asking.**
+- **Branch:** **the site is live** (launched 2026-10-19). Work happens on `landing-v2`; `ported-pages` is the Netlify preview (PR #1's deploy preview) and `main` is production (handstartdigital.com). All three were at `243960c` at launch. Commit when Aidan asks; push to `ported-pages` or `main` only when he says so, each time.
 - **Read `CLAUDE.md` first.** It's in the repo, so a new Claude Code chat loads it automatically. It now holds almost everything below: brand tokens, accent tokens, page structure, mascot system, homepage, Services, About and Case Studies slots, the Netlify Forms fields, the noindex rule and how the redirect works.
 - **Git identity:** Aidan Paggao <philmias8008@gmail.com>.
 - **Contact details used on the site:**
@@ -66,17 +66,7 @@
   - Four step rigs crossfade with the step timer: compass, clipboard, block, finish-flag (each plays its gag as its step appears; the flag celebrates when the runner reaches the end).
   - Path cards use clipboard (animated, `data-still="rest"`) and power-button, both rigs.
   - Four pillar mascots in "What do you get?" (browser-window, magnifier, megaphone, lightbulb), then all four together in its finale.
-- **Services, top to bottom:**
-  - **Real work vs template work** is the page's only `h1`, with the setup paragraph including the agency-ad line, the plumber mockup and a 6-item checklist.
-  - **A two-card fork:** "Already paying someone?" goes to `/contact`, and "Starting fresh?" scrolls to `#work-together`.
-  - **How We Can Work Together** (`h2`).
-  - **The pinned 5-panel wipe stack**, unchanged.
-  - **Build your handstart:**
-    - Checkbox chips feed a sticky tray.
-    - Picks are saved to sessionStorage `hs_selected_services` as `[{id,label,group}]`.
-    - They're passed to the contact link as `?services=` slugs, and to the Cal.com popup as `notes`.
-  - **What we don't do**, no mascot (glove-stop dropped 2026-10-18).
-  - **The closing section.**
+- **Services, top to bottom (2026-10-19):** cloud-sky opening ("So, what are we working on?", typed search pill, lede, the click/tap call to action), `#build` (five panels with pill-chip checkboxes, the sticky "My handstart" bar, the full tray `#my-handstart`), "How to spot template work" (`#real-work`: snake-oil opener with the SuperDuperFlowPro mockup, six tells in two flowing columns, "And my personal favorites:" with three quoted pitches, then a cloud band: "Ask yourself, is that quality of work worth paying for…", "Let's talk about it more:", Build your handstart to `#build` and Contact), "What I don't do" (four items), closing "Still not sure where to start?".
 - **Contact:**
   - An optional website field, entered as plain text.
   - A hidden `services` field in the static form.
@@ -94,17 +84,54 @@
   - No mascots beside the narrative (handshake and ribbon dropped).
   - A power-button pull-line: "I see it, we decide it, we start it."
   - stopwatch beside the ticker.
-  - The closing section is Contact plus "See what I do".
+  - The closing section: "Ready to add yours to the mix?" / "See what I do and build your handstart, or get in touch:" with Build your handstart and Contact.
 - **Case Studies:**
-  - One bar-chart slot in the hero (placeholder until the art is built; podium and foam-finger dropped, a podium ranks the work).
+  - Hero: "Latest Work" (golden underline) with the `case-files` rig beside it (on phones: heading left, mascot right, copy below). Closing copy: "See what I do and build your handstart, or get in touch:".
   - Live and In progress chips.
   - The coming-soon page and Greenlife have no mascots (and don't load the mascot files). Greenlife's results have real numbers and no TODO boxes.
 - **Nav:** Services, About, Case Studies, plus the Contact button. The Difference is gone, and `/the-difference` redirects 301 to `/services#real-work`.
 - **Netlify files:** `_headers` (cache rules plus the thank-you noindex) and `_redirects`.
 
+## Launched (2026-10-19): pick up here
+
+**What's live on https://handstartdigital.com** (bare domain is primary; www 301s to it; DNS is Netlify DNS):
+- All 10 pages: the redesign with the Golden hour palette, golden arrow buttons (navy text, cream hover block), cloud-sky bands (homepage "And a whole lot more", Services opening and template-work wrap-up), every mascot rig, self-hosted fonts and opentype.js.
+- Indexable: home, Services, About, Case Studies, Greenlife, Contact, Privacy, Terms. Noindex: `contact/thank-you/` (permanent, meta plus `X-Robots-Tag`) and `case-studies/soon/` (placeholder).
+- `sitemap.xml` (8 pages) and `robots.txt` (Allow all, points to the sitemap). Add new pages to the sitemap; never thank-you or soon.
+- Dev pages (`/mascot-test/`, `/font-test/`, `/logo-test/`, `/palette-test/`, `/motif-test/`) and `/docs/`, `/tools/` return 404 on Netlify (`_redirects`); they work on the local preview only.
+- Contact form (Netlify Forms) tested by Aidan on the preview, mobile and desktop. Cal.com loads on the first "Book a call" click (tested: opens, carries picked services into the notes).
+- No cookies, no analytics, no trackers; only sessionStorage for Services picks. No consent banner needed until GA4 or a pixel is added (spec in `docs/privacy-workstream.md`).
+- Verified after deploy: every page 200, noindex only on thank-you and soon, sitemap and robots 200, dev pages and docs 404, fonts 200, `/the-difference` 301.
+
+**Git at launch:** `landing-v2`, `ported-pages` and `main` all at `243960c`, fast-forwarded (no merge commits). Commits this day: `1abab8f` (rigs, copy pass, QA), `1a73ca3` (workflow note), `f9a8942` (thank-you hero clean-up), `243960c` (launch: indexing, sitemap, dev pages hidden).
+
+**Launch to-dos (Aidan, 2026-10-22: "important we get to those"; raise them at the start of every session until done):**
+1. [ ] Google Search Console: add a Domain property for `handstartdigital.com` (TXT record in Netlify DNS: Domains, handstartdigital.com, DNS; no code change needed) and submit `https://handstartdigital.com/sitemap.xml`. As of 2026-10-22 there is no Google TXT record yet.
+2. [x] PR #1: merged and closed on GitHub (checked 2026-10-22). Its deploy preview no longer updates.
+3. [ ] Back up `assets/mascots/incoming/_refs/` (19 MB, gitignored; every Recraft source the builds need). Ask Aidan where (iCloud Drive, external drive).
+4. [ ] Send one test message through the live contact form (Aidan does it) and confirm it reaches Netlify Forms and the inbox.
+5. [ ] Paperwork from `docs/privacy-workstream.md`: written OKs from Roy (Greenlife: name, numbers, screenshots, photos, quoted review), Maki Moto and KreativExpo (logos as in-progress work); Claude can draft the requests. Confirm the MSA and SOW exist under those names; save Netlify, Zoho and Cal.com data processing terms.
+
+**Editing the live site (agreed 2026-10-22):**
+1. Short plan, Aidan OKs it.
+2. Edit on `landing-v2`; check on localhost:8000 (Mac) and the 8080 phone link.
+3. QA: inline scripts parse, links, no em dashes, reduced-motion fallbacks; screenshots if useful.
+4. Summarize changed files. Commit only when Aidan says so.
+5. Optional, on his say: push to `ported-pages` for a Netlify preview (needed for forms, `_redirects`, `_headers`, Cal.com, indexing). PR #1 is closed, so this needs branch deploys on for `ported-pages` in Netlify (not yet confirmed) or a fresh PR to `main`.
+6. On his explicit say: fast-forward `main` (live in about a minute), then check the live pages. Rollback: republish the previous deploy in Netlify.
+
+**Open, smaller items:**
+- Services ad-eligibility note: proposed one line under "Do you need customers now?" ("Ad platforms set their own eligibility rules. I'll tell you upfront what's available for your business."); waiting on Aidan.
+- Buttons on cream backgrounds (thank-you "15 Min Call", Contact "Send it" / "Book a call", coming-soon page) lose their cream hover block against cream; Aidan hasn't decided (navy block there, or move them onto sky).
+- The homepage headline "Don't drift into a template." is navy on the deep sky top (about 2.8:1, under the 3:1 large-text minimum); Aidan said it looks fine. Fixes if needed: lighten the sky top, a soft cream glow, or move it down.
+- Prune the 60-item "And a whole lot more" list; the thank-you hero's gag is off (`noGag` in `HERO_THUMBS`, code kept); parked: the two-hero high-five and handshake (need an artist).
+- Unused files that could be deleted with Aidan's OK: `assets/steps/*.png`, the legacy `style.css`, `main.js`, `logo.png`, `hero-logo.png`, and the untracked `Handstart Digital - Services-4.html` (gitignored).
+
+**Done 2026-10-19 (this session), beyond the list above:** thank-you hero rebuilt in code (two thumbs-up at the chest, arms from the band's sides into the hands' outer-side wrists, unshaded thumbs-up hand with the wrist stub cut off, own shadow, then an outline clean-up in the shared victory drawing: smoothed seam under the lowest finger, trimmed right-edge cut, legs drawn over the shoes); Case Studies mascot `case-files` (the magnifier sifting manila folders beside him, fan-out gag) replacing the dropped bar chart; heading "Latest Work" with a golden underline, phone layout heading left / mascot right; About: handwritten "hi, I'm Aidan" above the card (all sizes), copy edits, ABCD A bullets ("Strategy from someone who can actually walk through your front door and understand your business" / "Modern tools, old-fashioned care"), closing "Ready to add yours to the mix?"; Services: click/tap by pointer type, template-work section rewritten (snake-oil opener, SuperDuperFlowPro mockup, personal favorites, "Ask yourself…" wrap-up with Build your handstart (to `#build`) and Contact on a cloud band), cloud sky on the opening, bigger tells list, new panel question "Is your website as good as your business?"; homepage: "…the sky's the limit!" line, cloud band, Build your handstart line on the sky (handwriting first), more top padding on phones, navy headline; site-wide grammar pass and Greenlife rewrite; privacy policy updated (form fields, Cal.com; effective October 19, 2026); fonts and opentype.js self-hosted; Cal.com lazy-loaded; static copyright year; code QA (scripts parse, no runtime errors, no broken links).
+
 ## Redesign phase: the new homepage landing (2026-10-07 to 2026-10-16)
 
-**Pick up here (2026-10-19):** all redesign work is on the local branch `landing-v2`, **uncommitted and offline** (Aidan: no commits, merges or pushes until he says; never push to Netlify). Mascots are Jamm-style rigs (spec: `docs/mascot-rig-spec.md`; every prompt and pick: `docs/mascot-prompts.md`; player `assets/js/hs-mascot-rig.js`; build `tools/build-mascot-rig.py`; dev pages `/mascot-test/rig/?m=<id>` and `/mascot-test/rig/crowd/`). **FIRST, before anything else: finish the thank-you hero.** He is `hero-thumbs` on `contact/thank-you/`: his victory-pose drawing posed by the code into two thumbs-up, pupils centred to look at you, no gag (blink and breath). Aidan asked for a Recraft version: **the same hero facing the viewer, one thumb up by his chest and one raised high** (prompt in "Prompts still to run" below). Ask Aidan whether he ran it, help him pick (count fingers, readable 1, matches the hero, faces the viewer), then use the drawing as it is for a still with only the eyes split out to blink, and swap it in. **Then:** the bar chart for the Case Studies hero (prompt below; three separate bars, they regrow in the gag). **Done 2026-10-18 and 19:** speech-bubble (Services Retention panel), finish-flag (homepage step 4, cued by the runner), compass / clipboard / block (homepage steps 1 to 3; step 2 copy now "Make your list"), stopwatch (About ticker, replaced the megaphone), power-button with arms pressing its own button (homepage "Already know" card, About pull-line, Contact "Send it"), rig-drawn shadows for the block and flag, no blobs anywhere, `data-still="rest"`, `data-gag-cue`, `data-first-gag`. **Dropped:** ribbon, glove-stop and its Services slot, podium, foam-finger, the About handshake; the bar-chart left About and Greenlife; individual case study pages have no mascots. **Parked:** the two-hero high-five and handshake (dev page only; they need a hero drawn facing left and one in profile, see "Artist brief" in the spec). Start by restarting both preview servers and giving him both links (check the IP, it moves).
+**Earlier pick-up note (superseded by "Launched" above):** the thank-you hero and the Case Studies mascot were finished on 2026-10-19 (the Recraft thank-you redraw and the bar chart were both dropped).
 
 ### Rig lessons (2026-10-17 and 18)
 - **Recraft:** describe the whole object, say "inanimate object with no face, no eyes, no mouth, no arms, no legs", ask for the hero's shading in words ("a blue-grey shade band along its left edge, the outline thicker on the shaded side"). Golden parts almost always come back with a golden "ghost" copy or strip where the darker golden shade should be: plan to recolour it in `build-mascot-rig.py` rather than reroll. **Count fingers on every hand:** Recraft drifts to four fingers, and it cannot vary frames on one sheet (it draws the same pose three times).
@@ -114,25 +141,12 @@
 
 - **More lessons (2026-10-18 and 19):** moving parts work best as their own Recraft generation (the bubble's tail, the flag's cloth, needles, hands), and their prompts should not name the object they belong to (asked for "the tail of a speech bubble", Recraft draws the whole bubble). Recraft cannot draw the hero facing left as a right glove or in profile; anything needing those is parked for an artist. Swapping one drawing for another mid-motion (fists to a clasp) always shows: design around it (the handshake starts clasped). Aidan judges at full speed on the dev page: show frozen frames for checking, but expect motion notes back.
 
-### Prompts still to run (2026-10-19)
+### Prompts still to run
+None. The thank-you hero redraw and the bar chart were dropped on 2026-10-19 (the bar chart looked too close to Google Analytics); the manila folder prompt that replaced it is logged in `docs/mascot-prompts.md`.
 
-All: Handstart style, Precise, palette `#1D3F66 #FFFFFF #A9BACD #E3A23B #F0C46E #B57A1E` (white ticked as background), 1:1, no reference image.
-
-**1. The thank-you hero (do this first).** Used as drawn, for a still; only the eyes get split out to blink.
-```
-A white cartoon glove mascot: the whole glove is the head and body, a thumb and three rounded fingers pointing up at the top, a big friendly face on the back of the hand with two large white oval eyes touching each other and big round solid dark pupils, a wide closed smile, a golden band around the bottom of the glove like a wrist cuff with a light golden stripe and a bold dark number 1. Thin bendy rubber-hose arms come out of the sides of the band, and thin rubber-hose legs come out of the bottom of the band, with chunky golden sneakers with white soles. Pose: standing facing the viewer straight on, feet planted apart, looking straight at the viewer with the pupils in the middle of the eyes, one arm bent with a white glove hand giving a thumbs-up held in front of its chest, the other arm raised high above with another white glove hand giving a thumbs-up, a big happy smile. Bold even thick dark outline, flat solid colors, one flat blue-grey shade on one side only, full body with plenty of space around it, plain white background.
-```
-Check: a thumb plus three fingers on every hand, a readable 1, his look (touching eyes, closed smile, golden sneakers), facing the viewer.
-
-**2. The bar chart (Case Studies hero).**
-```
-A single cartoon prop on its own in a 1930s rubber-hose cartoon style: a chunky bar chart made of three separate thick rounded bars standing side by side on a short flat white base, with small gaps between the bars so each bar has its own full outline. The bars rise from left to right, short, medium and tall: the short one white, the medium one light golden, the tall one golden. The tall bar is noticeably wide. Each bar has a narrow darker stripe down its left side, drawn inside its own outline, not a copy behind it. Bold thick dark hand-drawn outline with a slight organic wobble, soft squashy bouncy proportions, flat solid colors, no gradient, no texture, no axis lines, no numbers, no text. It is an inanimate object with no face, no eyes, no mouth, no arms, no legs. No ground shadow, centered with plenty of space around it, plain white background.
-```
-Plan: face on the tall bar; idle a small sway; gag the bars drop and regrow one by one, the tall one popping up with a grin.
-
-### Branch and uncommitted work
-- `ported-pages` has commit `41ef00c` (hero rig, idle rig, landing test page, docs), not pushed. `landing-v2` was branched from it; **everything since is uncommitted on `landing-v2`**.
-- **Aidan still has to delete these by hand** (the auto-mode classifier blocked it): `git rm assets/steps/*.png style.css main.js logo.png hero-logo.png && rm "Handstart Digital - Services-4.html"`.
+### Branch
+- See "Launched" above: everything is committed and live at `243960c`.
+- **Aidan still has to delete these by hand if he wants** (the auto-mode classifier blocked it): `git rm assets/steps/*.png style.css main.js logo.png hero-logo.png && rm "Handstart Digital - Services-4.html"`.
 
 ### Decided
 - **Palette:** Golden hour (ink `#1D3F66`, sky `#7FB5E3`, golden `#E3A23B`, light golden `#F0C46E`, cream). Homepage now; the other pages stay navy and amber until the rollout. Golden is never text on cream.
@@ -216,10 +230,7 @@ Preview URL: https://deploy-preview-1--handstartdigital.netlify.app (Netlify add
    - The homepage portal ride, with the hero mascot fading out on desktop and phone.
    - The Services picker: the sticky "My handstart" bar on a real phone (the pinned stack and "Starting fresh?" fork are gone).
    - The About sticky card, with the bar-chart staying clear of the header.
-6. **At launch:**
-   - Remove noindex from every page **except** thank-you.
-   - Leave thank-you out of any sitemap.
-   - Don't add a robots.txt Disallow for it.
+6. ~~At launch~~ done 2026-10-19: noindex removed except thank-you and soon, sitemap without them, no Disallow.
 7. **Unused files** that could be deleted, with the user's OK:
    - `assets/steps/step-1..4-*.png` and the two `doodle-*.png` files.
    - The legacy `style.css`, `main.js`, `logo.png` and `hero-logo.png`.
@@ -234,7 +245,7 @@ Preview URL: https://deploy-preview-1--handstartdigital.netlify.app (Netlify add
    - The logo should be explored in Midjourney, then **rebuilt as an SVG**.
 
 ## Things a new chat won't have
-- **Your Netlify site URL.** It's needed for the `curl` checks.
+- ~~Your Netlify site URL~~: production is https://handstartdigital.com, the preview https://deploy-preview-1--handstartdigital.netlify.app.
 - **The rest of the step prompts from Claude chat**, if any are left. The original handoff's "Open items" list was a duplicate of the timeline, so it never came through.
 - **The Midjourney results and which direction won.**
 - **The two hero-bib-hand prompts:** paste them from this chat if you want them reused word for word.
